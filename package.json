@@ -1,9 +1,12 @@
 {
   "name": "veniqa-server",
+  "author": "Vivek Pandey (EJ)",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "build": "rimraf build/ && babel ./ --out-dir build/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start": "npm install && npm run build && node ./build/bin/www",
+    "devstart": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -11,6 +14,20 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
-    "morgan": "~1.9.0"
+    "joi": "^14.3.0",
+    "jsonwebtoken": "^8.4.0",
+    "mongodb": "^3.1.10",
+    "morgan": "~1.9.0",
+    "nodemailer": "^4.7.0",
+    "tunnel-ssh": "^4.1.4",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.7",
+    "rimraf": "^2.6.2"
   }
 }
