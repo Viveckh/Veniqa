@@ -7,7 +7,7 @@ import DBCollections from './../properties/dbCollections.json'
 
 let db = null, server;
 let database; 
-let whitepaper_auth_collection, external_messages_collection;
+let users_collection;
 
 /**
  * Function that connects with the database and gets up the db connection for the application to use. It also 
@@ -31,8 +31,7 @@ let getDB = async () => {
         console.log("Connected to DB successfully!");
         database = client.db(config.databaseName);
 
-        whitepaper_auth_collection = database.collection(DBCollections.WHITEPAPER_AUTH_COLLECTION)
-        external_messages_collection = database.collection(DBCollections.EXTERNAL_MESSAGES_COLLECTION)
+        users_collection = database.collection(DBCollections.USERS_COLLECTION)
     }
     catch(err){
         console.log("Error connecting to SSH Tunnel")
@@ -44,6 +43,4 @@ getDB()
 
 exports.db = () => database;
 
-exports.whitepaperAuthCollection = () => whitepaper_auth_collection;
-
-exports.externalMessagesCollection = () => external_messages_collection;
+exports.usersCollection = () => users_collection;

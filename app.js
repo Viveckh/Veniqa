@@ -8,6 +8,7 @@ import logger from 'morgan';
 // Router imports
 import indexRouter from './routes/index';
 import amazonRouter from './routes/amazon';
+import securityRouter from './routes/security';
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
+app.use('/security', securityRouter);
 app.use('/amazon', amazonRouter);
 
 // catch 404 and forward to error handler
