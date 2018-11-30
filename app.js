@@ -1,5 +1,5 @@
 // Standard Express and Node Server imports
-var createError = require('http-errors');
+import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
