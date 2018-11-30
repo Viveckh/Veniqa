@@ -1,6 +1,6 @@
 <template>
   <div id="main-page">
-      
+
       <div class="absolute-buttons">
         <b-button class="veniqa-button">Hottest Deals</b-button>
         <b-button class="veniqa-button">Christmas Deals</b-button>
@@ -22,7 +22,6 @@ export default {
 @import "../../assets/css/global.scss";
 
 $home-button-bg: rgba(199,203,210,0.8);
-$pitch-black: #202020;
 
 .veniqa-button{
   padding: 10px 20px;

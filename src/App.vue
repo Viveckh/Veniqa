@@ -1,13 +1,18 @@
 <template>
   <div id="app">
+    <header-menu/>
     <router-view/>
   </div>
 </template>
 
 <script>
+import HeaderMenu from '@/components/homepage/HeaderMenu.vue';
 
 export default {
   name: 'app',
+  components: {
+    HeaderMenu
+  }
 };
 </script>
 

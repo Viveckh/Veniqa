@@ -1,7 +1,8 @@
 <template>
   <div class="home">
+    
     <div class="main-screen">
-        <header-menu/>
+        
         <main-page/>
     </div>
 
@@ -11,13 +12,12 @@
 </template>
 
 <script>
-import HeaderMenu from '@/components/homepage/HeaderMenu.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 
 export default {
   name: 'home',
   components: {
-    HeaderMenu,
+    // HeaderMenu,
     MainPage,
   },
 };
