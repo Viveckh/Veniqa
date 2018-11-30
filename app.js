@@ -10,6 +10,9 @@ import indexRouter from './routes/index';
 import amazonRouter from './routes/amazon';
 import securityRouter from './routes/security';
 
+// Database connection imports
+import dbConnection from './database/dbConnection';
+
 var app = express();
 
 // view engine setup
