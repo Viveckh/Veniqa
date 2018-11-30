@@ -1,9 +1,9 @@
 import express from 'express';
 var router = express.Router();
 
-/* GET home page. */
+/* GET Amazon Endpoint. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Veniqa' });
+  res.render('index', { title: 'Veniqa Amazon' });
 });
 
 module.exports = router;

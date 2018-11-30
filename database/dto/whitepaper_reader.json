@@ -1,0 +1,10 @@
+{
+    "_id": 0,
+    "username" : 1,
+    "first_name" : 1,
+    "last_name" : 1,
+    "email": 1,
+    "nda_signed" : 1,
+    "nda_signed_on": 1,
+    "nda_form_image" : 1
+}

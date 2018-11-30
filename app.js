@@ -7,6 +7,7 @@ import logger from 'morgan';
 
 // Router imports
 import indexRouter from './routes/index';
+import amazonRouter from './routes/amazon';
 
 var app = express();
 
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // To Allow cross origin requests originating from selected origins
 app.use(function(req, res, next) {
-  var allowedOrigins = ['https://www.ngineerx.com', 'https://ngineerx.com', 'http://localhost:4200'];
+  var allowedOrigins = ['https://www.ngineerx.com', 'https://ngineerx.com', 'https://www.veniqa.com', 'https://veniqa.com', 'http://localhost:4200'];
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);
@@ -34,6 +35,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
+app.use('/amazon', amazonRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
