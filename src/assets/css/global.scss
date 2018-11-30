@@ -1,0 +1,46 @@
+$link-hover-color: #C99B80;
+$app-text-color: #2c3e50;
+
+
+.inline-list{
+  list-style-type: none;
+
+  li {
+    display: inline-block;
+    padding: 15px 20px;
+    margin-right: 5px !important;
+  }
+}
+
+.space{
+  height: 150px;
+}
+
+.list-link{
+  li {
+    cursor: pointer;
+  }
+  li:hover, a:hover{
+    color: $link-hover-color;
+    text-decoration: none;
+  }
+}
+
+a{
+  color: $app-text-color;
+  text-decoration: none;
+}
+
+
+
+.align-right{
+  text-align: right;
+}
+
+.align-left{
+  text-align: left;
+}
+
+.align-center{
+  text-align: center;
+}
