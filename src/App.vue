@@ -11,8 +11,8 @@ import HeaderMenu from '@/components/homepage/HeaderMenu.vue';
 export default {
   name: 'app',
   components: {
-    HeaderMenu
-  }
+    HeaderMenu,
+  },
 };
 </script>
 

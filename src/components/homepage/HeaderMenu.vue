@@ -28,10 +28,10 @@
 
 <script>
 export default {
-  name: "HeaderMenu",
+  name: 'HeaderMenu',
   data() {
     return {};
-  }
+  },
 };
 </script>
 

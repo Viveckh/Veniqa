@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-    
+
     <div class="main-screen">
-        
         <main-page/>
     </div>
 
