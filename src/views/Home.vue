@@ -23,10 +23,9 @@ export default {
 </script>
 
 <style >
-.home{
-  height: 100%;
-}
+
 .main-bg{
   background-image: url(./../assets/images/background.png);
+  height: 100vh;
 }
 </style>

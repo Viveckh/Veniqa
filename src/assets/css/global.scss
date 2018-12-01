@@ -75,6 +75,17 @@ a{
   }
 }
 
-.vendor-search-btn{
+.vendor-search-input{
   padding: 25px !important;
+}
+
+.dark-button{
+  border: 2px solid $white-shade !important;
+    background-color: $pitch-black;
+    color: white;
+}
+
+.low-side-padding{
+  padding-left: 5px !important;
+  padding-right: 5px !important;
 }

@@ -66,7 +66,7 @@ export default {
 .block {
   height: 250px;
   padding: 10px 0px;
-  margin: 10px 0px;
+  // margin: 10px 0px;
 
   line-height: 250px;
 

@@ -2,7 +2,6 @@
   <div id="app">
     <header-menu/>
     <router-view/>
-    <div class="space"></div>
     <footer-view/>
   </div>
 </template>
@@ -28,7 +27,7 @@ export default {
   text-align: center;
   margin:0px;
   color: #2c3e50;
-  height: 100%;
+  /* height: 100%; */
   font-size: 18px;
 }
 
