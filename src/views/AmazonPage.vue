@@ -10,41 +10,41 @@
       :data="searchResult"
     ></search-result-view>
     </div>
-    
+
   </div>
 </template>
 
 <script>
 import Amazon from '@/components/vendor-pages/amazon/Amazon.vue';
-import SearchResultView from '@/components/SearchResultView.vue'
+import SearchResultView from '@/components/SearchResultView.vue';
 import Axios from 'axios';
 
 export default {
   name: 'AmazonPage',
   components: {
     Amazon,
-    SearchResultView
+    SearchResultView,
   },
   data() {
     return {
       searchResult: [],
-    }
+    };
   },
 
   methods: {
     async searchForProduct(searchTerm) {
-      let {data} = await Axios.get('AmazonSearchResult.json');
-      
-      if(data){
+      const { data } = await Axios.get('AmazonSearchResult.json');
+
+      if (data) {
         this.searchResult.splice(0, this.searchResult.length);
         this.searchResult.push(...data);
 
-        this.$scrollTo("#searchResult", 1000, {
-          offset: -80
-        })
+        this.$scrollTo('#searchResult', 1000, {
+          offset: -80,
+        });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -15,19 +15,19 @@
     </div>
     </div>
 
-    
+
   </div>
 </template>
 
 <script>
 export default {
-  name: "SearchResultView",
+  name: 'SearchResultView',
   props: {
     data: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

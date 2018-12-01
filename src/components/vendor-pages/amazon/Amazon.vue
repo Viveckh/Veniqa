@@ -15,33 +15,33 @@
             ></b-form-input>
           </b-col>
           <b-col md="3" class="low-side-padding">
-            <b-button 
+            <b-button
               class="matching-size dark-button"
-              @click="searchForProduct()"  
+              @click="searchForProduct()"
             >Search</b-button>
           </b-col>
         </b-row>
       </div>
     </div>
 
-    
+
   </div>
 </template>
 
 <script>
 
 export default {
-  name: "Amazon",
+  name: 'Amazon',
   data() {
     return {
-      searchTerm: "",
+      searchTerm: '',
     };
   },
 
   methods: {
-    searchForProduct(){
+    searchForProduct() {
       this.$emit('searchClicked', this.searchTerm);
-    }
+    },
   },
 };
 </script>
