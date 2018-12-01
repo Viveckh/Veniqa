@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 
-    <div class="main-screen">
+    <div class="main-screen main-bg">
         <main-page/>
     </div>
 
@@ -23,14 +23,10 @@ export default {
 </script>
 
 <style >
-.home, .main-screen{
+.home{
   height: 100%;
 }
-.main-screen{
-  min-height: 100%;
+.main-bg{
   background-image: url(./../assets/images/background.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 </style>

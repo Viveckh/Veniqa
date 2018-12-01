@@ -1,6 +1,5 @@
 <template>
   <div id="main-page">
-
       <div class="absolute-buttons">
         <b-button class="veniqa-button">Hottest Deals</b-button>
         <b-button class="veniqa-button">Christmas Deals</b-button>

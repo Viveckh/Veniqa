@@ -9,7 +9,7 @@
       <b-collapse is-nav id="nav_collapse" class="collapsible-content">
         <b-navbar-nav>
           <b-nav-item class="veniqa-nav" href="#">Deals</b-nav-item>
-          <b-nav-item class="veniqa-nav" href="#">Amazon</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/amazon">Amazon</b-nav-item>
           <b-nav-item class="veniqa-nav" href="#">Macy's</b-nav-item>
           <b-nav-item class="veniqa-nav" href="#">Sephora</b-nav-item>
           <b-nav-item class="veniqa-nav" href="#">Michael Kors</b-nav-item>

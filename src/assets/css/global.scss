@@ -39,6 +39,13 @@ a{
   }
 }
 
+.main-screen{
+  min-height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .align-right{
   text-align: right;
 }
@@ -66,4 +73,8 @@ a{
     background-color: $pitch-black;
     color: white;
   }
+}
+
+.vendor-search-btn{
+  padding: 25px !important;
 }
