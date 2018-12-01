@@ -4,18 +4,19 @@
     <div class=" amazon-page-bg">
       <amazon/>
     </div>
-    
+
   </div>
 </template>
 
 <script>
-import Amazon from '@/components/vendor-pages/Amazon.vue'
+import Amazon from '@/components/vendor-pages/Amazon.vue';
+
 export default {
   name: 'AmazonPage',
-  components:{
-    Amazon
-  }
-}
+  components: {
+    Amazon,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -32,4 +33,3 @@ export default {
 }
 
 </style>
-

@@ -23,7 +23,7 @@
         </b-row>
       </div>
 
-      
+
     </div>
     <div class="block light">
       <div class="main-block">
