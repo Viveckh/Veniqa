@@ -2,16 +2,19 @@
   <div id="app">
     <header-menu/>
     <router-view/>
+    <footer-view/>
   </div>
 </template>
 
 <script>
-import HeaderMenu from '@/components/homepage/HeaderMenu.vue';
+import HeaderMenu from '@/components/HeaderMenu.vue';
+import FooterView from '@/components/Footer.vue';
 
 export default {
   name: 'app',
   components: {
     HeaderMenu,
+    FooterView,
   },
 };
 </script>
@@ -24,7 +27,7 @@ export default {
   text-align: center;
   margin:0px;
   color: #2c3e50;
-  height: 100%;
+  /* height: 100%; */
   font-size: 18px;
 }
 
