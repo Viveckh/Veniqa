@@ -1,13 +1,19 @@
-import UserModel from '../database/models/user'
+import bCrypt from 'bcrypt-nodejs';
+import UserModel from '../database/models/user';
 
 /**
- * This service performs security related tasks, like verifying user creds from db
+ * This service performs security related tasks, like signup
  */
 export default {
     async signup(userObj) {
+        // Creating a hash by taking the password
+        var createHash = function(password){
+            return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+        }
+
         let user = new UserModel({
             email: userObj.email,
-            password: userObj.password,
+            password: createHash(userObj.password),
             name: userObj.name 
         });
 
@@ -21,9 +27,5 @@ export default {
                         return err;
                     })
 
-    },
-
-    async login(loginObj) {
-        
     }
 }

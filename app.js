@@ -13,6 +13,20 @@ var RedisStore = require('connect-redis')(session);
 import sessionConfig from './properties/session';
 import redisConfig from './properties/redis';
 
+// Router imports
+import indexRouter from './routes/index';
+import amazonRouter from './routes/amazon';
+import securityRouter from './routes/security';
+
+// Database connection imports, importing initializes it
+import dbConnection from './database/dbConnection';
+
+// Imports for authentication
+import passport from 'passport';
+import passportInit from './initializers/passportInit';
+
+/************************************************************* */
+
 // Redis client
 var redisClient = redis.createClient({
   host: redisConfig.host, 
@@ -25,13 +39,7 @@ var redisClient = redis.createClient({
   }
 });
 
-// Router imports
-import indexRouter from './routes/index';
-import amazonRouter from './routes/amazon';
-import securityRouter from './routes/security';
-
-// Database connection imports
-import dbConnection from './database/dbConnection';
+/************************************************************* */
 
 var app = express();
 
@@ -44,6 +52,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/************************************************************* */
 
 // Configure sessions
 app.use(session({
@@ -66,6 +76,15 @@ app.use(session({
     // secure: true, // Set this to true only after veniqa has a ssl enabled site
   }
 }))
+
+/************************************************************* */
+// Configure authentication
+
+passportInit.initializePassport(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+/************************************************************* */
 
 // To Allow cross origin requests originating from selected origins
 app.use(function(req, res, next) {
