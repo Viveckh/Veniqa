@@ -21,5 +21,9 @@ export default {
                         return err;
                     })
 
+    },
+
+    async login(loginObj) {
+        
     }
 }

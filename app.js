@@ -5,6 +5,26 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+// Imports for session management
+import uuidv4 from 'uuid/v4';
+import session from 'express-session';
+import redis from 'redis';
+var RedisStore = require('connect-redis')(session);
+import sessionConfig from './properties/session';
+import redisConfig from './properties/redis';
+
+// Redis client
+var redisClient = redis.createClient({
+  host: redisConfig.host, 
+  port: redisConfig.port, 
+  password: redisConfig.password, 
+  tls: {
+    host: redisConfig.host,
+    port: redisConfig.port,
+    servername: redisConfig.host
+  }
+});
+
 // Router imports
 import indexRouter from './routes/index';
 import amazonRouter from './routes/amazon';
@@ -24,6 +44,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Configure sessions
+app.use(session({
+  genid: (req) => {
+    console.log("[SESSION]: Generating new session id: ", req.sessionID);
+    return uuidv4() // Use UUIDs for session IDs
+  },
+  store: new RedisStore({
+    host: redisConfig.host, 
+    port: redisConfig.port, 
+    pass: redisConfig.password, 
+    client: redisClient
+  }),
+  secret: sessionConfig.secretKey,
+  resave: false,  // setting true forces a resave in store even if session not changed
+  rolling: true,  // setting true updates expiration with maxAge after every user request
+  saveUninitialized: true,  // setting true saves even unmodified sessions
+  cookie: {
+    maxAge: sessionConfig.maxAge
+    // secure: true, // Set this to true only after veniqa has a ssl enabled site
+  }
+}))
 
 // To Allow cross origin requests originating from selected origins
 app.use(function(req, res, next) {
