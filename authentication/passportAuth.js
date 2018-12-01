@@ -61,8 +61,8 @@ export default {
 
             })
         );
-
         
+
         passport.use('signup', new LocalStrategy({
                 usernameField: 'email',
                 passwordField: 'password',
@@ -118,6 +118,17 @@ export default {
         // Generates hash using bCrypt
         var createHash = function(password){
             return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+        }
+    },
+
+    isAuthenticated(req, res, done){ 
+        // Passport adds the isAuthenticated function in req body when successfully authenticated, removes when session expired or user logs out
+        if (req.isAuthenticated()) {
+            console.log("logged in")
+            done()
+        }
+        else {
+            return res.status(401).send('only for logged in users')
         }
     }
 }

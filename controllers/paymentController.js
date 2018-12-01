@@ -1,5 +1,5 @@
 export default {
     checkout(req, res, next) {
-        return res.status(200).send("You should only be here if authenticated")
+        return res.status(200).send("If you see this, it means you are a logged in user")
     }
 }

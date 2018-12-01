@@ -27,7 +27,7 @@ import dbConnection from './database/dbConnection';
 
 // Imports for authentication
 import passport from 'passport';
-import passportInit from './initializers/passportInit';
+import passportAuth from './authentication/passportAuth';
 
 /************************************************************* */
 
@@ -84,7 +84,7 @@ app.use(session({
 /************************************************************* */
 // Configure authentication
 
-passportInit.initializePassport(passport);
+passportAuth.initializePassport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 

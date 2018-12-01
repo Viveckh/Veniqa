@@ -1,6 +1,6 @@
 import express from 'express';
 import paymentController from '../controllers/paymentController';
-import AuthClass from '../common/authenticationValidator'
+import passportAuth from '../authentication/passportAuth'
 
 var router = express.Router();
 
@@ -26,6 +26,6 @@ router.get('/', function(req, res, next) {
 //   return res.status(401).send('only for logged in users')
 // });
 
-router.get('/checkout', AuthClass.isAuthenticated , paymentController.checkout );
+router.get('/checkout', passportAuth.isAuthenticated, paymentController.checkout );
 
 module.exports = router;
