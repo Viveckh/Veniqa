@@ -5,7 +5,7 @@ import UserModel from '../database/models/user';
  * This service performs security related tasks, like signup
  */
 export default {
-    async signup(userObj) {
+    signup(userObj) {
         // Creating a hash by taking the password
         var createHash = function(password){
             return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);

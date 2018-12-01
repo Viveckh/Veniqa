@@ -5,6 +5,10 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+// Babel imports, even though they aren't directly referenced, they need to be here
+import babelCore from 'babel-core/register';
+import babelPolyfill from 'babel-polyfill';
+
 // Imports for session management
 import uuidv4 from 'uuid/v4';
 import session from 'express-session';
