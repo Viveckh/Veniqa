@@ -7,7 +7,6 @@
         <b-button class="veniqa-button">How Veniqa Works
           <font-awesome-icon icon="play" />
         </b-button>
-
       </div>
     </div>
 </template>
@@ -21,18 +20,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/css/global.scss";
 
-$home-button-bg: rgba(199,203,210,0.8);
-
-.veniqa-button{
-  padding: 10px 20px;
-  margin: 5px 10px;
-  font-size: larger;
-  background-color: $home-button-bg;
-  color: $pitch-black;
-  font-weight: bold;
-  border: 2px solid $pitch-black;
-  border-radius: 0;
-}
 
 .veniqa-button:hover{
   background-color: $pitch-black;

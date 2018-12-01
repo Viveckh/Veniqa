@@ -2,16 +2,20 @@
   <div id="app">
     <header-menu/>
     <router-view/>
+    <div class="space"></div>
+    <footer-view/>
   </div>
 </template>
 
 <script>
-import HeaderMenu from '@/components/homepage/HeaderMenu.vue';
+import HeaderMenu from '@/components/HeaderMenu.vue';
+import FooterView from '@/components/Footer.vue';
 
 export default {
   name: 'app',
   components: {
     HeaderMenu,
+    FooterView,
   },
 };
 </script>

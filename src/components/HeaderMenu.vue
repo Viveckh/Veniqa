@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/css/global.scss";
+@import "../assets/css/global.scss";
 
 .veniqa-nav {
   padding: 5px 10px;

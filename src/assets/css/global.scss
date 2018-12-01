@@ -2,6 +2,8 @@ $link-hover-color: #C99B80;
 $app-text-color: #2c3e50;
 $pitch-black: #202428;
 $white-shade: rgba(255, 255, 255, 0.5);
+$home-button-bg: rgba(199,203,210,0.8);
+
 
 .inline-list{
   list-style-type: none;
@@ -30,9 +32,12 @@ $white-shade: rgba(255, 255, 255, 0.5);
 a{
   color: $app-text-color;
   text-decoration: none;
+  cursor: pointer;
+
+  &:hover{
+    color: lightness($color: $app-text-color) !important;
+  }
 }
-
-
 
 .align-right{
   text-align: right;
@@ -44,4 +49,21 @@ a{
 
 .align-center{
   text-align: center;
+}
+
+.veniqa-button{
+  padding: 10px 20px;
+  margin: 5px 10px;
+  font-size: larger;
+  background-color: $home-button-bg;
+  color: $pitch-black;
+  font-weight: bold;
+  border: 2px solid $pitch-black;
+  border-radius: 0;
+
+  &.dark{
+    border: 2px solid $white-shade !important;
+    background-color: $pitch-black;
+    color: white;
+  }
 }

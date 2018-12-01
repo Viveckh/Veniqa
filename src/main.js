@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue';
 import '@/assets/css/colors.scss';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -28,4 +29,3 @@ new Vue({
   render: h => h(App),
 }).$mount('#app');
 
-/* eslint-disable */
