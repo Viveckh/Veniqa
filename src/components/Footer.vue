@@ -28,17 +28,17 @@
     <div class="block light">
       <div class="main-block">
           <b-row>
-          <b-col class="align-left">
+          <b-col class="align-left center-sm" md="4">
             <a>Privary Policy</a>
             <br>
             <a>Terms and Condition</a>
           </b-col>
-          <b-col>
-            @2018 Veniqa
+          <b-col md="4">
+            <strong>@2018 Veniqa
             <br>
-            An Ngineerx Subsidiary
+            An Ngineerx Subsidiary</strong>
           </b-col>
-          <b-col class="align-right">
+          <b-col class="align-right center-sm" md="4">
             <a>Facebook</a>
             <br>
             <a>Instagram</a>
@@ -81,6 +81,7 @@ export default {
     line-height: normal;
     .center-sm{
       text-align: center;
+      margin: 15px 0px;
     }
 
     padding-top: 50px;
