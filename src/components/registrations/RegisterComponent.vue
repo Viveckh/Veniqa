@@ -80,9 +80,8 @@
 
     <div class="modal-bottom"></div>
     <b-btn class="register-button" @click="registerClicked()">Register</b-btn>
-    
+
     <p class="register-class" @click="loginNavigation()">Already a User? Go back to login.</p>
-    <div class="modal-bottom"></div>
   </div>
 </template>
 
@@ -90,33 +89,33 @@
 export default {
   name: 'RegisterComponent',
   data() {
-    return{
+    return {
       username: '',
       password: '',
       confirmPassword: '',
       phone: '',
       name: '',
-    }
+    };
   },
 
   methods: {
     registerClicked() {
-      if (this.usernameState && this.passwordState && this.confirmPasswordState && this.phoneState && this.nameState){
+      if (this.usernameState && this.passwordState && this.confirmPasswordState && this.phoneState && this.nameState) {
         this.$emit('register', {
-          username: this.username,
+          email: this.username,
           password: this.password,
           phone: this.phone,
-          name: this.name
-        })
+          name: this.name,
+        });
       }
     },
 
     loginNavigation() {
-      this.$emit('loginNav')
+      this.$emit('loginNav');
     },
 
     validEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
   },
@@ -144,9 +143,9 @@ export default {
     nameState() {
       if (this.name.length == 0) return null;
       return this.name.length > 0;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -160,4 +159,3 @@ export default {
   cursor: pointer;
 }
 </style>
-

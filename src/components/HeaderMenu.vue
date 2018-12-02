@@ -20,7 +20,8 @@
           <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
           <b-nav-item class="veniqa-nav">
-            <span v-b-modal.registration-modal>Login</span>
+            <span v-if="!userLoggedIn" v-b-modal.registration-modal>Login</span>
+            <!-- <span v-else>{{nameOfUser}} </span> -->
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -35,24 +36,45 @@
       :ok-disabled="true"
       :hide-header="true"
       :modal-class="registrationClass"
+      ref="registrationModal"
     >
-      <user-account-modal></user-account-modal>
+      <user-account-modal @loginSuccess="loggedIn()"></user-account-modal>
     </b-modal>
   </div>
 </template>
 
 <script>
-import UserAccountModal from "@/components/UserAccountModal.vue";
+import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
 
 export default {
-  name: "HeaderMenu",
+  name: 'HeaderMenu',
   components: {
-    UserAccountModal
+    UserAccountModal,
+  },
+
+  created() {
+    if (!localStorage.getItem('email') || localStorage.getItem('email') == 'undefined'){
+      this.userLoggedIn = false;
+    }
+    else  this.userLoggedIn= true;
   },
   data() {
     return {
-      registrationClass: ["registration-mode"]
+      registrationClass: ['registration-mode'],
+      userLoggedIn: false
     };
+  },
+
+  methods: {
+    loggedIn() {
+      this.$refs.registrationModal.hide();
+    },
+  },
+
+  computed: {
+    nameOfUser(){
+      return this.$store.getters['authStore/getFirstName']
+    }
   }
 };
 </script>

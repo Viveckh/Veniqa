@@ -35,13 +35,12 @@
       <b-form-invalid-feedback id="passwordFeedback">Enter at least 6 characters.</b-form-invalid-feedback>
     </b-form-group>
 
-    <p class="forget-password" @click="forgetPassword()">Forget Password?</p>
+    <p class="forget-password" @click="forgetPassword()">Forgot Password?</p>
 
     <b-btn class="login-button" @click="loginClicked()">Login</b-btn>
 
     <p class="register-class" @click="register()">New User? Register here.</p>
 
-    <div class="modal-bottom"></div>
   </div>
 </template>
 
@@ -50,30 +49,30 @@ export default {
   name: 'LoginComponent',
   data() {
     return {
-      username: "",
-      password: ""
+      username: '',
+      password: '',
     };
   },
   methods: {
     validEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
 
     forgetPassword() {},
 
-    loginClicked(){
-      if (this.usernameState && this.passwordState){
+    loginClicked() {
+      if (this.usernameState && this.passwordState) {
         this.$emit('login', {
-          username: this.username,
+          email: this.username,
           password: this.password,
-        })
+        });
       }
     },
 
     register() {
-      this.$emit('register')
-    }
+      this.$emit('register');
+    },
   },
   computed: {
     usernameState() {
@@ -84,8 +83,8 @@ export default {
     passwordState() {
       if (this.password.length == 0) return null;
       return this.password.length > 6;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -102,7 +101,7 @@ export default {
   .user-icon {
     font-size: 100px;
     margin-bottom: 20px;
-    
+
   }
   // background: -webkit-linear-gradient( #136a8a, #267871);
   // -webkit-background-clip: text;

@@ -5,38 +5,51 @@
     </div>
     <div v-else>
       <register-component @register="register" @loginNav="navigateToLogin"></register-component>
-
     </div>
+    <div class="modal-bottom"></div>
+
   </div>
 </template>
 
 <script>
 import LoginComponent from '@/components/registrations/LoginComponent';
 import RegisterComponent from '@/components/registrations/RegisterComponent';
+import AuthService from '@/services/auth.js'
 
 export default {
-  name: "UserAccountModal",
+  name: 'UserAccountModal',
   components: {
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   },
   data() {
     return {
-      showLogin: true
-    }
+      showLogin: true,
+    };
   },
 
   methods: {
-    login({username, password}){
-      console.log("Username", username);
-      console.log("Password", password)
+    async login(userInfo) {
+      let res= await this.$store.dispatch('authStore/login', userInfo);
+
+      if(res.status && res.status == 200){
+        this.$emit('loginSuccess');
+      }
+      else {
+        
+      }
     },
 
-    register({username, password, phone}){
-      console.log("Register with")
-      console.log("Username", username);
-      console.log("Password", password)
-      console.log("Phone", phone)
+    async register(userInfo) {
+      let res = await this.$store.dispatch('authStore/registerUser', userInfo);
+
+      if(res.status == 200){
+        this.$emit('loginSuccess');
+      }
+      else{
+
+      }
+
     },
 
     navigateToRegister() {
@@ -45,9 +58,9 @@ export default {
 
     navigateToLogin() {
       this.showLogin = true;
-    }
-  }
-  
+    },
+  },
+
 };
 </script>
 
