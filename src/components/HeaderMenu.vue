@@ -21,7 +21,7 @@
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
           <b-nav-item class="veniqa-nav">
             <span v-if="!userLoggedIn" v-b-modal.registration-modal>Login</span>
-            <!-- <span v-else>{{nameOfUser}} </span> -->
+            <span v-else>{{nameOfUser}}</span>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -44,37 +44,41 @@
 </template>
 
 <script>
-import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
+import UserAccountModal from "@/components/registrations/UserAccountModal.vue";
 
 export default {
-  name: 'HeaderMenu',
+  name: "HeaderMenu",
   components: {
-    UserAccountModal,
+    UserAccountModal
   },
 
   created() {
-    if (!localStorage.getItem('email') || localStorage.getItem('email') == 'undefined') {
+    let email = localStorage.getItem("email");
+    if (!email || email == "undefined") {
       this.userLoggedIn = false;
-    } else this.userLoggedIn = true;
+    } else {
+      this.$store.commit("authStore/setEmail", email);
+      this.userLoggedIn = true;
+    }
   },
   data() {
     return {
-      registrationClass: ['registration-mode'],
-      userLoggedIn: false,
+      registrationClass: ["registration-mode"],
+      userLoggedIn: false
     };
   },
 
   methods: {
     loggedIn() {
       this.$refs.registrationModal.hide();
-    },
+    }
   },
 
   computed: {
     nameOfUser() {
-      return this.$store.getters['authStore/getFirstName'];
-    },
-  },
+      return this.$store.getters["authStore/getFirstName"];
+    }
+  }
 };
 </script>
 
@@ -91,14 +95,13 @@ export default {
     border: 0px;
     padding: 0 2em;
   }
-
 }
 
-.modal-backdrop{
-    background-image: linear-gradient(#136a8a, #267871) !important;
-  }
+.modal-backdrop {
+  background-image: linear-gradient(#136a8a, #267871) !important;
+}
 
-.modal-backdrop.show{
+.modal-backdrop.show {
   opacity: 0.7 !important;
 }
 

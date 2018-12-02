@@ -66,7 +66,8 @@ export default {
     },
 
     getFirstName(state) {
-      return state.name.split(' ')[0];
+      // return state.name.split(' ')[0];
+      return state.email.split('@')[0];
     },
   },
 };
