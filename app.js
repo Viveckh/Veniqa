@@ -21,6 +21,7 @@ import redisConfig from './properties/redis';
 import indexRouter from './routes/index';
 import amazonRouter from './routes/amazon';
 import securityRouter from './routes/security';
+import catalogRouter from './routes/catalog';
 
 // Database connection imports, importing initializes it
 import dbConnection from './database/dbConnection';
@@ -106,6 +107,7 @@ app.use(function(req, res, next) {
 app.use('/', indexRouter);
 app.use('/security', securityRouter);
 app.use('/amazon', amazonRouter);
+app.use('/catalog', catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
