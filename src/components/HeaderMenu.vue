@@ -20,7 +20,7 @@
           <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
           <b-nav-item class="veniqa-nav">
-            <span v-if="!userLoggedIn" v-b-modal.registration-modal>Login</span>
+            <span v-if="!userSessionActive" v-b-modal.registration-modal>Login</span>
             <span v-else>{{nameOfUser}}</span>
           </b-nav-item>
         </b-navbar-nav>
@@ -46,21 +46,13 @@
 <script>
 import UserAccountModal from "@/components/registrations/UserAccountModal.vue";
 
+
 export default {
   name: "HeaderMenu",
   components: {
     UserAccountModal
   },
 
-  created() {
-    let email = localStorage.getItem("email");
-    if (!email || email == "undefined") {
-      this.userLoggedIn = false;
-    } else {
-      this.$store.commit("authStore/setEmail", email);
-      this.userLoggedIn = true;
-    }
-  },
   data() {
     return {
       registrationClass: ["registration-mode"],
@@ -77,6 +69,10 @@ export default {
   computed: {
     nameOfUser() {
       return this.$store.getters["authStore/getFirstName"];
+    },
+
+    userSessionActive() {
+      return this.$store.getters['authStore/isSessionActive'];
     }
   }
 };

@@ -1,5 +1,6 @@
 export default {
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://veniqa.azurewebsites.net',
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
+  isSessionActive: '/security/isLoggedIn'
 };

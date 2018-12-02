@@ -10,12 +10,24 @@
 import HeaderMenu from '@/components/HeaderMenu.vue';
 import FooterView from '@/components/Footer.vue';
 
+import axios from 'axios'
+
 export default {
   name: 'app',
   components: {
     HeaderMenu,
     FooterView,
   },
+
+  async created() {
+    await this.$store.dispatch('authStore/initiateAppSession');
+
+    // axios({
+    //   method: 'get',
+    //   url: 'https://veniqa.azurewebsites.net/checkout',
+    //   withCredentials: true
+    // })
+  }
 };
 </script>
 
