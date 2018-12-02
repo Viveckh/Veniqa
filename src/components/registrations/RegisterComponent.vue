@@ -82,6 +82,8 @@
     <b-btn class="register-button" @click="registerClicked()">Register</b-btn>
 
     <p class="register-class" @click="loginNavigation()">Already a User? Go back to login.</p>
+    <div class="modal-bottom"></div>
+
   </div>
 </template>
 

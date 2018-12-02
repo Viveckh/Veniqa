@@ -15,20 +15,24 @@ export default {
     }, payload) {
       if (!payload) return null;
 
-      const res = await axios({
-        method: 'post',
-        url: ProxyUrls.baseUrl + ProxyUrls.registerUrl,
-        data: payload,
-        withCredentials: true,
-      });
+      try {
+        const res = await axios({
+          method: 'post',
+          url: ProxyUrls.baseUrl + ProxyUrls.registerUrl,
+          data: payload,
+          withCredentials: true,
+        });
 
-      if (res && res.data) {
-        commit('setEmail', res.data.email);
-        commit('setName', res.data.name);
-        commit('setSessionActive', true);
+        if (res && res.data) {
+          commit('setEmail', res.data.email);
+          commit('setName', res.data.name);
+          commit('setSessionActive', true);
+        }
+
+        return res;
+      } catch (err) {
+        throw new Error(err);
       }
-
-      return res;
     },
 
     async login({
@@ -37,20 +41,23 @@ export default {
     }, payload) {
       if (!payload) return null;
 
-      const res = await axios({
-        method: 'post',
-        url: ProxyUrls.baseUrl + ProxyUrls.loginUrl,
-        data: payload,
-        withCredentials: true,
-      });
+      try {
+        const res = await axios({
+          method: 'post',
+          url: ProxyUrls.baseUrl + ProxyUrls.loginUrl,
+          data: payload,
+          withCredentials: true,
+        });
 
-      if (res && res.data) {
-        commit('setEmail', res.data.email);
-        commit('setName', res.data.name);
-        commit('setSessionActive', true);
+        if (res && res.data) {
+          commit('setEmail', res.data.email);
+          commit('setName', res.data.name);
+          commit('setSessionActive', true);
+        }
+        return res;
+      } catch (err) {
+        throw new Error(err);
       }
-
-      return res;
     },
 
     async initiateAppSession({

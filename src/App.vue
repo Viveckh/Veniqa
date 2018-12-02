@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notifications group="all" width="100%" position="top center"/>
     <header-menu/>
     <router-view/>
     <footer-view/>
@@ -21,12 +22,6 @@ export default {
 
   async created() {
     await this.$store.dispatch('authStore/initiateAppSession');
-
-    // axios({
-    //   method: 'get',
-    //   url: 'https://veniqa.azurewebsites.net/checkout',
-    //   withCredentials: true
-    // })
   },
 };
 </script>

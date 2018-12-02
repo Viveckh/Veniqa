@@ -6,8 +6,6 @@
     <div v-else>
       <register-component @register="register" @loginNav="navigateToLogin"></register-component>
     </div>
-    <div class="modal-bottom"></div>
-
   </div>
 </template>
 
@@ -26,33 +24,50 @@ export default {
   data() {
     return {
       showLogin: true,
+      showFailure: false,
     };
   },
 
   methods: {
     async login(userInfo) {
-      const res = await this.$store.dispatch('authStore/login', userInfo);
+      try {
+        const res = await this.$store.dispatch('authStore/login', userInfo);
 
-      if (res.status && res.status == 200) {
         this.$emit('loginSuccess');
 
-        axios({
-          method: 'get',
-          url: 'https://veniqa.azurewebsites.net/checkout',
-          withCredentials: true,
+        this.$notify({
+          group: 'all',
+          type: 'success',
+          text: 'Successfully logged in',
         });
-      } else {
-
+      } catch (err) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'User credentials are not correct. Please try again',
+        });
       }
     },
 
     async register(userInfo) {
-      const res = await this.$store.dispatch('authStore/registerUser', userInfo);
+      try {
+        const res = await this.$store.dispatch(
+          'authStore/registerUser',
+          userInfo,
+        );
 
-      if (res.status == 200) {
         this.$emit('loginSuccess');
-      } else {
-
+        this.$notify({
+          group: 'all',
+          type: 'success',
+          text: 'User successfully created',
+        });
+      } catch (err) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'User could not be created at the moment. Please check if you already have an account.',
+        });
       }
     },
 
@@ -64,10 +79,8 @@ export default {
       this.showLogin = true;
     },
   },
-
 };
 </script>
 
 <style lang="scss">
-
 </style>
