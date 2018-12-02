@@ -53,15 +53,14 @@ export default {
   },
 
   created() {
-    if (!localStorage.getItem('email') || localStorage.getItem('email') == 'undefined'){
+    if (!localStorage.getItem('email') || localStorage.getItem('email') == 'undefined') {
       this.userLoggedIn = false;
-    }
-    else  this.userLoggedIn= true;
+    } else this.userLoggedIn = true;
   },
   data() {
     return {
       registrationClass: ['registration-mode'],
-      userLoggedIn: false
+      userLoggedIn: false,
     };
   },
 
@@ -72,10 +71,10 @@ export default {
   },
 
   computed: {
-    nameOfUser(){
-      return this.$store.getters['authStore/getFirstName']
-    }
-  }
+    nameOfUser() {
+      return this.$store.getters['authStore/getFirstName'];
+    },
+  },
 };
 </script>
 

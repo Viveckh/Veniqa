@@ -14,7 +14,7 @@
 <script>
 import LoginComponent from '@/components/registrations/LoginComponent';
 import RegisterComponent from '@/components/registrations/RegisterComponent';
-import AuthService from '@/services/auth.js'
+import AuthService from '@/services/auth.js';
 
 export default {
   name: 'UserAccountModal',
@@ -30,26 +30,23 @@ export default {
 
   methods: {
     async login(userInfo) {
-      let res= await this.$store.dispatch('authStore/login', userInfo);
+      const res = await this.$store.dispatch('authStore/login', userInfo);
 
-      if(res.status && res.status == 200){
+      if (res.status && res.status == 200) {
         this.$emit('loginSuccess');
-      }
-      else {
-        
+      } else {
+
       }
     },
 
     async register(userInfo) {
-      let res = await this.$store.dispatch('authStore/registerUser', userInfo);
+      const res = await this.$store.dispatch('authStore/registerUser', userInfo);
 
-      if(res.status == 200){
+      if (res.status == 200) {
         this.$emit('loginSuccess');
-      }
-      else{
+      } else {
 
       }
-
     },
 
     navigateToRegister() {
