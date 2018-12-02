@@ -105,6 +105,10 @@ export default {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+
+  .navbar-brand{
+    margin-right: 0px;
+  }
 }
 
 .collapsible-content {
@@ -120,6 +124,7 @@ export default {
     top: 0;
     text-align: center;
     padding: 0;
+    margin-right: 0;
   }
 }
 
