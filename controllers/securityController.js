@@ -14,20 +14,5 @@ export default {
             console.log("[ERROR]: User signup failed => ", err);
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
-    },
-
-    async login(req, res, next) {
-        try {
-            response = await securityService.login(req.body);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
-        }
-        catch(err) {
-            console.log("[ERROR]: User login failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
-        }
-
     }
 }

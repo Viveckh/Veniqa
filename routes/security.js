@@ -17,10 +17,17 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
     req.session.regenerate((err) => {
         req.session.passport = temp;
         req.session.save((err) => {
-            res.status(200).send("Login successful");
+            res.status(200).send({
+                email: req.user.email,
+                name: req.user.name 
+            });
         })
     })
     
+})
+
+router.get('/isLoggedIn', (req, res, next) => {
+    return res.status(200).send(req.isAuthenticated())
 })
 
 router.get('/logout', (req, res, next) => {
