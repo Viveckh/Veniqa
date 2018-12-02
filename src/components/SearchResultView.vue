@@ -9,7 +9,7 @@
         >
           <h4>{{product.name}}</h4>
           <hr>
-          <h5>{{product.currency}} {{product.price}} </h5>
+          <h5>{{product.price}} </h5>
           <b-button variant="warning">Add to Cart</b-button>
         </div>
     </div>
