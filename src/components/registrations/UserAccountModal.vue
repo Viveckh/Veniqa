@@ -15,7 +15,7 @@
 import LoginComponent from '@/components/registrations/LoginComponent';
 import RegisterComponent from '@/components/registrations/RegisterComponent';
 
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: 'UserAccountModal',
@@ -39,8 +39,8 @@ export default {
         axios({
           method: 'get',
           url: 'https://veniqa.azurewebsites.net/checkout',
-          withCredentials: true
-        })
+          withCredentials: true,
+        });
       } else {
 
       }

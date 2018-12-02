@@ -11,7 +11,7 @@ export default {
   actions: {
     async registerUser({
       state,
-      commit
+      commit,
     }, payload) {
       if (!payload) return null;
 
@@ -19,13 +19,13 @@ export default {
         method: 'post',
         url: ProxyUrls.baseUrl + ProxyUrls.registerUrl,
         data: payload,
-        withCredentials: true
+        withCredentials: true,
       });
 
       if (res && res.data) {
         commit('setEmail', res.data.email);
         commit('setName', res.data.name);
-        commit('setSessionActive', true)
+        commit('setSessionActive', true);
       }
 
       return res;
@@ -33,7 +33,7 @@ export default {
 
     async login({
       state,
-      commit
+      commit,
     }, payload) {
       if (!payload) return null;
 
@@ -41,13 +41,13 @@ export default {
         method: 'post',
         url: ProxyUrls.baseUrl + ProxyUrls.loginUrl,
         data: payload,
-        withCredentials: true
+        withCredentials: true,
       });
 
       if (res && res.data) {
         commit('setEmail', res.data.email);
         commit('setName', res.data.name);
-        commit('setSessionActive', true)
+        commit('setSessionActive', true);
       }
 
       return res;
@@ -55,21 +55,21 @@ export default {
 
     async initiateAppSession({
       state,
-      commit
+      commit,
     }) {
       const res = await axios({
         method: 'get',
         url: ProxyUrls.baseUrl + ProxyUrls.isSessionActive,
-        withCredentials: true
-      })
+        withCredentials: true,
+      });
       if (res && res.data == true) {
         commit('setEmail', localStorage.getItem('email'));
         commit('setName', localStorage.getItem('name'));
-        commit('setSessionActive', true)
+        commit('setSessionActive', true);
       } else {
-        commit('setSessionActive', false)
+        commit('setSessionActive', false);
       }
-    }
+    },
   },
   mutations: {
     setEmail(state, email) {
@@ -88,7 +88,7 @@ export default {
         localStorage.removeItem('email');
         localStorage.removeItem('name');
       }
-    }
+    },
   },
   getters: {
     getName(state) {
@@ -105,6 +105,6 @@ export default {
 
     isSessionActive(state) {
       return state.isSessionActive;
-    }
+    },
   },
 };

@@ -44,37 +44,37 @@
 </template>
 
 <script>
-import UserAccountModal from "@/components/registrations/UserAccountModal.vue";
+import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
 
 
 export default {
-  name: "HeaderMenu",
+  name: 'HeaderMenu',
   components: {
-    UserAccountModal
+    UserAccountModal,
   },
 
   data() {
     return {
-      registrationClass: ["registration-mode"],
-      userLoggedIn: false
+      registrationClass: ['registration-mode'],
+      userLoggedIn: false,
     };
   },
 
   methods: {
     loggedIn() {
       this.$refs.registrationModal.hide();
-    }
+    },
   },
 
   computed: {
     nameOfUser() {
-      return this.$store.getters["authStore/getFirstName"];
+      return this.$store.getters['authStore/getFirstName'];
     },
 
     userSessionActive() {
       return this.$store.getters['authStore/isSessionActive'];
-    }
-  }
+    },
+  },
 };
 </script>
 
