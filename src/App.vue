@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notifications group="all" width="100%" position="top center"/>
     <header-menu/>
     <router-view/>
     <footer-view/>
@@ -10,11 +11,17 @@
 import HeaderMenu from '@/components/HeaderMenu.vue';
 import FooterView from '@/components/Footer.vue';
 
+import axios from 'axios';
+
 export default {
   name: 'app',
   components: {
     HeaderMenu,
     FooterView,
+  },
+
+  async created() {
+    await this.$store.dispatch('authStore/initiateAppSession');
   },
 };
 </script>

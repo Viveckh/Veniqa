@@ -14,9 +14,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import '@/assets/css/global.scss';
-import VueScrollTo from 'vue-scrollto';
+import '@/assets/css/overrides.scss';
 
-Vue.use(VueScrollTo)
+import VueScrollTo from 'vue-scrollto';
+import Notifications from 'vue-notification'
+
+// Vue.use(VueScrollTo)
+Vue.use(Notifications)
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {

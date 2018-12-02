@@ -6,54 +6,95 @@ export default {
   state: {
     email: '',
     name: '',
+    isSessionActive: false,
   },
   actions: {
-    async registerUser({ state, commit }, payload) {
+    async registerUser({
+      state,
+      commit,
+    }, payload) {
       if (!payload) return null;
 
-      const res = await axios({
-        method: 'post',
-        url: ProxyUrls.baseUrl + ProxyUrls.registerUrl,
-        data: payload,
-      });
+      try {
+        const res = await axios({
+          method: 'post',
+          url: ProxyUrls.baseUrl + ProxyUrls.registerUrl,
+          data: payload,
+          withCredentials: true,
+        });
 
-      if (res && res.data) {
-        commit('setEmail', res.data.email);
-        commit('setName', res.data.name);
-        localStorage.setItem('email', res.data.email);
-        localStorage.setItem('name', res.data.name);
+        if (res && res.data) {
+          commit('setEmail', res.data.email);
+          commit('setName', res.data.name);
+          commit('setSessionActive', true);
+        }
+
+        return res;
+      } catch (err) {
+        throw new Error(err);
       }
-
-      return res;
     },
 
-    async login({ state, commit }, payload) {
+    async login({
+      state,
+      commit,
+    }, payload) {
       if (!payload) return null;
 
-      const res = await axios({
-        method: 'post',
-        url: ProxyUrls.baseUrl + ProxyUrls.loginUrl,
-        data: payload,
-      });
+      try {
+        const res = await axios({
+          method: 'post',
+          url: ProxyUrls.baseUrl + ProxyUrls.loginUrl,
+          data: payload,
+          withCredentials: true,
+        });
 
-      if (res && res.data) {
-        commit('setEmail', res.data.email);
-        commit('setName', res.data.name);
-        localStorage.setItem('email', payload.email);
+        if (res && res.data) {
+          commit('setEmail', res.data.email);
+          commit('setName', res.data.name);
+          commit('setSessionActive', true);
+        }
+        return res;
+      } catch (err) {
+        throw new Error(err);
       }
+    },
 
-      console.log(res);
-
-      return res;
+    async initiateAppSession({
+      state,
+      commit,
+    }) {
+      const res = await axios({
+        method: 'get',
+        url: ProxyUrls.baseUrl + ProxyUrls.isSessionActive,
+        withCredentials: true,
+      });
+      if (res && res.data == true) {
+        commit('setEmail', localStorage.getItem('email'));
+        commit('setName', localStorage.getItem('name'));
+        commit('setSessionActive', true);
+      } else {
+        commit('setSessionActive', false);
+      }
     },
   },
   mutations: {
     setEmail(state, email) {
       state.email = email;
+      localStorage.setItem('email', email);
     },
 
     setName(state, name) {
       state.name = name;
+      localStorage.setItem('name', name);
+    },
+
+    setSessionActive(state, val) {
+      state.isSessionActive = val;
+      if (!val) {
+        localStorage.removeItem('email');
+        localStorage.removeItem('name');
+      }
     },
   },
   getters: {
@@ -66,8 +107,11 @@ export default {
     },
 
     getFirstName(state) {
-      // return state.name.split(' ')[0];
-      return state.email.split('@')[0];
+      return state.name.split(' ')[0];
+    },
+
+    isSessionActive(state) {
+      return state.isSessionActive;
     },
   },
 };
