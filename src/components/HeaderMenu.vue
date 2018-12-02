@@ -19,36 +19,99 @@
           <b-nav-item class="veniqa-nav" to="/about">About</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
-          <b-nav-item class="veniqa-nav" href="#">Login</b-nav-item>
+          <b-nav-item class="veniqa-nav">
+            <span v-if="!userLoggedIn" v-b-modal.registration-modal>Login</span>
+            <span v-else>{{nameOfUser}}</span>
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <b-modal
+      id="registration-modal"
+      centered
+      size="md"
+      :hide-footer="true"
+      :cancel-disabled="true"
+      :ok-disabled="true"
+      :hide-header="true"
+      :modal-class="registrationClass"
+      ref="registrationModal"
+    >
+      <user-account-modal @loginSuccess="loggedIn()"></user-account-modal>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import UserAccountModal from "@/components/registrations/UserAccountModal.vue";
+
 export default {
-  name: 'HeaderMenu',
-  data() {
-    return {};
+  name: "HeaderMenu",
+  components: {
+    UserAccountModal
   },
+
+  created() {
+    let email = localStorage.getItem("email");
+    if (!email || email == "undefined") {
+      this.userLoggedIn = false;
+    } else {
+      this.$store.commit("authStore/setEmail", email);
+      this.userLoggedIn = true;
+    }
+  },
+  data() {
+    return {
+      registrationClass: ["registration-mode"],
+      userLoggedIn: false
+    };
+  },
+
+  methods: {
+    loggedIn() {
+      this.$refs.registrationModal.hide();
+    }
+  },
+
+  computed: {
+    nameOfUser() {
+      return this.$store.getters["authStore/getFirstName"];
+    }
+  }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../assets/css/global.scss";
 
 .veniqa-nav {
   padding: 5px 10px;
 }
 
-.navbar-override{
+.registration-mode {
+  .modal-content {
+    background-image: $home-button-bg;
+    border: 0px;
+    padding: 0 2em;
+  }
+}
+
+.modal-backdrop {
+  background-image: linear-gradient(#136a8a, #267871) !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.7 !important;
+}
+
+.navbar-override {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
 
-.collapsible-content{
+.collapsible-content {
   z-index: 10;
 }
 
@@ -65,14 +128,14 @@ export default {
 }
 
 /* this is when the screen size is small */
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .navbar-override {
     background-color: $pitch-black;
     width: 100%;
 
-    a{
-    color: $white-shade !important;
-}
+    a {
+      color: $white-shade !important;
+    }
     .navbar-toggler {
       border-color: $white-shade !important;
     }
