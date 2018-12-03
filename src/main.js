@@ -18,6 +18,7 @@ import '@/assets/css/overrides.scss';
 
 import VueScrollTo from 'vue-scrollto';
 import Notifications from 'vue-notification'
+import VueAxios from './plugins/axios'
 
 // Vue.use(VueScrollTo)
 Vue.use(Notifications)

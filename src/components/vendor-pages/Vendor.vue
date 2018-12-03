@@ -1,9 +1,9 @@
 <template>
-  <div class="amazon-component">
+  <div class="vendor-component">
     <!-- This is the search portion -->
     <div class="main-view">
       <div class="main-block">
-        <img src="./../../../assets/amazon-logo.png" alt="AMAZON" width="100%">
+        <img :src="getPath()" :alt="vendor" width="80%">
         <b-row>
           <b-col md="9" class="low-side-padding">
             <b-form-input
@@ -11,7 +11,7 @@
               @keyup.enter="searchForProduct()"
               type="text"
               class="vendor-search-input"
-              placeholder="Search for an item on amazon. E.g. Fossil Watch, Ray Ban Sunglasses"
+              :placeholder="'Search for an item on '+ vendor+'. E.g. Fossil Watch, Ray Ban Sunglasses'"
             ></b-form-input>
           </b-col>
           <b-col md="3" class="low-side-padding">
@@ -31,7 +31,13 @@
 <script>
 
 export default {
-  name: 'Amazon',
+  name: 'Vendor',
+  props: {
+    vendor: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       searchTerm: '',
@@ -39,6 +45,9 @@ export default {
   },
 
   methods: {
+    getPath() {
+      return require(`./../../assets/${this.vendor}-logo.png`);
+    },
     searchForProduct() {
       this.$emit('searchClicked', this.searchTerm);
     },
@@ -47,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.amazon-component {
+.vendor-component {
   height: inherit;
 }
 

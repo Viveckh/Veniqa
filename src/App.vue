@@ -38,6 +38,12 @@ export default {
   font-size: 18px;
 }
 
+@media (max-width: 768px){
+  #app{
+    overflow: hidden;
+  }
+}
+
 html,body{
   margin: 0px;
   height: 100%;

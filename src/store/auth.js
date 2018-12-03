@@ -1,5 +1,5 @@
-import axios from 'axios';
 import ProxyUrls from '@/constants/ProxyUrls.js';
+import Vue from 'vue';
 
 export default {
   namespaced: true,
@@ -16,11 +16,10 @@ export default {
       if (!payload) return null;
 
       try {
-        const res = await axios({
+        const res = await Vue.prototype.$axios({
           method: 'post',
-          url: ProxyUrls.baseUrl + ProxyUrls.registerUrl,
+          url: ProxyUrls.registerUrl,
           data: payload,
-          withCredentials: true,
         });
 
         if (res && res.data) {
@@ -42,11 +41,11 @@ export default {
       if (!payload) return null;
 
       try {
-        const res = await axios({
+        const res = await Vue.prototype.$axios({
           method: 'post',
-          url: ProxyUrls.baseUrl + ProxyUrls.loginUrl,
+          url: ProxyUrls.loginUrl,
           data: payload,
-          withCredentials: true,
+          // withCredentials: true,
         });
 
         if (res && res.data) {
@@ -64,10 +63,10 @@ export default {
       state,
       commit,
     }) {
-      const res = await axios({
+      const res = await Vue.prototype.$axios({
         method: 'get',
-        url: ProxyUrls.baseUrl + ProxyUrls.isSessionActive,
-        withCredentials: true,
+        url: ProxyUrls.isSessionActive,
+        // withCredentials: true,
       });
       if (res && res.data == true) {
         commit('setEmail', localStorage.getItem('email'));

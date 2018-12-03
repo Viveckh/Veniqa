@@ -9,8 +9,8 @@
       <b-collapse is-nav id="nav_collapse" class="collapsible-content">
         <b-navbar-nav>
           <b-nav-item class="veniqa-nav" to="/">Deals</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/amazon">Amazon</b-nav-item>
-          <b-nav-item class="veniqa-nav" href="#">Macy's</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/vendor/amazon">Amazon</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/vendor/macys">Macy's</b-nav-item>
           <b-nav-item class="veniqa-nav" href="#">Sephora</b-nav-item>
           <b-nav-item class="veniqa-nav" href="#">Michael Kors</b-nav-item>
         </b-navbar-nav>
@@ -105,6 +105,10 @@ export default {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+
+  .navbar-brand{
+    margin-right: 0px;
+  }
 }
 
 .collapsible-content {
@@ -120,6 +124,7 @@ export default {
     top: 0;
     text-align: center;
     padding: 0;
+    margin-right: 0;
   }
 }
 
