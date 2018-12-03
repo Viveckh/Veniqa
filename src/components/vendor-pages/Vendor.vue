@@ -46,7 +46,7 @@ export default {
 
   methods: {
     getPath() {
-      return require('./../../assets/'+this.vendor+'-logo.png');
+      return require(`./../../assets/${this.vendor}-logo.png`);
     },
     searchForProduct() {
       this.$emit('searchClicked', this.searchTerm);
