@@ -12,6 +12,7 @@
 <script>
 import LoginComponent from '@/components/registrations/LoginComponent';
 import RegisterComponent from '@/components/registrations/RegisterComponent';
+import ProxyUrls from '@/constants/ProxyUrls.js';
 
 import axios from 'axios';
 

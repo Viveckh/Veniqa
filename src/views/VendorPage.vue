@@ -11,55 +11,54 @@
 </template>
 
 <script>
-import VendorSearch from "@/components/vendor-pages/Vendor";
-import axios from "axios";
+import VendorSearch from '@/components/vendor-pages/Vendor';
 import SearchResultView from '@/components/SearchResultView.vue';
+import ProxyUrls from '@/constants/ProxyUrls';
 
 export default {
-  name: "VendorPage",
+  name: 'VendorPage',
   props: {
     vendorName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     VendorSearch,
-    SearchResultView
+    SearchResultView,
   },
 
   data() {
     return {
       vendorMap: {
         macys: "Macy's",
-        amazon: "Amazon"
+        amazon: 'Amazon',
       },
-      searchResult: []
+      searchResult: [],
     };
   },
 
   methods: {
     async searchForProduct(searchTerm) {
-      const res = await axios({
-        withCredentials: true,
-        url: "https://veniqa.azurewebsites.net/catalog/search",
+      const res = await this.$axios({
+        url: ProxyUrls.searchProduct,
         method: 'post',
         data: {
           store: this.vendorMap[this.vendorName],
-          category: "Make-Up"
-        }
+          category: 'Make-Up',
+        },
       });
 
       if (res) {
         this.searchResult.splice(0, this.searchResult.length);
         this.searchResult.push(...res.data);
 
-        this.$scrollTo("#searchResult", 1000, {
-          offset: -80
+        this.$scrollTo('#searchResult', 1000, {
+          offset: -80,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

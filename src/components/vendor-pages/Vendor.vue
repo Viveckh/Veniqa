@@ -36,7 +36,7 @@ export default {
     vendor: {
       type: String,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -45,8 +45,8 @@ export default {
   },
 
   methods: {
-    getPath(){
-      return "./../../assets/"+this.vendor+"-logo.png"
+    getPath() {
+      return `./../../assets/${this.vendor}-logo.png`;
     },
     searchForProduct() {
       this.$emit('searchClicked', this.searchTerm);

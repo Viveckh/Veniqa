@@ -3,4 +3,6 @@ export default {
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
   isSessionActive: '/security/isLoggedIn',
+
+  searchProduct: '/catalog/search',
 };
