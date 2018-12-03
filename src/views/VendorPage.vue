@@ -12,7 +12,7 @@
 
 <script>
 import VendorSearch from '@/components/vendor-pages/Vendor';
-import SearchResultView from '@/components/SearchResultView.vue';
+import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
 import ProxyUrls from '@/constants/ProxyUrls';
 
 export default {
