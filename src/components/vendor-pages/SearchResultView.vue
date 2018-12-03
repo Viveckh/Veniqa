@@ -15,7 +15,7 @@
           </p>
           <p><strong>{{product.name}}</strong></p>
           <p>{{product.price}}</p>
-          <b-button class="primary-button add-cart-button">Add to Cart</b-button>
+          <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button>
         </div>
       </div>
     </div>
@@ -41,6 +41,10 @@ export default {
         height: "250px",
         'margin-bottom': '10px'
       };
+    },
+
+    addToCart(product){
+      this.$store.dispatch('cartStore/addToTheCart', product);
     }
   }
 };
