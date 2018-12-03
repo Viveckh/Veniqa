@@ -3,7 +3,7 @@
     <!-- This is the search portion -->
     <div class="main-view">
       <div class="main-block">
-        <img :src="getPath()" :alt="vendor" width="100%">
+        <img :src="getPath()" :alt="vendor" width="80%">
         <b-row>
           <b-col md="9" class="low-side-padding">
             <b-form-input
@@ -46,7 +46,7 @@ export default {
 
   methods: {
     getPath() {
-      return `./../../assets/${this.vendor}-logo.png`;
+      return require('./../../assets/'+this.vendor+'-logo.png');
     },
     searchForProduct() {
       this.$emit('searchClicked', this.searchTerm);
