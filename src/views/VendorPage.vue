@@ -14,7 +14,7 @@
 import VendorSearch from '@/components/vendor-pages/Vendor';
 import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
 import ProxyUrls from '@/constants/ProxyUrls';
-import ProductDTO from '@/dto/Products.json'
+import ProductDTO from '@/dto/Products.json';
 
 export default {
   name: 'VendorPage',
@@ -52,11 +52,11 @@ export default {
 
       if (res) {
         this.searchResult.splice(0, this.searchResult.length);
-        let transformed = [];
-        
-        res.data.forEach(p => {
+        const transformed = [];
+
+        res.data.forEach((p) => {
           transformed.push(_.assign(ProductDTO, p));
-        })
+        });
 
         this.searchResult.push(...transformed);
 

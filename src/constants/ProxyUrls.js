@@ -5,5 +5,5 @@ export default {
   isSessionActive: '/security/isLoggedIn',
 
   searchProduct: '/catalog/search',
-  addToCart: '/addToCart'
+  addToCart: '/addToCart',
 };

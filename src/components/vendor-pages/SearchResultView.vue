@@ -24,29 +24,29 @@
 
 <script>
 export default {
-  name: "SearchResultView",
+  name: 'SearchResultView',
   props: {
     data: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
     getPictureStyle(img) {
       return {
-        "background-image": "url(" + img+ ")",
-        "background-size": "cover",
-        width: "100%",
-        height: "250px",
-        'margin-bottom': '10px'
+        'background-image': `url(${img})`,
+        'background-size': 'cover',
+        width: '100%',
+        height: '250px',
+        'margin-bottom': '10px',
       };
     },
 
-    addToCart(product){
+    addToCart(product) {
       this.$store.dispatch('cartStore/addToTheCart', product);
-    }
-  }
+    },
+  },
 };
 </script>
 
