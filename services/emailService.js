@@ -19,7 +19,7 @@ export default {
             from: '"Veniqa Smart Bot 👾" <smartbot@ngineerx.com>', // sender address
             to: 'smartbot@ngineerx.com, ' + email, // list of receivers
             subject: 'Veniqa - Confirm Your Email', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to confirm your email address<br><br><a href="' + frontEndUrls.emailConfirmationBaseUrl + '/' + token + '"></a>'
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to confirm your email address<br><br><button><a href="' + frontEndUrls.emailConfirmationBaseUrl + '/' + token + '">Confirm Your Email Address</a></button>'
         };
 
         // send mail with defined transport object
@@ -37,7 +37,7 @@ export default {
             from: '"Veniqa Smart Bot 👾" <smartbot@ngineerx.com>', // sender address
             to: 'smartbot@ngineerx.com, ' + email, // list of receivers
             subject: 'Veniqa - Password Reset', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '"></a>'
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '">Reset Password</a></button>'
         };
 
         // send mail with defined transport object

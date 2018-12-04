@@ -28,6 +28,41 @@ export default {
                     })
     },
 
+    confirmEmailAddress(token) {
+        let promise = new Promise((resolve, reject) => {
+            User.findOne({emailConfirmationToken: token}, (err, user) => {
+                if (err) { return resolve(false) }
+                if (!user) {
+                    //return {code: 404, errmsg: 'The token is invalid or already expired.'}
+                    return resolve(false);
+                }
+
+                // if user is found, then go ahead and confirm the email
+                user.emailConfirmationToken = undefined;
+
+                user.save((err) => {
+                    if (err) {
+                        //return {code: 500, errmsg: 'Server could not reset password'}
+                        return resolve(false)
+                    }
+                    return resolve(user)
+                })
+            })
+        })
+        .then(user => {
+            if (user) {
+                return true;
+            }
+            return false;
+        })
+        .catch(err => {
+            console.log(err);
+            return err;
+        })
+
+        return promise;
+    },
+
     async forgotPassword(email) {
         let promise = new Promise((resolve, reject) => {
             let token = cryptoGen.generateRandomToken();
@@ -51,10 +86,12 @@ export default {
                     if (err) {
                         return {code: 500, errmsg: 'Server could not generate token'}
                     }
+                    console.log("inside callback", user);
                     return user;
                 })
             })
         }).then(user => {
+            console.log(user);
             if (user) {
                 emailService.emailPasswordResetInstructions(user.email, user.name, user.passwordResetToken);
                 return true;
@@ -70,44 +107,60 @@ export default {
     },
 
     isPasswordResetTokenValid(token) {
-        User.findOne({ passwordResetToken: token, resetPasswordExpires: {$gt: Date.now()}}, (err, user) => {
-            if (err) {return err; }
-            // If no matching users were found, it should definitely be expired/invalid token, because this would get called only if user received a reset link
-            if (!user) {
-                return false;
-            }
-            return true;
+        let promise = new Promise((resolve, reject) => {
+            User.findOne({ passwordResetToken: token, passwordResetExpires: {$gt: Date.now()}}, (err, user) => {
+                if (err) {return resolve(false) }
+                // If no matching users were found, it should definitely be expired/invalid token, because this would get called only if user received a reset link
+                if (!user) {
+                    return resolve(false);
+                }
+                return resolve(true);
+            })
         })
+        .catch(err => {
+            console.log(err)
+            return err;
+        })
+
+        return promise;
     },
 
-    resetPassword(token, password) {
-        async.waterfall([
-            (callback) => {
-                User.findOne({passwordResetToken: token, passwordResetExpires: { $gt: Date.now()}}, (err, user) => {
-                    if (err) { return err; }
-                    if (!user) {
-                        return {code: 404, errmsg: 'The token is invalid or already expired.'}
+    resetPassword(token, newPassword) {
+        let promise = new Promise((resolve, reject) => {
+            User.findOne({passwordResetToken: token, passwordResetExpires: { $gt: Date.now()}}, (err, user) => {
+                if (err) { return resolve(false) }
+                if (!user) {
+                    //return {code: 404, errmsg: 'The token is invalid or already expired.'}
+                    return resolve(false);
+                }
+
+                // if user is found, then go ahead and update the password
+                user.password = cryptoGen.createPasswordHash(newPassword);
+                user.passwordResetToken = undefined;
+                user.passwordResetExpires = undefined;
+
+                user.save((err) => {
+                    if (err) {
+                        //return {code: 500, errmsg: 'Server could not reset password'}
+                        return resolve(false)
                     }
-
-                    // if user is found, then go ahead and update the password
-                    user.password = cryptoGen.createPasswordHash(password);
-                    user.passwordResetToken = undefined;
-                    user.passwordResetExpires = undefined;
-
-                    user.save((err) => {
-                        if (err) {
-                            return {code: 500, errmsg: 'Server could not reset password'}
-                        }
-                        callback(err, user);
-                    })
-
+                    return resolve(user)
                 })
-            },
-            (user) => {
-                // Send password reset confirmation to the user
+            })
+        })
+        .then(user => {
+            if (user) {
                 emailService.emailPasswordResetConfirmation(user.email, user.name);
-            }            
-        ])
+                return true;
+            }
+            return false;
+        })
+        .catch(err => {
+            console.log(err);
+            return err;
+        })
+
+        return promise;
     }
 
 

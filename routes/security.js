@@ -65,6 +65,12 @@ router.get('/logout', (req, res, next) => {
     console.log("after logout", req.session)
 });
 
+router.route('/confirmEmailAddress/:token').get(securityController.confirmEmailAddress);
+
 router.route('/forgotPassword').get(securityController.forgotPassword);
+
+router.route('/validatePasswordResetToken/:token').get(securityController.validatePasswordResetToken);
+
+router.route('/resetPassword').post(securityController.resetPassword);
 
 module.exports = router;
