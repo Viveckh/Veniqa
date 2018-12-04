@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/views/Home.vue';
-import VendorPage from '@/views/VendorPage';
+import Checkout from '@/components/checkout/Checkout.vue';
 
 Vue.use(Router);
 
@@ -46,6 +46,10 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
     },
+    {
+      path: '/checkout',
+      component: Checkout
+    }
 
 
   ],

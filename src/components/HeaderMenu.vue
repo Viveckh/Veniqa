@@ -23,6 +23,9 @@
             <span v-if="!userSessionActive" v-b-modal.registration-modal>Login</span>
             <span v-else>{{nameOfUser}}</span>
           </b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/checkout">
+             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/><b-badge :pill="true" variant="danger">5</b-badge>
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
