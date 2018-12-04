@@ -31,5 +31,9 @@ export default {
       }
     },
   },
-  getters: {},
+  getters: {
+    getCart(state){
+      return state.cart;
+    }
+  },
 };
