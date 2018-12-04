@@ -18,7 +18,10 @@ import '@/assets/css/overrides.scss';
 
 import VueScrollTo from 'vue-scrollto';
 import Notifications from 'vue-notification'
-import VueAxios from './plugins/axios'
+import VueAxios from './plugins/axios';
+import _ from 'lodash';
+
+import 'animate.css'
 
 // Vue.use(VueScrollTo)
 Vue.use(Notifications)
