@@ -26,6 +26,6 @@ export default {
                         console.log("[ERROR]: User insertion failed => ", err)
                         return err;
                     })
-
+        
     }
 }

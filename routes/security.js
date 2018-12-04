@@ -8,7 +8,14 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Security' });
 });
 
-router.route('/signup').post(securityController.signup);
+//router.route('/signup').post(securityController.signup);
+
+router.post('/signup', passport.authenticate('signup'), (req, res, next) => {
+    res.status(200).send({
+        email: req.user.email,
+        name: req.user.name
+    })
+});
 
 router.post('/login', passport.authenticate('login'), (req, res, next) => {
     // If this part gets executed, it means authentication was successful
@@ -31,9 +38,6 @@ router.get('/isLoggedIn', (req, res, next) => {
 })
 
 router.get('/logout', (req, res, next) => {
-    if (req.isAuthenticated()) {
-        console.log('this user was authenticated before logout')
-    }
     req.logout();
     if (req.session) {
         req.session.destroy((err) => {

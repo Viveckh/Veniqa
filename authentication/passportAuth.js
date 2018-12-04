@@ -70,7 +70,7 @@ export default {
             },
             function(req, username, password, done) {
 
-                findOrCreateUser = function(){
+                var findOrCreateUser = function(){
                     // find a user in Mongo with provided username
                     User.findOne({ 'email' :  username }, function(err, user) {
                         // In case of any error, return using the done method
@@ -80,25 +80,24 @@ export default {
                         }
                         // already exists
                         if (user) {
-                            console.log('User already exists with username: '+username);
+                            console.log('User already exists with username: ' + username);
                             return done(null, false);
                         } else {
                             // if there is no user with that email
                             // create the user
-                            var newUser = new User();
-
-                            // set the user's local credentials
-                            newUser.email = username;
-                            newUser.password = createHash(password);
-                            newUser.name = req.param('name');
+                            var newUser = new User({
+                                email: username,
+                                password: createHash(password),
+                                name: req.param('name')
+                            });
 
                             // save the user
-                            newUser.save(function(err) {
+                            newUser.save((err) => {
                                 if (err){
-                                    console.log('Error in Saving user: '+err);  
-                                    throw err;  
+                                    console.log("[ERROR]: User insertion failed => ", err)  
+                                    return done(err);  
                                 }
-                                console.log('User Registration succesful');    
+                                console.log("[DB]: User inserted => ", newUser);    
                                 return done(null, newUser);
                             });
                         }
