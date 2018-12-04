@@ -38,7 +38,7 @@ export default {
             function(username, password, done) { 
                 // check in mongo if a user with username exists or not
                 User.findOne({ 'email' :  username }, 
-                    function(err, user) {
+                    (err, user) => {
                         // In case of any error, return using the done method
                         if (err) {
                             return done(err);
@@ -53,6 +53,13 @@ export default {
                             console.log('Invalid Password');
                             return done(null, false); // redirect back to login page
                         }
+                        /*
+                        // If user has not confirmed their email address yet, make sure to not log them in
+                        if (user.emailConfirmationToken) {
+                            console.log('Email confirmation pending')
+                            return done(null, false);
+                        }
+                        */
                         // User and password both match, return user from done method
                         // which will be treated like success
                         return done(null, user);

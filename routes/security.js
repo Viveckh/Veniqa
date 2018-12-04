@@ -2,20 +2,26 @@ import express from 'express';
 import securityController from '../controllers/securityController';
 var router = express.Router();
 import passport from 'passport';
+import securityService from '../services/securityService';
 
 /* GET Amazon Endpoint. */
 router.get('/', function(req, res, next) {
+    securityService.forgotPassword('vpandey@ngineerx.com');
+    securityService.isPasswordResetTokenValid('673a3a744197a1e32a451ea8acefa8b73bceeac7')
+    securityService.resetPassword('673a3a744197a1e32a451ea8acefa8b73bceeac7', 'ganggang')
     res.render('index', { title: 'Veniqa Security' });
 });
 
-//router.route('/signup').post(securityController.signup);
+router.route('/signup').post(securityController.signup);
 
+/*
 router.post('/signup', passport.authenticate('signup'), (req, res, next) => {
     res.status(200).send({
         email: req.user.email,
         name: req.user.name
     })
 });
+*/
 
 router.post('/login', passport.authenticate('login'), (req, res, next) => {
     // If this part gets executed, it means authentication was successful
@@ -26,7 +32,8 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
         req.session.save((err) => {
             res.status(200).send({
                 email: req.user.email,
-                name: req.user.name 
+                name: req.user.name,
+                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true'
             });
         })
     })

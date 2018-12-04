@@ -20,7 +20,10 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    emailConfirmationToken: String,
+    passwordResetToken: String,
+    passwordResetExpires: Date
 });
 
 // The first param is the collection name this model represents
