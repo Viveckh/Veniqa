@@ -4,20 +4,13 @@ import async from 'async';
 import cryptoConfig from '../properties/crypto';
 
 export default {
-    generateRandomTokenWithCallback(callback) {
-        let token;
-        crypto.randomBytes(20, (err, buf) => {
-            token = buf.toString('hex');
-            callback(err, token);
-        })
-    },
-
     generateRandomToken() {
         return new Promise((resolve, reject) => {
             // generate reset token
             crypto.randomBytes(20, (err, buf) => {
-                if(err)
+                if(err) {
                     return reject(err);
+                }
                 const token = buf.toString('hex');
                 resolve(token);
             });     

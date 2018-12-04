@@ -68,62 +68,9 @@ export default {
 
             })
         );
-        
-
-        passport.use('signup', new LocalStrategy({
-                usernameField: 'email',
-                passwordField: 'password',
-                passReqToCallback : true // allows us to pass back the entire request to the callback
-            },
-            function(req, username, password, done) {
-
-                var findOrCreateUser = function(){
-                    // find a user in Mongo with provided username
-                    User.findOne({ 'email' :  username }, function(err, user) {
-                        // In case of any error, return using the done method
-                        if (err){
-                            console.log('Error in SignUp: '+err);
-                            return done(err);
-                        }
-                        // already exists
-                        if (user) {
-                            console.log('User already exists with username: ' + username);
-                            return done(null, false);
-                        } else {
-                            // if there is no user with that email
-                            // create the user
-                            var newUser = new User({
-                                email: username,
-                                password: createHash(password),
-                                name: req.param('name')
-                            });
-
-                            // save the user
-                            newUser.save((err) => {
-                                if (err){
-                                    console.log("[ERROR]: User insertion failed => ", err)  
-                                    return done(err);  
-                                }
-                                console.log("[DB]: User inserted => ", newUser);    
-                                return done(null, newUser);
-                            });
-                        }
-                    });
-                };
-                // Delay the execution of findOrCreateUser and execute the method
-                // in the next tick of the event loop
-                process.nextTick(findOrCreateUser);
-            })
-        );
-
 
         var isValidPassword = (user, password) => {
             return bCrypt.compareSync(password, user.password);
-        }
-
-        // Generates hash using bCrypt
-        var createHash = function(password){
-            return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
         }
     },
 
