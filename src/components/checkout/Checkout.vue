@@ -2,7 +2,7 @@
   <div class="checkout">
     <div class="space"></div>
     <h2>Checkout</h2>
-    
+
     <b-row>
       <b-col md="6">
         <shipping-detail :allAddresses="shippingAddress" :selected="selectedAddress" @selected="addressSelected"/>
@@ -25,7 +25,7 @@ export default {
   components: {
     ShippingDetail,
     OrderDetail,
-    PaymentDetail
+    PaymentDetail,
   },
 
   data() {
@@ -33,15 +33,15 @@ export default {
       shippingAddress: [],
       selectedAddress: {},
       payment: {},
-    }
+    };
   },
 
   methods: {
-    addressSelected(selected){
+    addressSelected(selected) {
       this.selectedAddress = selected;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

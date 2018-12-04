@@ -32,8 +32,8 @@ export default {
     },
   },
   getters: {
-    getCart(state){
+    getCart(state) {
       return state.cart;
-    }
+    },
   },
 };

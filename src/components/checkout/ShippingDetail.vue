@@ -160,20 +160,20 @@
 </template>
 
 <script>
-import ShippingDTO from "@/dto/ShippingAddress.json";
+import ShippingDTO from '@/dto/ShippingAddress.json';
 
 export default {
-  name: "ShippingDetail",
+  name: 'ShippingDetail',
   props: {
     allAddresses: {
       required: true,
-      type: Array
+      type: Array,
     },
 
     selected: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
   created() {
     this.shippingDeet = ShippingDTO;
@@ -181,7 +181,7 @@ export default {
   data() {
     return {
       isShowAddAddress: false,
-      shippingDeet: null
+      shippingDeet: null,
     };
   },
 
@@ -199,7 +199,7 @@ export default {
     },
 
     resetFields() {
-      for (let key in this.shippingDeet) {
+      for (const key in this.shippingDeet) {
         this.shippingDeet[key] = null;
       }
     },
@@ -209,30 +209,30 @@ export default {
     },
 
     chooseAddress(add) {
-      this.$emit("selected", add);
+      this.$emit('selected', add);
     },
 
     saveAddress() {
-      for (let key in this.shippingDeet) {
+      for (const key in this.shippingDeet) {
         if (this.shippingDeet[key] == null) {
-          this.shippingDeet[key] = "";
+          this.shippingDeet[key] = '';
         }
       }
       if (
-        this.firstNameState &&
-        this.address1State &&
-        this.stateState &&
-        this.zipState &&
-        this.countryState
+        this.firstNameState
+        && this.address1State
+        && this.stateState
+        && this.zipState
+        && this.countryState
       ) {
-        let cloned = _.cloneDeep(this.shippingDeet);
+        const cloned = _.cloneDeep(this.shippingDeet);
         this.allAddresses.push(cloned);
-        this.$emit("selected", cloned);
+        this.$emit('selected', cloned);
 
         this.resetFields();
         this.isShowAddAddress = false;
       }
-    }
+    },
   },
 
   computed: {
@@ -259,8 +259,8 @@ export default {
     countryState() {
       if (this.shippingDeet.country == null) return null;
       return this.shippingDeet.country.length > 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -300,4 +300,3 @@ export default {
   }
 }
 </style>
-

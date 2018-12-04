@@ -48,8 +48,8 @@ export default new Router({
     },
     {
       path: '/checkout',
-      component: Checkout
-    }
+      component: Checkout,
+    },
 
 
   ],
