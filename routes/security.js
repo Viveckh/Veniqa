@@ -6,10 +6,10 @@ import securityService from '../services/securityService';
 
 /* GET Amazon Endpoint. */
 router.get('/', function(req, res, next) {
-    securityService.forgotPassword('vpandey@ngineerx.com');
-    securityService.isPasswordResetTokenValid('673a3a744197a1e32a451ea8acefa8b73bceeac7')
-    securityService.resetPassword('673a3a744197a1e32a451ea8acefa8b73bceeac7', 'ganggang')
-    res.render('index', { title: 'Veniqa Security' });
+    //securityService.forgotPassword('vpandey@ngineerx.com');
+    //securityService.isPasswordResetTokenValid('673a3a744197a1e32a451ea8acefa8b73bceeac7')
+    //securityService.resetPassword('673a3a744197a1e32a451ea8acefa8b73bceeac7', 'ganggang')
+    res.render('index', { title: 'Kariba Security' });
 });
 
 router.route('/signup').post(securityController.signup);
@@ -64,5 +64,7 @@ router.get('/logout', (req, res, next) => {
     }     
     console.log("after logout", req.session)
 });
+
+router.route('/forgotPassword').get(securityController.forgotPassword);
 
 module.exports = router;

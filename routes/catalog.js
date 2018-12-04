@@ -8,6 +8,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Curated Catalog' });
 });
 
-router.post('/search', passportAuth.isAuthenticated, catalogController.searchCatalog)
+router.route('/search').post(catalogController.searchCatalog)
 
 module.exports = router;

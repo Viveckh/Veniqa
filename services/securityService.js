@@ -8,11 +8,12 @@ import emailService from './emailService';
  * This service performs security related tasks, like signup
  */
 export default {
-    signup(userObj) {
+    async signup(userObj) {
         let user = new User({
             email: userObj.email,
             password: cryptoGen.createPasswordHash(userObj.password),
-            name: userObj.name
+            name: userObj.name,
+            emailConfirmationToken: await cryptoGen.generateRandomToken()
         });
 
         return  user.save()
@@ -27,41 +28,45 @@ export default {
                     })
     },
 
-    forgotPassword(email) {
-        async.waterfall([
-            cryptoGen.generateRandomTokenWithCallback,
-            // The asynchronous function above generates the token and passes it to the next function below
-            (token, callback) => {
-                console.log(token);
-                User.findOne({email: email}, (err, user) => {
-                    // Return if any errors exist
+    async forgotPassword(email) {
+        let promise = new Promise((resolve, reject) => {
+            let token = cryptoGen.generateRandomToken();
+            resolve(token);
+        }).then(token => {
+            //if(1) throw "somedsf"
+            return User.findOne({email: email}, (err, user) => {
+                // Return if any errors exist
+                if (err) {
+                    return err;
+                }
+                // Return if user does not exist
+                if (!user) {
+                    return {code: 404, errmsg: 'User does not exist'};
+                }
+                // If user exists, then generate token and save it
+                user.passwordResetToken = token;
+                user.passwordResetExpires = Date.now() + tokenValidityConfig.passwordResetTokenValidFor;
+
+                user.save((err) => {
                     if (err) {
-                        return err;
+                        return {code: 500, errmsg: 'Server could not generate token'}
                     }
-                    // Return if user does not exist
-                    if (!user) {
-                        return {code: 404, errmsg: 'User does not exist'}
-                    }
-                    // If user exists, then generate token and save it
-                    user.passwordResetToken = token;
-                    user.passwordResetExpires = Date.now() + tokenValidityConfig.passwordResetTokenValidFor;
-
-                    user.save((err) => {
-                        if (err) {
-                            return {code: 500, errmsg: 'Server could not generate token'}
-                        }
-                        callback(err, token, user);
-                    })
-                    
+                    return user;
                 })
-
-            },
-            // Send email in the function below
-            (token, user) => {
-                // Send password reset email here
-                emailService.emailPasswordResetInstructions(user.email, user.name, token);
+            })
+        }).then(user => {
+            if (user) {
+                emailService.emailPasswordResetInstructions(user.email, user.name, user.passwordResetToken);
+                return true;
             }
-        ])
+            return false;       
+        })
+        .catch(err => {
+            console.log(err)
+            return err;
+        })
+
+        return promise;
     },
 
     isPasswordResetTokenValid(token) {
