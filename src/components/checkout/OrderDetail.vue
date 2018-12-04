@@ -29,9 +29,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+
 export default {
-  name: "OrderDetail",
+  name: 'OrderDetail',
   data() {
     return {};
   },
@@ -39,21 +40,21 @@ export default {
   methods: {
     orderPicture(img) {
       return {
-        "background-image": "url(" + img + ")",
-        width: "100%",
-        height: "70px",
-        "background-size": "contain",
-        'background-repeat': 'no-repeat'
+        'background-image': `url(${img})`,
+        width: '100%',
+        height: '70px',
+        'background-size': 'contain',
+        'background-repeat': 'no-repeat',
 
       };
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      orders: "cartStore/getCart"
-    })
-  }
+      orders: 'cartStore/getCart',
+    }),
+  },
 };
 </script>
 
