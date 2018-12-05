@@ -20,8 +20,7 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
             res.status(200).send({
                 email: req.user.email,
                 name: req.user.name,
-                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true',
-                cart: req.user.cart
+                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true'
             });
         })
     })

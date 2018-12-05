@@ -30,11 +30,6 @@ let userSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        product_origin: {
-            type: String,
-            required: true,
-            enum: ['curated', 'amazon', 'macys']
-        },
         counts: {
             type: Number,
             required: true,

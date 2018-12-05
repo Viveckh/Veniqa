@@ -10,4 +10,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/addToCart', passportAuth.isAuthenticated, shoppingController.addToCart);
 
+router.get('/getCart', passportAuth.isAuthenticated, shoppingController.getCart);
+
 module.exports = router;

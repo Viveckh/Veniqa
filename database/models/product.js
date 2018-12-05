@@ -5,7 +5,8 @@ let productSchema = new mongoose.Schema({
     store: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        enum: ['Curated', 'Amazon', 'Macys', 'Sephora']
     },
     brand: {
         type: String,

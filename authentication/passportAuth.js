@@ -77,7 +77,6 @@ export default {
     isAuthenticated(req, res, done){ 
         // Passport adds the isAuthenticated function in req body when successfully authenticated, removes when session expired or user logs out
         if (req.isAuthenticated()) {
-            console.log("logged in")
             done()
         }
         else {
