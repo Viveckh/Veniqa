@@ -9,7 +9,6 @@
     "devstart": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {
-    "async": "^2.6.1",
     "bcrypt-nodejs": "0.0.3",
     "connect-redis": "^3.4.0",
     "cookie-parser": "~1.4.3",
@@ -20,6 +19,7 @@
     "jade": "~1.11.0",
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
     "mongodb": "^3.1.10",
     "mongoose": "^5.3.14",
     "morgan": "~1.9.0",

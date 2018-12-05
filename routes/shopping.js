@@ -12,4 +12,8 @@ router.post('/addToCart', passportAuth.isAuthenticated, shoppingController.addTo
 
 router.get('/getCart', passportAuth.isAuthenticated, shoppingController.getCart);
 
+router.post('/updateCart', passportAuth.isAuthenticated, shoppingController.updateCart);
+
+router.post('/deleteFromCart', passportAuth.isAuthenticated, shoppingController.deleteFromCart);
+
 module.exports = router;
