@@ -53,6 +53,8 @@ router.get('/logout', (req, res, next) => {
     console.log("after logout", req.session)
 });
 
+router.route('/resendEmailAddressConfirmationLink').get(securityController.resendEmailAddressConfirmationLink)
+
 router.route('/confirmEmailAddress/:token').get(securityController.confirmEmailAddress);
 
 router.route('/forgotPassword').get(securityController.forgotPassword);

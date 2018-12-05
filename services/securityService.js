@@ -23,11 +23,37 @@ export default {
                 emailService.emailEmailConfirmationInstructions(user.email, user.name, user.emailConfirmationToken)
                 return {email: user.email, name: user.name};
             }
-            return null;
+            return {errMsg: 'could not create user'};
         }
         catch(err) {
             console.log("[ERROR]: User insertion failed => ", err)
             return err;
+        }
+    },
+
+    async resendEmailAddressConfirmationLink(email) {
+        try {
+            // This should only work if there is already an existing emailConfirmationToken. If there is none, it means user already verified
+            let user = await User.findOne({email: email}).exists('emailConfirmationToken').exec();
+            let token = await cryptoGen.generateRandomToken();
+    
+            // If a user is found, and they are still unverified, update the token and send the email
+            if (user && token) {
+                user.emailConfirmationToken = token;
+
+                // Overwrite the user variable with result from the new save.
+                user = await user.save();
+                console.log(user);
+                if (user) {
+                    emailService.emailEmailConfirmationInstructions(user.email, user.name, user.emailConfirmationToken)
+                    return true;
+                }
+            }
+            return {errMsg: 'Email is already confirmed or does not exist in system.'};
+        }
+        catch(err) {
+            console.log(err)
+            return false;
         }
     },
 
