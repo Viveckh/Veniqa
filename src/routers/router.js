@@ -50,6 +50,11 @@ export default new Router({
       path: '/checkout',
       component: Checkout,
     },
+    {
+      path: '/email-confirmation/:token',
+      props: true,
+      component: () => import('@/views/EmailConfirmation.vue'),
+    },
 
 
   ],

@@ -61,7 +61,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'User successfully created',
+          text: 'User successfully created. Please check your inbox to confirm email',
         });
       } catch (err) {
         this.$notify({

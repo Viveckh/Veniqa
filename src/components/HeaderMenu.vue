@@ -80,7 +80,7 @@ export default {
 
     orders() {
       return this.$store.getters['cartStore/getCart'];
-    }
+    },
   },
 };
 </script>

@@ -6,4 +6,5 @@ export default {
 
   searchProduct: '/catalog/search',
   addToCart: '/addToCart',
+  confirmEmail: '/security/confirmEmailAddress',
 };

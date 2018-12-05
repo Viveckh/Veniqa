@@ -29,6 +29,7 @@
         name="password"
         :state="passwordState"
         v-model="password"
+        @keyup.enter="loginClicked()"
         placeholder="Enter Password"
         aria-describedby="passwordFeedback"
       ></b-form-input>
@@ -64,6 +65,7 @@ export default {
     forgetPassword() {},
 
     loginClicked() {
+      console.log('Going here');
       if (this.usernameState && this.passwordState) {
         this.$emit('login', {
           email: this.username,

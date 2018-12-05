@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist'
+import VuexPersistence from 'vuex-persist';
 
 // Import modules here.
 import CartStore from '@/store/cart';
 import AuthStore from '@/store/auth';
+
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({
-    cartStore: state.cartStore
-  })
-})
+    cartStore: state.cartStore,
+  }),
+});
 
 Vue.use(Vuex);
 
@@ -20,5 +21,5 @@ export default new Vuex.Store({
     authStore: AuthStore,
   },
 
-  plugins: [vuexLocal.plugin]
+  plugins: [vuexLocal.plugin],
 });
