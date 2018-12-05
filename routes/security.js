@@ -2,11 +2,10 @@ import express from 'express';
 import securityController from '../controllers/securityController';
 var router = express.Router();
 import passport from 'passport';
-import securityService from '../services/securityService';
 
 /* GET Amazon Endpoint. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Kariba Security' });
+    res.render('index', { title: 'Veniqa Security' });
 });
 
 router.route('/signup').post(securityController.signup);
@@ -21,7 +20,8 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
             res.status(200).send({
                 email: req.user.email,
                 name: req.user.name,
-                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true'
+                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true',
+                cart: req.user.cart
             });
         })
     })

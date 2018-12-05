@@ -1,4 +1,3 @@
-import async from 'async';
 import User from '../database/models/user';
 import cryptoGen from '../authentication/cryptoGen';
 import tokenValidityConfig from '../properties/tokenValidity';

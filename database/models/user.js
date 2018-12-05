@@ -23,7 +23,24 @@ let userSchema = new mongoose.Schema({
     },
     emailConfirmationToken: String,
     passwordResetToken: String,
-    passwordResetExpires: Date
+    passwordResetExpires: Date,
+    cart: [{
+        // _id field will get added automatically upon insertion
+        product_id: {
+            type: String,
+            required: true
+        },
+        product_origin: {
+            type: String,
+            required: true,
+            enum: ['curated', 'amazon', 'macys']
+        },
+        counts: {
+            type: Number,
+            required: true,
+            default: 1
+        }
+    }]
 });
 
 // The first param is the collection name this model represents

@@ -22,6 +22,7 @@ import indexRouter from './routes/index';
 import amazonRouter from './routes/amazon';
 import securityRouter from './routes/security';
 import catalogRouter from './routes/catalog';
+import shoppingRouter from './routes/shopping';
 
 // Database connection imports, importing initializes it
 import dbConnection from './database/dbConnection';
@@ -108,6 +109,7 @@ app.use('/', indexRouter);
 app.use('/security', securityRouter);
 app.use('/amazon', amazonRouter);
 app.use('/catalog', catalogRouter);
+app.use('/shopping', shoppingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

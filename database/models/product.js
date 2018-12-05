@@ -46,8 +46,24 @@ let productSchema = new mongoose.Schema({
         }
     },
     price: {
-        type: Number,
-        required: true
+        amount: {
+            type: Number,
+            required: true
+        },
+        currency: {
+            type: String,
+            required: true
+        }
+    },
+    weight: {
+        quantity: {
+            type: Number,
+            required: true
+        },
+        unit: {
+            type: String,
+            required: true
+        }
     },
     custom_attributes: {
         type: Map,
