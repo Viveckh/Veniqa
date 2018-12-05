@@ -24,7 +24,7 @@
             <span v-else>{{nameOfUser}}</span>
           </b-nav-item>
           <b-nav-item class="veniqa-nav" to="/checkout">
-             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/><b-badge :pill="true" variant="danger">5</b-badge>
+             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/><b-badge :pill="true" variant="danger">{{orders.length}}</b-badge>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -76,6 +76,10 @@ export default {
 
     userSessionActive() {
       return this.$store.getters['authStore/isSessionActive'];
+    },
+
+    orders() {
+      return this.$store.getters['cartStore/getCart'];
     },
   },
 };
