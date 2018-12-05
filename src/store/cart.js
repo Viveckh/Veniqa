@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
 
+
 export default {
   namespaced: true,
   state: {
