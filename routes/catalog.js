@@ -12,7 +12,7 @@ router.post('/search', catalogController.searchCatalog);
 
 // GetProductDetails
 
-router.post('/updateProduct', catalogController.updateProduct);
+router.put('/updateProduct', catalogController.updateProduct);
 
 // AddProduct
 

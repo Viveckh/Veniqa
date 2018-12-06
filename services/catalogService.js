@@ -28,7 +28,7 @@ export default {
             delete productObj._id;
             
             // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update
-            let product = Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).exec();
+            let product = await Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).exec();
             if (product) {
                 return product;
             }
