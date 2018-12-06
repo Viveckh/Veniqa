@@ -5,14 +5,14 @@
       <span
         class="edit-bag"
         @click="editOrder()"
-        v-if="!editMode && orders.length > 0"
+        v-if="!editMode && this.orders && orders.length > 0"
       >Edit Bag</span>
       <span
         class="edit-bag delete"
-        v-if="editMode && this.orders.length > 0"
+        v-if="editMode && this.orders && this.orders.length > 0"
         @click="deleteSelected()"
       >Delete</span>
-      <span class="edit-bag" v-if="editMode && this.orders.length > 0" @click="done()">Done</span>
+      <span class="edit-bag" v-if="editMode && this.orders && this.orders.length > 0" @click="done()">Done</span>
     </h3>
     <hr>
     <ul class="orders">
@@ -54,7 +54,7 @@
       </li>
     </ul>
 
-    <div v-if="orders.length <= 0" class="order-empty">
+    <div v-if="orders && orders.length <= 0" class="order-empty">
       <div class="content">
         <div>You have not ordered yet.
           <br><br>
@@ -107,7 +107,7 @@ export default {
       }
     },
 
-    done() {
+    async done() {
       let validated = true;
       for (let i = 0; i < this.orders.length; i++) {
         const item = this.orders[i];
@@ -118,6 +118,7 @@ export default {
 
       if (validated) {
         this.editMode = false;
+        await this.$store.dispatch('cartStore/updateOrders');
         this.selectedItems = [];
       }
     },

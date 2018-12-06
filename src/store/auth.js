@@ -59,6 +59,21 @@ export default {
       }
     },
 
+    async logout({ commit }) {
+      try {
+        const { data } = await Vue.prototype.$axios({
+          method: 'get',
+          url: ProxyUrls.logoutUrl,
+        });
+
+        if (data) {
+          commit('logoutUser');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
     async initiateAppSession({
       state,
       commit,
@@ -94,6 +109,14 @@ export default {
         localStorage.removeItem('email');
         localStorage.removeItem('name');
       }
+    },
+
+    logoutUser(state) {
+      state.name = '';
+      state.email = '';
+      localStorage.removeItem('email');
+      localStorage.removeItem('name');
+      state.isSessionActive = false;
     },
   },
   getters: {

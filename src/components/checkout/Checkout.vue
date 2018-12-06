@@ -5,7 +5,7 @@
 
     <b-row>
       <b-col md="6">
-        <shipping-detail :allAddresses="shippingAddress" :selected="selectedAddress" @selected="addressSelected"/>
+        <shipping-detail :selected="selectedAddress" @selected="addressSelected"/>
         <payment-detail/>
       </b-col>
       <b-col md="6">
@@ -30,7 +30,6 @@ export default {
 
   data() {
     return {
-      shippingAddress: [],
       selectedAddress: {},
       payment: {},
     };

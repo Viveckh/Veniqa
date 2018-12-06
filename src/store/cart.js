@@ -11,7 +11,23 @@ export default {
     async addToTheCart({
       state,
       commit,
+      rootGetters,
     }, payload) {
+      // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
+      if (!rootGetters['authStore/isSessionActive']) {
+        const foundIndex = _.findIndex(state.cart, pr => pr._id === payload._id);
+
+        if (foundIndex >= 0) {
+          state.cart[foundIndex].counts += 1;
+        } else {
+          payload.counts += 1;
+          state.cart.push(payload);
+        }
+
+        commit('setLocalCart', state.cart);
+        return true;
+      }
+
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
@@ -22,15 +38,17 @@ export default {
         });
 
         commit('setCart', res.data);
+        return true;
       } catch (err) {
-
+        return false;
       }
     },
 
     async getCart({
       state,
       commit,
-    }) {
+      dispatch,
+    }, append) {
       try {
         const {
           data,
@@ -39,7 +57,12 @@ export default {
           url: ProxyUrl.getCart,
         });
 
-        commit('setCart', data);
+        if (append) {
+          commit('appendToCart', data);
+          dispatch('updateOrders');
+        } else {
+          commit('setCart', data);
+        }
       } catch (err) {
         throw new Error(err);
       }
@@ -48,13 +71,22 @@ export default {
     async deleteOrders({
       state,
       commit,
+      rootGetters,
     }, products) {
       const deletedIds = _.map(products, '_id');
+
+      // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
+      if (!rootGetters['authStore/isSessionActive']) {
+        _.remove(state.cart, product => deletedIds.indexOf(product._id) >= 0);
+
+        commit('setLocalCart', state.cart);
+        return;
+      }
       try {
         const {
           data,
         } = await Vue.prototype.$axios({
-          method: 'post',
+          method: 'delete',
           url: ProxyUrl.deleteCart,
           data: {
             productIds: deletedIds,
@@ -72,7 +104,14 @@ export default {
     async updateOrders({
       state,
       commit,
+      rootGetters,
     }) {
+      // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
+      if (!rootGetters['authStore/isSessionActive']) {
+        // These commits don't do anything but are necessary because they help persist.
+        commit('setLocalCart', state.cart);
+        return true;
+      }
       const orders = _.map(state.cart, c => ({
         product_id: c._id,
         counts: c.counts,
@@ -82,7 +121,7 @@ export default {
         const {
           data,
         } = await Vue.prototype.$axios({
-          method: 'post',
+          method: 'put',
           url: ProxyUrl.updateCart,
           data: orders,
         });
@@ -94,6 +133,25 @@ export default {
     },
   },
   mutations: {
+    resetOrders(state) {
+      state.cart = [];
+    },
+    appendToCart(state, newProducts) {
+      newProducts.forEach((pr) => {
+        const ind = _.findIndex(state.cart, {
+          _id: pr._id,
+        });
+
+        if (ind < 0) {
+          const temp = pr.product;
+          temp.counts = pr.counts;
+          state.cart.push(temp);
+        }
+      });
+    },
+    setLocalCart(state, products) {
+      state.cart = [...state.cart];
+    },
     setCart(state, allProducts) {
       state.cart.splice(0, state.cart.length);
       const transformed = [];
