@@ -17,4 +17,7 @@ export default {
   getCart: '/shopping/getCart',
   deleteCart: '/shopping/deleteFromCart',
   updateCart: '/shopping/updateCart',
+
+  // Addresses
+  addressUrl: '/address'
 };

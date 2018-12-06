@@ -161,15 +161,11 @@
 
 <script>
 import ShippingDTO from '@/dto/ShippingAddress.json';
+import { mapGetters } from "vuex";
 
 export default {
   name: 'ShippingDetail',
   props: {
-    allAddresses: {
-      required: true,
-      type: Array,
-    },
-
     selected: {
       required: true,
       type: Object,
@@ -226,6 +222,11 @@ export default {
         && this.countryState
       ) {
         const cloned = _.cloneDeep(this.shippingDeet);
+
+        // this.$store.dispatch('shippingStore/addressAction', {
+        //   address: cloned,
+        //   action: 'post'
+        // })
         this.allAddresses.push(cloned);
         this.$emit('selected', cloned);
 
@@ -236,6 +237,10 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      allAddresses: 'shippingStore/allAddresses'
+    }),
+
     firstNameState() {
       if (this.shippingDeet.firstName == null) return null;
       return this.shippingDeet.firstName.length >= 1;
@@ -260,6 +265,8 @@ export default {
       if (this.shippingDeet.country == null) return null;
       return this.shippingDeet.country.length > 0;
     },
+
+
   },
 };
 </script>
