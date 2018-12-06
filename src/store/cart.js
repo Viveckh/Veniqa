@@ -31,6 +31,7 @@ export default {
     async getCart({
       state,
       commit,
+      dispatch
     }, append) {
       try {
         const {
@@ -60,7 +61,7 @@ export default {
         const {
           data,
         } = await Vue.prototype.$axios({
-          method: 'post',
+          method: 'delete',
           url: ProxyUrl.deleteCart,
           data: {
             productIds: deletedIds,
@@ -88,7 +89,7 @@ export default {
         const {
           data,
         } = await Vue.prototype.$axios({
-          method: 'post',
+          method: 'put',
           url: ProxyUrl.updateCart,
           data: orders,
         });
