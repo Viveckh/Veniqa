@@ -47,23 +47,23 @@
 </template>
 
 <script>
-import ProxyUrls from "@/constants/ProxyUrls.js";
+import ProxyUrls from '@/constants/ProxyUrls.js';
 
 export default {
-  name: "EmailConfirmation",
+  name: 'EmailConfirmation',
   props: {
     token: {
       required: true,
-      default: String
-    }
+      default: String,
+    },
   },
 
   async created() {
     if (this.token) {
       try {
         const { data } = await this.$axios({
-          method: "get",
-          url: `${ProxyUrls.confirmEmail}/${this.token}`
+          method: 'get',
+          url: `${ProxyUrls.confirmEmail}/${this.token}`,
         });
 
         if (data) {
@@ -79,7 +79,7 @@ export default {
     return {
       value: null,
       resendHit: false,
-      email: ""
+      email: '',
     };
   },
 
@@ -92,33 +92,33 @@ export default {
       if (this.emailState) {
         try {
           const { data } = await this.$axios({
-            method: "get",
-            url: ProxyUrls.resendEmail + this.email
+            method: 'get',
+            url: ProxyUrls.resendEmail + this.email,
           });
 
           this.$notify({
-            group: "all",
-            type: "success",
-            text: "Email successfully sent. Please check your inbox."
+            group: 'all',
+            type: 'success',
+            text: 'Email successfully sent. Please check your inbox.',
           });
         } catch (err) {
           this.$notify({
-            group: "all",
-            type: "error",
+            group: 'all',
+            type: 'error',
             text:
-              "Some error occured while trying to send the email. Please try later."
+              'Some error occured while trying to send the email. Please try later.',
           });
         }
       }
-    }
+    },
   },
 
   computed: {
     emailState() {
       if (this.email.length == 0) return null;
       return this.validEmail(this.email);
-    }
-  }
+    },
+  },
 };
 </script>
 

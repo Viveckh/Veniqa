@@ -34,7 +34,7 @@ export default {
       vendorMap: {
         macys: "Macy's",
         amazon: 'Amazon',
-        sephora: 'Sephora'
+        sephora: 'Sephora',
       },
       searchResult: [],
     };

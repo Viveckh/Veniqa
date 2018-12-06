@@ -11,6 +11,8 @@
 import HeaderMenu from '@/components/HeaderMenu.vue';
 import FooterView from '@/components/Footer.vue';
 
+import { mapGetters } from 'vuex';
+
 import axios from 'axios';
 
 export default {
@@ -22,6 +24,16 @@ export default {
 
   async created() {
     await this.$store.dispatch('authStore/initiateAppSession');
+
+    if (this.isSessionActive) {
+      this.$store.dispatch('cartStore/getCart');
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      isSessionActive: 'authStore/isSessionActive',
+    }),
   },
 };
 </script>
