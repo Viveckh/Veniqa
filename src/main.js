@@ -19,11 +19,11 @@ import '@/assets/css/overrides.scss';
 import VueScrollTo from 'vue-scrollto';
 import Notifications from 'vue-notification'
 import VueAxios from './plugins/axios';
+import GMap from './plugins/geocode';
 import _ from 'lodash';
 
 import 'animate.css'
 
-// Vue.use(VueScrollTo)
 Vue.use(Notifications)
 
 // You can also pass in the default options

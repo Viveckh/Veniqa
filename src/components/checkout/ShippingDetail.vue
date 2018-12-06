@@ -25,12 +25,19 @@
       <font-awesome-icon icon="plus"/>&nbsp;&nbsp; Add a new address
     </a>
 
+    <!-- This is the google maps implementation which doesn't work right now due to billing -->
+    <!-- <gmap-autocomplete :value="description"
+        placeholder="This is a placeholder text"
+        @place_changed="setPlace"
+        :select-first-on-enter="true">
+      </gmap-autocomplete> -->
+
     <!-- Input form to add new address for the user -->
     <transition
       name="shipping-form-anim"
       enter-active-class="animated slideInLeft faster"
       leave-active-class="animated slideOutLeft faster"
-    >
+      >
       <div v-if="isShowAddAddress" class="shipping-form">
         <hr>
         <b-row>
@@ -178,10 +185,15 @@ export default {
     return {
       isShowAddAddress: false,
       shippingDeet: null,
+      description: '',
+
     };
   },
 
   methods: {
+    setPlace() {
+
+    },
     showAddAddress() {
       this.isShowAddAddress = true;
     },
