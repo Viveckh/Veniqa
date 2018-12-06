@@ -60,56 +60,56 @@
 </template>
 
 <script>
-import ProxyUrl from "@/constants/ProxyUrls";
+import ProxyUrl from '@/constants/ProxyUrls';
 
 export default {
-  name: "PasswordConfirmation",
+  name: 'PasswordConfirmation',
   props: {
     token: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
     return {
       isReset: false,
-      password: "",
-      confirmPassword: "",
-      username: ''
+      password: '',
+      confirmPassword: '',
+      username: '',
     };
   },
 
   async created() {
     // When created, first confirm if the link is still valid.
     try {
-      let { data } = await this.$axios({
-        method: "get",
-        url: ProxyUrl.validateResetToken + this.token
+      const { data } = await this.$axios({
+        method: 'get',
+        url: ProxyUrl.validateResetToken + this.token,
       });
 
       if (data) {
         this.isReset = true;
         this.$notify({
-          group: "all",
-          type: "success",
-          text: "You can now change your password."
+          group: 'all',
+          type: 'success',
+          text: 'You can now change your password.',
         });
       } else {
         this.$notify({
-          group: "all",
-          type: "warn",
+          group: 'all',
+          type: 'warn',
           text:
-            "Looks like you are a little too late. Please try resending the email."
+            'Looks like you are a little too late. Please try resending the email.',
         });
       }
     } catch (err) {
       // console.log("Error ", err);
       this.$notify({
-        group: "all",
-        type: "error",
+        group: 'all',
+        type: 'error',
         text:
-          "There was an error fulfilling your request. Please try resending the reset information."
+          'There was an error fulfilling your request. Please try resending the reset information.',
       });
     }
   },
@@ -119,68 +119,68 @@ export default {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-   async resetButtonClick() {
-      if(this.usernameState){
+    async resetButtonClick() {
+      if (this.usernameState) {
         try {
-          const {data} = await this.$axios({
+          const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrl.forgotPassword + this.username
+            url: ProxyUrl.forgotPassword + this.username,
           });
 
           this.$notify({
-            group: 'all', 
+            group: 'all',
             type: 'success',
-            text: 'The email was just sent. Please check your email and follow the instructions.'
-          })
-        }catch(err){
+            text: 'The email was just sent. Please check your email and follow the instructions.',
+          });
+        } catch (err) {
           this.$notify({
-            group: 'all', 
+            group: 'all',
             type: 'error',
-            text: 'The email could not be sent right now. Please try again later'
-          })
+            text: 'The email could not be sent right now. Please try again later',
+          });
         }
       }
     },
     async resetPassword() {
       if (this.passwordState && this.confirmPasswordState) {
         try {
-          let { data } = await this.$axios({
-            method: "post",
+          const { data } = await this.$axios({
+            method: 'post',
             url: ProxyUrl.resetPassword,
             data: {
               token: this.token,
-              newPassword: this.password
-            }
+              newPassword: this.password,
+            },
           });
           if (data) {
             this.$notify({
-              group: "all",
-              type: "success",
-              text: "You can now go ahead and login."
+              group: 'all',
+              type: 'success',
+              text: 'You can now go ahead and login.',
             });
-            this.$router.push("/");
+            this.$router.push('/');
           } else {
             this.isReset = false;
             this.password = '';
             this.confirmPassword = '';
 
             this.$notify({
-              group: "all",
-              type: "warn",
+              group: 'all',
+              type: 'warn',
               text:
-                "Looks like you are a little too late. Please try resending the email."
+                'Looks like you are a little too late. Please try resending the email.',
             });
           }
         } catch (err) {
           this.$notify({
-            group: "all",
-            type: "error",
+            group: 'all',
+            type: 'error',
             text:
-              "There was an error fulfilling your request. Please try resending the reset information."
+              'There was an error fulfilling your request. Please try resending the reset information.',
           });
         }
       }
-    }
+    },
   },
 
   computed: {
@@ -198,7 +198,7 @@ export default {
       if (this.username.length == 0) return null;
       return this.validEmail(this.username);
     },
-  }
+  },
 };
 </script>
 
@@ -213,4 +213,3 @@ h2{
   margin-bottom: 50px;
 }
 </style>
-

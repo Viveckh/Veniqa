@@ -66,30 +66,30 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "OrderDetail",
+  name: 'OrderDetail',
   data() {
     return {
       editMode: false,
-      selectedItems: []
+      selectedItems: [],
     };
   },
 
   methods: {
     orderPicture(img) {
       return {
-        "background-image": `url(${img})`,
-        width: "100%",
-        height: "70px",
-        "background-size": "contain",
-        "background-repeat": "no-repeat"
+        'background-image': `url(${img})`,
+        width: '100%',
+        height: '70px',
+        'background-size': 'contain',
+        'background-repeat': 'no-repeat',
       };
     },
 
     gotoDealPage() {
-      this.$router.push('/')
+      this.$router.push('/');
     },
 
     editOrder() {
@@ -125,23 +125,23 @@ export default {
     async deleteSelected() {
       try {
         await this.$store.dispatch(
-          "cartStore/deleteOrders",
-          this.selectedItems
+          'cartStore/deleteOrders',
+          this.selectedItems,
         );
       } catch (err) {}
       this.selectedItems = [];
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      orders: "cartStore/getCart"
+      orders: 'cartStore/getCart',
     }),
 
     quantityState() {
       return qty => qty >= 1;
-    }
-  }
+    },
+  },
 };
 </script>
 

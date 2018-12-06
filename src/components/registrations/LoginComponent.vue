@@ -85,25 +85,25 @@ export default {
     },
 
     async resetPassword() {
-      if(this.usernameState){
+      if (this.usernameState) {
         try {
-          const {data} = await this.$axios({
+          const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrl.forgotPassword + this.username
+            url: ProxyUrl.forgotPassword + this.username,
           });
-          this.$emit('close')
+          this.$emit('close');
 
           this.$notify({
-            group: 'all', 
+            group: 'all',
             type: 'success',
-            text: 'The email was just sent. Please check your email and follow the instructions.'
-          })
-        }catch(err){
+            text: 'The email was just sent. Please check your email and follow the instructions.',
+          });
+        } catch (err) {
           this.$notify({
-            group: 'all', 
+            group: 'all',
             type: 'error',
-            text: 'The email could not be sent right now. Please try again later'
-          })
+            text: 'The email could not be sent right now. Please try again later',
+          });
         }
       }
     },
