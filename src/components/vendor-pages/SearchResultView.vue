@@ -53,12 +53,12 @@ export default {
           group: 'toast',
           type: 'success',
           text: `Added ${product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
         });
       } else {
         this.$notify({
           group: 'toast',
-          type: 'warning',
+          type: 'warn',
           text: `${product.name} couldn't be added for some reason. Please try again later`,
         });
       }
@@ -68,6 +68,7 @@ export default {
       this.$router.push(`/products/${pid}`);
     },
   },
+
 };
 </script>
 

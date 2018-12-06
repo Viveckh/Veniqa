@@ -4,7 +4,12 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand class="abs">
-        <img src="@/assets/transparent-logo.png" alt="VENIQA" width="120px" style="padding-top: 20px;">
+        <img
+          src="@/assets/transparent-logo.png"
+          alt="VENIQA"
+          width="120px"
+          style="padding-top: 20px;"
+        >
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse" class="collapsible-content">
         <b-navbar-nav>
@@ -20,24 +25,46 @@
           <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
-          <b-nav-item class="veniqa-nav" href="#" v-else>{{nameOfUser}}</b-nav-item>
+          <!-- <b-nav-item class="veniqa-nav" v-else> -->
+            <!-- {{nameOfUser}} -->
+            <b-nav-item-dropdown class="veniqa-nav" :text="nameOfUser" right v-else>
+              <b-dropdown-item href="#">Profile</b-dropdown-item>
+              <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
+            </b-nav-item-dropdown>
+          <!-- </b-nav-item> -->
           <b-nav-item class="veniqa-nav" to="/checkout">
-             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/><b-badge :pill="true" variant="danger">{{orders.length}}</b-badge>
+            <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
+            <b-badge :pill="true" variant="danger">{{orders.length}}</b-badge>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-
-
   </div>
 </template>
 
 <script>
-
-
 export default {
   name: 'HeaderMenu',
+  methods: {
+    async logoutClicked() {
+      try {
+        const res = await this.$store.dispatch('authStore/logout');
+        this.$notify({
+          group: 'all',
+          type: 'success',
+          text: 'You have been successfully logged out.',
+        });
 
+        this.$store.commit('cartStore/resetOrders');
+      } catch (err) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'Sorry but we could not log you out at the moment.',
+        });
+      }
+    },
+  },
   computed: {
     nameOfUser() {
       return this.$store.getters['authStore/getFirstName'];
@@ -82,7 +109,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 
-  .navbar-brand{
+  .navbar-brand {
     margin-right: 0px;
   }
 }
@@ -118,4 +145,6 @@ export default {
     }
   }
 }
+
+
 </style>

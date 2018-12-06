@@ -107,7 +107,7 @@ export default {
       }
     },
 
-    done() {
+    async done() {
       let validated = true;
       for (let i = 0; i < this.orders.length; i++) {
         const item = this.orders[i];
@@ -118,6 +118,7 @@ export default {
 
       if (validated) {
         this.editMode = false;
+        await this.$store.dispatch('cartStore/updateOrders');
         this.selectedItems = [];
       }
     },

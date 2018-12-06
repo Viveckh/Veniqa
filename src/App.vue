@@ -65,5 +65,6 @@ html,body{
 .toast-notification{
   margin-top: 100px !important;
   font-size: 0.8em !important;
+  padding: 20px 10px !important;
 }
 </style>

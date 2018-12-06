@@ -11,7 +11,23 @@ export default {
     async addToTheCart({
       state,
       commit,
+      rootGetters,
     }, payload) {
+      // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
+      if (!rootGetters['authStore/isSessionActive']) {
+        const foundIndex = _.findIndex(state.cart, pr => pr._id === payload._id);
+
+        if (foundIndex >= 0) {
+          state.cart[foundIndex].counts += 1;
+        } else {
+          payload.counts += 1;
+          state.cart.push(payload);
+        }
+
+        commit('setLocalCart', state.cart);
+        return true;
+      }
+
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
@@ -55,8 +71,17 @@ export default {
     async deleteOrders({
       state,
       commit,
+      rootGetters,
     }, products) {
       const deletedIds = _.map(products, '_id');
+
+      // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
+      if (!rootGetters['authStore/isSessionActive']) {
+        _.remove(state.cart, product => deletedIds.indexOf(product._id) >= 0);
+
+        commit('setLocalCart', state.cart);
+        return;
+      }
       try {
         const {
           data,
@@ -79,7 +104,14 @@ export default {
     async updateOrders({
       state,
       commit,
+      rootGetters,
     }) {
+      // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
+      if (!rootGetters['authStore/isSessionActive']) {
+        // These commits don't do anything but are necessary because they help persist.
+        commit('setLocalCart', state.cart);
+        return true;
+      }
       const orders = _.map(state.cart, c => ({
         product_id: c._id,
         counts: c.counts,
@@ -101,14 +133,24 @@ export default {
     },
   },
   mutations: {
+    resetOrders(state) {
+      state.cart = [];
+    },
     appendToCart(state, newProducts) {
       newProducts.forEach((pr) => {
-        const ind = _.findIndex(state.cart, { _id: pr._id });
+        const ind = _.findIndex(state.cart, {
+          _id: pr._id,
+        });
 
         if (ind < 0) {
-          state.cart.push(pr);
+          const temp = pr.product;
+          temp.counts = pr.counts;
+          state.cart.push(temp);
         }
       });
+    },
+    setLocalCart(state, products) {
+      state.cart = [...state.cart];
     },
     setCart(state, allProducts) {
       state.cart.splice(0, state.cart.length);
