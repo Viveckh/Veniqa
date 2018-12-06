@@ -21,10 +21,18 @@ let userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    approved: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     permissions: {
         type: [String],
         required: true,
-        enum: ['SUPERADMIN', 'ORDER_VIEW', 'ORDER_MANAGE', 'CATALOG_VIEW', 'CATALOG_MANAGE']
+        enum: ['SUPERADMIN', 'ORDER_VIEW', 'ORDER_MANAGE', 'CATALOG_VIEW', 'CATALOG_MANAGE'],
+        validate: (value) => {
+            return value.length > 0
+        }
     },
     emailConfirmationToken: String,
     passwordResetToken: String,

@@ -53,6 +53,12 @@ export default {
                             console.log('Invalid Password');
                             return done(null, false); // redirect back to login page
                         }
+
+                        // If the user's account has not been approved, make sure to prevent login
+                        if (!user.approved) {
+                            console.log("Account not approved yet for login")
+                            return done(null, false);
+                        }
                         /*
                         // If user has not confirmed their email address yet, make sure to not log them in
                         if (user.emailConfirmationToken) {

@@ -12,7 +12,8 @@ export default {
             email: userObj.email,
             password: cryptoGen.createPasswordHash(userObj.password),
             name: userObj.name,
-            emailConfirmationToken: await cryptoGen.generateRandomToken()
+            emailConfirmationToken: await cryptoGen.generateRandomToken(),
+            permissions: userObj.permissions
         });
 
         try {
@@ -20,7 +21,7 @@ export default {
             if (user) {
                 console.log("[DB]: User inserted => ", user);
                 emailService.emailEmailConfirmationInstructions(user.email, user.name, user.emailConfirmationToken)
-                return {email: user.email, name: user.name};
+                return {email: user.email, name: user.name, permissions: user.permissions};
             }
             return {errMsg: 'could not create user'};
         }
