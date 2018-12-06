@@ -31,6 +31,24 @@ export default {
         });
     },
 
+    emailAdminWelcomeInstructions(email, name, token) {
+        // setup email data with unicode symbols
+        let mailOptions = {
+            from: '"Veniqa Support 👾" <support@veniqa.com>', // sender address
+            to: 'support@veniqa.com, ' + email, // list of receivers
+            subject: 'Veniqa - Admin Onboarding Instructions', // Subject line
+            html: '<b>Hi </b>' +  name + '<br>Thanks for joining Veniqa as an admin. <br> Before you can login, please click the link below to reset your login password<br><br><button><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '">Reset Password</a></button><br><br>Once you reset your password, you will be redirected to the login page.'
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message sent: %s', info.messageId);
+        });
+    },
+
     emailPasswordResetInstructions(email, name, token) {
         // setup email data with unicode symbols
         let mailOptions = {
