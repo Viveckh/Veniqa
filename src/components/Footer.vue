@@ -1,50 +1,10 @@
 <template>
   <div>
     <div class="block news dark">
-      <div class="newsletter dark">
-        <b-row>
-          <b-col class="align-right center-sm">
-            <span>
-            Get Notified of hottest deals
-            <br>
-            <input
-              type="text"
-              class="input"
-              v-model="subscriptionEmail">
-            </span>
-
-          </b-col>
-          <b-col class="align-left center-sm">
-            <b-button
-              class="subscribe-button veniqa-button dark"
-              @click="subscribeClicked()"
-            >Subscribe</b-button>
-          </b-col>
-        </b-row>
-      </div>
-
-
+      <div class="newsletter dark"></div>
     </div>
     <div class="block light">
-      <div class="main-block">
-          <b-row>
-          <b-col class="align-left center-sm" md="4">
-            <a>Privary Policy</a>
-            <br>
-            <a>Terms and Condition</a>
-          </b-col>
-          <b-col md="4">
-            <strong>@2018 Veniqa
-            <br>
-            An Ngineerx Subsidiary</strong>
-          </b-col>
-          <b-col class="align-right center-sm" md="4">
-            <a>Facebook</a>
-            <br>
-            <a>Instagram</a>
-          </b-col>
-        </b-row>
-      </div>
+      <div class="main-block"></div>
     </div>
   </div>
 </template>
@@ -70,16 +30,17 @@ export default {
 
   line-height: 250px;
 
-  span, .main-block {
+  span,
+  .main-block {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
     width: 80%;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     line-height: normal;
-    .center-sm{
+    .center-sm {
       text-align: center;
       margin: 15px 0px;
     }
@@ -110,6 +71,4 @@ export default {
     color: $pitch-black;
   }
 }
-
-
 </style>

@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <h2>
-        <strong v-if="!forgotEnabled">Login</strong>
+        <strong v-if="!forgotEnabled">Admin Login</strong>
         <strong v-else>Forgot Password</strong>
       </h2>
       <p v-if="forgotEnabled">Please enter your email to reset the password.</p>
@@ -26,7 +26,7 @@
 
     <b-form-group>
       <b-form-input
-      v-if="!forgotEnabled"
+        v-if="!forgotEnabled"
         type="password"
         name="password"
         :state="passwordState"
@@ -45,8 +45,6 @@
 
     <p class="register-class" @click="register()">New User? Register here.</p>
     <div class="modal-bottom"></div>
-
-
   </div>
 </template>
 
@@ -95,13 +93,15 @@ export default {
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'The email was just sent. Please check your email and follow the instructions.',
+            text:
+              'The email was just sent. Please check your email and follow the instructions.',
           });
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'The email could not be sent right now. Please try again later',
+            text:
+              'The email could not be sent right now. Please try again later',
           });
         }
       }
@@ -133,15 +133,16 @@ export default {
 
 .header {
   // margin: 50px 0px;
-  color: #267871;
+  color: red;
 
-  h2{
+  h2 {
     margin-bottom: 1em;
   }
 }
 .login-button {
   width: 100%;
-  background-image: linear-gradient(to right, #136a8a, #267871) !important;
+  background-image: linear-gradient(to right, red, red) !important;
+  border: 0px;
 }
 
 .register-class {

@@ -11,18 +11,18 @@
 </template>
 
 <script>
-import UserAccountModal from "@/components/registrations/UserAccountModal.vue";
+import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
-    UserAccountModal
+    UserAccountModal,
   },
 
   data() {
     return {
-      registrationClass: ["registration-mode"],
-      userLoggedIn: false
+      registrationClass: ['registration-mode'],
+      userLoggedIn: false,
     };
   },
 
@@ -30,8 +30,8 @@ export default {
     loggedIn() {
       // Do something when logged in.
       this.$router.push('/');
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -40,7 +40,7 @@ export default {
 
 .login {
   height: 100vh;
-  background-image: $gradient-color;
+  //background-image: $gradient-color;
   line-height: 100vh;
 
   .content {
@@ -55,6 +55,6 @@ export default {
   width: 70%;
   margin: auto;
   background-color: white;
-  box-shadow: 5px 6px 10px 0px #2E3532;
+  //box-shadow: 5px 6px 10px 0px #2e3532;
 }
 </style>

@@ -61,7 +61,7 @@
         placeholder="Re-enter the password"
         aria-describedby="confirmPasswordFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="confirmPasswordFeedback">It should match the password entered. </b-form-invalid-feedback>
+      <b-form-invalid-feedback id="confirmPasswordFeedback">It should match the password entered.</b-form-invalid-feedback>
     </b-form-group>
 
     <b-form-group>
@@ -82,7 +82,6 @@
 
     <p class="register-class" @click="loginNavigation()">Already a User? Go back to login.</p>
     <div class="modal-bottom"></div>
-
   </div>
 </template>
 
@@ -101,7 +100,13 @@ export default {
 
   methods: {
     registerClicked() {
-      if (this.usernameState && this.passwordState && this.confirmPasswordState && this.phoneState && this.nameState) {
+      if (
+        this.usernameState
+        && this.passwordState
+        && this.confirmPasswordState
+        && this.phoneState
+        && this.nameState
+      ) {
         this.$emit('register', {
           email: this.username,
           password: this.password,
@@ -152,7 +157,7 @@ export default {
 <style lang="scss">
 .register-button {
   width: 100%;
-  background-image: linear-gradient(to right, #136a8a, #267871) !important;
+  background-image: linear-gradient(to right, red, red) !important;
 }
 
 .register-class {
