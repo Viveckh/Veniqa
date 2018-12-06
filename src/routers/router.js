@@ -3,7 +3,8 @@ import Router from 'vue-router';
 import Home from '@/views/Home.vue';
 import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
-import Login from '@/views/Login.vue'
+import Login from '@/views/Login.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -16,7 +17,7 @@ export default new Router({
       children: [
         {
           path: '',
-          component: MainPage
+          component: MainPage,
         },
         {
           path: 'about',
@@ -54,9 +55,14 @@ export default new Router({
           path: 'checkout',
           component: Checkout,
         },
-      ]
+        {
+          path: 'products/:productId',
+          component: () => import('@/views/ProductDetail.vue'),
+          props: true,
+        },
+      ],
     },
-    
+
     {
       path: '/email-confirmation/:token',
       props: true,
@@ -69,8 +75,8 @@ export default new Router({
     },
     {
       path: '/login',
-      component: Login
-    }
+      component: Login,
+    },
 
 
   ],
