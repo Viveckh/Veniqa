@@ -7,7 +7,11 @@
         @click="editOrder()"
         v-if="!editMode && orders.length > 0"
       >Edit Bag</span>
-      <span class="edit-bag delete" v-if="editMode && this.orders.length > 0" @click="deleteSelected()">Delete</span>
+      <span
+        class="edit-bag delete"
+        v-if="editMode && this.orders.length > 0"
+        @click="deleteSelected()"
+      >Delete</span>
       <span class="edit-bag" v-if="editMode && this.orders.length > 0" @click="done()">Done</span>
     </h3>
     <hr>
@@ -42,37 +46,50 @@
               min="1"
               aria-describedby="qtyFeedback"
             ></b-form-input>
-            <b-form-invalid-feedback v-if="editMode" id="qtyFeedback"> > 0 </b-form-invalid-feedback>
+            <b-form-invalid-feedback v-if="editMode" id="qtyFeedback">> 0</b-form-invalid-feedback>
             <span v-else>{{item.counts}}</span>
           </b-col>
           <b-col>{{item.price.currency}} {{item.price.amount}}</b-col>
         </b-row>
       </li>
     </ul>
+
+    <div v-if="orders.length <= 0" class="order-empty">
+      <div class="content">
+        <div>You have not ordered yet.
+          <br><br>
+          <b-button @click="gotoDealPage()" class="primary-button">Go Get Orderin</b-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'OrderDetail',
+  name: "OrderDetail",
   data() {
     return {
       editMode: false,
-      selectedItems: [],
+      selectedItems: []
     };
   },
 
   methods: {
     orderPicture(img) {
       return {
-        'background-image': `url(${img})`,
-        width: '100%',
-        height: '70px',
-        'background-size': 'contain',
-        'background-repeat': 'no-repeat',
+        "background-image": `url(${img})`,
+        width: "100%",
+        height: "70px",
+        "background-size": "contain",
+        "background-repeat": "no-repeat"
       };
+    },
+
+    gotoDealPage() {
+      this.$router.push('/')
     },
 
     editOrder() {
@@ -107,23 +124,24 @@ export default {
 
     async deleteSelected() {
       try {
-        await this.$store.dispatch('cartStore/deleteOrders', this.selectedItems);
-      } catch (err) {
-
-      }
+        await this.$store.dispatch(
+          "cartStore/deleteOrders",
+          this.selectedItems
+        );
+      } catch (err) {}
       this.selectedItems = [];
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
-      orders: 'cartStore/getCart',
+      orders: "cartStore/getCart"
     }),
 
     quantityState() {
       return qty => qty >= 1;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -142,6 +160,21 @@ export default {
 }
 
 .order-detail {
+  margin-top: 30px;
+  .order-empty {
+    height: 500px;
+    line-height: 500px;
+    color: #bdbdbd;
+    font-size: 1.5em;
+    text-align: center;
+
+    .content {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+    }
+  }
+
   .orders {
     list-style-type: none;
     padding: 0px;

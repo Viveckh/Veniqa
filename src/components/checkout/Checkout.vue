@@ -50,8 +50,8 @@ export default {
   margin: auto;
   margin-bottom: 10px;
 
-  h2{
-    margin-bottom: 20px;
-  }
+  // h2{
+  //   margin-bottom: 20px;
+  // }
 }
 </style>
