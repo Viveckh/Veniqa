@@ -33,7 +33,7 @@ export default {
 
       // There are few things to do when the user is logged in.
       // Get the user's cart and Get the addresses.
-      this.$store.dispatch('cartStore/fetchCart');
+      this.$store.dispatch('cartStore/getCart', true);
       // this.$store.dispatch('shippingStore/fetchAddresses');
     }
   }

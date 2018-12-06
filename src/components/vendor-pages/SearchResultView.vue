@@ -4,7 +4,8 @@
       <h2>Search Results for Fossil Watches</h2>
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
-          <div
+          <div @click="openProductDetail(product._id)">
+            <div
             class="img-cls"
             :style="getPictureStyle(product.picture_urls[0])"
             v-if="product.picture_urls.length > 0"
@@ -15,6 +16,8 @@
           </p>
           <p><strong>{{product.name}}</strong></p>
           <p>{{product.price}}</p>
+          </div>
+          
           <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button>
         </div>
       </div>
@@ -43,9 +46,27 @@ export default {
       };
     },
 
-    addToCart(product) {
-      this.$store.dispatch('cartStore/addToTheCart', product);
+    async addToCart(product) {
+      let val = await this.$store.dispatch('cartStore/addToTheCart', product);
+      if(val) {
+        this.$notify({
+          group: 'toast',
+          type: 'success',
+          text: 'Added ' + product.name + ' to the cart'
+        })
+      }else{
+        this.$notify({
+          group: 'toast',
+          type: 'warning',
+          text: product.name +' couldn\'t be added for some reason. Please try again later'
+        })
+      }
+      
     },
+
+    openProductDetail(pid){
+      this.$router.push('/products/'+pid);
+    }
   },
 };
 </script>

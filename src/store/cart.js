@@ -22,15 +22,16 @@ export default {
         });
 
         commit('setCart', res.data);
+        return true;
       } catch (err) {
-
+        return false;
       }
     },
 
     async getCart({
       state,
       commit,
-    }, {append}) {
+    }, append) {
       try {
         const {
           data,
