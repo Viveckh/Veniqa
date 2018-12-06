@@ -4,7 +4,7 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand class="abs">
-        <img src="@/assets/logo.png" alt="VENIQA" width="120px">
+        <img src="@/assets/transparent-logo.png" alt="VENIQA" width="120px" style="padding-top: 20px;">
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse" class="collapsible-content">
         <b-navbar-nav>
@@ -19,10 +19,8 @@
           <b-nav-item class="veniqa-nav" to="/about">About</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
-          <b-nav-item class="veniqa-nav">
-            <span v-if="!userSessionActive" v-b-modal.registration-modal>Login</span>
-            <span v-else>{{nameOfUser}}</span>
-          </b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+          <b-nav-item class="veniqa-nav" href="#" v-else>{{nameOfUser}}</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/checkout">
              <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/><b-badge :pill="true" variant="danger">{{orders.length}}</b-badge>
           </b-nav-item>
@@ -30,44 +28,16 @@
       </b-collapse>
     </b-navbar>
 
-    <b-modal
-      id="registration-modal"
-      centered
-      size="md"
-      :hide-footer="true"
-      :cancel-disabled="true"
-      :ok-disabled="true"
-      :hide-header="true"
-      :modal-class="registrationClass"
-      ref="registrationModal"
-    >
-      <user-account-modal @loginSuccess="loggedIn()"></user-account-modal>
-    </b-modal>
+
   </div>
 </template>
 
 <script>
-import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
+
 
 
 export default {
   name: 'HeaderMenu',
-  components: {
-    UserAccountModal,
-  },
-
-  data() {
-    return {
-      registrationClass: ['registration-mode'],
-      userLoggedIn: false,
-    };
-  },
-
-  methods: {
-    loggedIn() {
-      this.$refs.registrationModal.hide();
-    },
-  },
 
   computed: {
     nameOfUser() {

@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from '@/views/Home.vue';
 import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
-
+import Login from '@/views/Login.vue'
 Vue.use(Router);
 
 export default new Router({
@@ -12,7 +12,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      // name: 'home',
       component: Home,
       children: [
         {
@@ -68,6 +67,10 @@ export default new Router({
       props: true,
       component: () => import('@/views/PasswordConfirmation.vue'),
     },
+    {
+      path: '/login',
+      component: Login
+    }
 
 
   ],

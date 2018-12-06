@@ -1,7 +1,6 @@
 <template>
-  <div class="white-bg">
+  <div>
     <div class="header">
-      <font-awesome-icon class="user-icon" icon="user-circle"/>
       <h2>
         <strong v-if="!forgotEnabled">Login</strong>
         <strong v-else>Forgot Password</strong>
@@ -133,17 +132,12 @@ export default {
 }
 
 .header {
-  margin: 50px 0px;
+  // margin: 50px 0px;
   color: #267871;
 
-  .user-icon {
-    font-size: 100px;
-    margin-bottom: 20px;
-
+  h2{
+    margin-bottom: 1em;
   }
-  // background: -webkit-linear-gradient( #136a8a, #267871);
-  // -webkit-background-clip: text;
-  // -webkit-text-fill-color: transparent;
 }
 .login-button {
   width: 100%;
