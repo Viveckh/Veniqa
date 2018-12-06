@@ -19,7 +19,6 @@ import redisConfig from './properties/redis';
 
 // Router imports
 import indexRouter from './routes/index';
-import amazonRouter from './routes/amazon';
 import securityRouter from './routes/security';
 import catalogRouter from './routes/catalog';
 import shoppingRouter from './routes/shopping';
@@ -107,7 +106,6 @@ app.use(function(req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/security', securityRouter);
-app.use('/amazon', amazonRouter);
 app.use('/catalog', catalogRouter);
 app.use('/shopping', shoppingRouter);
 

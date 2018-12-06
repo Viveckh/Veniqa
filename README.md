@@ -1,4 +1,4 @@
-# Veniqa-Server
+# Veniqa-AdminServer
 
 ## Install the dependencies
 `npm install`

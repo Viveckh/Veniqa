@@ -21,22 +21,15 @@ let userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    permissions: {
+        type: [String],
+        required: true,
+        enum: ['SUPERADMIN', 'ORDER_VIEW', 'ORDER_MANAGE', 'CATALOG_VIEW', 'CATALOG_MANAGE']
+    },
     emailConfirmationToken: String,
     passwordResetToken: String,
-    passwordResetExpires: Date,
-    cart: [{
-        // _id field will get added automatically upon insertion
-        product_id: {
-            type: String,
-            required: true
-        },
-        counts: {
-            type: Number,
-            required: true,
-            default: 1
-        }
-    }]
+    passwordResetExpires: Date
 });
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model('veniqa_users', userSchema);
+module.exports = mongoose.model('veniqa_admins', userSchema);
