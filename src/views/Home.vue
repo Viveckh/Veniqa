@@ -1,31 +1,33 @@
 <template>
   <div class="home">
-
-    <div class="main-screen main-bg">
-        <main-page/>
+    <header-menu/>
+    <div>
+        <!-- <main-page/> -->
+        <router-view/>
     </div>
 
     <div class="space"></div>
-
+    <footer-view/>
   </div>
 </template>
 
 <script>
 import MainPage from '@/components/homepage/MainPage.vue';
-
+import HeaderMenu from '@/components/HeaderMenu.vue';
+import FooterView from '@/components/Footer.vue';
 export default {
   name: 'home',
   components: {
     // HeaderMenu,
-    MainPage,
+    // MainPage,
+    HeaderMenu,
+    FooterView
   },
 };
 </script>
 
-<style >
-
-.main-bg{
-  background-image: url(./../assets/images/background.png);
-  height: 100vh;
+<style lang="scss" scoped>
+.home{
+  height: 100%;
 }
 </style>
