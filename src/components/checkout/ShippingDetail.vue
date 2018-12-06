@@ -161,7 +161,7 @@
 
 <script>
 import ShippingDTO from '@/dto/ShippingAddress.json';
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'ShippingDetail',
@@ -238,7 +238,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      allAddresses: 'shippingStore/allAddresses'
+      allAddresses: 'shippingStore/allAddresses',
     }),
 
     firstNameState() {

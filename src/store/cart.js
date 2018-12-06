@@ -31,7 +31,7 @@ export default {
     async getCart({
       state,
       commit,
-      dispatch
+      dispatch,
     }, append) {
       try {
         const {
@@ -41,10 +41,10 @@ export default {
           url: ProxyUrl.getCart,
         });
 
-        if(append){
+        if (append) {
           commit('appendToCart', data);
           dispatch('updateOrders');
-        }else{
+        } else {
           commit('setCart', data);
         }
       } catch (err) {
@@ -101,11 +101,11 @@ export default {
     },
   },
   mutations: {
-    appendToCart(state, newProducts){
-      newProducts.forEach(pr => {
-        let ind = _.findIndex(state.cart, {_id: pr._id});
+    appendToCart(state, newProducts) {
+      newProducts.forEach((pr) => {
+        const ind = _.findIndex(state.cart, { _id: pr._id });
 
-        if(ind < 0){
+        if (ind < 0) {
           state.cart.push(pr);
         }
       });

@@ -11,18 +11,18 @@
 </template>
 
 <script>
-import UserAccountModal from "@/components/registrations/UserAccountModal.vue";
+import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
-    UserAccountModal
+    UserAccountModal,
   },
 
   data() {
     return {
-      registrationClass: ["registration-mode"],
-      userLoggedIn: false
+      registrationClass: ['registration-mode'],
+      userLoggedIn: false,
     };
   },
 
@@ -35,8 +35,8 @@ export default {
       // Get the user's cart and Get the addresses.
       this.$store.dispatch('cartStore/getCart', true);
       // this.$store.dispatch('shippingStore/fetchAddresses');
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       vendorMap: {
-        macys: "MACYS",
+        macys: 'MACYS',
         amazon: 'AMAZON',
         sephora: 'SEPHORA',
       },

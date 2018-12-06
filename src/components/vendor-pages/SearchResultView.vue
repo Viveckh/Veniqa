@@ -17,7 +17,7 @@
           <p><strong>{{product.name}}</strong></p>
           <p>{{product.price}}</p>
           </div>
-          
+
           <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button>
         </div>
       </div>
@@ -47,26 +47,25 @@ export default {
     },
 
     async addToCart(product) {
-      let val = await this.$store.dispatch('cartStore/addToTheCart', product);
-      if(val) {
+      const val = await this.$store.dispatch('cartStore/addToTheCart', product);
+      if (val) {
         this.$notify({
           group: 'toast',
           type: 'success',
-          text: 'Added ' + product.name + ' to the cart'
-        })
-      }else{
+          text: `Added ${product.name} to the cart`,
+        });
+      } else {
         this.$notify({
           group: 'toast',
           type: 'warning',
-          text: product.name +' couldn\'t be added for some reason. Please try again later'
-        })
+          text: `${product.name} couldn't be added for some reason. Please try again later`,
+        });
       }
-      
     },
 
-    openProductDetail(pid){
-      this.$router.push('/products/'+pid);
-    }
+    openProductDetail(pid) {
+      this.$router.push(`/products/${pid}`);
+    },
   },
 };
 </script>

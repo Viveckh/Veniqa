@@ -3,32 +3,33 @@
 </template>
 
 <script>
-import ProxyUrls from "@/constants/ProxyUrls";
+import ProxyUrls from '@/constants/ProxyUrls';
+
 export default {
-  name: "ProductDetail",
+  name: 'ProductDetail',
   props: {
     productId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   async created() {
     if (this.productId) {
       try {
-        let { data } = await this.$axios({
+        const { data } = await this.$axios({
           url: ProxyUrls.getProductDefinitionUrl + this.productId,
-          type: "get"
+          type: 'get',
         });
-        if(data){
+        if (data) {
           this.product = data;
         }
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "Product detail could not be retrieved at the moment. Please try again later."
+            'Product detail could not be retrieved at the moment. Please try again later.',
         });
       }
     }
@@ -36,12 +37,11 @@ export default {
 
   data() {
     return {
-      product: null
+      product: null,
     };
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 </style>
-

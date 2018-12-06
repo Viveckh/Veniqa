@@ -2,9 +2,9 @@
   <div id="app">
     <notifications group="all" width="100%" position="bottom center"/>
     <notifications group="toast" position="top right"/>
-    
+
     <router-view/>
-    
+
   </div>
 </template>
 

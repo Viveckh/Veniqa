@@ -1,24 +1,24 @@
-import Vue from "vue";
-import ProxyUrls from "../constants/ProxyUrls";
+import Vue from 'vue';
+import ProxyUrls from '../constants/ProxyUrls';
 
 
 export default {
   namespaced: true,
   state: {
-    addresses: []
+    addresses: [],
   },
 
   mutations: {
-    setAddresses(state, adds){
+    setAddresses(state, adds) {
       state.addresses.splice(0, state.addresses.length);
       state.addresses.push(adds);
-    }
+    },
   },
 
   actions: {
-    async addressAction({state, commit}, {address, action}){
+    async addressAction({ state, commit }, { address, action }) {
       try {
-        let {data} = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: action,
           url: ProxyUrls.addressUrl,
           data: action == 'get' ? null : address,
@@ -26,7 +26,7 @@ export default {
 
         commit(setAddresses, data);
         return true;
-      }catch(err){
+      } catch (err) {
         return false;
       }
     },
@@ -37,6 +37,6 @@ export default {
   getters: {
     allAddresses(state) {
       return state.addresses;
-    }
-  }
-}
+    },
+  },
+};

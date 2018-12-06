@@ -19,5 +19,5 @@ export default {
   updateCart: '/shopping/updateCart',
 
   // Addresses
-  addressUrl: '/address'
+  addressUrl: '/address',
 };

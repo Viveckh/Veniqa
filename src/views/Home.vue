@@ -15,13 +15,14 @@
 import MainPage from '@/components/homepage/MainPage.vue';
 import HeaderMenu from '@/components/HeaderMenu.vue';
 import FooterView from '@/components/Footer.vue';
+
 export default {
   name: 'home',
   components: {
     // HeaderMenu,
     // MainPage,
     HeaderMenu,
-    FooterView
+    FooterView,
   },
 };
 </script>
