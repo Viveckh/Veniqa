@@ -28,6 +28,6 @@ module.exports = {
     // host: '0.0.0.0',
     port: 4200, // CHANGE YOUR PORT HERE!
     // https: false,
-    // hotOnly: false,
+    hotOnly: false,
   },
 };
