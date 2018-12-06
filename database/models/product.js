@@ -6,7 +6,7 @@ let productSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        enum: ['Curated', 'Amazon', 'Macys', 'Sephora']
+        enum: ['CURATED', 'AMAZON', 'MACYS', 'SEPHORA', 'EBAY', 'MICHAEL KORS']
     },
     brand: {
         type: String,
@@ -21,7 +21,10 @@ let productSchema = new mongoose.Schema({
     item_url: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        validate: (value) => {
+            return validator.isURL(value, {allow_underscores: true})
+        }
     },
     category: {
         type: String,
@@ -38,8 +41,8 @@ let productSchema = new mongoose.Schema({
         of: String,
         required: true,
         validate: (value) => {
-            for (let entry in value) {
-                if(!validator.isURL(entry)) {
+            for (let entry of value) {
+                if(!validator.isURL(entry, {allow_underscores: true})) {
                     return false;
                 }
             }
@@ -53,7 +56,8 @@ let productSchema = new mongoose.Schema({
         },
         currency: {
             type: String,
-            required: true
+            required: true,
+            enum: ['USD', 'BDT', 'NPR']
         }
     },
     weight: {
@@ -63,7 +67,8 @@ let productSchema = new mongoose.Schema({
         },
         unit: {
             type: String,
-            required: true
+            required: true,
+            enum: ['LB', 'KG', 'OZ']
         }
     },
     custom_attributes: {
