@@ -20,6 +20,7 @@ import redisConfig from './properties/redis';
 // Router imports
 import indexRouter from './routes/index';
 import securityRouter from './routes/security';
+import superAdminRouter from './routes/superAdmin';
 import catalogRouter from './routes/catalog';
 import shoppingRouter from './routes/shopping';
 
@@ -106,6 +107,7 @@ app.use(function(req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/security', securityRouter);
+app.use('/superAdmin', superAdminRouter);
 app.use('/catalog', catalogRouter);
 app.use('/shopping', shoppingRouter);
 

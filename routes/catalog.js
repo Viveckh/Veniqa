@@ -8,6 +8,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Curated Catalog' });
 });
 
-router.route('/search').post(catalogController.searchCatalog)
+router.post('/search', catalogController.searchCatalog);
+
+// GetProductDetails
+
+router.post('/updateProduct', catalogController.updateProduct);
+
+// AddProduct
+
+// DeleteProduct
 
 module.exports = router;

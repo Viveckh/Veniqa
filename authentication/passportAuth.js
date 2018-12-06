@@ -1,6 +1,7 @@
 var LocalStrategy   = require('passport-local').Strategy;
 import bCrypt from 'bcrypt-nodejs';
 import User from '../database/models/user';
+import * as _ from 'lodash';
 
 export default {
     initializePassport(passport) {
@@ -87,6 +88,16 @@ export default {
         }
         else {
             return res.status(401).send('only for logged in users')
+        }
+    },
+
+    isSuperAdmin(req, res, done) {
+        // Validate if admin is a superadmin, otherwise return a 401
+        if (_.indexOf(req.user.permissions, 'SUPERADMIN') > -1) {
+            done();
+        }
+        else {
+            return res.status(401).send('only for superusers');
         }
     }
 }
