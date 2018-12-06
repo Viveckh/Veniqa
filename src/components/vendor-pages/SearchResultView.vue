@@ -15,7 +15,7 @@
             <font-awesome-icon icon="shopping-bag" width="100%"/>
           </p>
           <p><strong>{{product.name}}</strong></p>
-          <p>{{product.price}}</p>
+          <p>{{product.price.currency}} {{product.price.amount}} </p>
           </div>
 
           <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button>
@@ -53,6 +53,7 @@ export default {
           group: 'toast',
           type: 'success',
           text: `Added ${product.name} to the cart`,
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
         });
       } else {
         this.$notify({

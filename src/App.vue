@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <notifications group="all" width="100%" position="bottom center"/>
-    <notifications group="toast" position="top right"/>
+    <notifications group="all" classes="vue-notification main-notification" width="100%" position="bottom center"/>
+    <notifications group="toast" classes="vue-notification toast-notification" position="top right"/>
 
     <router-view/>
 
@@ -60,5 +60,10 @@ html,body{
 
 .container{
   margin: 0px !important;
+}
+
+.toast-notification{
+  margin-top: 100px !important;
+  font-size: 0.8em !important;
 }
 </style>
