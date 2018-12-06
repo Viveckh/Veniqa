@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="white-bg">
     <div class="header">
       <font-awesome-icon class="user-icon" icon="user-circle"/>
       <h2>

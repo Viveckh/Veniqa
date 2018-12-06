@@ -3,6 +3,9 @@ export default {
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
   isSessionActive: '/security/isLoggedIn',
+  forgotPassword: '/security/forgotPassword?email=',
+  validateResetToken: '/security/validatePasswordResetToken/',
+  resetPassword: '/security/resetPassword',
 
   searchProduct: '/catalog/search',
   confirmEmail: '/security/confirmEmailAddress',

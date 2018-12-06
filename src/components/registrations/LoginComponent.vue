@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="white-bg">
     <div class="header">
       <font-awesome-icon class="user-icon" icon="user-circle"/>
       <h2>
-        <strong>Login</strong>
+        <strong v-if="!forgotEnabled">Login</strong>
+        <strong v-else>Forgot Password</strong>
       </h2>
+      <p v-if="forgotEnabled">Please enter your email to reset the password.</p>
     </div>
 
     <b-form-group>
@@ -14,7 +16,7 @@
         name="username"
         :state="usernameState"
         v-model="username"
-        placeholder="Enter Username"
+        placeholder="Enter Email"
         aria-describedby="usernameFeedback"
       ></b-form-input>
       <b-form-invalid-feedback id="usernameFeedback">
@@ -25,6 +27,7 @@
 
     <b-form-group>
       <b-form-input
+      v-if="!forgotEnabled"
         type="password"
         name="password"
         :state="passwordState"
@@ -36,9 +39,10 @@
       <b-form-invalid-feedback id="passwordFeedback">Enter at least 6 characters.</b-form-invalid-feedback>
     </b-form-group>
 
-    <p class="forget-password" @click="forgetPassword()">Forgot Password?</p>
+    <p class="forget-password" v-if="!forgotEnabled" @click="forgetPassword()">Forgot Password?</p>
 
-    <b-btn class="login-button" @click="loginClicked()">Login</b-btn>
+    <b-btn class="login-button" v-if="!forgotEnabled" @click="loginClicked()">Login</b-btn>
+    <b-btn class="login-button" v-if="forgotEnabled" @click="resetPassword()">Reset Password</b-btn>
 
     <p class="register-class" @click="register()">New User? Register here.</p>
     <div class="modal-bottom"></div>
@@ -48,12 +52,15 @@
 </template>
 
 <script>
+import ProxyUrl from '@/constants/ProxyUrls';
+
 export default {
   name: 'LoginComponent',
   data() {
     return {
       username: '',
       password: '',
+      forgotEnabled: false,
     };
   },
   methods: {
@@ -62,7 +69,11 @@ export default {
       return re.test(email);
     },
 
-    forgetPassword() {},
+    forgetPassword() {
+      // this.$emit('forgotPassword', this.usernameState ? this.username : '');
+      this.forgotEnabled = true;
+      this.password = '';
+    },
 
     loginClicked() {
       if (this.usernameState && this.passwordState) {
@@ -70,6 +81,30 @@ export default {
           email: this.username,
           password: this.password,
         });
+      }
+    },
+
+    async resetPassword() {
+      if(this.usernameState){
+        try {
+          const {data} = await this.$axios({
+            method: 'get',
+            url: ProxyUrl.forgotPassword + this.username
+          });
+          this.$emit('close')
+
+          this.$notify({
+            group: 'all', 
+            type: 'success',
+            text: 'The email was just sent. Please check your email and follow the instructions.'
+          })
+        }catch(err){
+          this.$notify({
+            group: 'all', 
+            type: 'error',
+            text: 'The email could not be sent right now. Please try again later'
+          })
+        }
       }
     },
 

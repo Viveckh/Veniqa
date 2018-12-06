@@ -122,30 +122,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../assets/css/global.scss";
 
-.confirmation-page {
-  height: 700px;
-  line-height: 700px;
-
-  .req-success {
-    color: $primary-green;
-  }
-
-  .req-err {
-    color: $primary-red;
-  }
-  .page {
-    display: inline-block;
-    line-height: normal;
-    vertical-align: middle;
-    font-size: 1.5em;
-  }
-
-  .check-button {
-    font-size: 3em;
-    margin: 20px 0px;
-  }
-}
 </style>

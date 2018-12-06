@@ -55,6 +55,11 @@ export default new Router({
       props: true,
       component: () => import('@/views/EmailConfirmation.vue'),
     },
+    {
+      path: '/password-reset/:token',
+      props: true,
+      component: () => import('@/views/PasswordConfirmation.vue')
+    }
 
 
   ],
