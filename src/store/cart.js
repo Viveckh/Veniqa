@@ -8,45 +8,108 @@ export default {
     cart: [],
   },
   actions: {
-    async addToTheCart({ state, commit }, payload) {
+    async addToTheCart({
+      state,
+      commit,
+    }, payload) {
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
-          data: payload,
+          data: {
+            product_id: payload._id,
+          },
         });
+
+        commit('setCart', res.data);
       } catch (err) {
 
       }
-      commit('addToCart', payload);
+    },
+
+    async getCart({
+      state,
+      commit,
+    }) {
+      try {
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          method: 'get',
+          url: ProxyUrl.getCart,
+        });
+
+        commit('setCart', data);
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async deleteOrders({
+      state,
+      commit,
+    }, products) {
+      const deletedIds = _.map(products, '_id');
+      try {
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          method: 'post',
+          url: ProxyUrl.deleteCart,
+          data: {
+            productIds: deletedIds,
+          },
+        });
+
+        if (data) {
+          commit('deleteProduct', deletedIds);
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async updateOrders({
+      state,
+      commit,
+    }) {
+      const orders = _.map(state.cart, c => ({
+        product_id: c._id,
+        counts: c.counts,
+      }));
+
+      try {
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          method: 'post',
+          url: ProxyUrl.updateCart,
+          data: orders,
+        });
+
+        commit('setCart', data);
+      } catch (err) {
+        console.log("Couldn't update the order");
+      }
     },
   },
   mutations: {
-    addToCart(state, product) {
-      const index = _.findIndex(state.cart, { name: product.name });
-      if (index >= 0) {
-        state.cart[index].quantity += 1;
-      } else {
-        product.quantity = 1;
-        state.cart.push(product);
-      }
+    setCart(state, allProducts) {
+      state.cart.splice(0, state.cart.length);
+      const transformed = [];
+      allProducts.forEach((pr) => {
+        const temp = pr.product;
+        temp.counts = pr.counts;
+        transformed.push(temp);
+      });
+      state.cart.push(...transformed);
     },
 
-    deleteOrders(state, products){
-      let indexes = [];
-      if (products && products.length > 0){
-        state.cart.forEach((c, ci) => {
-          // Check for the products that do not exist in the given list. This reverse logic is later used to pull all the
-          // unselected ones so that Vue can react after the changes.
-          if(_.findIndex(products, c) < 0) indexes.push(ci)
-        });
+    deleteProduct(state, productIds) {
+      _.remove(state.cart, c => productIds.indexOf(c._id) >= 0);
 
-        let result = _.pullAt(state.cart, indexes);
-        state.cart.splice(0, state.cart.length);
-        state.cart.push(...result);
-
-      }
-    }
+      state.cart = [...state.cart];
+    },
   },
   getters: {
     getCart(state) {

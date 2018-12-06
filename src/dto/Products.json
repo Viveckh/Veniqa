@@ -1,4 +1,5 @@
 {
+  "_id": "",
   "store": "",
   "brand": "",
   "name": "",
@@ -6,9 +7,9 @@
   "category": "",
   "subcategory": "",
   "picture_urls": [],
-  "price": 0,
+  "price": {},
   "custom_attributes": {
   },
   "details_html": "",
-  "quantity": 0
+  "count": 0
 }

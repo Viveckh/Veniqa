@@ -49,5 +49,9 @@ export default {
   width: 90%;
   margin: auto;
   margin-bottom: 10px;
+
+  // h2{
+  //   margin-bottom: 20px;
+  // }
 }
 </style>

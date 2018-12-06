@@ -3,12 +3,12 @@
     <!-- This is the search portion -->
     <div class="main-view">
       <div class="main-block">
-        <img :src="getPath()" :alt="vendor" width="80%">
+        <img :src="getPath()" :alt="vendor" width="80%" class="vendor-image">
         <b-row>
           <b-col md="9" class="low-side-padding">
             <b-form-input
               v-model="searchTerm"
-              @keyup.enter="searchForProduct()"
+              @keyup.native.enter="searchForProduct()"
               type="text"
               class="vendor-search-input"
               :placeholder="'Search for an item on '+ vendor+'. E.g. Fossil Watch, Ray Ban Sunglasses'"
@@ -63,6 +63,10 @@ export default {
 .matching-size{
   width: 100%;
   line-height: 2.2em;
+}
+
+.vendor-image{
+  margin-bottom: 15px;
 }
 
 .main-view {

@@ -1,5 +1,5 @@
 <template>
-  <div class="align-left">
+  <div class="align-left shipping">
     <h3>Shipping Details</h3>
     <hr>
 
@@ -277,6 +277,10 @@ export default {
   .action-buttons {
     padding: 10px 0px;
   }
+}
+
+.shipping{
+  margin-top: 30px;
 }
 
 .shipping-list {
