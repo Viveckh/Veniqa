@@ -1,9 +1,10 @@
 // http://underscorejs.org/docs/underscore.html#section-83
 export default function debounce(func, wait, immediate) {
-  let timeout, args, context, timestamp, result;
+  let timeout; let args; let context; let timestamp; let
+    result;
 
-  let later = function() {
-    let last = Date.now() - timestamp;
+  const later = function () {
+    const last = Date.now() - timestamp;
 
     if (last < wait && last >= 0) {
       timeout = setTimeout(later, wait - last);
@@ -20,12 +21,12 @@ export default function debounce(func, wait, immediate) {
     }
   };
 
-  return function() {
+  return function () {
     context = this;
     args = arguments;
     timestamp = Date.now();
 
-    let callNow = immediate && !timeout;
+    const callNow = immediate && !timeout;
 
     if (!timeout) {
       timeout = setTimeout(later, wait);
@@ -37,5 +38,5 @@ export default function debounce(func, wait, immediate) {
     }
 
     return result;
-  }
+  };
 }

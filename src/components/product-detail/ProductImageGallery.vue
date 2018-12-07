@@ -46,28 +46,28 @@
 </template>
 
 <script>
-// We need this specific version of working Drift-Zoom package. 
-import Drift from "../assets/drift-zoom/src/js/Drift.js";
+// We need this specific version of working Drift-Zoom package.
+import Drift from '../../assets/drift-zoom/src/js/Drift.js';
 
 /**
  * Courtesy of akulubala from vue-product-zoomer
  */
 export default {
-  name: "ProductImageGallery",
+  name: 'ProductImageGallery',
   props: {
     baseZoomerOptions: {
       type: Object,
-      default: function() {
+      default() {
         return {};
-      }
+      },
     },
     baseImages: {
       type: Object,
       required: true,
-      default: function() {
+      default() {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -80,105 +80,99 @@ export default {
       drift: null,
       options: {
         zoomFactor: 4,
-        pane: "container",
+        pane: 'container',
         hoverDelay: 300,
-        namespace: "container-zoomer",
+        namespace: 'container-zoomer',
         move_by_click: true,
         scroll_items: 4,
-        choosed_thumb_border_color: "#ff3d00",
-        move_button_style: "chevron"
-      }
+        choosed_thumb_border_color: '#ff3d00',
+        move_button_style: 'chevron',
+      },
     };
   },
   computed: {
-    zoomer_box: function() {
-      return this.options.namespace + "-zoomer-box";
+    zoomer_box() {
+      return `${this.options.namespace}-zoomer-box`;
     },
-    pane_id: function() {
-      return this.options.namespace + "-pane-container";
+    pane_id() {
+      return `${this.options.namespace}-pane-container`;
     },
-    move_button: function() {
-      return this.options.move_button_style === "chevron"
+    move_button() {
+      return this.options.move_button_style === 'chevron'
         ? {
-            left: "chevron-left",
-            right: "chevron-right"
-          }
+          left: 'chevron-left',
+          right: 'chevron-right',
+        }
         : {
-            left: "angle-double-left",
-            right: "angle-double-right"
-          };
-    }
+          left: 'angle-double-left',
+          right: 'angle-double-right',
+        };
+    },
   },
   mounted() {
     document
-      .querySelector("." + this.zoomer_box + " .thumb-list")
+      .querySelector(`.${this.zoomer_box} .thumb-list`)
       .setAttribute(
-        "style",
-        "grid-template-columns: repeat(" +
-          this.baseZoomerOptions.scroll_items +
-          ", auto)"
+        'style',
+        `grid-template-columns: repeat(${
+          this.baseZoomerOptions.scroll_items
+        }, auto)`,
       );
-    let t = setInterval(() => {
-      if (document.readyState === "complete") {
-        if (this.options.pane === "container-round") {
+    const t = setInterval(() => {
+      if (document.readyState === 'complete') {
+        if (this.options.pane === 'container-round') {
           this.options.inlinePane = true;
         } else {
           this.options.inlinePane = false;
           this.options.paneContainer = document.getElementById(this.pane_id);
-          let rect = document
-            .querySelector("." + this.zoomer_box)
+          const rect = document
+            .querySelector(`.${this.zoomer_box}`)
             .getBoundingClientRect();
-          let customStyle = "";
-          if (this.options.pane === "pane") {
-            customStyle =
-              "width:" +
-              rect.width * 1.2 +
-              "px;height:" +
-              rect.height +
-              "px;left:" +
-              rect.right +
-              "px;top:" +
-              (0) +
-              "px;";
+          let customStyle = '';
+          if (this.options.pane === 'pane') {
+            customStyle = `width:${
+              rect.width * 1.2
+            }px;height:${
+              rect.height
+            }px;left:${
+              rect.right
+            }px;top:${
+              0
+            }px;`;
           } else {
-            customStyle =
-              "width:" +
-              rect.width +
-              "px;height:" +
-              rect.height +
-              "px;left:" +
-              rect.x +
-              "px;top:" +
-              (0) +
-              "px;";
+            customStyle = `width:${
+              rect.width
+            }px;height:${
+              rect.height
+            }px;left:${
+              rect.x
+            }px;top:${
+              0
+            }px;`;
           }
-          this.options.paneContainer.setAttribute("style", customStyle);
+          this.options.paneContainer.setAttribute('style', customStyle);
         }
 
         this.options.injectBaseStyles = true;
-        let previewImg = "." + this.zoomer_box + " .preview-box img";
+        const previewImg = `.${this.zoomer_box} .preview-box img`;
         this.drift = new Drift(
           document.querySelector(previewImg),
-          this.options
+          this.options,
         );
         clearInterval(t);
       }
     }, 500);
   },
   watch: {
-    choosedThumb: function(thumb) {
-      let matchNormalImg = this.normal_size.find(img => {
-        return img.id === thumb.id;
-      });
-      let matchLargeImg = this.large_size.find(img => {
-        return img.id === thumb.id;
-      });
+    choosedThumb(thumb) {
+      const matchNormalImg = this.normal_size.find(img => img.id === thumb.id);
+      const matchLargeImg = this.large_size.find(img => img.id === thumb.id);
       this.previewLargeImg = Object.assign({}, matchLargeImg);
       this.previewImg = Object.assign({}, matchNormalImg);
       if (this.drift !== null) {
         this.drift.setZoomImageURL(matchLargeImg.url);
       }
-    }
+    },
   },
   created() {
     if (Object.keys(this.baseImages).length > 0) {
@@ -190,7 +184,7 @@ export default {
     }
 
     if (this.normal_size.length === 0) {
-      console.log("Product Zoomer Need Normal Size Image At Least!!!");
+      console.log('Product Zoomer Need Normal Size Image At Least!!!');
       return;
     }
     if (this.thumbs.length === 0) {
@@ -211,8 +205,8 @@ export default {
     }
 
     if (
-      this.options.pane === "container-round" ||
-      this.options.pane === "container"
+      this.options.pane === 'container-round'
+      || this.options.pane === 'container'
     ) {
       this.options.hoverBoundingBox = false;
     } else {
@@ -221,8 +215,8 @@ export default {
   },
   methods: {
     moveThumbs(direction) {
-      let len = this.thumbs.length;
-      if (direction === "right") {
+      const len = this.thumbs.length;
+      if (direction === 'right') {
         const moveThumb = this.thumbs.splice(len - 1, 1);
         this.thumbs = [moveThumb[0], ...this.thumbs];
       } else {
@@ -231,21 +225,21 @@ export default {
       }
     },
     chooseThumb(thumb, event) {
-      let eventType = event.type;
-      if (eventType === "mouseover") {
+      const eventType = event.type;
+      if (eventType === 'mouseover') {
         if (this.options.move_by_click !== true) {
           this.choosedThumb = thumb;
         }
       } else {
         this.choosedThumb = thumb;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-@import "../assets/css/drift-basic.css";
+@import "../../assets/css/drift-basic.css";
 .preview-box {
   margin-bottom: 1vh;
 }

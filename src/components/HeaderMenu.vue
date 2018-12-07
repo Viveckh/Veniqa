@@ -34,7 +34,7 @@
           <!-- </b-nav-item> -->
           <b-nav-item class="veniqa-nav" to="/checkout">
             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
-            <b-badge :pill="true" variant="danger">{{orders.length}}</b-badge>
+            <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -74,8 +74,8 @@ export default {
       return this.$store.getters['authStore/isSessionActive'];
     },
 
-    orders() {
-      return this.$store.getters['cartStore/getCart'];
+    totalOrders() {
+      return this.$store.getters['cartStore/getTotal'];
     },
   },
 };

@@ -3,26 +3,26 @@ import { addClasses, removeClasses } from './util/dom';
 
 // All officially-supported browsers have this, but it's easy to
 // account for, just in case.
-var divStyle = document.createElement('div').style;
+const divStyle = document.createElement('div').style;
 
-const HAS_ANIMATION = typeof document === 'undefined' ?
-  false :
-  ('animation' in divStyle || 'webkitAnimation' in divStyle);
+const HAS_ANIMATION = typeof document === 'undefined'
+  ? false
+  : ('animation' in divStyle || 'webkitAnimation' in divStyle);
 
-let __instance = (function () {
+const __instance = (function () {
   let instance;
   return (newInstance) => {
     if (newInstance) {
       instance = newInstance;
     }
     return instance;
-  }
+  };
 }());
 export default class ZoomPane {
   constructor(options = {}) {
     this.isShowing = false;
 
-    let {
+    const {
       container = null,
       zoomFactor = throwIfMissing(),
       inline = throwIfMissing(),
@@ -31,10 +31,12 @@ export default class ZoomPane {
       containInline = throwIfMissing(),
       inlineOffsetX = 0,
       inlineOffsetY = 0,
-      inlineContainer = document.body
+      inlineContainer = document.body,
     } = options;
 
-    this.settings = { container, zoomFactor, inline, namespace, showWhitespaceAtEdges, containInline, inlineOffsetX, inlineOffsetY, inlineContainer };
+    this.settings = {
+      container, zoomFactor, inline, namespace, showWhitespaceAtEdges, containInline, inlineOffsetX, inlineOffsetY, inlineContainer,
+    };
 
     this.openClasses = this._buildClasses('open');
     this.openingClasses = this._buildClasses('opening');
@@ -47,9 +49,9 @@ export default class ZoomPane {
   }
 
   _buildClasses(suffix) {
-    let classes = [`drift-${suffix}`];
+    const classes = [`drift-${suffix}`];
 
-    let ns = this.settings.namespace;
+    const ns = this.settings.namespace;
     if (ns) {
       classes.push(`${ns}-${suffix}`);
     }
@@ -61,7 +63,7 @@ export default class ZoomPane {
     this.el = document.createElement('div');
     addClasses(this.el, this._buildClasses('zoom-pane'));
 
-    let loaderEl = document.createElement('div');
+    const loaderEl = document.createElement('div');
     addClasses(loaderEl, this._buildClasses('zoom-pane-loader'));
     this.el.appendChild(loaderEl);
 
@@ -83,16 +85,16 @@ export default class ZoomPane {
   setPosition(percentageOffsetX, percentageOffsetY, triggerRect) {
     let left = -(this.imgEl.clientWidth * percentageOffsetX - (this.el.clientWidth / 2));
     let top = -(this.imgEl.clientHeight * percentageOffsetY - (this.el.clientHeight / 2));
-    let maxLeft = -(this.imgEl.clientWidth - this.el.clientWidth);
-    let maxTop = -(this.imgEl.clientHeight - this.el.clientHeight);
+    const maxLeft = -(this.imgEl.clientWidth - this.el.clientWidth);
+    const maxTop = -(this.imgEl.clientHeight - this.el.clientHeight);
 
     if (this.el.parentElement === this.settings.inlineContainer) {
       // This may be needed in the future to deal with browser event
       // inconsistencies, but it's difficult to tell for sure.
       // let scrollX = isTouch ? 0 : window.scrollX;
       // let scrollY = isTouch ? 0 : window.scrollY;
-      let scrollX = window.pageXOffset;
-      let scrollY = window.pageYOffset;
+      const scrollX = window.pageXOffset;
+      const scrollY = window.pageYOffset;
 
       let inlineLeft = triggerRect.left + (percentageOffsetX * triggerRect.width)
         - (this.el.clientWidth / 2) + this.settings.inlineOffsetX + scrollX;
@@ -100,7 +102,7 @@ export default class ZoomPane {
         - (this.el.clientHeight / 2) + this.settings.inlineOffsetY + scrollY;
 
       if (this.settings.containInline) {
-        let elRect = this.el.getBoundingClientRect();
+        const elRect = this.el.getBoundingClientRect();
 
 
         if (inlineLeft < triggerRect.left + scrollX) {
@@ -139,7 +141,7 @@ export default class ZoomPane {
   }
 
   get _isInline() {
-    let inline = this.settings.inline;
+    const inline = this.settings.inline;
 
     return inline === true || (typeof inline === 'number' && window.innerWidth <= inline);
   }
@@ -221,14 +223,14 @@ export default class ZoomPane {
     // The window could have been resized above or below `inline`
     // limits since the ZoomPane was shown. Because of this, we
     // can't rely on `this._isInline` here.
-    
+
     if (this.el.parentElement === this.settings.container) {
       this.settings.container.removeChild(this.el);
     } else if (this.el.parentElement === this.settings.inlineContainer) {
       this.settings.inlineContainer.removeChild(this.el);
     }
     if (this.settings.inline !== true) {
-      this.settings.container.style.display = "none";
+      this.settings.container.style.display = 'none';
     }
   };
 

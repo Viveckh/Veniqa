@@ -1,26 +1,26 @@
 import throwIfMissing from './util/throwIfMissing';
 import { addClasses, removeClasses } from './util/dom';
 
-let __instance = (function () {
+const __instance = (function () {
   let instance;
   return (newInstance) => {
     if (newInstance) {
       instance = newInstance;
     }
     return instance;
-  }
+  };
 }());
 
 
 export default class BoundingBox {
   constructor(options) {
     if (__instance()) {
-      return __instance()
+      return __instance();
     }
 
     this.isShowing = false;
 
-    let {
+    const {
       namespace = null,
       zoomFactor = throwIfMissing(),
       containerEl = throwIfMissing(),
@@ -35,9 +35,9 @@ export default class BoundingBox {
   }
 
   _buildClasses(suffix) {
-    let classes = [`drift-${suffix}`];
+    const classes = [`drift-${suffix}`];
 
-    let ns = this.settings.namespace;
+    const ns = this.settings.namespace;
     if (ns) {
       classes.push(`${ns}-${suffix}`);
     }
@@ -52,9 +52,9 @@ export default class BoundingBox {
 
   show(zoomPaneWidth, zoomPaneHeight) {
     this.isShowing = true;
-    document.querySelector('body').appendChild(this.el)
+    document.querySelector('body').appendChild(this.el);
 
-    let style = this.el.style;
+    const style = this.el.style;
     style.width = `${Math.round(zoomPaneWidth / this.settings.zoomFactor)}px`;
     style.height = `${Math.round(zoomPaneHeight / this.settings.zoomFactor)}px`;
 
@@ -63,7 +63,7 @@ export default class BoundingBox {
 
   hide() {
     if (this.isShowing) {
-      document.querySelector('body').removeChild(this.el)
+      document.querySelector('body').removeChild(this.el);
     }
 
     this.isShowing = false;
@@ -72,10 +72,9 @@ export default class BoundingBox {
   }
 
   setPosition(movementPercentageOffsetX, movementPercentageOffsetY, triggerRect) {
+    const pageXOffset = window.pageXOffset;
+    const pageYOffset = window.pageYOffset;
 
-    let pageXOffset = window.pageXOffset;
-    let pageYOffset = window.pageYOffset;
-    
     let inlineLeft = triggerRect.left + (movementPercentageOffsetX * triggerRect.width)
       - (this.el.clientWidth / 2) + pageXOffset;
     let inlineTop = triggerRect.top + (movementPercentageOffsetY * triggerRect.height)

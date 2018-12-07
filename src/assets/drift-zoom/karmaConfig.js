@@ -1,8 +1,8 @@
 const baseConfig = {
   frameworks: ['browserify', 'jasmine'],
   files: [
-    {pattern: 'src/**/*.js', included: false, served: false},
-    'test/**/test*.js'
+    { pattern: 'src/**/*.js', included: false, served: false },
+    'test/**/test*.js',
   ],
   preprocessors: {
     'src/**/*.js': 'browserify',
@@ -11,7 +11,7 @@ const baseConfig = {
   browserify: {
     transform: [
       'babelify',
-    ]
+    ],
   },
   concurrency: 5,
   captureTimeout: 90000,
@@ -21,15 +21,15 @@ const baseConfig = {
 
 const stringConfig = JSON.stringify(baseConfig);
 
-var headlessConfig = JSON.parse(stringConfig);
+const headlessConfig = JSON.parse(stringConfig);
 headlessConfig.browsers = ['PhantomJS'];
 
-var localConfig = JSON.parse(stringConfig);
+const localConfig = JSON.parse(stringConfig);
 localConfig.browsers = ['Chrome', 'Firefox'];
 
-var fullConfig = JSON.parse(stringConfig);
+const fullConfig = JSON.parse(stringConfig);
 fullConfig.reporters = ['progress', 'saucelabs'];
-fullConfig.saucelabs = { testName: 'Drift Tests' }
+fullConfig.saucelabs = { testName: 'Drift Tests' };
 fullConfig.browsers = [
   'sl_chrome',
   'sl_safari_9',
