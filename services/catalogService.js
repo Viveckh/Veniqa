@@ -1,7 +1,7 @@
 import Product from '../database/models/product';
 
 export default {
-    async searchCatalog(searchObj) {
+    async searchCatalog(searchObj, pagingOptions) {
         // Preparing search filters
         let searchFilters = {}
         searchObj.store ? searchFilters.store = searchObj.store : '';
@@ -9,7 +9,15 @@ export default {
         console.log("Search Filters", searchFilters)
 
         try {
-            let products = await Product.find(searchFilters, '_id name brand store price picture_urls category subcategory').exec()
+            let products = await Product.paginate(searchFilters, {
+                select: '_id name brand store price picture_urls category subcategory',
+                page: pagingOptions.page,
+                limit: pagingOptions.limit
+            }).then(result => {
+                return result;
+            }).catch(err => {
+                return err;
+            })
             return products;
         }   
         catch(err) {

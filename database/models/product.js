@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import mongoosePaginator from 'mongoose-paginate';
 
 let productSchema = new mongoose.Schema({
     store: {
@@ -81,6 +82,9 @@ let productSchema = new mongoose.Schema({
         trim: true
     }
 });
+
+// Add the paginator plugin to the schema
+productSchema.plugin(mongoosePaginator);
 
 // The first param is the collection name this model represents
 module.exports = mongoose.model('veniqa_curated_products', productSchema);
