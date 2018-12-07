@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/search', catalogController.searchCatalog);
 
-// GetProductDetails
+router.route('/getProductDetails').get(catalogController.getProductDetails);
 
 router.put('/updateProduct', catalogController.updateProduct);
 
