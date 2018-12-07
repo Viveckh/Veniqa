@@ -44,7 +44,7 @@ export default {
   margin:0px;
   color: #2c3e50;
   /* height: 100%; */
-  font-size: 18px;
+  font-size: 0.93em;
 }
 
 @media (max-width: 768px){

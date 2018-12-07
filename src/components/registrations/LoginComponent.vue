@@ -2,8 +2,8 @@
   <div>
     <div class="header">
       <h2>
-        <strong v-if="!forgotEnabled">Login</strong>
-        <strong v-else>Forgot Password</strong>
+        <p v-if="!forgotEnabled">Login</p>
+        <p v-else>Forgot Password</p>
       </h2>
       <p v-if="forgotEnabled">Please enter your email to reset the password.</p>
     </div>
@@ -141,7 +141,7 @@ export default {
 }
 .login-button {
   width: 100%;
-  background-image: linear-gradient(to right, #136a8a, #267871) !important;
+  background-image: linear-gradient(to right, #267871, #136a8a) !important;
 }
 
 .register-class {

@@ -4,18 +4,20 @@
       <h2>Search Results for Fossil Watches</h2>
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
-          <div @click="openProductDetail(product._id)">
+          <div class="link" @click="openProductDetail(product._id)">
             <div
-            class="img-cls"
-            :style="getPictureStyle(product.picture_urls[0])"
-            v-if="product.picture_urls.length > 0"
-          ></div>
+              class="img-cls"
+              :style="getPictureStyle(product.picture_urls[0])"
+              v-if="product.picture_urls.length > 0"
+            ></div>
 
-          <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
-            <font-awesome-icon icon="shopping-bag" width="100%"/>
-          </p>
-          <p><strong>{{product.name}}</strong></p>
-          <p>{{product.price.currency}} {{product.price.amount}} </p>
+            <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
+              <font-awesome-icon icon="shopping-bag" width="100%"/>
+            </p>
+            <p>
+              <strong>{{product.name}}</strong>
+            </p>
+            <p>{{product.price.currency}} {{product.price.amount}}</p>
           </div>
 
           <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button>
@@ -27,48 +29,49 @@
 
 <script>
 export default {
-  name: 'SearchResultView',
+  name: "SearchResultView",
   props: {
     data: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
 
   methods: {
     getPictureStyle(img) {
       return {
-        'background-image': `url(${img})`,
-        'background-size': 'cover',
-        width: '100%',
-        height: '250px',
-        'margin-bottom': '10px',
+        "background-image": `url(${img})`,
+        "background-size": "cover",
+        width: "100%",
+        height: "250px",
+        "margin-bottom": "10px"
       };
     },
 
     async addToCart(product) {
-      const val = await this.$store.dispatch('cartStore/addToTheCart', product);
+      const val = await this.$store.dispatch("cartStore/addToTheCart", product);
       if (val) {
         this.$notify({
-          group: 'toast',
-          type: 'success',
+          group: "toast",
+          type: "success",
           text: `Added ${product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
         });
       } else {
         this.$notify({
-          group: 'toast',
-          type: 'warn',
-          text: `${product.name} couldn't be added for some reason. Please try again later`,
+          group: "toast",
+          type: "warn",
+          text: `${
+            product.name
+          } couldn't be added for some reason. Please try again later`
         });
       }
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    },
-  },
-
+    }
+  }
 };
 </script>
 
@@ -92,17 +95,20 @@ export default {
   margin: 20px 20px 20px 0px;
   width: 300px;
 
-  p{
+  .link {
+    cursor: pointer;
+  }
+  p {
     padding: 5px 30px;
     margin: 0px;
   }
 
-  .img-cls{
+  .img-cls {
     border-top-right-radius: 0.25rem;
     border-top-left-radius: 0.25rem;
   }
 
-  .add-cart-button{
+  .add-cart-button {
     width: 100%;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;

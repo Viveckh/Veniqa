@@ -114,7 +114,7 @@ export default {
       }
       const orders = _.map(state.cart, c => ({
         product_id: c._id,
-        counts: c.counts,
+        counts: parseInt( c.counts),
       }));
 
       try {
@@ -123,7 +123,9 @@ export default {
         } = await Vue.prototype.$axios({
           method: 'put',
           url: ProxyUrl.updateCart,
-          data: orders,
+          data: {
+            "cartItems": orders
+          },
         });
 
         commit('setCart', data);
