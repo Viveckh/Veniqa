@@ -10,4 +10,6 @@ router.get('/', function(req, res, next) {
 
 router.route('/search').post(catalogController.searchCatalog)
 
+router.route('/getProductDetails').get(catalogController.getProductDetails);
+
 module.exports = router;
