@@ -22,6 +22,7 @@ import VueAxios from './plugins/axios';
 import GMap from './plugins/geocode';
 import _ from 'lodash';
 
+
 import 'animate.css'
 
 Vue.use(Notifications)
