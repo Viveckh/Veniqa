@@ -71,6 +71,7 @@ export default {
     },
     async login(userInfo) {
       try {
+        this.$store.commit('loaderStore/setLoader');
         const data = await this.$store.dispatch('authStore/login', userInfo);
         if (data.cart && data.cart.length > 0) {
           const incomingProductIds = _.map(data.cart, 'product_id');
@@ -102,6 +103,7 @@ export default {
           text: 'User credentials are not correct. Please try again',
         });
       }
+      this.$store.commit('loaderStore/unsetLoader');
     },
 
     async register(userInfo) {
