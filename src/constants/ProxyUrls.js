@@ -9,6 +9,7 @@ export default {
   resetPassword: '/security/resetPassword',
 
   searchProduct: '/catalog/search',
+  getProductDefinitionUrl: '/catalog/getProductDetails?productId=',
   confirmEmail: '/security/confirmEmailAddress',
   resendEmail: '/security/resendEmailAddressConfirmationLink?email=',
 

@@ -17,7 +17,7 @@ export default class Drift {
     // A bit unexpected if you haven't seen this pattern before.
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
-    let {
+    const {
       // Prefix for generated element class names (e.g. `my-ns` will
       // result in classes such as `my-ns-pane`. Default `drift-`
       // prefixed classes will always be added as well.
@@ -76,11 +76,13 @@ export default class Drift {
     if (inlinePane !== true && !isDOMElement(paneContainer)) {
       throw new TypeError('`paneContainer` must be a DOM element when `inlinePane !== true`');
     }
-    if(!isDOMElement(inlineContainer)){
+    if (!isDOMElement(inlineContainer)) {
       throw new TypeError('`inlineContainer` must be a DOM element');
     }
 
-    this.settings = { namespace, showWhitespaceAtEdges, containInline, inlineOffsetX, inlineOffsetY, inlineContainer, sourceAttribute, zoomFactor, paneContainer, inlinePane, handleTouch, onShow, onHide, injectBaseStyles, hoverDelay, touchDelay, hoverBoundingBox, touchBoundingBox };
+    this.settings = {
+      namespace, showWhitespaceAtEdges, containInline, inlineOffsetX, inlineOffsetY, inlineContainer, sourceAttribute, zoomFactor, paneContainer, inlinePane, handleTouch, onShow, onHide, injectBaseStyles, hoverDelay, touchDelay, hoverBoundingBox, touchBoundingBox,
+    };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -113,7 +115,7 @@ export default class Drift {
       namespace: this.settings.namespace,
       inlineOffsetX: this.settings.inlineOffsetX,
       inlineOffsetY: this.settings.inlineOffsetY,
-      inlineContainer: this.settings.inlineContainer
+      inlineContainer: this.settings.inlineContainer,
     });
   }
 
@@ -136,7 +138,7 @@ export default class Drift {
 
   setZoomImageURL(imageURL) {
     this.zoomPane._setImageURL(imageURL);
-  };
+  }
 
   disable() {
     this.trigger.enabled = false;

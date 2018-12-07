@@ -41,19 +41,18 @@ export default {
       if (!payload) return null;
 
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.loginUrl,
           data: payload,
-          // withCredentials: true,
         });
 
-        if (res && res.data) {
-          commit('setEmail', res.data.email);
-          commit('setName', res.data.name);
+        if (data) {
+          commit('setEmail', data.email);
+          commit('setName', data.name);
           commit('setSessionActive', true);
         }
-        return res;
+        return data;
       } catch (err) {
         throw new Error(err);
       }

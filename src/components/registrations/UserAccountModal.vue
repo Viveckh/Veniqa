@@ -71,8 +71,23 @@ export default {
     },
     async login(userInfo) {
       try {
-        const res = await this.$store.dispatch('authStore/login', userInfo);
+        const data = await this.$store.dispatch('authStore/login', userInfo);
+        if (data.cart && data.cart.length > 0) {
+          const incomingProductIds = _.map(data.cart, 'product_id');
+          // Update the cart values.
+          const currentCartItems = this.$store.getters['cartStore/getCart'];
 
+          const newProductIds = [];
+          currentCartItems.forEach((item) => {
+            if (incomingProductIds.indexOf(item._id) < 0) {
+              newProductIds.push(item);
+            }
+          });
+
+          if (newProductIds.length > 0) {
+            this.$store.dispatch('cartStore/addToTheCart', newProductIds);
+          }
+        }
         this.$emit('loginSuccess');
 
         this.$notify({
@@ -125,11 +140,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.inside-section {
-  // padding: 40px 40px;
-  // padding-right: 10px;
-}
-
 .account-table{
   display: table;
   height: 100%;

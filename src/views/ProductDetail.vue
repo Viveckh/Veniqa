@@ -1,35 +1,39 @@
 <template>
   <div class="product-detail">
     <div class="space"></div>
-
-    <b-row>
+    <div v-if="product != null">
+      <b-row>
       <b-col md="7">
         <div>
           <product-image-gallery :base-images="productImages" :base-zoomer-options="zoomerOptions"/>
         </div>
       </b-col>
       <b-col md="5">
-
+        <product-description :data="product"/>
       </b-col>
     </b-row>
+    </div>
+
   </div>
 </template>
 
 <script>
-import ProxyUrls from "@/constants/ProxyUrls";
-import JSONFile from "@/assets/json/product.json";
-import ProductImageGallery from '@/components/ProductImageGallery';
+import ProxyUrls from '@/constants/ProxyUrls';
+import JSONFile from '@/assets/json/product.json';
+import ProductImageGallery from '@/components/product-detail/ProductImageGallery';
+import ProductDescription from '@/components/product-detail/ProductDescription';
 
 export default {
-  name: "ProductDetail",
+  name: 'ProductDetail',
   components: {
-    ProductImageGallery
+    ProductImageGallery,
+    ProductDescription,
   },
   props: {
     productId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
@@ -37,49 +41,57 @@ export default {
       product: null,
       zoomerOptions: {
         zoomFactor: 3,
-        pane: "pane",
+        pane: 'pane',
         hoverDelay: 300,
-        namespace: "zoomer",
+        namespace: 'zoomer',
         move_by_click: false,
         scroll_items: 4,
-        choosed_thumb_border_color: "#2c3e50"
+        choosed_thumb_border_color: '#2c3e50',
       },
 
       productImages: {
-        'normal_size': []
-      }
+        normal_size: [],
+      },
     };
   },
 
   async created() {
     if (this.productId) {
-      // try {
-      //   const { data } = await this.$axios({
-      //     url: ProxyUrls.getProductDefinitionUrl + this.productId,
-      //     type: 'get',
-      //   });
-      //   if (data) {
-      //     this.product = data;
-      //   }
-      // } catch (err) {
-      //   this.$notify({
-      //     group: 'all',
-      //     type: 'error',
-      //     text:
-      //       'Product detail could not be retrieved at the moment. Please try again later.',
-      //   });
-      // }
+      try {
+        const { data } = await this.$axios({
+          url: ProxyUrls.getProductDefinitionUrl + this.productId,
+          type: 'get',
+        });
+        if (data) {
+          data.responseData.counts = 0;
+          this.product = data.responseData;
+          // this.product.counts = 0;
+          this.product.picture_urls.forEach((picture, pid) => {
+            this.productImages.normal_size.push({
+              id: pid,
+              url: picture,
+            });
+          });
+        }
+      } catch (err) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text:
+            'Product detail could not be retrieved at the moment. Please try again later.',
+        });
+      }
 
-      this.product = JSONFile;
+      // this.product = JSONFile;
 
-      this.product.picture_urls.forEach((picture,pid) => {
-        this.productImages.normal_size.push({
-          id: pid,
-          url: picture,
-        })
-      })
+      // this.product.picture_urls.forEach((picture, pid) => {
+      //   this.productImages.normal_size.push({
+      //     id: pid,
+      //     url: picture,
+      //   });
+      // });
     }
-  }
+  },
 };
 </script>
 

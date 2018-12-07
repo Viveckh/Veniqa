@@ -24,6 +24,7 @@ import _ from 'lodash';
 
 
 import 'animate.css'
+import './assets/css/hover.css'
 
 Vue.use(Notifications)
 

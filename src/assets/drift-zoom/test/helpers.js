@@ -1,7 +1,7 @@
 import ZoomPane from '../src/js/ZoomPane';
 
-export let mockEvent = {
-  preventDefault: function() {}
+export const mockEvent = {
+  preventDefault() {},
 };
 
 export function defaultDriftConfig() {
@@ -23,7 +23,7 @@ export function defaultDriftConfig() {
     hoverDelay: 0,
     touchDelay: 0,
     hoverBoundingBox: false,
-    touchBoundingBox: false
+    touchBoundingBox: false,
   };
 }
 

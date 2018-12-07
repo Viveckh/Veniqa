@@ -18,9 +18,9 @@ export default {
         const foundIndex = _.findIndex(state.cart, pr => pr._id === payload._id);
 
         if (foundIndex >= 0) {
-          state.cart[foundIndex].counts += 1;
+          state.cart[foundIndex].counts = parseInt(state.cart[foundIndex].counts) + 1;
         } else {
-          payload.counts += 1;
+          payload.counts = parseInt(payload.counts) + 1;
           state.cart.push(payload);
         }
 
@@ -34,6 +34,7 @@ export default {
           method: 'post',
           data: {
             product_id: payload._id,
+            counts: payload.counts,
           },
         });
 
@@ -48,7 +49,7 @@ export default {
       state,
       commit,
       dispatch,
-    }, append) {
+    }) {
       try {
         const {
           data,
@@ -57,12 +58,8 @@ export default {
           url: ProxyUrl.getCart,
         });
 
-        if (append) {
-          commit('appendToCart', data);
-          dispatch('updateOrders');
-        } else {
-          commit('setCart', data);
-        }
+
+        commit('setCart', data);
       } catch (err) {
         throw new Error(err);
       }
@@ -105,17 +102,24 @@ export default {
       state,
       commit,
       rootGetters,
-    }) {
+    }, payloadArray) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
         // These commits don't do anything but are necessary because they help persist.
         commit('setLocalCart', state.cart);
         return true;
       }
-      const orders = _.map(state.cart, c => ({
-        product_id: c._id,
-        counts: parseInt( c.counts),
-      }));
+      // const orders = _.map(payloadArray, c => ({
+      //   product_id: c._id,
+      //   counts: parseInt(c.counts),
+      // }));
+      const orders = [];
+      payloadArray.forEach((item) => {
+        orders.push({
+          product_id: item._id,
+          counts: item.counts,
+        });
+      });
 
       try {
         const {
@@ -124,13 +128,15 @@ export default {
           method: 'put',
           url: ProxyUrl.updateCart,
           data: {
-            "cartItems": orders
+            cartItems: orders,
           },
         });
 
         commit('setCart', data);
+        return data;
       } catch (err) {
         console.log("Couldn't update the order");
+        throw new Error(err);
       }
     },
   },
@@ -174,6 +180,15 @@ export default {
   getters: {
     getCart(state) {
       return state.cart;
+    },
+
+    getTotal(state) {
+      let total = 0;
+
+      state.cart.forEach((product) => {
+        total += parseInt(product.counts);
+      });
+      return total;
     },
   },
 };

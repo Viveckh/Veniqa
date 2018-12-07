@@ -29,49 +29,49 @@
 
 <script>
 export default {
-  name: "SearchResultView",
+  name: 'SearchResultView',
   props: {
     data: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
     getPictureStyle(img) {
       return {
-        "background-image": `url(${img})`,
-        "background-size": "cover",
-        width: "100%",
-        height: "250px",
-        "margin-bottom": "10px"
+        'background-image': `url(${img})`,
+        'background-size': 'cover',
+        width: '100%',
+        height: '250px',
+        'margin-bottom': '10px',
       };
     },
 
     async addToCart(product) {
-      const val = await this.$store.dispatch("cartStore/addToTheCart", product);
+      const val = await this.$store.dispatch('cartStore/addToTheCart', product);
       if (val) {
         this.$notify({
-          group: "toast",
-          type: "success",
+          group: 'toast',
+          type: 'success',
           text: `Added ${product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
         });
       } else {
         this.$notify({
-          group: "toast",
-          type: "warn",
+          group: 'toast',
+          type: 'warn',
           text: `${
             product.name
-          } couldn't be added for some reason. Please try again later`
+          } couldn't be added for some reason. Please try again later`,
         });
       }
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    }
-  }
+    },
+  },
 };
 </script>
 
