@@ -34,7 +34,6 @@ let userSchema = new mongoose.Schema({
             return value.length > 0
         }
     },
-    emailConfirmationToken: String,
     passwordResetToken: String,
     passwordResetExpires: Date
 });

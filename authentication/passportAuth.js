@@ -60,13 +60,7 @@ export default {
                             console.log("Account not approved yet for login")
                             return done(null, false);
                         }
-                        /*
-                        // If user has not confirmed their email address yet, make sure to not log them in
-                        if (user.emailConfirmationToken) {
-                            console.log('Email confirmation pending')
-                            return done(null, false);
-                        }
-                        */
+    
                         // User and password both match, return user from done method
                         // which will be treated like success
                         return done(null, user);

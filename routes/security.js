@@ -8,8 +8,6 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Security' });
 });
 
-router.route('/signup').post(securityController.signup);
-
 router.post('/login', passport.authenticate('login'), (req, res, next) => {
     // If this part gets executed, it means authentication was successful
     // Regenerating a new session ID after the user is authenticated
@@ -20,7 +18,6 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
             res.status(200).send({
                 email: req.user.email,
                 name: req.user.name,
-                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true',
                 permissions: req.user.permissions
             });
         })
@@ -53,9 +50,6 @@ router.get('/logout', (req, res, next) => {
     console.log("after logout", req.session)
 });
 
-router.route('/resendEmailAddressConfirmationLink').get(securityController.resendEmailAddressConfirmationLink)
-
-router.route('/confirmEmailAddress/:token').get(securityController.confirmEmailAddress);
 
 router.route('/forgotPassword').get(securityController.forgotPassword);
 
