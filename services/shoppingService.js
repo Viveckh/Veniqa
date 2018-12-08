@@ -84,6 +84,17 @@ export default {
 
             // Make sure the user exists and return their cart
             if (user) {
+                // if the user doesn't have a cart set up yet, initialize it
+                if (!user.cart) {
+                    user.cart = {
+                        items: [],
+                        totalPrice: {
+                            amount: 0,
+                            currency: 'USD'
+                        }
+                    }
+                };
+
                 // This is where info to be returned will be collected
                 let enrichedCart = {
                     items: [],
