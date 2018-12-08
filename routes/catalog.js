@@ -14,6 +14,8 @@ router.route('/getProductDetails').get(catalogController.getProductDetails);
 
 router.put('/updateProduct', catalogController.updateProduct);
 
+router.get('/getPresignedUrlsForCatalogImageUploads', catalogController.getPresignedUrlsForCatalogImageUploads);
+
 // AddProduct
 
 // DeleteProduct

@@ -1,4 +1,7 @@
 import Product from '../database/models/product';
+import cryptoGen from '../authentication/cryptoGen';
+import awsConnections from '../cloudservices/awsConnections';
+import awsConfig from '../properties/aws-config';
 
 export default {
     async searchCatalog(searchObj, pagingOptions) {
@@ -63,6 +66,81 @@ export default {
         }
         catch(err) {
             console.log("[ERROR]: Product update failed => ", err)
+            return err;
+        }
+    },
+
+    async getPresignedUrlsForCatalogImageUploads(numberOfThumbnails, numberOfFeaturedImages, numberOfDetailedImages) {
+        try {
+            // Generate a random folder name to put contents
+            let folderName = await cryptoGen.generateRandomToken();
+            
+            // Prepare the object which will contain the urls
+            let response = {
+                thumbnailUrls: [],
+                featuredImageUrls: [],
+                detailedImageUrls: [] 
+            }
+
+            // Generate the thumbnail urls and push it to the response object
+            for (let index = 0; index < numberOfThumbnails; index++) {
+                let objectKey = folderName + "/thumbnails/" + await cryptoGen.generateRandomToken();
+                let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
+
+                let presignedUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
+                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Key: objectKey,
+                    ContentType: 'image/png',
+                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                });
+
+                response.thumbnailUrls.push({
+                    uploadUrl: presignedUploadUrl,
+                    liveUrl: objectLiveUrl
+                })
+            }
+
+            // Generate the featured image urls and push it to the response object
+            for (let index = 0; index < numberOfFeaturedImages; index++) {
+                let objectKey = folderName + "/featured-images/" + await cryptoGen.generateRandomToken();
+                let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
+
+                let presignedUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
+                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Key: objectKey,
+                    ContentType: 'image/png',
+                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                });
+
+                response.featuredImageUrls.push({
+                    uploadUrl: presignedUploadUrl,
+                    liveUrl: objectLiveUrl
+                })
+            }
+
+            // Generate the detailed image urls and push it to the response object
+            for (let index = 0; index < numberOfDetailedImages; index++) {
+                let objectKey = folderName + "/detailed-images/" + await cryptoGen.generateRandomToken();
+                let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
+
+                let presignedUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
+                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Key: objectKey,
+                    ContentType: 'image/png',
+                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                });
+
+                response.detailedImageUrls.push({
+                    uploadUrl: presignedUploadUrl,
+                    liveUrl: objectLiveUrl
+                })
+            }
+
+            // Returm all the generated urls
+            return response;
+        }
+        catch(err) {
+            console.log(err);
             return err;
         }
     }
