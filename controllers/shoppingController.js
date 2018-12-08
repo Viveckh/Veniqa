@@ -49,7 +49,7 @@ export default {
     async deleteFromCart(req, res, next) {
         let response;
         try {
-            response = await shoppingService.deleteFromCart(req.user, req.body.productIds);
+            response = await shoppingService.deleteFromCart(req.user, req.body.cartItemIds);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }
