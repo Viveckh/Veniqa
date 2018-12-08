@@ -1,0 +1,22 @@
+{
+  "product": {
+    "price": {
+      "currency": "",
+      "amount": 0
+    },
+    "picture_urls": [],
+    "_id": "",
+    "store": "",
+    "brand": "",
+    "name": ""
+  },
+  "additionalDetails": {
+    "counts": 0,
+    "aggregatedPrice": {
+      "currency": "",
+      "amount": 0
+    },
+    "_id": "",
+    "product_id": ""
+  }
+}

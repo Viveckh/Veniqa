@@ -65,7 +65,6 @@ export default {
         if (data) {
           data.responseData.counts = 0;
           this.product = data.responseData;
-          // this.product.counts = 0;
           this.product.picture_urls.forEach((picture, pid) => {
             this.productImages.normal_size.push({
               id: pid,
@@ -82,14 +81,6 @@ export default {
         });
       }
 
-      // this.product = JSONFile;
-
-      // this.product.picture_urls.forEach((picture, pid) => {
-      //   this.productImages.normal_size.push({
-      //     id: pid,
-      //     url: picture,
-      //   });
-      // });
     }
   },
 };

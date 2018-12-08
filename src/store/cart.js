@@ -1,41 +1,44 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-
+import OrderDTO from '@/dto/Order.json'
 
 export default {
   namespaced: true,
   state: {
     cart: [],
+    total: {}
   },
   actions: {
     async addToTheCart({
       state,
       commit,
       rootGetters,
-    }, payload) {
+    }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
-        const foundIndex = _.findIndex(state.cart, pr => pr._id === payload._id);
+        const foundIndex = _.findIndex(state.cart, pr => pr.product_id === products.product_id);
 
         if (foundIndex >= 0) {
           state.cart[foundIndex].counts = parseInt(state.cart[foundIndex].counts) + 1;
         } else {
-          payload.counts = parseInt(payload.counts) + 1;
-          state.cart.push(payload);
+          products.counts = parseInt(products.counts) + 1;
+          state.cart.push(products);
         }
 
         commit('setLocalCart', state.cart);
         return true;
       }
 
+      let toSend = _.map(products, p => ({
+        product_id: p._id,
+        counts: p.counts == 0 ? 1 : p.counts
+      }));
+
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
-          data: {
-            product_id: payload._id,
-            counts: payload.counts,
-          },
+          data: toSend,
         });
 
         commit('setCart', res.data);
@@ -58,7 +61,6 @@ export default {
           url: ProxyUrl.getCart,
         });
 
-
         commit('setCart', data);
       } catch (err) {
         throw new Error(err);
@@ -69,16 +71,17 @@ export default {
       state,
       commit,
       rootGetters,
-    }, products) {
-      const deletedIds = _.map(products, '_id');
+    }, cartItems) {
+      const deletedIds = _.map(cartItems, 'additionalDetails._id');
 
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
-      if (!rootGetters['authStore/isSessionActive']) {
-        _.remove(state.cart, product => deletedIds.indexOf(product._id) >= 0);
+      // if (!rootGetters['authStore/isSessionActive']) {
+      //   _.remove(state.cart, product => deletedIds.indexOf(product._id) >= 0);
 
-        commit('setLocalCart', state.cart);
-        return;
-      }
+      //   commit('setLocalCart', state.cart);
+      //   return;
+      // }
+
       try {
         const {
           data,
@@ -86,12 +89,12 @@ export default {
           method: 'delete',
           url: ProxyUrl.deleteCart,
           data: {
-            productIds: deletedIds,
+            cartItemIds: deletedIds,
           },
         });
 
         if (data) {
-          commit('deleteProduct', deletedIds);
+          commit('setCart', data);
         }
       } catch (err) {
         throw new Error(err);
@@ -109,15 +112,13 @@ export default {
         commit('setLocalCart', state.cart);
         return true;
       }
-      // const orders = _.map(payloadArray, c => ({
-      //   product_id: c._id,
-      //   counts: parseInt(c.counts),
-      // }));
+
       const orders = [];
-      payloadArray.forEach((item) => {
+      state.cart.forEach((item) => {
         orders.push({
-          product_id: item._id,
-          counts: item.counts,
+          product_id: item.additionalDetails.product_id,
+          _id: item.additionalDetails._id,
+          counts: item.additionalDetails.counts,
         });
       });
 
@@ -160,21 +161,15 @@ export default {
     setLocalCart(state, products) {
       state.cart = [...state.cart];
     },
-    setCart(state, allProducts) {
+    setCart(state, allCarts) {
       state.cart.splice(0, state.cart.length);
-      const transformed = [];
-      allProducts.forEach((pr) => {
-        const temp = pr.product;
-        temp.counts = pr.counts;
-        transformed.push(temp);
+      let transformed = [];
+      state.total = allCarts.totalPrice;
+      allCarts.items.forEach((item) => {
+        transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
       });
+
       state.cart.push(...transformed);
-    },
-
-    deleteProduct(state, productIds) {
-      _.remove(state.cart, c => productIds.indexOf(c._id) >= 0);
-
-      state.cart = [...state.cart];
     },
   },
   getters: {
@@ -183,12 +178,7 @@ export default {
     },
 
     getTotal(state) {
-      let total = 0;
-
-      state.cart.forEach((product) => {
-        total += parseInt(product.counts);
-      });
-      return total;
+      return state.total;
     },
   },
 };

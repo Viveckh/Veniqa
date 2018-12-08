@@ -11,32 +11,32 @@
 </template>
 
 <script>
-import VendorSearch from '@/components/vendor-pages/Vendor';
-import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
-import ProxyUrls from '@/constants/ProxyUrls';
-import ProductDTO from '@/dto/Products.json';
+import VendorSearch from "@/components/vendor-pages/Vendor";
+import SearchResultView from "@/components/vendor-pages/SearchResultView.vue";
+import ProxyUrls from "@/constants/ProxyUrls";
+import ProductDTO from "@/dto/Products.json";
 
 export default {
-  name: 'VendorPage',
+  name: "VendorPage",
   props: {
     vendorName: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     VendorSearch,
-    SearchResultView,
+    SearchResultView
   },
 
   data() {
     return {
       vendorMap: {
-        macys: 'MACYS',
-        amazon: 'AMAZON',
-        sephora: 'SEPHORA',
+        macys: "MACYS",
+        amazon: "AMAZON",
+        sephora: "SEPHORA"
       },
-      searchResult: [],
+      searchResult: []
     };
   },
 
@@ -44,29 +44,35 @@ export default {
     async searchForProduct(searchTerm) {
       const res = await this.$axios({
         url: ProxyUrls.searchProduct,
-        method: 'post',
+        method: "post",
         data: {
-          store: this.vendorMap[this.vendorName],
-          category: 'Make-Up',
-        },
+          searchFilters: {
+            store: this.vendorMap[this.vendorName],
+            category: "Make-Up"
+          },
+          pagingOptions: {
+            page: 1,
+            limit: 1
+          }
+        }
       });
 
       if (res) {
         this.searchResult.splice(0, this.searchResult.length);
         const transformed = [];
 
-        res.data.forEach((p) => {
+        res.data.docs.forEach(p => {
           transformed.push(_.assign(ProductDTO, p));
         });
 
         this.searchResult.push(...transformed);
 
-        this.$scrollTo('#searchResult', 1000, {
-          offset: -80,
+        this.$scrollTo("#searchResult", 1000, {
+          offset: -80
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
