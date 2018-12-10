@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import ROLES_ARRAY from '../reference-data-files/roles';
 
 let userSchema = new mongoose.Schema({
     email: {
@@ -29,7 +30,7 @@ let userSchema = new mongoose.Schema({
     permissions: {
         type: [String],
         required: true,
-        enum: ['SUPERADMIN', 'ORDER_VIEW', 'ORDER_MANAGE', 'CATALOG_VIEW', 'CATALOG_MANAGE'],
+        enum: ROLES_ARRAY,
         validate: (value) => {
             return value.length > 0
         }

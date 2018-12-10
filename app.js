@@ -23,6 +23,7 @@ import securityRouter from './routes/security';
 import superAdminRouter from './routes/superAdmin';
 import catalogRouter from './routes/catalog';
 import shoppingRouter from './routes/shopping';
+import referenceDataRouter from './routes/referenceData';
 
 // Database connection imports, importing initializes it
 import dbConnection from './database/dbConnection';
@@ -110,6 +111,7 @@ app.use('/security', securityRouter);
 app.use('/superAdmin', superAdminRouter);
 app.use('/catalog', catalogRouter);
 app.use('/shopping', shoppingRouter);
+app.use('/referenceData', referenceDataRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

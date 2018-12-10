@@ -1,0 +1,702 @@
+{
+	"info": {
+		"_postman_id": "661b1541-173f-461f-96e7-41ce59de4955",
+		"name": "Veniqa Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"random\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/forgotPassword?email=vpandey@ngineerx.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"forgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vpandey@ngineerx.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validatePasswordResetToken",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/validatePasswordResetToken/f9ee5ab8cbd8ccdc8aff30519bad54615e1b9bfa",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"validatePasswordResetToken",
+								"f9ee5ab8cbd8ccdc8aff30519bad54615e1b9bfa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"f9ee5ab8cbd8ccdc8aff30519bad54615e1b9bfa\",\n\t\"newPassword\": \"golang\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/resetPassword",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isLoggedIn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/isLoggedIn",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"isLoggedIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "catalog search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"MACYS\",\n\t\t\"category\": \"Make-Up Kits\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{server}}/catalog/search",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProduct",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store\" : \"AMAZON\",\n    \"brand\" : \"BEVERLY HILLS KAY\",\n    \"name\" : \"Amrezy Highlighter\",\n    \"item_url\" : \"https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product\",\n    \"category\" : \"Make-Up Kits\",\n    \"subcategory\" : \"Palettes\",\n    \"thumbnailUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\",\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8\"\n    ],\n    \"featuredImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"detailedImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"price\" : {\n        \"amount\" : 27.99,\n        \"currency\" : \"USD\"\n    },\n    \"weight\" : {\n        \"quantity\" : 3.2,\n        \"unit\" : \"LB\"\n    },\n    \"custom_attributes\" : {\n        \"color\" : \"light brilliant gold\"\n    },\n    \"details_html\" : \"A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.\",\n    \"colors\": [\t\n    \t{\"name\": \"Black\", \"hexValue\": \"#000000\"},\n    \t{\"name\": \"Brown\", \"hexValue\": \"#435ADF\"}\n    ],\n    \"sizes\":  [\"XS\", \"S\", \"M\", \"L\"]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/catalog/addProduct",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c095956e7179a6ca083d1ac",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"getProductDetails"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "5c095956e7179a6ca083d1ac"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\" : \"5c09591be7179a6ca083d15f\",\n    \"store\" : \"AMAZON\",\n    \"brand\" : \"BEVERLY HILLS\",\n    \"name\" : \"Amrezy Highlighter\",\n    \"item_url\" : \"https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product\",\n    \"category\" : \"Make-Up\",\n    \"subcategory\" : \"Palettes\",\n    \"thumbnailUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\",\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8\"\n    ],\n    \"featuredImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"detailedImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"price\" : {\n        \"amount\" : 27.99,\n        \"currency\" : \"USD\"\n    },\n    \"weight\" : {\n        \"quantity\" : 3.2,\n        \"unit\" : \"LB\"\n    },\n    \"custom_attributes\" : {\n        \"color\" : \"light brilliant gold\"\n    },\n    \"details_html\" : \"A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/catalog/updateProduct",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"updateProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"productId\": \"5c0dc672cdbcb65bc5f1c8e4\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/catalog/deleteProduct",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"deleteProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPresignedUrlsForCatalogImageUploads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/catalog/getPresignedUrlsForCatalogImageUploads?numberOfThumbnails=1&numberOfFeaturedImages=2&numberOfDetailedImages=2&productId=5c09591be7179a6ca083d15f",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"getPresignedUrlsForCatalogImageUploads"
+							],
+							"query": [
+								{
+									"key": "numberOfThumbnails",
+									"value": "1"
+								},
+								{
+									"key": "numberOfFeaturedImages",
+									"value": "2"
+								},
+								{
+									"key": "numberOfDetailedImages",
+									"value": "2"
+								},
+								{
+									"key": "productId",
+									"value": "5c09591be7179a6ca083d15f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImageToPresignedUrl",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "image/png",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {}
+						},
+						"url": {
+							"raw": "https://veniqa-catalog-images.s3.amazonaws.com/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8?AWSAccessKeyId=AKIAIB2NMUNKWZKQHUDQ&Content-Type=image%2Fpng&Expires=1544403184&Signature=UsLI2wvE4xoMTtr46zJ46%2B45goM%3D",
+							"protocol": "https",
+							"host": [
+								"veniqa-catalog-images",
+								"s3",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"6948edbc43110f0828169a5119e4f0f88436658c",
+								"thumbnails",
+								"8ebad3add8ef7424eed96cc560c8d135b14f9fb8"
+							],
+							"query": [
+								{
+									"key": "AWSAccessKeyId",
+									"value": "AKIAIB2NMUNKWZKQHUDQ"
+								},
+								{
+									"key": "Content-Type",
+									"value": "image%2Fpng"
+								},
+								{
+									"key": "Expires",
+									"value": "1544403184"
+								},
+								{
+									"key": "Signature",
+									"value": "UsLI2wvE4xoMTtr46zJ46%2B45goM%3D"
+								}
+							]
+						},
+						"description": "NOT A VENIQA API, THIS IS ONLY MEANT TO SHOW YOU HOW TO USE THE PRESIGNED URLS FROM THE CLIENT SIDE TO UPLOAD CATALOG IMAGES."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shopping",
+			"item": []
+		},
+		{
+			"name": "SuperAdmin",
+			"item": [
+				{
+					"name": "createAdmin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"viveckh@hotmail.com\",\n\t\"name\": \"Vivek Pandey\",\n\t\"permissions\": [\"CATALOG_VIEW\", \"ORDER_VIEW\"]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/superAdmin/createAdmin",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"superAdmin",
+								"createAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllAdmins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/superAdmin/getAllAdmins",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"superAdmin",
+								"getAllAdmins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAdminDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/superAdmin/getAdminDetails?email=viveckh@hotmail.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"superAdmin",
+								"getAdminDetails"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "viveckh@hotmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAdminAccess",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"viveckh@hotmail.com\",\n\t\"approved\": false,\n\t\"permissions\": [\"CATALOG_MANAGE\", \"ORDER_VIEW\"]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/superAdmin/updateAdminAccess",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"superAdmin",
+								"updateAdminAccess"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAdmin",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"viveckh@hotmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/superAdmin/deleteAdmin",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"superAdmin",
+								"deleteAdmin"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f7a24ff-545b-45dd-b2a1-f4801fb85854",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc55e001-f6f4-4d95-820b-7ad80be15ea2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Reference Data",
+			"item": [
+				{
+					"name": "getStores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/getStores",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"getStores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/getProductCategories",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"getProductCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/getRoles",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"getRoles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getWeightUnits",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/getWeightUnits",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"getWeightUnits"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3995122f-6f15-4105-a019-4d7b3483f573",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2345aa3b-6d8b-43ba-a446-28d890486dce",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
