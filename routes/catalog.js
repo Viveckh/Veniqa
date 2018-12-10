@@ -10,14 +10,14 @@ router.get('/', function(req, res, next) {
 
 router.post('/search', catalogController.searchCatalog);
 
+router.post('/addProduct', catalogController.addProductToCatalog);
+
 router.route('/getProductDetails').get(catalogController.getProductDetails);
 
-router.put('/updateProduct', catalogController.updateProduct);
+router.put('/updateProduct', catalogController.updateProductInCatalog);
+
+router.delete('/deleteProduct', catalogController.deleteProductFromCatalog);
 
 router.get('/getPresignedUrlsForCatalogImageUploads', catalogController.getPresignedUrlsForCatalogImageUploads);
-
-// AddProduct
-
-// DeleteProduct
 
 module.exports = router;

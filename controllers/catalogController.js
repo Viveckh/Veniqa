@@ -16,6 +16,21 @@ export default {
         }
     },
 
+    async addProductToCatalog(req, res, next) {
+        let response;
+        try {
+            response = await catalogService.addProductToCatalog(req.body);
+            if (response.errorDetails) {
+                return res.status(400).send(response);
+            }
+            return res.status(200).send(response);
+        }
+        catch(err) {
+            console.log("[ERROR]: Get products failed => ", err);
+            return res.status(500).send({ status: "failed", errorDetails: err});
+        }
+    },
+
     async getProductDetails(req, res, next) {
         let response;
         try {
@@ -31,10 +46,10 @@ export default {
         }
     },
 
-    async updateProduct(req, res, next) {
+    async updateProductInCatalog(req, res, next) {
         let response;
         try {
-            response = await catalogService.updateProduct(req.body);
+            response = await catalogService.updateProductInCatalog(req.body);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }
@@ -46,10 +61,25 @@ export default {
         }
     },
 
+    async deleteProductFromCatalog(req, res, next) {
+        let response;
+        try {
+            response = await catalogService.deleteProductFromCatalog(req.body.productId);
+            if (response.errorDetails) {
+                return res.status(400).send(response);
+            }
+            return res.status(200).send(response);
+        }
+        catch(err) {
+            console.log("[ERROR]: Get products failed => ", err);
+            return res.status(500).send({ status: "failed", errorDetails: err});
+        }
+    },
+
     async getPresignedUrlsForCatalogImageUploads(req, res, next) {
         let response;
         try {
-            response = await catalogService.getPresignedUrlsForCatalogImageUploads(req.query.numberOfThumbnails, req.query.numberOfFeaturedImages, req.query.numberOfDetailedImages);
+            response = await catalogService.getPresignedUrlsForCatalogImageUploads(req.query.productId, req.query.numberOfThumbnails, req.query.numberOfFeaturedImages, req.query.numberOfDetailedImages);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }
