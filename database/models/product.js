@@ -2,6 +2,32 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import mongoosePaginator from 'mongoose-paginate';
 
+let colorSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    hexValue: {
+        type: String,
+        required: true,
+        validate: (value) => {
+            return validator.isHexColor(value)
+        }
+    }
+}, {_id: false});
+
+let priceSchema = new mongoose.Schema({
+    amount: {
+        type: Number,
+        required: true
+    },
+    currency: {
+        type: String,
+        required: true,
+        enum: ['USD', 'BDT', 'NPR']
+    }
+}, {_id: false})
+
 let productSchema = new mongoose.Schema({
     store: {
         type: String,
@@ -37,13 +63,39 @@ let productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    picture_urls: {
+    thumbnailUrls: {
         type: Array,
         of: String,
         required: true,
         validate: (value) => {
             for (let entry of value) {
-                if(!validator.isURL(entry, {allow_underscores: true})) {
+                if(!(validator.isURL(entry, {allow_underscores: true}) && entry.includes("s3.amazonaws.com"))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    },
+    featuredImageUrls: {
+        type: Array,
+        of: String,
+        required: true,
+        validate: (value) => {
+            for (let entry of value) {
+                if(!(validator.isURL(entry, {allow_underscores: true}) && entry.includes("s3.amazonaws.com"))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    },
+    detailedImageUrls: {
+        type: Array,
+        of: String,
+        required: true,
+        validate: (value) => {
+            for (let entry of value) {
+                if(!(validator.isURL(entry, {allow_underscores: true}) && entry.includes("s3.amazonaws.com"))) {
                     return false;
                 }
             }
@@ -51,15 +103,8 @@ let productSchema = new mongoose.Schema({
         }
     },
     price: {
-        amount: {
-            type: Number,
-            required: true
-        },
-        currency: {
-            type: String,
-            required: true,
-            enum: ['USD', 'BDT', 'NPR']
-        }
+        type: priceSchema,
+        required: true
     },
     weight: {
         quantity: {
@@ -80,6 +125,14 @@ let productSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    colors: {
+        type: [colorSchema],
+        required: false
+    },
+    sizes: {
+        type: [String],
+        required: false
     }
 });
 

@@ -10,7 +10,7 @@ export default {
 
         try {
             let products = await Product.paginate(searchFilters, {
-                select: '_id name brand store price picture_urls category subcategory',
+                select: '_id name brand store price thumbnailUrls category subcategory',
                 page: pagingOptions.page,
                 limit: pagingOptions.limit
             }).then(result => {

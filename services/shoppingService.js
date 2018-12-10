@@ -108,7 +108,7 @@ export default {
                 user.cart.totalPrice.amount = 0;
 
                 for (let [index, item] of user.cart.items.entries()) {
-                    let product = await Product.findOne({_id: item.product_id}, '_id name brand store price picture_urls').exec();
+                    let product = await Product.findOne({_id: item.product_id}, '_id name brand store price thumbnailUrls').exec();
 
                     // If the product exists in catalog, only then return it
                     if (product) {
