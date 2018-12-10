@@ -21,12 +21,13 @@ import Notifications from 'vue-notification'
 import VueAxios from './plugins/axios';
 import GMap from './plugins/geocode';
 import _ from 'lodash';
-
+import {AtomSpinner} from 'epic-spinners'
 
 import 'animate.css'
 import './assets/css/hover.css'
 
 Vue.use(Notifications)
+Vue.use(AtomSpinner)
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {

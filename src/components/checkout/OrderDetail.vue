@@ -10,41 +10,32 @@
           <b-col md="3">
             <div
               class="order-img order-desc"
-              v-if="item.picture_urls.length > 0"
-              @click="gotoProduct(item)"
-              :style="orderPicture(item.picture_urls[0])"
+              v-if="item.product.picture_urls.length > 0"
+              @click="gotoProduct(item.product)"
+              :style="orderPicture(item.product.picture_urls[0])"
             ></div>
           </b-col>
           <b-col md="5">
-            <div class="order-desc" @click="gotoProduct(item._id)">
-              {{item.name}}
+            <div class="order-desc" @click="gotoProduct(item.product._id)">
+              {{item.product.name}}
             <br>
             <span style="font-size: 12px">Standard Shipping</span>
             </div>
             <span class="delete" @click="deleteSelected(item)">Delete</span>
           </b-col>
           <b-col class="align-right">
-            <b-form-input
-              v-model="item.counts"
-              :state="quantityState(item.counts)"
-              :disabled="!editMode"
-              type="number"
-              @blur.native="updateCartItem(item)"
-              min="1"
-              aria-describedby="qtyFeedback"
-            ></b-form-input>
-            <b-form-invalid-feedback v-if="editMode" id="qtyFeedback">> 0</b-form-invalid-feedback>
+            <b-form-select v-model="item.additionalDetails.counts" :options="countOptions" @input="updateCartItem(item)" class="mb-3" />
           </b-col>
-          <b-col class="align-right">{{item.price.currency}} {{formatedPrice(item.price.amount * item.counts)}}</b-col>
+          <b-col class="align-right">{{item ? item.additionalDetails.aggregatedPrice.currency : ''}} {{item ? item.additionalDetails.aggregatedPrice.amount : ''}}</b-col>
         </b-row>
       </li>
     </ul>
 
-    <hr>
 
-    <b-row class="total-line">
+    <b-row class="total-line" v-if="cartTotal && cartTotal.amount > 0">
+      <hr>
       <b-col cols="8"><strong>Total</strong> </b-col>
-      <b-col class="align-right">{{getTotal()}}</b-col>
+      <b-col class="align-right">{{cartTotal.currency}} {{cartTotal.amount}}</b-col>
     </b-row>
 
     <div v-if="orders && orders.length <= 0" class="order-empty">
@@ -67,7 +58,12 @@ export default {
     return {
       editMode: true,
       selectedItems: [],
+      countOptions: [],
     };
+  },
+
+  created() {
+    this.countOptions = Array.from(Array(200).keys(), val => val + 1);
   },
 
   methods: {
@@ -81,20 +77,6 @@ export default {
       };
     },
 
-    formatedPrice(price) {
-      const val = parseInt(price * 100);
-      return val / 100;
-    },
-
-    getTotal() {
-      let total = 0;
-      let currency = null;
-      this.orders.forEach((order) => {
-        if (!currency) currency = order.price.currency;
-        total += this.formatedPrice(order.price.amount * order.counts);
-      });
-      return `${currency} ${total}`;
-    },
 
     gotoDealPage() {
       this.$router.push('/');
@@ -122,7 +104,7 @@ export default {
     },
 
     async updateCartItem(item) {
-      if (item.counts > 0) {
+      if (item.additionalDetails.counts > 0) {
         try {
           this.editMode = false;
           const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
@@ -138,22 +120,6 @@ export default {
       }
     },
 
-    // async done() {
-    //   let validated = true;
-    //   for (let i = 0; i < this.orders.length; i++) {
-    //     const item = this.orders[i];
-    //     if (!this.quantityState(item.counts)) {
-    //       validated = false;
-    //     }
-    //   }
-
-    //   if (validated) {
-    //     this.editMode = false;
-    //     await this.$store.dispatch('cartStore/updateOrders');
-    //     this.selectedItems = [];
-    //   }
-    // },
-
     async deleteSelected(item) {
       try {
         await this.$store.dispatch(
@@ -167,6 +133,8 @@ export default {
   computed: {
     ...mapGetters({
       orders: 'cartStore/getCart',
+      cartTotal: 'cartStore/getTotal',
+
     }),
 
     quantityState() {

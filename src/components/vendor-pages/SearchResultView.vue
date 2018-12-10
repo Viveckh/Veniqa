@@ -49,7 +49,7 @@ export default {
     },
 
     async addToCart(product) {
-      const val = await this.$store.dispatch('cartStore/addToTheCart', product);
+      const val = await this.$store.dispatch('cartStore/addToTheCart', [product]);
       if (val) {
         this.$notify({
           group: 'toast',

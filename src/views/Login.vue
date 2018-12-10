@@ -30,11 +30,7 @@ export default {
     loggedIn() {
       // Do something when logged in.
       this.$router.push('/');
-
-      // There are few things to do when the user is logged in.
-      // Get the user's cart and Get the addresses.
-      // this.$store.dispatch('cartStore/getCart', true);
-      // this.$store.dispatch('shippingStore/fetchAddresses');
+      this.$store.commit('loaderStore/unsetLoader');
     },
   },
 };

@@ -46,8 +46,14 @@ export default {
         url: ProxyUrls.searchProduct,
         method: 'post',
         data: {
-          store: this.vendorMap[this.vendorName],
-          category: 'Make-Up',
+          searchFilters: {
+            store: this.vendorMap[this.vendorName],
+            category: 'Make-Up',
+          },
+          pagingOptions: {
+            page: 1,
+            limit: 1,
+          },
         },
       });
 
@@ -55,7 +61,7 @@ export default {
         this.searchResult.splice(0, this.searchResult.length);
         const transformed = [];
 
-        res.data.forEach((p) => {
+        res.data.docs.forEach((p) => {
           transformed.push(_.assign(ProductDTO, p));
         });
 

@@ -65,7 +65,6 @@ export default {
         if (data) {
           data.responseData.counts = 0;
           this.product = data.responseData;
-          // this.product.counts = 0;
           this.product.picture_urls.forEach((picture, pid) => {
             this.productImages.normal_size.push({
               id: pid,
@@ -81,15 +80,6 @@ export default {
             'Product detail could not be retrieved at the moment. Please try again later.',
         });
       }
-
-      // this.product = JSONFile;
-
-      // this.product.picture_urls.forEach((picture, pid) => {
-      //   this.productImages.normal_size.push({
-      //     id: pid,
-      //     url: picture,
-      //   });
-      // });
     }
   },
 };

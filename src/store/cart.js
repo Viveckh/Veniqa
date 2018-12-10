@@ -1,41 +1,68 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-
+import OrderDTO from '@/dto/Order.json';
 
 export default {
   namespaced: true,
   state: {
     cart: [],
+    total: {},
   },
   actions: {
     async addToTheCart({
       state,
       commit,
       rootGetters,
-    }, payload) {
+    }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
-      if (!rootGetters['authStore/isSessionActive']) {
-        const foundIndex = _.findIndex(state.cart, pr => pr._id === payload._id);
+      if (!rootGetters['authStore/isSessionActive'] && products.length > 0) {
+        const foundIndex = _.findIndex(state.cart, pr => _.isEqual(pr.product, products[0]));
 
+        if (Object.keys(state.total).length <= 0) {
+          state.total = {
+            amount: 0,
+            currency: '',
+          };
+        }
+        // Here the assumption currently is that only one product will be there everytime since everything is local.
         if (foundIndex >= 0) {
-          state.cart[foundIndex].counts = parseInt(state.cart[foundIndex].counts) + 1;
+          const order = state.cart[foundIndex];
+          order.additionalDetails.counts = parseInt(order.additionalDetails.counts) + 1;
+          order.additionalDetails.aggregatedPrice = {
+            currency: order.additionalDetails.aggregatedPrice.currency,
+            amount: parseFloat(order.product.price.amount) + parseFloat(order.additionalDetails.aggregatedPrice.amount),
+          };
+          if (state.total.currency.length == 0) {
+            state.total.currency = order.additionalDetails.aggregatedPrice.currency;
+          }
         } else {
-          payload.counts = parseInt(payload.counts) + 1;
-          state.cart.push(payload);
+          const order = _.cloneDeep(OrderDTO);
+          order.product = _.cloneDeep(products[0]);
+          order.additionalDetails.counts = 1;
+          order.additionalDetails.product_id = products[0]._id;
+          order.additionalDetails._id = state.cart.length;
+          order.additionalDetails.aggregatedPrice = {
+            currency: products[0].price.currency,
+            amount: products[0].price.amount,
+          };
+
+          state.cart.push(order);
         }
 
-        commit('setLocalCart', state.cart);
+        commit('setLocalCart');
         return true;
       }
+
+      const toSend = _.map(products, p => ({
+        product_id: p._id,
+        counts: p.counts == 0 ? 1 : p.counts,
+      }));
 
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
-          data: {
-            product_id: payload._id,
-            counts: payload.counts,
-          },
+          data: toSend,
         });
 
         commit('setCart', res.data);
@@ -58,7 +85,6 @@ export default {
           url: ProxyUrl.getCart,
         });
 
-
         commit('setCart', data);
       } catch (err) {
         throw new Error(err);
@@ -69,16 +95,17 @@ export default {
       state,
       commit,
       rootGetters,
-    }, products) {
-      const deletedIds = _.map(products, '_id');
+    }, cartItems) {
+      const deletedIds = _.map(cartItems, 'additionalDetails._id');
 
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
-        _.remove(state.cart, product => deletedIds.indexOf(product._id) >= 0);
+        _.remove(state.cart, order => deletedIds.indexOf(order.additionalDetails._id) >= 0);
 
-        commit('setLocalCart', state.cart);
+        commit('setLocalCart');
         return;
       }
+
       try {
         const {
           data,
@@ -86,12 +113,12 @@ export default {
           method: 'delete',
           url: ProxyUrl.deleteCart,
           data: {
-            productIds: deletedIds,
+            cartItemIds: deletedIds,
           },
         });
 
         if (data) {
-          commit('deleteProduct', deletedIds);
+          commit('setCart', data);
         }
       } catch (err) {
         throw new Error(err);
@@ -106,18 +133,23 @@ export default {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
         // These commits don't do anything but are necessary because they help persist.
-        commit('setLocalCart', state.cart);
-        return true;
+        const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
+        if (updatedItem) {
+          updatedItem.additionalDetails.aggregatedPrice.amount = parseInt(updatedItem.additionalDetails.counts) * parseFloat(updatedItem.product.price.amount);
+          updatedItem.additionalDetails.aggregatedPrice.amount = updatedItem.additionalDetails.aggregatedPrice.amount.toFixed(2);
+          commit('setLocalCart');
+          return true;
+        }
+
+        return false;
       }
-      // const orders = _.map(payloadArray, c => ({
-      //   product_id: c._id,
-      //   counts: parseInt(c.counts),
-      // }));
+
       const orders = [];
-      payloadArray.forEach((item) => {
+      state.cart.forEach((item) => {
         orders.push({
-          product_id: item._id,
-          counts: item.counts,
+          product_id: item.additionalDetails.product_id,
+          _id: item.additionalDetails._id,
+          counts: item.additionalDetails.counts,
         });
       });
 
@@ -143,6 +175,7 @@ export default {
   mutations: {
     resetOrders(state) {
       state.cart = [];
+      state.total = {};
     },
     appendToCart(state, newProducts) {
       newProducts.forEach((pr) => {
@@ -157,24 +190,32 @@ export default {
         }
       });
     },
-    setLocalCart(state, products) {
+    setLocalCart(state) {
       state.cart = [...state.cart];
+
+      let amount = 0; let
+        currency = '';
+      state.cart.forEach((item) => {
+        amount += parseFloat(item.additionalDetails.aggregatedPrice.amount);
+        if (currency.length == 0) {
+          currency = item.additionalDetails.aggregatedPrice.currency;
+        }
+      });
+      amount = amount.toFixed(2);
+      state.total = {
+        amount,
+        currency,
+      };
     },
-    setCart(state, allProducts) {
+    setCart(state, allCarts) {
       state.cart.splice(0, state.cart.length);
       const transformed = [];
-      allProducts.forEach((pr) => {
-        const temp = pr.product;
-        temp.counts = pr.counts;
-        transformed.push(temp);
+      state.total = allCarts.totalPrice;
+      allCarts.items.forEach((item) => {
+        transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
       });
+
       state.cart.push(...transformed);
-    },
-
-    deleteProduct(state, productIds) {
-      _.remove(state.cart, c => productIds.indexOf(c._id) >= 0);
-
-      state.cart = [...state.cart];
     },
   },
   getters: {
@@ -183,11 +224,15 @@ export default {
     },
 
     getTotal(state) {
-      let total = 0;
+      return state.total;
+    },
 
-      state.cart.forEach((product) => {
-        total += parseInt(product.counts);
+    getTotalItems(state) {
+      let total = 0;
+      state.cart.forEach((item) => {
+        total += parseInt(item.additionalDetails.counts);
       });
+
       return total;
     },
   },

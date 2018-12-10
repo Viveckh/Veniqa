@@ -73,7 +73,7 @@ export default {
 
   methods: {
     async addToCart() {
-      const val = await this.$store.dispatch('cartStore/addToTheCart', this.product);
+      const val = await this.$store.dispatch('cartStore/addToTheCart', [this.product]);
       if (val) {
         this.$notify({
           group: 'toast',
