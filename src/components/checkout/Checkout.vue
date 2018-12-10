@@ -45,8 +45,9 @@ export default {
 
 <style lang="scss">
 .checkout{
-  width: 90%;
-  margin: auto;
+  // width: 90%;
+  // margin: auto;
+  padding: 0rem 2rem;
   margin-bottom: 10px;
 }
 </style>

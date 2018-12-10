@@ -41,20 +41,20 @@ export default {
 
 .login {
   height: 100vh;
-  background-image: $gradient-color;
-  line-height: 100vh;
+  // background-image: $gradient-color;
+  // line-height: 100vh;
 
-  .content {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-    width: 100%;
-  }
+  // .content {
+  //   display: inline-block;
+  //   vertical-align: middle;
+  //   line-height: normal;
+  //   width: 100%;
+  // }
 }
 
 .auth-box {
-  width: 70%;
-  margin: auto;
+  // width: 70%;
+  // margin: auto;
   background-color: white;
   box-shadow: 5px 6px 10px 0px #2E3532;
 }

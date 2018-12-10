@@ -10,7 +10,7 @@
           <b-col md="3">
             <div
               class="order-img order-desc"
-              v-if="item.product.picture_urls.length > 0"
+              v-if="item.product.picture_urls && item.product.picture_urls.length > 0"
               @click="gotoProduct(item.product)"
               :style="orderPicture(item.product.picture_urls[0])"
             ></div>
