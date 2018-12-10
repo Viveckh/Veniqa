@@ -10,7 +10,6 @@
           </div>
           <div class="account-body">
             <div class="account-content">
-
               <div v-if="activePanel =='registration'" class="inside-section">
                 <transition
                   name="register-transition"
@@ -73,20 +72,25 @@ export default {
       try {
         this.$store.commit('loaderStore/setLoader');
         const data = await this.$store.dispatch('authStore/login', userInfo);
-        if (data.cart && data.cart.length > 0) {
+
+        if (data.cart && data.cart.items.length > 0) {
           const incomingProductIds = _.map(data.cart, 'product_id');
           // Update the cart values.
           const currentCartItems = this.$store.getters['cartStore/getCart'];
 
-          const newProductIds = [];
+          const toAdd = [];
           currentCartItems.forEach((item) => {
-            if (incomingProductIds.indexOf(item._id) < 0) {
-              newProductIds.push(item);
+            if (incomingProductIds.indexOf(item.additionalDetails.product_id) < 0) {
+              // Adding the product ID and the counts.
+              toAdd.push({
+                _id: item.additionalDetails.product_id,
+                counts: item.additionalDetails.counts,
+              });
             }
           });
 
-          if (newProductIds.length > 0) {
-            this.$store.dispatch('cartStore/addToTheCart', newProductIds);
+          if (toAdd.length > 0) {
+            this.$store.dispatch('cartStore/addToTheCart', toAdd);
           }
         }
         this.$emit('loginSuccess');
@@ -142,28 +146,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.account-table{
+.account-table {
   display: table;
   height: 100%;
   width: 100%;
 
-  .account-body{
+  .account-body {
     display: table-row;
-    .account-content{
+    .account-content {
       display: table-cell;
       vertical-align: middle;
       padding-left: 30px;
-
     }
 
-    .image{
+    .image {
       height: 100px;
       width: 100%;
     }
   }
 }
 
-.account-all{
+.account-all {
   height: 650px;
 }
 

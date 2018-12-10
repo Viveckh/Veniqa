@@ -24,27 +24,16 @@
             <span class="delete" @click="deleteSelected(item)">Delete</span>
           </b-col>
           <b-col class="align-right">
-            <!-- <b-form-input
-              v-model="item.additionalDetails.counts"
-              :state="quantityState(item.additionalDetails.counts)"
-              :disabled="!editMode"
-              type="number"
-              @blur.native="updateCartItem(item)"
-              min="1"
-              aria-describedby="qtyFeedback"
-            ></b-form-input>
-            <b-form-invalid-feedback v-if="editMode" id="qtyFeedback">> 0</b-form-invalid-feedback> -->
             <b-form-select v-model="item.additionalDetails.counts" :options="countOptions" @input="updateCartItem(item)" class="mb-3" />
           </b-col>
-          <!-- <b-col class="align-right">{{item.price.currency}} {{formatedPrice(item.price.amount * item.counts)}}</b-col> -->
           <b-col class="align-right">{{item ? item.additionalDetails.aggregatedPrice.currency : ''}} {{item ? item.additionalDetails.aggregatedPrice.amount : ''}}</b-col>
         </b-row>
       </li>
     </ul>
 
-    <hr>
 
-    <b-row class="total-line">
+    <b-row class="total-line" v-if="cartTotal && cartTotal.amount > 0">
+      <hr>
       <b-col cols="8"><strong>Total</strong> </b-col>
       <b-col class="align-right">{{cartTotal.currency}} {{cartTotal.amount}}</b-col>
     </b-row>
@@ -69,12 +58,12 @@ export default {
     return {
       editMode: true,
       selectedItems: [],
-      countOptions: []
+      countOptions: [],
     };
   },
 
   created() {
-    this.countOptions = Array.from(Array(200).keys(), val => val+1);
+    this.countOptions = Array.from(Array(200).keys(), val => val + 1);
   },
 
   methods: {
@@ -144,7 +133,7 @@ export default {
   computed: {
     ...mapGetters({
       orders: 'cartStore/getCart',
-      cartTotal: 'cartStore/getTotal'
+      cartTotal: 'cartStore/getTotal',
 
     }),
 

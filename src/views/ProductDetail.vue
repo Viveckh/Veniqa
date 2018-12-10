@@ -80,7 +80,6 @@ export default {
             'Product detail could not be retrieved at the moment. Please try again later.',
         });
       }
-
     }
   },
 };

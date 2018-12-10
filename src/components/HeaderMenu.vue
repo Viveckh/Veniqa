@@ -75,7 +75,7 @@ export default {
     },
 
     totalOrders() {
-      return this.$store.getters['cartStore/getTotal'];
+      return this.$store.getters['cartStore/getTotalItems'];
     },
   },
 };
