@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import mongoosePaginator from 'mongoose-paginate';
+import * as _ from 'lodash';
+
+import STORES_ARRAY from '../reference-data-files/stores.json';
+import WEIGHT_UNITS_ARRAY from '../reference-data-files/weightUnits.json'; 
+import PRODUCT_CATEGORIES from '../reference-data-files/product-categories.json'
 
 let colorSchema = new mongoose.Schema({
     name: {
@@ -24,7 +29,7 @@ let priceSchema = new mongoose.Schema({
     currency: {
         type: String,
         required: true,
-        enum: ['USD', 'BDT', 'NPR']
+        enum: ['USD']
     }
 }, {_id: false})
 
@@ -33,7 +38,7 @@ let productSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        enum: ['CURATED', 'AMAZON', 'MACYS', 'SEPHORA', 'EBAY', 'MICHAEL KORS']
+        enum: STORES_ARRAY
     },
     brand: {
         type: String,
@@ -56,12 +61,22 @@ let productSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        validate: (value) => {
+            // Get all category names and check if the passed value is one of them
+            let categoriesArray = _.map(PRODUCT_CATEGORIES, 'name');
+            return categoriesArray.includes(value);
+        }
     },
     subcategory: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        validate: function(value) {
+            // Find the selected category object and see if the subcategory exists in subcategories array
+            let categoryObj = _.find(PRODUCT_CATEGORIES, {name: this.category})
+            return categoryObj && categoryObj.subcategories && categoryObj.subcategories.includes(value);
+        }
     },
     thumbnailUrls: {
         type: Array,
@@ -114,7 +129,7 @@ let productSchema = new mongoose.Schema({
         unit: {
             type: String,
             required: true,
-            enum: ['LB', 'KG', 'OZ']
+            enum: WEIGHT_UNITS_ARRAY
         }
     },
     custom_attributes: {

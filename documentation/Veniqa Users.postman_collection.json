@@ -1,0 +1,466 @@
+{
+	"info": {
+		"_postman_id": "c5972cd1-37d9-4e71-8f8e-e3360465e157",
+		"name": "Veniqa Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"random\",\n\t\"name\": \"Vivek Pandey\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/signup",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resendEmailAddressConfirmationLink",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/resendEmailAddressConfirmationLink?email=vpandey@ngineerx.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"resendEmailAddressConfirmationLink"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vpandey@ngineerx.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirmEmailAddress",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/confirmEmailAddress/35ecbf438aed2842e43fc2b0e987a94908de725b",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"confirmEmailAddress",
+								"35ecbf438aed2842e43fc2b0e987a94908de725b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"random\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/forgotPassword?email=vpandey@ngineerx.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"forgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vpandey@ngineerx.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validatePasswordResetToken",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/validatePasswordResetToken/3d421ad1d212b5a72177a3e8546ea8abaae85580",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"validatePasswordResetToken",
+								"3d421ad1d212b5a72177a3e8546ea8abaae85580"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"3d421ad1d212b5a72177a3e8546ea8abaae85580\",\n\t\"newPassword\": \"golang\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/resetPassword",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isLoggedIn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/isLoggedIn",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"isLoggedIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "checkout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/checkout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "catalog search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"MACYS\",\n\t\t\"category\": \"Make-Up\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{server}}/catalog/search",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c095956e7179a6ca083d1ac",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"getProductDetails"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "5c095956e7179a6ca083d1ac"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shopping",
+			"item": [
+				{
+					"name": "addToCart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n\t\"product_id\": \"5c095956e7179a6ca083d1ac\",\n\t\"color\": {\n\t\t\"name\": \"Brown\",\n\t\t\"hexValue\": \"#DC143C\"\n\t},\n\t\"counts\": 2,\n\t\"size\": \"S\"\n}]"
+						},
+						"url": {
+							"raw": "{{server}}/shopping/addToCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"addToCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cartItems\": [\n\t\t{\n\t\t\t\"_id\": \"5c0b23643aac363fa78531ae\",\n\t\t\t\"product_id\": \"5c095956e7179a6ca083d1ac\",\n\t\t\t\"counts\": 5,\n\t\t\t\"color\": {\n                \"name\": \"Black\",\n                \"hexValue\": \"#000000\"\n            }\n\t\t\t\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/shopping/updateCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"updateCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/shopping/getCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"getCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteFromCart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cartItemIds\": [\n\t\t\"5c0b23643aac363fa78531ae\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/shopping/deleteFromCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"deleteFromCart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
