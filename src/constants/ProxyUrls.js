@@ -24,4 +24,5 @@ export default {
   addProduct: '/catalog/addProduct',
   refData: '/referenceData/getCatalogBundle',
   getProduct: '/catalog/getProductDetails',
+  editProduct: '/catalog/updateProduct',
 };

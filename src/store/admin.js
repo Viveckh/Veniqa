@@ -38,14 +38,13 @@ export default {
             productId: id,
           },
         });
-        // console.log('Deleted');
+
         dispatch('getAllProducts');
       } catch (err) {
         console.log(err);
       }
     },
     async addProduct({ dispatch }, product) {
-      // console.log(product);
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addProduct,
@@ -53,25 +52,41 @@ export default {
           method: 'post',
           data: product,
         });
-        // console.log(res);
+
         dispatch('getAllProducts');
       } catch (err) {
         console.log(err);
+        throw new Error(err);
+      }
+    },
+    async editProduct({ dispatch }, product) {
+      try {
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.editProduct,
+          withCredentials: true,
+          method: 'put',
+          data: product,
+        });
+
+        dispatch('getAllProducts');
+      } catch (err) {
+        console.log(err);
+        throw new Error(err);
       }
     },
     async getProduct({ dispatch }, id) {
-      // console.log(product);
-      const productGetUrl = `${ProxyUrl.getProduct}productId=${id}`;
+      const productGetUrl = `${ProxyUrl.getProduct}?productId=${id}`;
       try {
         const res = await Vue.prototype.$axios({
           url: productGetUrl,
           withCredentials: true,
           method: 'get',
         });
-        // console.log(res);
-        // dispatch('getAllProducts');
+        // console.log(res.data.responseData);
+        return res.data.responseData;
       } catch (err) {
         console.log(err);
+        throw new Error(err);
       }
     },
     async getAllProducts({ commit }) {

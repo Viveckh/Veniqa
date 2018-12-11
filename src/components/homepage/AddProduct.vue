@@ -2,7 +2,7 @@
 <template>
   <div>
     <br>
-    <form class="form-horizontal" @submit.prevent="handleAddProduct">
+    <div class="form-horizontal">
       <div class="form-group form-group-sm">
         <label class="control-label col-sm-2" for="name">Product Name</label>
         <div class="col-sm-10">
@@ -127,12 +127,23 @@
       </div>
       <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
-          <button type="submit" class="btn btn-success">Add Product</button>
+          <button
+            v-if="this.data != null"
+            type="button"
+            @click="handleEditProduct()"
+            class="btn btn-success"
+          >Edit Product</button>
+          <button
+            v-else
+            type="button"
+            @click="handleAddProduct()"
+            class="btn btn-success"
+          >Add Product</button>
           &nbsp;
           <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -140,6 +151,15 @@
 import * as _ from 'lodash';
 
 export default {
+  props: {
+    data: { required: false, type: Object, default: null },
+  },
+  created() {
+    if (this.data != null) {
+      console.log('Created', this.data);
+      this.product = _.cloneDeep(this.data);
+    }
+  },
   data() {
     return {
       product: {
@@ -190,9 +210,29 @@ export default {
     goBack() {
       this.$emit('cancelTrigger');
     },
-    handleAddProduct() {
-      this.$store.dispatch('adminStore/addProduct', this.product);
-      this.$emit('cancelTrigger');
+    async handleAddProduct() {
+      try {
+        await this.$store.dispatch('adminStore/addProduct', this.product);
+        this.$emit('cancelTrigger');
+      } catch (err) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'There was an error',
+        });
+      }
+    },
+    async handleEditProduct() {
+      try {
+        await this.$store.dispatch('adminStore/editProduct', this.product);
+        this.$emit('cancelTrigger');
+      } catch (err) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'There was an error',
+        });
+      }
     },
     getSubCategory() {
       const refState = this.$store.getters['adminStore/allStateData'];

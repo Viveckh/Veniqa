@@ -32,9 +32,9 @@
             <td>${{product.price.amount}}</td>
             <td>{{product.store}}</td>
             <td>
-              <router-link :to="'/admin/edit/'+product._id">
-                <i class="fa fa-edit" style="color:#7FB3D5"></i>
-              </router-link>
+              <a @click="editProductFunc(product._id)">
+                <i class="fa fa-edit" style="color:green"></i>
+              </a>
             </td>
             <td>
               <a @click="deleteProduct(product._id)">
@@ -45,7 +45,7 @@
         </tbody>
       </table>
     </div>
-    <add-product v-if="isAddView" @cancelTrigger="isAddView=false"/>
+    <add-product v-if="isAddView" @cancelTrigger="isAddView=false" :data="editProductData"/>
   </div>
 </template>
 
@@ -54,14 +54,12 @@ import AddProduct from '@/components/homepage/AddProduct.vue';
 
 export default {
   components: {
-    // HeaderMenu,
-    // MainPage,
-    // addPr
     AddProduct,
   },
   data() {
     return {
       isAddView: false,
+      editProductData: null,
     };
   },
   async created() {
@@ -78,6 +76,16 @@ export default {
       return this.$store.dispatch('adminStore/deleteProduct', id);
     },
     addProductFunc() {
+      this.isAddView = true;
+      this.editProductData = null;
+    },
+    async editProductFunc(id) {
+      const editProductDetails = await this.$store.dispatch(
+        'adminStore/getProduct',
+        id,
+      );
+      this.editProductData = editProductDetails;
+      console.log(this.editProductData);
       this.isAddView = true;
     },
   },
