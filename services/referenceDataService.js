@@ -6,6 +6,21 @@ import ROLES_ARRAY from '../database/reference-data-files/roles';
 import PRODUCT_CATEGORIES from '../database/reference-data-files/product-categories.json'
 
 export default {
+    async getCatalogBundle() {
+        try {
+            let result = {
+                stores: STORES_ARRAY,
+                product_categories: PRODUCT_CATEGORIES,
+                weight_units: WEIGHT_UNITS_ARRAY
+            }
+            return result;
+        }
+        catch(err) {
+            console.log(err);
+            return false;
+        }
+    },
+
     async getStores() {
         try {
             return STORES_ARRAY;

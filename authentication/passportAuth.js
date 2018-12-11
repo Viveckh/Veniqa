@@ -93,5 +93,49 @@ export default {
         else {
             return res.status(401).send('only for superadmins');
         }
+    },
+
+    canManageCatalog(req, res, done) {
+        let validPermissions = ['SUPERADMIN', 'CATALOG_MANAGE'];
+        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
+        if (found) {
+            done();
+        }
+        else {
+            return res.status(401).send('permission denied to manage catalog');
+        }
+    },
+
+    canViewCatalog(req, res, done) {
+        let validPermissions = ['SUPERADMIN', 'CATALOG_MANAGE', 'CATALOG_VIEW'];
+        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
+        if (found) {
+            done();
+        }
+        else {
+            return res.status(401).send('permission denied to view catalog');
+        }
+    },
+
+    canManageOrders(req, res, done) {
+        let validPermissions = ['SUPERADMIN', 'ORDER_MANAGE'];
+        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
+        if (found) {
+            done();
+        }
+        else {
+            return res.status(401).send('permission denied to manage orders');
+        }
+    },
+
+    canViewOrders(req, res, done) {
+        let validPermissions = ['SUPERADMIN', 'ORDER_MANAGE', 'ORDER_VIEW'];
+        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
+        if (found) {
+            done();
+        }
+        else {
+            return res.status(401).send('permission denied to view orders');
+        }
     }
 }

@@ -8,16 +8,16 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Curated Catalog' });
 });
 
-router.post('/search', catalogController.searchCatalog);
+router.post('/search', passportAuth.isAuthenticated, passportAuth.canViewCatalog, catalogController.searchCatalog);
 
-router.post('/addProduct', catalogController.addProductToCatalog);
+router.post('/addProduct', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.addProductToCatalog);
 
-router.route('/getProductDetails').get(catalogController.getProductDetails);
+router.get('/getProductDetails', passportAuth.isAuthenticated, passportAuth.canViewCatalog, catalogController.getProductDetails);
 
-router.put('/updateProduct', catalogController.updateProductInCatalog);
+router.put('/updateProduct', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.updateProductInCatalog);
 
-router.delete('/deleteProduct', catalogController.deleteProductFromCatalog);
+router.delete('/deleteProduct', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.deleteProductFromCatalog);
 
-router.get('/getPresignedUrlsForCatalogImageUploads', catalogController.getPresignedUrlsForCatalogImageUploads);
+router.get('/getPresignedUrlsForCatalogImageUploads', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.getPresignedUrlsForCatalogImageUploads);
 
 module.exports = router;

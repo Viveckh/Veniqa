@@ -190,7 +190,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"MACYS\",\n\t\t\"category\": \"Make-Up Kits\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"AMAZON\",\n\t\t\"category\": \"Make-Up Kits\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/search",
@@ -244,7 +244,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/catalog/getProductDetails?productId=5c095956e7179a6ca083d1ac",
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c0ece58cad28765b794ad65",
 							"host": [
 								"{{server}}"
 							],
@@ -255,7 +255,7 @@
 							"query": [
 								{
 									"key": "productId",
-									"value": "5c095956e7179a6ca083d1ac"
+									"value": "5c0ece58cad28765b794ad65"
 								}
 							]
 						}
@@ -586,6 +586,28 @@
 		{
 			"name": "Reference Data",
 			"item": [
+				{
+					"name": "getCatalogBundle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/getCatalogBundle",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"getCatalogBundle"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "getStores",
 					"request": {

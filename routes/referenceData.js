@@ -10,12 +10,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Reference Data' });
 });
 
-router.get('/getStores', referenceDataController.getStores);
+router.get('/getCatalogBundle', passportAuth.isAuthenticated, referenceDataController.getCatalogBundle);
 
-router.get('/getProductCategories', referenceDataController.getProductCategories);
+router.get('/getStores', passportAuth.isAuthenticated, referenceDataController.getStores);
 
-router.get('/getRoles', referenceDataController.getRoles);
+router.get('/getProductCategories', passportAuth.isAuthenticated, referenceDataController.getProductCategories);
 
-router.get('/getWeightUnits', referenceDataController.getWeightUnits);
+router.get('/getRoles', passportAuth.isAuthenticated, referenceDataController.getRoles);
+
+router.get('/getWeightUnits', passportAuth.isAuthenticated, referenceDataController.getWeightUnits);
 
 module.exports = router;
