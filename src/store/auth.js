@@ -9,10 +9,7 @@ export default {
     isSessionActive: false,
   },
   actions: {
-    async registerUser({
-      state,
-      commit,
-    }, payload) {
+    async registerUser({ state, commit }, payload) {
       if (!payload) return null;
 
       try {
@@ -34,10 +31,7 @@ export default {
       }
     },
 
-    async login({
-      state,
-      commit,
-    }, payload) {
+    async login({ state, commit }, payload) {
       if (!payload) return null;
 
       try {
@@ -59,10 +53,7 @@ export default {
       }
     },
 
-    async initiateAppSession({
-      state,
-      commit,
-    }) {
+    async initiateAppSession({ state, commit }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
         url: ProxyUrls.isSessionActive,

@@ -279,7 +279,7 @@ export default {
   }
 }
 
-.shipping{
+.shipping {
   margin-top: 30px;
 }
 

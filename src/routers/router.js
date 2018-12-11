@@ -10,75 +10,78 @@ Vue.use(Router);
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [{
-    path: '/',
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-    children: [{
-      path: '',
-      component: MainPage,
-    },
+  routes: [
     {
-      path: 'about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
-    },
-    {
-      path: 'faqs',
-      name: 'faqs',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/FAQs.vue'),
+      path: '/',
+      component: Home,
       meta: {
         requiresAuth: true,
       },
-    },
-    {
-      path: 'contact',
-      name: 'contact',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: 'vendor/:vendorName',
-      props: true,
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
-    },
-    {
-      path: 'checkout',
-      component: Checkout,
-    },
-    ],
-  },
+      children: [
+        {
+          path: '',
+          component: MainPage,
+        },
 
-  {
-    path: '/email-confirmation/:token',
-    props: true,
-    component: () => import('@/views/EmailConfirmation.vue'),
-  },
-  {
-    path: '/password-reset/:token',
-    props: true,
-    component: () => import('@/views/PasswordConfirmation.vue'),
-  },
-  {
-    path: '/login',
-    component: Login,
-  },
+        {
+          path: 'about',
+          name: 'about',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+        },
+        {
+          path: 'faqs',
+          name: 'faqs',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '@/views/FAQs.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'contact',
+          name: 'contact',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'vendor/:vendorName',
+          props: true,
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
+        },
+        {
+          path: 'checkout',
+          component: Checkout,
+        },
+      ],
+    },
+
+    {
+      path: '/email-confirmation/:token',
+      props: true,
+      component: () => import('@/views/EmailConfirmation.vue'),
+    },
+    {
+      path: '/password-reset/:token',
+      props: true,
+      component: () => import('@/views/PasswordConfirmation.vue'),
+    },
+    {
+      path: '/login',
+      component: Login,
+    },
   ],
 });
 

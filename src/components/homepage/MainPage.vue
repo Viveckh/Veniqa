@@ -1,81 +1,133 @@
+// src/pages/Admin/Products
 <template>
-  <div id="main-page">
-    <div class="main-bg">
-      <b-card no-body>
-        <b-tabs card>
-          <b-tab title="View Inventory" active>
-            <b-table hover :items="items"></b-table>
-          </b-tab>
-          <b-tab title="Add"></b-tab>
-          <b-tab title="Settings"></b-tab>
-        </b-tabs>
-      </b-card>
+  <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+    <div v-if="!isAddView">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        style="margin:10px;"
+        @click="addProductFunc()"
+      >
+        <i class="fa fa-plus"></i>
+        Add a Product
+      </button>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Manufacturer</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in products" v-if="products.length > 0">
+            <td>
+              <img :src="product.thumbnailUrls[0]" class="productTableImg">
+            </td>
+            <td>{{product.name}}</td>
+            <td>${{product.price.amount}}</td>
+            <td>{{product.store}}</td>
+            <td>
+              <router-link :to="'/admin/edit/'+product._id">
+                <i class="fa fa-edit" style="color:#7FB3D5"></i>
+              </router-link>
+            </td>
+            <td>
+              <a @click="deleteProduct(product._id)">
+                <i class="fa fa-trash" style="color:#FA8072"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <add-product v-if="isAddView" @cancelTrigger="isAddView=false"/>
   </div>
 </template>
 
 <script>
-const items = [
-  {
-    isActive: true,
-    age: 40,
-    first_name: 'Dickerson',
-    last_name: 'Macdonald',
-  },
-  {
-    isActive: false,
-    age: 21,
-    first_name: 'Larsen',
-    last_name: 'Shaw',
-  },
-  {
-    isActive: false,
-    age: 89,
-    first_name: 'Geneva',
-    last_name: 'Wilson',
-    _rowVariant: 'danger',
-  },
-  {
-    isActive: true,
-    age: 40,
-    first_name: 'Thor',
-    last_name: 'Macdonald',
-    _cellVariants: { isActive: 'success', age: 'info', first_name: 'warning' },
-  },
-  {
-    isActive: false,
-    age: 29,
-    first_name: 'Dick',
-    last_name: 'Dunlap',
-  },
-];
+import AddProduct from '@/components/homepage/AddProduct.vue';
 
 export default {
+  components: {
+    // HeaderMenu,
+    // MainPage,
+    // addPr
+    AddProduct,
+  },
   data() {
     return {
-      items,
+      isAddView: false,
     };
   },
+  async created() {
+    await this.$store.dispatch('adminStore/getAllProducts');
+  },
+  computed: {
+    products() {
+      return this.$store.getters['adminStore/allProducts'];
+    },
+  },
+  methods: {
+    deleteProduct(id) {
+      return this.$store.dispatch('adminStore/deleteProduct', id);
+    },
+    addProductFunc() {
+      this.isAddView = true;
+    },
+  },
+};
+</script>
+<style>
+.productTableImg {
+  height: 50px;
+  widows: 50px;
+  border: 1px;
+  border-color: cadetblue;
+}
+</style>
+
+
+<script>
+import AddProduct from "@/components/homepage/AddProduct.vue";
+
+export default {
+  components: {
+    // HeaderMenu,
+    // MainPage,
+    // addPr
+    AddProduct
+  },
+  data() {
+    return {
+      isAddView: false
+    };
+  },
+  async created() {
+    await this.$store.dispatch("adminStore/getAllProducts");
+  },
+  computed: {
+    products() {
+      return this.$store.getters["adminStore/allProducts"];
+    }
+  },
+  methods: {
+    deleteProduct(id) {
+      return this.$store.dispatch("adminStore/deleteProduct", id);
+    },
+    addProductFunc() {
+      this.isAddView = true;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/global.scss";
-
-.veniqa-button:hover {
-  background-color: $pitch-black;
-  border: 2px solid $pitch-black;
-}
-.absolute-buttons {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  margin-bottom: 100px;
-}
-
-.main-bg {
-  //background-image: url(./../../assets/images/background.png);
-  height: 100vh;
-  background-size: cover;
+.home {
+  height: 100%;
 }
 </style>

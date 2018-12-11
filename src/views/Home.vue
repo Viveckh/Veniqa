@@ -1,18 +1,14 @@
 <template>
   <div class="home">
     <header-menu/>
-    <div>
-      <!-- <main-page/> -->
-      <router-view/>
-    </div>
-
+    <side-menu/>
     <div class="space"></div>
   </div>
 </template>
 
 <script>
 import HeaderMenu from '@/components/HeaderMenu.vue';
-// import FooterView from '@/components/Footer.vue';
+import SideMenu from '@/components/SideBarMenu.vue';
 
 export default {
   name: 'home',
@@ -20,7 +16,7 @@ export default {
     // HeaderMenu,
     // MainPage,
     HeaderMenu,
-    // FooterView,
+    SideMenu,
   },
 };
 </script>

@@ -119,7 +119,7 @@ export default {
 
     passwordState() {
       if (this.password.length == 0) return null;
-      return this.password.length > 6;
+      return this.password.length >= 6;
     },
   },
 };

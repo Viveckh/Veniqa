@@ -43,48 +43,48 @@
 </template>
 
 <script>
-import LoginComponent from "@/components/registrations/LoginComponent";
-import RegisterComponent from "@/components/registrations/RegisterComponent";
-import ProxyUrls from "@/constants/ProxyUrls.js";
-import ForgotPassword from "@/components/registrations/ForgotPasswordComponent";
+import LoginComponent from '@/components/registrations/LoginComponent';
+import RegisterComponent from '@/components/registrations/RegisterComponent';
+import ProxyUrls from '@/constants/ProxyUrls.js';
+import ForgotPassword from '@/components/registrations/ForgotPasswordComponent';
 
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "UserAccountModal",
+  name: 'UserAccountModal',
   components: {
     LoginComponent,
     RegisterComponent,
-    ForgotPassword
+    ForgotPassword,
   },
   data() {
     return {
       showLogin: true,
-      activePanel: "login",
-      showFailure: false
+      activePanel: 'login',
+      showFailure: false,
     };
   },
 
   methods: {
     closeModal() {
-      this.$emit("loginSuccess");
+      this.$emit('loginSuccess');
     },
     async login(userInfo) {
       try {
-        const res = await this.$store.dispatch("authStore/login", userInfo);
+        const res = await this.$store.dispatch('authStore/login', userInfo);
 
-        this.$emit("loginSuccess");
+        this.$emit('loginSuccess');
 
         this.$notify({
-          group: "all",
-          type: "success",
-          text: "Successfully logged in"
+          group: 'all',
+          type: 'success',
+          text: 'Successfully logged in',
         });
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
-          text: "User credentials are not correct. Please try again"
+          group: 'all',
+          type: 'error',
+          text: 'User credentials are not correct. Please try again',
         });
       }
     },
@@ -92,35 +92,35 @@ export default {
     async register(userInfo) {
       try {
         const res = await this.$store.dispatch(
-          "authStore/registerUser",
-          userInfo
+          'authStore/registerUser',
+          userInfo,
         );
 
-        this.$emit("loginSuccess");
+        this.$emit('loginSuccess');
         this.$notify({
-          group: "all",
-          type: "success",
+          group: 'all',
+          type: 'success',
           text:
-            "User successfully created. Please check your inbox to confirm email"
+            'User successfully created. Please check your inbox to confirm email',
         });
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "User could not be created at the moment. Please check if you already have an account."
+            'User could not be created at the moment. Please check if you already have an account.',
         });
       }
     },
 
     navigateToRegister() {
-      this.activePanel = "registration";
+      this.activePanel = 'registration';
     },
 
     navigateToLogin() {
-      this.activePanel = "login";
-    }
-  }
+      this.activePanel = 'login';
+    },
+  },
 };
 </script>
 
