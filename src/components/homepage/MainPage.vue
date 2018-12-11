@@ -1,6 +1,6 @@
 // src/pages/Admin/Products
 <template>
-  <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+  <div class="col-lg-11">
     <div v-if="!isAddView">
       <button
         type="button"
@@ -84,8 +84,8 @@ export default {
 </script>
 <style>
 .productTableImg {
-  height: 50px;
-  widows: 50px;
+  height: 75px;
+  widows: 75px;
   border: 1px;
   border-color: cadetblue;
 }

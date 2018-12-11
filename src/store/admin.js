@@ -6,6 +6,10 @@ export default {
   namespaced: true,
   state: {
     products: [],
+    stores: [],
+    brands: [],
+    currencies: [],
+    units: [],
   },
   actions: {
     async deleteProduct({ dispatch }, id) {
@@ -21,7 +25,22 @@ export default {
         console.log('Deleted');
         dispatch('getAllProducts');
       } catch (err) {
-        console.log('err');
+        console.log(err);
+      }
+    },
+    async addProduct({ dispatch }, product) {
+      console.log(product);
+      try {
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.addProduct,
+          withCredentials: true,
+          method: 'post',
+          data: product,
+        });
+        console.log(res);
+        dispatch('getAllProducts');
+      } catch (err) {
+        console.log(err);
       }
     },
     async getAllProducts({ state, commit }) {
