@@ -99,6 +99,13 @@ let addressSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['United States of America', 'Bangladesh', 'Nepal']
+    },
+    mobilePhone: {
+        type: String,
+        required: true,
+        validate: (value) => {
+            return validator.isMobilePhone(value)
+        }
     }
 })
 
