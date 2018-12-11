@@ -1,4 +1,4 @@
-# arjun
+# Veniqa AdminClient
 
 ## Project setup
 ```
