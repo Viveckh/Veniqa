@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <br>
@@ -11,25 +12,49 @@
       <div class="form-group form-group-sm">
         <label class="control-label col-sm-2" for="store">Store</label>
         <div class="col-sm-10">
-          <select class="select form-control" v-model="product.store" name="store"></select>
+          <b-form-select
+            v-model="product.store"
+            :options="refdata.stores"
+            class="select form-control"
+          />
         </div>
       </div>
       <div class="form-group form-group-sm">
         <label class="control-label col-sm-2" for="brand">Brand</label>
         <div class="col-sm-10">
-          <select class="select form-control" v-model="product.brand" name="brand"></select>
+          <input class="form-control" v-model="product.brand" name="name" type="text">
         </div>
       </div>
       <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="amount">Price</label>
+        <label class="control-label col-sm-2" for="store">Category</label>
         <div class="col-sm-10">
-          <input class="form-control" v-model="product.price.amount" name="amount" type="text">
+          <b-form-select
+            v-model="product.category"
+            :options="refdata.categories"
+            class="select form-control"
+          />
         </div>
       </div>
       <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="currency">Currency</label>
+        <label class="control-label col-sm-2" for="store">Subcategory</label>
         <div class="col-sm-10">
-          <select class="select form-control" v-model="product.price.currency" name="currency"></select>
+          <b-form-select
+            v-model="product.subcategory"
+            :options="getSubCategory()"
+            class="select form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+        <label class="control-label col-sm-2" for="amount">Price in $</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            v-model="product.price.amount"
+            name="amount"
+            type="number"
+            step="0.01"
+          >
         </div>
       </div>
       <div class="form-group form-group-sm">
@@ -69,13 +94,23 @@
       <div class="form-group form-group-sm">
         <label class="control-label col-sm-2" for="quantity">Quantity</label>
         <div class="col-sm-10">
-          <input class="form-control" v-model="product.weight.quantity" name="quantity" type="text">
+          <input
+            class="form-control"
+            v-model="product.weight.quantity"
+            name="quantity"
+            type="number"
+            step="0.01"
+          >
         </div>
       </div>
       <div class="form-group form-group-sm">
         <label class="control-label col-sm-2" for="unit">Unit</label>
         <div class="col-sm-10">
-          <select class="select form-control" v-model="product.weight.unit" name="unit"></select>
+          <b-form-select
+            v-model="product.weight.unit"
+            :options="refdata.weight_units"
+            class="select form-control"
+          />
         </div>
       </div>
       <div class="form-group form-group-sm">
@@ -102,6 +137,8 @@
 </template>
 
 <script>
+import * as _ from 'lodash';
+
 export default {
   data() {
     return {
@@ -129,7 +166,7 @@ export default {
         },
         weight: {
           quantity: 3.2,
-          unit: 'LB',
+          unit: 'OZ',
         },
         custom_attributes: {
           color: 'light brilliant gold',
@@ -144,12 +181,24 @@ export default {
       },
     };
   },
+  computed: {
+    refdata() {
+      return this.$store.getters['adminStore/allStateData'];
+    },
+  },
   methods: {
     goBack() {
       this.$emit('cancelTrigger');
     },
     handleAddProduct() {
       return this.$store.dispatch('adminStore/addProduct', this.product);
+    },
+    getSubCategory() {
+      const refState = this.$store.getters['adminStore/allStateData'];
+      const x = _.find(refState.refDataPayload.product_categories, {
+        name: this.product.category,
+      }).subcategories;
+      return x;
     },
   },
 };

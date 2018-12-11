@@ -66,6 +66,7 @@ export default {
   },
   async created() {
     await this.$store.dispatch('adminStore/getAllProducts');
+    await this.$store.dispatch('adminStore/getReferenceData');
   },
   computed: {
     products() {
@@ -91,40 +92,6 @@ export default {
 }
 </style>
 
-
-<script>
-import AddProduct from "@/components/homepage/AddProduct.vue";
-
-export default {
-  components: {
-    // HeaderMenu,
-    // MainPage,
-    // addPr
-    AddProduct
-  },
-  data() {
-    return {
-      isAddView: false
-    };
-  },
-  async created() {
-    await this.$store.dispatch("adminStore/getAllProducts");
-  },
-  computed: {
-    products() {
-      return this.$store.getters["adminStore/allProducts"];
-    }
-  },
-  methods: {
-    deleteProduct(id) {
-      return this.$store.dispatch("adminStore/deleteProduct", id);
-    },
-    addProductFunc() {
-      this.isAddView = true;
-    }
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 .home {

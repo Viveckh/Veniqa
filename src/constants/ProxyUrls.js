@@ -22,4 +22,5 @@ export default {
   listCatalog: '/catalog/search',
   deleteProduct: '/catalog/deleteProduct',
   addProduct: '/catalog/addProduct',
+  refData: '/referenceData/getCatalogBundle',
 };
