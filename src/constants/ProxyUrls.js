@@ -21,4 +21,8 @@ export default {
   baseUrl: 'https://hsjnruyi2xjmcrl.azurewebsites.net',
   listCatalog: '/catalog/search',
   deleteProduct: '/catalog/deleteProduct',
+  addProduct: '/catalog/addProduct',
+  refData: '/referenceData/getCatalogBundle',
+  getProduct: '/catalog/getProductDetails',
+  editProduct: '/catalog/updateProduct',
 };

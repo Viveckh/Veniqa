@@ -112,7 +112,7 @@ span {
   background: #343a40;
   color: #fff;
   transition: all 0.3s;
-  min-height: 800px;
+  min-height: 1300px;
 }
 
 #sidebar.active {
