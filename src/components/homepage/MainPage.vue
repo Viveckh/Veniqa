@@ -1,6 +1,6 @@
 // src/pages/Admin/Products
 <template>
-  <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+  <div class="col-lg-11">
     <div v-if="!isAddView">
       <button
         type="button"
@@ -32,9 +32,9 @@
             <td>${{product.price.amount}}</td>
             <td>{{product.store}}</td>
             <td>
-              <router-link :to="'/admin/edit/'+product._id">
-                <i class="fa fa-edit" style="color:#7FB3D5"></i>
-              </router-link>
+              <a @click="editProductFunc(product._id)">
+                <i class="fa fa-edit" style="color:green"></i>
+              </a>
             </td>
             <td>
               <a @click="deleteProduct(product._id)">
@@ -45,7 +45,7 @@
         </tbody>
       </table>
     </div>
-    <add-product v-if="isAddView" @cancelTrigger="isAddView=false"/>
+    <add-product v-if="isAddView" @cancelTrigger="isAddView=false" :data="editProductData"/>
   </div>
 </template>
 
@@ -54,18 +54,17 @@ import AddProduct from '@/components/homepage/AddProduct.vue';
 
 export default {
   components: {
-    // HeaderMenu,
-    // MainPage,
-    // addPr
     AddProduct,
   },
   data() {
     return {
       isAddView: false,
+      editProductData: null,
     };
   },
   async created() {
     await this.$store.dispatch('adminStore/getAllProducts');
+    await this.$store.dispatch('adminStore/getReferenceData');
   },
   computed: {
     products() {
@@ -78,53 +77,29 @@ export default {
     },
     addProductFunc() {
       this.isAddView = true;
+      this.editProductData = null;
+    },
+    async editProductFunc(id) {
+      const editProductDetails = await this.$store.dispatch(
+        'adminStore/getProduct',
+        id,
+      );
+      this.editProductData = editProductDetails;
+      console.log(this.editProductData);
+      this.isAddView = true;
     },
   },
 };
 </script>
 <style>
 .productTableImg {
-  height: 50px;
-  widows: 50px;
+  height: 75px;
+  widows: 75px;
   border: 1px;
   border-color: cadetblue;
 }
 </style>
 
-
-<script>
-import AddProduct from "@/components/homepage/AddProduct.vue";
-
-export default {
-  components: {
-    // HeaderMenu,
-    // MainPage,
-    // addPr
-    AddProduct
-  },
-  data() {
-    return {
-      isAddView: false
-    };
-  },
-  async created() {
-    await this.$store.dispatch("adminStore/getAllProducts");
-  },
-  computed: {
-    products() {
-      return this.$store.getters["adminStore/allProducts"];
-    }
-  },
-  methods: {
-    deleteProduct(id) {
-      return this.$store.dispatch("adminStore/deleteProduct", id);
-    },
-    addProductFunc() {
-      this.isAddView = true;
-    }
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 .home {
