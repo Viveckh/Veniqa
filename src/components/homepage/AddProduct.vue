@@ -191,7 +191,8 @@ export default {
       this.$emit('cancelTrigger');
     },
     handleAddProduct() {
-      return this.$store.dispatch('adminStore/addProduct', this.product);
+      this.$store.dispatch('adminStore/addProduct', this.product);
+      this.$emit('cancelTrigger');
     },
     getSubCategory() {
       const refState = this.$store.getters['adminStore/allStateData'];

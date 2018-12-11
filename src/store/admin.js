@@ -59,6 +59,21 @@ export default {
         console.log(err);
       }
     },
+    async getProduct({ dispatch }, id) {
+      // console.log(product);
+      const productGetUrl = `${ProxyUrl.getProduct}productId=${id}`;
+      try {
+        const res = await Vue.prototype.$axios({
+          url: productGetUrl,
+          withCredentials: true,
+          method: 'get',
+        });
+        // console.log(res);
+        // dispatch('getAllProducts');
+      } catch (err) {
+        console.log(err);
+      }
+    },
     async getAllProducts({ commit }) {
       try {
         const res = await axios({

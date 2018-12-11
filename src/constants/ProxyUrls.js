@@ -23,4 +23,5 @@ export default {
   deleteProduct: '/catalog/deleteProduct',
   addProduct: '/catalog/addProduct',
   refData: '/referenceData/getCatalogBundle',
+  getProduct: '/catalog/getProductDetails',
 };
