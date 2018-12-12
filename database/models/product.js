@@ -71,12 +71,14 @@ let productSchema = new mongoose.Schema({
     subcategory: {
         type: String,
         required: true,
-        trim: true,
+        trim: true
+        /*
         validate: function(value) {
             // Find the selected category object and see if the subcategory exists in subcategories array
             let categoryObj = _.find(PRODUCT_CATEGORIES, {name: this.category})
             return categoryObj && categoryObj.subcategories && categoryObj.subcategories.includes(value);
         }
+        */
     },
     thumbnailUrls: {
         type: Array,
