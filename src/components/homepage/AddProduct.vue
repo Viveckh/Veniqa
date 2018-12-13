@@ -1,158 +1,165 @@
 
 <template>
   <div>
-    <div>
-      <div class="align-left">
-        Products
-      </div>
-      <div class="align-right">
-        <button class="btn btn-primary" @click="manageImages()">Manage Images</button>
-      </div>
-    </div>
+    <manage-photo v-if="showManagePhoto" @complete="imageUploadComplete" @cancel="showManagePhoto = false"/>
 
-    <manage-photo/>
-
-    <br>
-    <div class="form-horizontal">
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="name">Product Name</label>
-        <div class="col-sm-10">
-          <input class="form-control" v-model="product.name" name="name" type="text">
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="store">Store</label>
-        <div class="col-sm-10">
-          <b-form-select
-            v-model="product.store"
-            :options="refdata.stores"
-            class="select form-control"
-          />
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="brand">Brand</label>
-        <div class="col-sm-10">
-          <input class="form-control" v-model="product.brand" name="name" type="text">
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="store">Category</label>
-        <div class="col-sm-10">
-          <b-form-select
-            v-model="product.category"
-            :options="refdata.categories"
-            class="select form-control"
-          />
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="store">Subcategory</label>
-        <div class="col-sm-10">
-          <b-form-select
-            v-model="product.subcategory"
-            :options="getSubCategory()"
-            class="select form-control"
-          />
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="amount">Price in $</label>
-        <div class="col-sm-10">
-          <input
-            class="form-control"
-            v-model="product.price.amount"
-            name="amount"
-            type="number"
-            step="0.01"
-          >
-        </div>
+    <div v-if="!showManagePhoto">
+      <div class="product-head">
+        <b-row>
+          <b-col>
+            <h2>Products</h2>
+          </b-col>
+          <b-col>
+            <div class="align-right">
+              <button class="btn btn-primary" @click="showManagePhoto = true">Manage Images</button>
+            </div>
+          </b-col>
+        </b-row>
       </div>
 
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="url">Item Url</label>
-        <div class="col-sm-10">
-          <input class="form-control" v-model="product.item_url" name="url" type="text">
+      <br>
+
+      <div class="form-horizontal">
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="name">Product Name</label>
+          <div class="col-sm-10">
+            <input class="form-control" v-model="product.name" name="name" type="text">
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="url">Picture URL 1</label>
-        <div class="col-sm-10">
-          <input class="form-control" v-model="product.thumbnailUrls[0]" name="url" type="text">
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="store">Store</label>
+          <div class="col-sm-10">
+            <b-form-select
+              v-model="product.store"
+              :options="refdata.stores"
+              class="select form-control"
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="url1">Picture URL 2</label>
-        <div class="col-sm-10">
-          <input
-            class="form-control"
-            v-model="product.featuredImageUrls[0]"
-            name="url1"
-            type="text"
-          >
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="brand">Brand</label>
+          <div class="col-sm-10">
+            <input class="form-control" v-model="product.brand" name="name" type="text">
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="url2">Picture URL 3</label>
-        <div class="col-sm-10">
-          <input
-            class="form-control"
-            v-model="product.detailedImageUrls[0]"
-            name="url2"
-            type="text"
-          >
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="store">Category</label>
+          <div class="col-sm-10">
+            <b-form-select
+              v-model="product.category"
+              :options="refdata.categories"
+              class="select form-control"
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="quantity">Quantity</label>
-        <div class="col-sm-10">
-          <input
-            class="form-control"
-            v-model="product.weight.quantity"
-            name="quantity"
-            type="number"
-            step="0.01"
-          >
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="store">Subcategory</label>
+          <div class="col-sm-10">
+            <b-form-select
+              v-model="product.subcategory"
+              :options="getSubCategory()"
+              class="select form-control"
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="unit">Unit</label>
-        <div class="col-sm-10">
-          <b-form-select
-            v-model="product.weight.unit"
-            :options="refdata.weight_units"
-            class="select form-control"
-          />
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="amount">Price in $</label>
+          <div class="col-sm-10">
+            <input
+              class="form-control"
+              v-model="product.price.amount"
+              name="amount"
+              type="number"
+              step="0.01"
+            >
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="control-label col-sm-2" for="details_html">Details</label>
-        <div class="col-sm-10">
-          <textarea
-            class="form-control"
-            cols="40"
-            v-model="product.details_html"
-            name="details_html"
-            rows="5"
-          ></textarea>
+
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="url">Item Url</label>
+          <div class="col-sm-10">
+            <input class="form-control" v-model="product.item_url" name="url" type="text">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-10 col-sm-offset-2">
-          <button
-            v-if="this.data != null"
-            type="button"
-            @click="handleEditProduct()"
-            class="btn btn-success"
-          >Edit Product</button>
-          <button
-            v-else
-            type="button"
-            @click="handleAddProduct()"
-            class="btn btn-success"
-          >Add Product</button>
-          &nbsp;
-          <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="url">Picture URL 1</label>
+          <div class="col-sm-10">
+            <input class="form-control" v-model="product.thumbnailUrls[0]" name="url" type="text">
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="url1">Picture URL 2</label>
+          <div class="col-sm-10">
+            <input
+              class="form-control"
+              v-model="product.featuredImageUrls[0]"
+              name="url1"
+              type="text"
+            >
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="url2">Picture URL 3</label>
+          <div class="col-sm-10">
+            <input
+              class="form-control"
+              v-model="product.detailedImageUrls[0]"
+              name="url2"
+              type="text"
+            >
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="quantity">Quantity</label>
+          <div class="col-sm-10">
+            <input
+              class="form-control"
+              v-model="product.weight.quantity"
+              name="quantity"
+              type="number"
+              step="0.01"
+            >
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="unit">Unit</label>
+          <div class="col-sm-10">
+            <b-form-select
+              v-model="product.weight.unit"
+              :options="refdata.weight_units"
+              class="select form-control"
+            />
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
+          <label class="control-label col-sm-2" for="details_html">Details</label>
+          <div class="col-sm-10">
+            <textarea
+              class="form-control"
+              cols="40"
+              v-model="product.details_html"
+              name="details_html"
+              rows="5"
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <button
+              v-if="this.data != null"
+              type="button"
+              @click="handleEditProduct()"
+              class="btn btn-success"
+            >Edit Product</button>
+            <button
+              v-else
+              type="button"
+              @click="handleAddProduct()"
+              class="btn btn-success"
+            >Add Product</button>
+            &nbsp;
+            <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
+          </div>
         </div>
       </div>
     </div>
@@ -163,7 +170,6 @@
 import * as _ from 'lodash';
 import ManagePhoto from '@/components/homepage/ManagePhoto';
 
-
 export default {
   props: {
     data: { required: false, type: Object, default: null },
@@ -173,7 +179,6 @@ export default {
   },
   created() {
     if (this.data != null) {
-      console.log('Created', this.data);
       this.product = _.cloneDeep(this.data);
     }
   },
@@ -218,6 +223,7 @@ export default {
       },
 
       showManagePhoto: false,
+      images: null,
     };
   },
   computed: {
@@ -226,6 +232,18 @@ export default {
     },
   },
   methods: {
+    /**
+     * @param {Object} payload
+     * {
+     *    detailedImageUrls: [list of urls]
+     *     featuredImageUrls: [list of urls]
+     *     thumbnailUrls: [list of urls]
+     * }
+    */
+    imageUploadComplete(payload) {
+      this.showManagePhoto = false;
+      this.images = payload;
+    },
     goBack() {
       this.$emit('cancelTrigger');
     },
@@ -264,5 +282,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.product-head {
+  margin-top: 1em;
+}
 </style>
