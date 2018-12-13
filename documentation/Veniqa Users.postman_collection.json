@@ -296,7 +296,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"MACYS\",\n\t\t\"category\": \"Make-Up\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"AMAZON\",\n\t\t\"category\": \"Make-Up Kits\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/search",
@@ -321,7 +321,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/catalog/getProductDetails?productId=5c095956e7179a6ca083d1ac",
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c12d7bf3cd3920081f32ff6",
 							"host": [
 								"{{server}}"
 							],
@@ -332,7 +332,7 @@
 							"query": [
 								{
 									"key": "productId",
-									"value": "5c095956e7179a6ca083d1ac"
+									"value": "5c12d7bf3cd3920081f32ff6"
 								}
 							]
 						}
@@ -358,7 +358,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[{\n\t\"product_id\": \"5c095956e7179a6ca083d1ac\",\n\t\"color\": {\n\t\t\"name\": \"Brown\",\n\t\t\"hexValue\": \"#DC143C\"\n\t},\n\t\"counts\": 2,\n\t\"size\": \"S\"\n}]"
+							"raw": "[{\n\t\"product\": \"5c1039844703bd008136d2a0\",\n\t\"color\": {\n\t\t\"name\": \"Brown\",\n\t\t\"hexValue\": \"#DC143C\"\n\t},\n\t\"counts\": 2,\n\t\"size\": \"S\"\n}]"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/addToCart",
@@ -387,7 +387,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cartItems\": [\n\t\t{\n\t\t\t\"_id\": \"5c0b23643aac363fa78531ae\",\n\t\t\t\"product_id\": \"5c095956e7179a6ca083d1ac\",\n\t\t\t\"counts\": 5,\n\t\t\t\"color\": {\n                \"name\": \"Black\",\n                \"hexValue\": \"#000000\"\n            }\n\t\t\t\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"cartItems\": [\n\t\t{\n\t\t\t\"_id\": \"5c12e581ec100827fb75f5cf\",\n\t\t\t\"product\": \"5c1039844703bd008136d2a0\",\n\t\t\t\"counts\": 5,\n\t\t\t\"color\": {\n                \"name\": \"Black\",\n                \"hexValue\": \"#000000\"\n            },\n            \"size\": \"M\"\n\t\t\t\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/updateCart",
@@ -445,7 +445,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cartItemIds\": [\n\t\t\"5c0b23643aac363fa78531ae\"\n\t]\n}"
+							"raw": "{\n\t\"cartItemIds\": [\n\t\t\"5c12e581ec100827fb75f5cf\"\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/deleteFromCart",
@@ -455,6 +455,120 @@
 							"path": [
 								"shopping",
 								"deleteFromCart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "addNewAddresss",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Arjun\",\n\t\"lastName\": \"Bastola\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
+						},
+						"url": {
+							"raw": "{{server}}/user/addNewAddress",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"addNewAddress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAddresses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/user/getAddresses",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"getAddresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAddress",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\": \"5c103581d8022d0e3050b850\",\n\t\"firstName\": \"Vivek\",\n\t\"lastName\": \"Pandey\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
+						},
+						"url": {
+							"raw": "{{server}}/user/updateAddress",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"updateAddress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAddress",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"addressId\": \"5c103581d8022d0e3050b850\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/user/deleteAddress",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"deleteAddress"
 							]
 						}
 					},

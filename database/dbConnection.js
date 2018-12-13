@@ -22,5 +22,9 @@ let getDBConnection = async() => {
 
 getDBConnection();
 
+// Initializing the models and registering them to their models
+require("./models/product")
+require("./models/user");
+
 // Exporting the connection
 exports.dbConnection = () => dbConnection;

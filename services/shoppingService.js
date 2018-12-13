@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import User from '../database/models/user';
 import Product from '../database/models/product';
 import * as _ from 'lodash';
@@ -18,13 +19,13 @@ export default {
 
                 // Now iterate through the items in the cartEntriesToProcess
                 for (let entry of cartEntriesToProcess) {
-                    let product = await Product.findOne({_id: entry.product_id}).exec()
+                    let product = await Product.findOne({_id: entry.product}).exec()
                     
                     // Make sure the product exists, if not proceed further
                     if (product) {
                         // Check to see if the product and choice combos already exists in user's cart
                         let index = _.findIndex(user.cart.items, {
-                            product_id: entry.product_id,
+                            product: mongoose.Types.ObjectId(entry.product),
                             color: entry.color,
                             size: entry.size
                         });
@@ -34,22 +35,22 @@ export default {
                             // If a value is supplied for count, it will be added. otherwise, 1 will be added.
                             user.cart.items[index].counts += entry.counts ? entry.counts : 1;
                             // Of course need that fresh calculation of various fields at order level
-                            user.cart.items[index].aggregatedWeight.quantity = (user.cart.items[index].counts * product.weight.quantity).toFixed(2);
-                            user.cart.items[index].aggregatedPrice.amount = (user.cart.items[index].counts * product.price.amount).toFixed(2);
+                            user.cart.items[index].aggregatedWeight.quantity = Math.round(user.cart.items[index].counts * product.weight.quantity * 100) / 100;
+                            user.cart.items[index].aggregatedPrice.amount = Math.round(user.cart.items[index].counts * product.price.amount * 100) / 100;
                         }
                         else {
                             // If the item doesn't exist, add the item to the cart
                             let counts = entry.counts ? entry.counts : 1
 
                             user.cart.items.push({
-                                product_id: entry.product_id,
+                                product: mongoose.Types.ObjectId(entry.product),
                                 counts: counts,
                                 aggregatedWeight: {
-                                    quantity: (product.weight.quantity * counts).toFixed(2),
+                                    quantity: Math.round(product.weight.quantity * counts * 100) / 100,
                                     unit: product.weight.unit
                                 },
                                 aggregatedPrice: {
-                                    amount: (product.price.amount * counts).toFixed(2),
+                                    amount: Math.round(product.price.amount * counts * 100) / 100,
                                     currency: product.price.currency
                                 },
                                 color: entry.color,
@@ -67,7 +68,7 @@ export default {
                         }
                     }
                     else {
-                        return {status: 'failed', errorDetails: 'The product with product id ' + entry.product_id + ' does not exist in the catalog anymore'};
+                        return {status: 'failed', errorDetails: 'The product with product id ' + entry.product + ' does not exist in the catalog anymore'};
                     }
                 }
             }
@@ -82,73 +83,33 @@ export default {
 
     async getCart(userObj) {
         try {
-            // find the user first
-            let user = await User.findOne({email: userObj.email}).exec();
+            // find the user first and populate while searching
+            let user = await User.findOne({email: userObj.email}).populate('cart.items.product', '_id name brand store weight price thumbnailUrls').exec();
 
             // Make sure the user exists and return their cart
             if (user) {
                 // if the user doesn't have a cart set up yet, initialize it
                 if (!user.cart) {
                     user.cart = this.returnFreshInitializedCart();
+                    return user.cart;
                 };
 
-                // This is where info to be returned will be collected
-                let enrichedCart = this.returnFreshInitializedCart();
+                // Call the recalculate cart function 
+                user.cart = this.recalculatePopulatedCart(user.cart);
 
-                // Resetting the calculated price to zero for a fresh calculation within the loop
-                user.cart.totalWeight.quantity = 0;
-                user.cart.subTotalPrice.amount = 0;
-                user.cart.serviceCharge.amount = 0; // Calculated based on a percentage below
-                user.cart.shippingPrice.amount = 50; // Default price for now
-                user.cart.tariffPrice.amount = 0; // Default price for now
-                user.cart.totalPrice.amount = 0;
+                // Return the populated cart
+                if (user.cart) {
+                    // Save with recalculated cart, and interestingly it seems to unpopulate the additional sections added during populate function above automatically
+                    user = await user.save()
 
-                for (let [index, item] of user.cart.items.entries()) {
-                    let product = await Product.findOne({_id: item.product_id}, '_id name brand store weight price thumbnailUrls').exec();
-
-                    // If the product exists in catalog, only then return it
-                    if (product) {
-                        // Recalculate things at the cart item level
-                        item.aggregatedWeight.quantity = (item.counts * product.weight.quantity).toFixed(2);
-                        item.aggregatedPrice.amount = (item.counts * product.price.amount).toFixed(2);
-
-                        // Add calculated values to the cart overall level, few of them are deferred for calculation after the loop
-                        user.cart.totalWeight.quantity += (item.aggregatedWeight.quantity).toFixed(2);
-                        user.cart.subTotalPrice.amount += (item.aggregatedPrice.amount).toFixed(2);
-                        user.cart.tariffPrice.amount += (0.05 * item.aggregatedPrice.amount).toFixed(2); // 5% tariff by default on all items
-
-                        // Push the item to enrichedCart's array
-                        enrichedCart.items.push({
-                            product: product,
-                            additionalDetails: item
-                        })
+                    if (user.cart) {
+                        // Return calculated cart
+                        return user.cart;
                     }
-                    else {
-                        // If the product wasn't found in catalog, remove it from the user's cart automatically
-                        user.cart.items.splice(index, 1)
-                    }
+                    return false;
                 }
+                return false;
 
-                // Calculate a few other things at the cart general level
-                user.cart.serviceCharge.amount = (0.03 * user.cart.subTotalPrice.amount).toFixed(2); // 3% service charge on subtotalprice
-                user.cart.shippingPrice.amount = (15 * user.cart.totalWeight.quantity).toFixed(2); //$15 per pound on total weight
-                user.cart.totalPrice.amount = (user.cart.subTotalPrice.amount + user.cart.tariffPrice.amount + user.cart.serviceCharge.amount + user.cart.shippingPrice.amount).toFixed(2);
-
-                // Save the new price calculation in mongo
-                user = await user.save();
-                
-                // Dump the general cart level details to enrichedCart object
-                enrichedCart.totalWeight.quantity = user.cart.totalWeight.quantity;
-                enrichedCart.subTotalPrice.amount = user.cart.subTotalPrice.amount;
-                enrichedCart.tariffPrice.amount = user.cart.tariffPrice.amount;
-                enrichedCart.serviceCharge.amount = user.cart.serviceCharge.amount;
-                enrichedCart.shippingPrice.amount = user.cart.shippingPrice.amount;
-                enrichedCart.totalPrice.amount = user.cart.totalPrice.amount;
-
-                if (user) {
-                    // Return the cart with the newly calculated price
-                    return enrichedCart;
-                }
             }
             return false;
         }
@@ -167,10 +128,11 @@ export default {
             if (user) {
                 // Find each item in cart for update, and if found, update the values associated with them
                 for (let item of cartItems) {
-                    // Validate that the cart item matches by doing a match using the _id and product_id
+                    // Validate that the cart item matches by doing a match using the _id and product id
                     let index = _.findIndex(user.cart.items, (obj) => {
-                        return obj._id.toString() == item._id && obj.product_id == item.product_id;
+                        return obj._id.toString() == item._id && obj.product.toString() == item.product;
                     });
+
                     // Update the values if the item is found, otherwise, silently ignore it
                     if (index > -1) {
                         user.cart.items[index] = item;
@@ -233,5 +195,55 @@ export default {
             totalPrice: { amount: 0, currency: 'USD' }
         }
         return cart;
+    },
+
+    recalculatePopulatedCart(cart) {
+        try {
+            // Resetting the calculated price to zero for a fresh calculation within the loop
+            cart.totalWeight.quantity = 0;
+            cart.subTotalPrice.amount = 0;
+            cart.serviceCharge.amount = 0; // Calculated based on a percentage below
+            cart.shippingPrice.amount = 0; // Default price for now
+            cart.tariffPrice.amount = 0; // Default price for now
+            cart.totalPrice.amount = 0;
+
+            let indexesToRemove = [];
+
+            for (let [index, item] of cart.items.entries()) {
+                let product = item.product;
+
+                // If the product is populated, only then move further
+                if (product._id) {
+                    // Recalculate things at the cart item level
+                    item.aggregatedWeight.quantity = Math.round(item.counts * product.weight.quantity * 100) / 100;
+                    item.aggregatedPrice.amount = Math.round(item.counts * product.price.amount * 100) / 100;
+
+                    // Add calculated values to the cart overall level, few of them are deferred for calculation after the loop
+                    cart.totalWeight.quantity += Math.round(item.aggregatedWeight.quantity * 100) / 100;
+                    cart.subTotalPrice.amount += Math.round(item.aggregatedPrice.amount * 100) / 100;
+                    cart.tariffPrice.amount += Math.round(0.05 * item.aggregatedPrice.amount * 100) / 100; // 5% tariff by default on all items
+                }
+                else {
+                    // If the product wasn't found in catalog, we'll have to remove it once this loop is complete
+                    indexesToRemove.push(index);
+                }
+            }
+
+            // Remove any items that could not be populated (meaning no match was found in Product Model)
+            for (let index of indexesToRemove) {
+                cart.items.splice(index, 1);
+            }
+
+            // Calculate a few other things at the cart general level
+            cart.serviceCharge.amount = Math.round(0.03 * cart.subTotalPrice.amount * 100) / 100; // 3% service charge on subtotalprice
+            cart.shippingPrice.amount = Math.round(15 * cart.totalWeight.quantity * 100) / 100; //$15 per pound on total weight
+            cart.totalPrice.amount = Math.round((cart.subTotalPrice.amount + cart.tariffPrice.amount + cart.serviceCharge.amount + cart.shippingPrice.amount) * 100) / 100;
+
+            // Return the cart
+            return cart;
+        }
+        catch(err) {
+            throw err;
+        }
     }
 }

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+const Schema = mongoose.Schema;
+import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 
 import WEIGHT_UNITS_ARRAY from '../reference-data-files/weightUnits.json'; 
 
@@ -42,8 +44,9 @@ let priceSchema = new mongoose.Schema({
 }, {_id: false})
 
 let cartItemSchema = new mongoose.Schema({
-    product_id: {
-        type: String,
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: MONGO_COLLECTIONS.curated_products,
         required: true
     },
     counts: {
@@ -184,4 +187,4 @@ let userSchema = new mongoose.Schema({
 
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model('veniqa_users', userSchema);
+module.exports = mongoose.model(MONGO_COLLECTIONS.users, userSchema);
