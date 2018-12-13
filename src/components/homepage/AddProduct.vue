@@ -1,7 +1,14 @@
 
 <template>
   <div>
-    <manage-photo v-if="showManagePhoto" @complete="imageUploadComplete" @cancel="showManagePhoto = false"/>
+    <manage-photo 
+      v-if="showManagePhoto" 
+      :detailedUrls="product.detailedImageUrls"
+      :thumbnailPropUrls="product.thumbnailUrls"
+      :featuredUrls="product.featuredUrls"
+      :productId="product._id"
+      @complete="imageUploadComplete" 
+      @cancel="showManagePhoto = false"/>
 
     <div v-if="!showManagePhoto">
       <div class="product-head">
@@ -242,7 +249,7 @@ export default {
     */
     imageUploadComplete(payload) {
       this.showManagePhoto = false;
-      this.images = payload;
+      _.assign(this.product, payload);
     },
     goBack() {
       this.$emit('cancelTrigger');
