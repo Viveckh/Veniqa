@@ -17,6 +17,9 @@ var RedisStore = require('connect-redis')(session);
 import sessionConfig from './properties/session';
 import redisConfig from './properties/redis';
 
+// Database connection imports, importing initializes it, do this before route imports to initialize db models
+import dbConnection from './database/dbConnection';
+
 // Router imports
 import indexRouter from './routes/index';
 import securityRouter from './routes/security';
@@ -24,9 +27,6 @@ import superAdminRouter from './routes/superAdmin';
 import catalogRouter from './routes/catalog';
 import shoppingRouter from './routes/shopping';
 import referenceDataRouter from './routes/referenceData';
-
-// Database connection imports, importing initializes it
-import dbConnection from './database/dbConnection';
 
 // Imports for authentication
 import passport from 'passport';

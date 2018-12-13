@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 import ROLES_ARRAY from '../reference-data-files/roles';
 
 let userSchema = new mongoose.Schema({
@@ -40,4 +41,4 @@ let userSchema = new mongoose.Schema({
 });
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model('veniqa_admins', userSchema);
+module.exports = mongoose.model(MONGO_COLLECTIONS.admins, userSchema);

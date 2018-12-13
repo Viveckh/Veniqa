@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import mongoosePaginator from 'mongoose-paginate';
+import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 import * as _ from 'lodash';
 
 import STORES_ARRAY from '../reference-data-files/stores.json';
@@ -162,4 +163,4 @@ let productSchema = new mongoose.Schema({
 productSchema.plugin(mongoosePaginator);
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model('veniqa_curated_products', productSchema);
+module.exports = mongoose.model(MONGO_COLLECTIONS.curated_products, productSchema);
