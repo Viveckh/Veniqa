@@ -21,6 +21,18 @@ let colorSchema = new mongoose.Schema({
     }
 }, {_id: false});
 
+let weightSchema = new mongoose.Schema({
+    quantity: {
+        type: Number,
+        required: true
+    },
+    unit: {
+        type: String,
+        required: true,
+        enum: WEIGHT_UNITS_ARRAY
+    }
+}, {_id: false})
+
 let priceSchema = new mongoose.Schema({
     amount: {
         type: Number,
@@ -124,15 +136,8 @@ let productSchema = new mongoose.Schema({
         required: true
     },
     weight: {
-        quantity: {
-            type: Number,
-            required: true
-        },
-        unit: {
-            type: String,
-            required: true,
-            enum: WEIGHT_UNITS_ARRAY
-        }
+        type: weightSchema,
+        required: true
     },
     custom_attributes: {
         type: Map,
