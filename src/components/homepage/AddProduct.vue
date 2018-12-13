@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <manage-photo v-if="showManagePhoto"/>
+    <manage-photo v-if="showManagePhoto" @complete="imageUploadComplete" @cancel="showManagePhoto = false"/>
 
     <div v-if="!showManagePhoto">
       <div class="product-head">
@@ -222,7 +222,8 @@ export default {
         sizes: ["XS", "S", "M", "L"]
       },
 
-      showManagePhoto: false
+      showManagePhoto: false,
+      images: null,
     };
   },
   computed: {
@@ -231,6 +232,18 @@ export default {
     }
   },
   methods: {
+    /** 
+     * @param {Object} payload
+     * {
+     *    detailedImageUrls: [list of urls]
+     *     featuredImageUrls: [list of urls]
+     *     thumbnailUrls: [list of urls]
+     * }
+    */
+    imageUploadComplete(payload){
+      this.showManagePhoto = false;
+      this.images = payload;
+    },
     goBack() {
       this.$emit("cancelTrigger");
     },

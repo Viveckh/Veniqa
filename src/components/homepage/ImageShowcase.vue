@@ -5,9 +5,9 @@
 
     <img
       draggable="false"
-      v-show="key <= displayLength"
+      v-show="key < displayLength"
       :key="key"
-      :src="image.thumbnailUrl"
+      :src="image.displayUrl"
       @click="chooseImage(image, $event)"
       v-for="(image, key) in images"
       class="responsive-image image-config"
@@ -17,7 +17,7 @@
 
     <font-awesome-icon icon="circle" @click="moveImage('left')"/>
   </div>
-  <div class='align-center'><i>Double click on the images to set as Featured image</i></div>
+  <div class='align-center'>Double click on the images to set as Featured image</div>
 </div>
   
 </template>
@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return {
-      // imageList: [],
       displayLength: 4,
     };
   },
@@ -49,7 +48,8 @@ export default {
 
     doubleClicked(image){
       image.featured = !image.featured;
-    }
+    },
+
   },
 };
 </script>

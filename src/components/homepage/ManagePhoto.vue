@@ -2,13 +2,14 @@
   <div id="manage-photo">
     <b-row>
       <b-col>
-        <font-awesome-icon icon="chevron-left"/>Back
+        <a @click="$emit('cancel')" ><font-awesome-icon icon="chevron-left"/>Back</a>
       </b-col>
       <b-col>
         <h2>Manage Images</h2>
       </b-col>
       <b-col>
         <div class="align-right">
+          <div class="btn btn-secondary" @click="$emit('cancel')">Cancel</div>
           <div class="btn btn-primary" @click="saveAll()">Save All</div>
         </div>
       </b-col>
@@ -16,15 +17,13 @@
     <div>
       <b-row>
         <b-col md="6">
-          <b-form-file :multiple="true" v-model="imageInput" @input="fileUploaded()" class="mt-3"></b-form-file> 
+          <b-form-file :multiple="true" v-model="imageInput" @input="fileUploaded()" class="mt-3"></b-form-file>
         </b-col>
         <b-col md="6">
-          <b-form-group
-            id="remoteUrl"
-            class="mt-3"
-          >
+          <b-form-group id="remoteUrl" class="mt-3">
             <b-form-input
               id="remote-url"
+              :disabled="true"
               v-model.trim="remoteUrl"
               @keyup.enter.native="loadImage()"
               placeholder="Paste a remote URL here"
@@ -51,8 +50,7 @@
         </div>
       </b-col>
       <b-col>
-        <div class="align-right">
-        </div>
+        <div class="align-right"></div>
       </b-col>
     </b-row>
     <b-row class="photos">
@@ -96,6 +94,8 @@
 
 <script>
 import ImageShowcase from "@/components/homepage/ImageShowcase";
+import ProxyUrls from "@/constants/ProxyUrls";
+import AWSParams from "@/constants/AwsParams";
 
 export default {
   name: "ManagePhoto",
@@ -116,7 +116,7 @@ export default {
        * DTO
        * {
        *   name: '', // unique
-       *   largeUrl: '',
+       *   largeBlob: '',
        *   thumbnailUrl: ''
        *   featured: false
        * }
@@ -134,20 +134,156 @@ export default {
           width: 300
         }
       },
-      fileSize: 1048576,
+      fileSize: 104857600,
 
-      remoteUrl: ""
+      remoteUrl: "",
+
+      detailedImageUrls: [],
+      featuredImageUrls: [],
+      thumbnailUrls: []
     };
   },
 
   methods: {
-
+    /**
+     * This is where all the backend calls are made.
+     */
     async saveAll() {
-      
+      let params = this.configureParams();
+        /**
+         * Data DTO
+         * detailedImageUrls: [
+         *   {
+         *      liveUrl: '',
+         *      uploadUrl: '',
+         *   }
+         * ],
+         * featuredImageUrls: [same as above],
+         * thumbnailUrls: [same as above]
+         *
+         */
+        let { data } = await this.$axios({
+          method: "get",
+          url: ProxyUrls.predefinedUrls,
+          params
+        });
+
+        let totalCallsToMake =
+          data.detailedImageUrls.length +
+          data.thumbnailUrls.length +
+          data.featuredImageUrls.length;
+
+        let done = _.after(totalCallsToMake, () =>{
+          this.$notify({
+            group: "all",
+            type: "success",
+            text: "All the images have been successfully loaded"
+          });
+
+          this.$emit("complete", {
+            detailedImageUrls: this.detailedImageUrls,
+            featuredImageUrls: this.featuredImageUrls,
+            thumbnailUrls: this.thumbnailUrls
+          });
+        });
+
+        this.detailedImageUrls = new Array(data.detailedImageUrls.length).fill('')
+        this.featuredImageUrls = new Array(data.featuredImageUrls.length).fill('')
+        this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill('')
+
+        /** This loop goes through each image there is and then asynchronously makes all the upload calls. 
+         * done() is called everytime the request passes with success. This will run the done function from above
+         * after all the calls succeed.
+         * 
+         * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
+         */
+        this.finalImages.forEach((imageObj, ind) => {
+          // Call for detailed image urls.
+          this.$axios({
+            headers: {
+              "Content-Type": "image/png"
+            },
+            method: "put",
+            url: data.detailedImageUrls[ind].uploadUrl,
+            data: imageObj.largeBlob,
+            withCredentials: false
+          }).then(res => {
+            this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
+            done();
+          }).catch(err => {
+            console.log("Detail Error", err)
+            this.handleError(imageObj.name);
+          })
+
+          // Call for thumbnails
+          this.$axios({
+            headers: {
+              "Content-Type": "image/png"
+            },
+            method: "put",
+            url: data.thumbnailUrls[ind].uploadUrl,
+            data: imageObj.thumbnailBlob,
+            withCredentials: false
+          }).then(res => {
+            this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
+            done();
+          }).catch(err => {
+            console.log("THumbnail Error", err)
+            this.handleError(imageObj.name)
+          })
+
+          // Call for Featured images.
+          if (imageObj.featured) {
+            this.$axios({
+              headers: {
+                "Content-Type": "image/png"
+              },
+              method: "put",
+              url: data.featuredImageUrls[ind].uploadUrl,
+              data: imageObj.largeBlob,
+              withCredentials: false
+            }).then(res => {
+              this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
+              done();
+            }).catch(err=>{
+            console.log("Featured Error", err)
+              this.handleError(imageObj.name);
+            })
+          }
+        });
     },
+
+    handleError(filename){
+      this.$notify({
+        group: 'all',
+        type: 'error',
+        text: `Image with name ${filename} could not be uploaded. Try again later.`
+      })
+    },
+
+    configureParams() {
+      let numberOfThumbnails = 0,
+        numberOfFeaturedImages = 0,
+        numberOfDetailedImages = 0,
+        productId = "";
+
+      this.finalImages.forEach(imageObj => {
+        // Right now, everything is +1 except the featured images.
+        numberOfThumbnails += 1;
+        numberOfDetailedImages += 1;
+        numberOfFeaturedImages += imageObj.featured ? 1 : 0;
+      });
+
+      return {
+        numberOfThumbnails,
+        numberOfFeaturedImages,
+        numberOfDetailedImages
+      };
+    },
+
     async cropImage() {
-      const largeUrl = await this.cropSection.promisedBlob("image/png");
-      const thumbnailUrl = await this.thumbnailCrop.promisedBlob(
+      const largeBlob = await this.cropSection.promisedBlob("image/png");
+      const thumbnailBlob = await this.thumbnailCrop.promisedBlob(
         "image/png",
         0.25
       );
@@ -158,16 +294,14 @@ export default {
         file => file.name === this.largeInitImage.name
       );
       if (index >= 0) {
-        this.finalImages[index].largeUrl = URL.createObjectURL(largeUrl);
-        this.finalImages[index].thumbnailUrl = URL.createObjectURL(
-          thumbnailUrl
-        );
+        this.finalImages[index].largeBlob = largeBlob;
+        this.finalImages[index].thumbnailBlob = thumbnailBlob;
       }
     },
 
-    /** 
+    /**
      * Runs when the file is uploaded through input box.
-    */
+     */
     fileUploaded() {
       if (this.imageInput.length > 0 && this.imageInput.length < 6) {
         this.imageInput.forEach(file => {
@@ -180,9 +314,9 @@ export default {
           ) {
             this.finalImages.push({
               name: file.name,
-              thumbnailUrl: URL.createObjectURL(file),
-              largeUrl: URL.createObjectURL(file),
-              normalUrl: URL.createObjectURL(file),
+              thumbnailBlob: file,
+              largeBlob: file,
+              displayUrl: URL.createObjectURL(file),
               featured: false
             });
           }
@@ -197,7 +331,7 @@ export default {
       }
     },
     imageChosenFromList(imageObj) {
-      this.setImages(imageObj.largeUrl, imageObj.thumbnailUrl, imageObj.name);
+      this.setImages(imageObj.largeBlob, imageObj.thumbnailBlob, imageObj.name);
     },
     loadImage() {
       let newObj = {
@@ -205,29 +339,31 @@ export default {
         thumbnailUrl: this.remoteUrl,
         largeUrl: this.remoteUrl,
         normalUrl: this.remoteUrl,
-        featured: false,
+        featured: false
       };
 
       this.setImages(this.remoteUrl, this.remoteUrl, newObj.name);
       this.finalImages.push(newObj);
       this.remoteUrl = "";
     },
+
     fileChosenInLarge(file) {
       if (file.size > this.fileSize) return;
       let newObj = {
         name: file.name,
-        thumbnailUrl: URL.createObjectURL(file),
-        largeUrl: URL.createObjectURL(file),
+        thumbnailBlob: file,
+        largeBlob: file,
+        displayUrl: URL.createObjectURL(file)
       };
 
       let ind = _.findIndex(this.finalImages, obj => obj.name === newObj.name);
       if (ind < 0) {
         this.finalImages.push({
           name: file.name,
-          thumbnailUrl: URL.createObjectURL(file),
-          largeUrl: URL.createObjectURL(file),
-          normalUrl: URL.createObjectURL(file),
-          featured: false,
+          thumbnailBlob: file,
+          largeBlob: file,
+          displayUrl: URL.createObjectURL(file),
+          featured: false
         });
 
         ind = this.finalImages.length - 1;
@@ -235,7 +371,7 @@ export default {
 
       newObj = this.finalImages[ind];
 
-      this.setImages(newObj.largeUrl, newObj.thumbnailUrl, newObj.name);
+      this.setImages(newObj.largeBlob, newObj.thumbnailBlob, newObj.name);
     },
 
     imageRemoveTrigger() {
@@ -245,12 +381,12 @@ export default {
 
     setImages(url, thumbUrl, name) {
       this.thumbnailInitImage = {
-        url: thumbUrl,
+        url: URL.createObjectURL(thumbUrl),
         name
       };
 
       this.largeInitImage = {
-        url,
+        url: URL.createObjectURL(url),
         name
       };
 

@@ -25,4 +25,5 @@ export default {
   refData: '/referenceData/getCatalogBundle',
   getProduct: '/catalog/getProductDetails',
   editProduct: '/catalog/updateProduct',
+  predefinedUrls: '/catalog/getPresignedUrlsForCatalogImageUploads'
 };
