@@ -167,15 +167,15 @@
 </template>
 
 <script>
-import * as _ from "lodash";
-import ManagePhoto from "@/components/homepage/ManagePhoto";
+import * as _ from 'lodash';
+import ManagePhoto from '@/components/homepage/ManagePhoto';
 
 export default {
   props: {
-    data: { required: false, type: Object, default: null }
+    data: { required: false, type: Object, default: null },
   },
   components: {
-    ManagePhoto
+    ManagePhoto,
   },
   created() {
     if (this.data != null) {
@@ -185,41 +185,41 @@ export default {
   data() {
     return {
       product: {
-        store: "AMAZON",
-        brand: "BEVERLY HILLS KAY",
-        name: "Amrezy Highlighter",
+        store: 'AMAZON',
+        brand: 'BEVERLY HILLS KAY',
+        name: 'Amrezy Highlighter',
         item_url:
-          "https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product",
-        category: "Make-Up Kits",
-        subcategory: "Palettes",
+          'https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product',
+        category: 'Make-Up Kits',
+        subcategory: 'Palettes',
         thumbnailUrls: [
-          "https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f",
-          "https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8"
+          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
+          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
         ],
         featuredImageUrls: [
-          "https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f"
+          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
         ],
         detailedImageUrls: [
-          "https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f"
+          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
         ],
         price: {
           amount: 27.99,
-          currency: "USD"
+          currency: 'USD',
         },
         weight: {
           quantity: 3.2,
-          unit: "OZ"
+          unit: 'OZ',
         },
         custom_attributes: {
-          color: "light brilliant gold"
+          color: 'light brilliant gold',
         },
         details_html:
-          "A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.",
+          'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
-          { name: "Black", hexValue: "#000000" },
-          { name: "Brown", hexValue: "#435ADF" }
+          { name: 'Black', hexValue: '#000000' },
+          { name: 'Brown', hexValue: '#435ADF' },
         ],
-        sizes: ["XS", "S", "M", "L"]
+        sizes: ['XS', 'S', 'M', 'L'],
       },
 
       showManagePhoto: false,
@@ -228,11 +228,11 @@ export default {
   },
   computed: {
     refdata() {
-      return this.$store.getters["adminStore/allStateData"];
-    }
+      return this.$store.getters['adminStore/allStateData'];
+    },
   },
   methods: {
-    /** 
+    /**
      * @param {Object} payload
      * {
      *    detailedImageUrls: [list of urls]
@@ -240,45 +240,45 @@ export default {
      *     thumbnailUrls: [list of urls]
      * }
     */
-    imageUploadComplete(payload){
+    imageUploadComplete(payload) {
       this.showManagePhoto = false;
       this.images = payload;
     },
     goBack() {
-      this.$emit("cancelTrigger");
+      this.$emit('cancelTrigger');
     },
     async handleAddProduct() {
       try {
-        await this.$store.dispatch("adminStore/addProduct", this.product);
-        this.$emit("cancelTrigger");
+        await this.$store.dispatch('adminStore/addProduct', this.product);
+        this.$emit('cancelTrigger');
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
-          text: "There was an error"
+          group: 'all',
+          type: 'error',
+          text: 'There was an error',
         });
       }
     },
     async handleEditProduct() {
       try {
-        await this.$store.dispatch("adminStore/editProduct", this.product);
-        this.$emit("cancelTrigger");
+        await this.$store.dispatch('adminStore/editProduct', this.product);
+        this.$emit('cancelTrigger');
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
-          text: "There was an error"
+          group: 'all',
+          type: 'error',
+          text: 'There was an error',
         });
       }
     },
     getSubCategory() {
-      const refState = this.$store.getters["adminStore/allStateData"];
+      const refState = this.$store.getters['adminStore/allStateData'];
       const x = _.find(refState.refDataPayload.product_categories, {
-        name: this.product.category
+        name: this.product.category,
       }).subcategories;
       return x;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -287,4 +287,3 @@ export default {
   margin-top: 1em;
 }
 </style>
-

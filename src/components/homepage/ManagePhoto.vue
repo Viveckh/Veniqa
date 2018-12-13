@@ -93,14 +93,14 @@
 </template>
 
 <script>
-import ImageShowcase from "@/components/homepage/ImageShowcase";
-import ProxyUrls from "@/constants/ProxyUrls";
-import AWSParams from "@/constants/AwsParams";
+import ImageShowcase from '@/components/homepage/ImageShowcase';
+import ProxyUrls from '@/constants/ProxyUrls';
+import AWSParams from '@/constants/AwsParams';
 
 export default {
-  name: "ManagePhoto",
+  name: 'ManagePhoto',
   components: {
-    ImageShowcase
+    ImageShowcase,
   },
   data() {
     return {
@@ -127,20 +127,20 @@ export default {
       size: {
         standard: {
           height: 800,
-          width: 600
+          width: 600,
         },
         thumbnail: {
           height: 400,
-          width: 300
-        }
+          width: 300,
+        },
       },
       fileSize: 104857600,
 
-      remoteUrl: "",
+      remoteUrl: '',
 
       detailedImageUrls: [],
       featuredImageUrls: [],
-      thumbnailUrls: []
+      thumbnailUrls: [],
     };
   },
 
@@ -149,8 +149,8 @@ export default {
      * This is where all the backend calls are made.
      */
     async saveAll() {
-      let params = this.configureParams();
-        /**
+      const params = this.configureParams();
+      /**
          * Data DTO
          * detailedImageUrls: [
          *   {
@@ -162,112 +162,117 @@ export default {
          * thumbnailUrls: [same as above]
          *
          */
-        let { data } = await this.$axios({
-          method: "get",
-          url: ProxyUrls.predefinedUrls,
-          params
+      const { data } = await this.$axios({
+        method: 'get',
+        url: ProxyUrls.predefinedUrls,
+        params,
+      });
+
+      const totalCallsToMake = data.detailedImageUrls.length
+          + data.thumbnailUrls.length
+          + data.featuredImageUrls.length;
+
+      const done = _.after(totalCallsToMake, () => {
+        this.$notify({
+          group: 'all',
+          type: 'success',
+          text: 'All the images have been successfully loaded',
         });
 
-        let totalCallsToMake =
-          data.detailedImageUrls.length +
-          data.thumbnailUrls.length +
-          data.featuredImageUrls.length;
-
-        let done = _.after(totalCallsToMake, () =>{
-          this.$notify({
-            group: "all",
-            type: "success",
-            text: "All the images have been successfully loaded"
-          });
-
-          this.$emit("complete", {
-            detailedImageUrls: this.detailedImageUrls,
-            featuredImageUrls: this.featuredImageUrls,
-            thumbnailUrls: this.thumbnailUrls
-          });
+        this.$emit('complete', {
+          detailedImageUrls: this.detailedImageUrls,
+          featuredImageUrls: this.featuredImageUrls,
+          thumbnailUrls: this.thumbnailUrls,
         });
+      });
 
-        this.detailedImageUrls = new Array(data.detailedImageUrls.length).fill('')
-        this.featuredImageUrls = new Array(data.featuredImageUrls.length).fill('')
-        this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill('')
+      this.detailedImageUrls = new Array(data.detailedImageUrls.length).fill('');
+      this.featuredImageUrls = new Array(data.featuredImageUrls.length).fill('');
+      this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill('');
 
-        /** This loop goes through each image there is and then asynchronously makes all the upload calls. 
+      /** This loop goes through each image there is and then asynchronously makes all the upload calls.
          * done() is called everytime the request passes with success. This will run the done function from above
          * after all the calls succeed.
-         * 
+         *
          * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
          */
-        this.finalImages.forEach((imageObj, ind) => {
-          // Call for detailed image urls.
-          this.$axios({
-            headers: {
-              "Content-Type": "image/png"
-            },
-            method: "put",
-            url: data.detailedImageUrls[ind].uploadUrl,
-            data: imageObj.largeBlob,
-            withCredentials: false
-          }).then(res => {
-            this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
-            done();
-          }).catch(err => {
-            console.log("Detail Error", err)
-            this.handleError(imageObj.name);
-          })
-
-          // Call for thumbnails
-          this.$axios({
-            headers: {
-              "Content-Type": "image/png"
-            },
-            method: "put",
-            url: data.thumbnailUrls[ind].uploadUrl,
-            data: imageObj.thumbnailBlob,
-            withCredentials: false
-          }).then(res => {
-            this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
-            done();
-          }).catch(err => {
-            console.log("THumbnail Error", err)
-            this.handleError(imageObj.name)
-          })
-
-          // Call for Featured images.
-          if (imageObj.featured) {
-            this.$axios({
-              headers: {
-                "Content-Type": "image/png"
-              },
-              method: "put",
-              url: data.featuredImageUrls[ind].uploadUrl,
-              data: imageObj.largeBlob,
-              withCredentials: false
-            }).then(res => {
-              this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
-              done();
-            }).catch(err=>{
-            console.log("Featured Error", err)
-              this.handleError(imageObj.name);
-            })
-          }
+      this.finalImages.forEach((imageObj, ind) => {
+        // Call for detailed image urls.
+        this.$axios({
+          headers: {
+            'Content-Type': 'image/png',
+          },
+          method: 'put',
+          url: data.detailedImageUrls[ind].uploadUrl,
+          data: imageObj.largeBlob,
+          withCredentials: false,
+        }).then((res) => {
+          this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
+          done();
+        }).catch((err) => {
+          console.log('Detail Error', err);
+          this.handleError(imageObj.name);
         });
+
+        // Call for thumbnails
+        this.$axios({
+          headers: {
+            'Content-Type': 'image/png',
+          },
+          method: 'put',
+          url: data.thumbnailUrls[ind].uploadUrl,
+          data: imageObj.thumbnailBlob,
+          withCredentials: false,
+        }).then((res) => {
+          this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
+          done();
+        }).catch((err) => {
+          console.log('THumbnail Error', err);
+          this.handleError(imageObj.name);
+        });
+
+        // Call for Featured images.
+        if (imageObj.featured) {
+          this.$axios({
+            headers: {
+              'Content-Type': 'image/png',
+            },
+            method: 'put',
+            url: data.featuredImageUrls[ind].uploadUrl,
+            data: imageObj.largeBlob,
+            withCredentials: false,
+          }).then((res) => {
+            this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
+            done();
+          }).catch((err) => {
+            console.log('Featured Error', err);
+            this.handleError(imageObj.name);
+          });
+        }
+      });
     },
 
-    handleError(filename){
+    handleError(filename) {
       this.$notify({
         group: 'all',
         type: 'error',
-        text: `Image with name ${filename} could not be uploaded. Try again later.`
-      })
+        text: `Image with name ${filename} could not be uploaded. Try again later.`,
+      });
     },
 
     configureParams() {
-      let numberOfThumbnails = 0,
-        numberOfFeaturedImages = 0,
-        numberOfDetailedImages = 0,
-        productId = "";
+      let numberOfThumbnails = 0;
 
-      this.finalImages.forEach(imageObj => {
+
+      let numberOfFeaturedImages = 0;
+
+
+      let numberOfDetailedImages = 0;
+
+
+      const productId = '';
+
+      this.finalImages.forEach((imageObj) => {
         // Right now, everything is +1 except the featured images.
         numberOfThumbnails += 1;
         numberOfDetailedImages += 1;
@@ -277,21 +282,21 @@ export default {
       return {
         numberOfThumbnails,
         numberOfFeaturedImages,
-        numberOfDetailedImages
+        numberOfDetailedImages,
       };
     },
 
     async cropImage() {
-      const largeBlob = await this.cropSection.promisedBlob("image/png");
+      const largeBlob = await this.cropSection.promisedBlob('image/png');
       const thumbnailBlob = await this.thumbnailCrop.promisedBlob(
-        "image/png",
-        0.25
+        'image/png',
+        0.25,
       );
 
       // Checks the index in final images list with the file name.
       const index = _.findIndex(
         this.finalImages,
-        file => file.name === this.largeInitImage.name
+        file => file.name === this.largeInitImage.name,
       );
       if (index >= 0) {
         this.finalImages[index].largeBlob = largeBlob;
@@ -304,29 +309,29 @@ export default {
      */
     fileUploaded() {
       if (this.imageInput.length > 0 && this.imageInput.length < 6) {
-        this.imageInput.forEach(file => {
+        this.imageInput.forEach((file) => {
           if (file.size > this.fileSize) {
             this.fileSizeExceed();
           }
           if (
-            file.size <= this.fileSize &&
-            _.findIndex(this.finalImages, obj => obj.name === file.name) < 0
+            file.size <= this.fileSize
+            && _.findIndex(this.finalImages, obj => obj.name === file.name) < 0
           ) {
             this.finalImages.push({
               name: file.name,
               thumbnailBlob: file,
               largeBlob: file,
               displayUrl: URL.createObjectURL(file),
-              featured: false
+              featured: false,
             });
           }
         });
       } else {
         this.$notify({
-          group: "all",
-          type: "warn",
+          group: 'all',
+          type: 'warn',
           text:
-            "Only upto 5 images can be loaded. Please only select up to 5 images."
+            'Only upto 5 images can be loaded. Please only select up to 5 images.',
         });
       }
     },
@@ -334,17 +339,17 @@ export default {
       this.setImages(imageObj.largeBlob, imageObj.thumbnailBlob, imageObj.name);
     },
     loadImage() {
-      let newObj = {
-        name: "remoteUrl" + this.finalImages.length,
+      const newObj = {
+        name: `remoteUrl${this.finalImages.length}`,
         thumbnailUrl: this.remoteUrl,
         largeUrl: this.remoteUrl,
         normalUrl: this.remoteUrl,
-        featured: false
+        featured: false,
       };
 
       this.setImages(this.remoteUrl, this.remoteUrl, newObj.name);
       this.finalImages.push(newObj);
-      this.remoteUrl = "";
+      this.remoteUrl = '';
     },
 
     fileChosenInLarge(file) {
@@ -353,7 +358,7 @@ export default {
         name: file.name,
         thumbnailBlob: file,
         largeBlob: file,
-        displayUrl: URL.createObjectURL(file)
+        displayUrl: URL.createObjectURL(file),
       };
 
       let ind = _.findIndex(this.finalImages, obj => obj.name === newObj.name);
@@ -363,7 +368,7 @@ export default {
           thumbnailBlob: file,
           largeBlob: file,
           displayUrl: URL.createObjectURL(file),
-          featured: false
+          featured: false,
         });
 
         ind = this.finalImages.length - 1;
@@ -382,12 +387,12 @@ export default {
     setImages(url, thumbUrl, name) {
       this.thumbnailInitImage = {
         url: URL.createObjectURL(thumbUrl),
-        name
+        name,
       };
 
       this.largeInitImage = {
         url: URL.createObjectURL(url),
-        name
+        name,
       };
 
       this.thumbnailCrop.refresh();
@@ -397,7 +402,7 @@ export default {
     resetImagesModification() {
       const index = _.findIndex(
         this.finalImages,
-        file => file.name === this.largeInitImage.name
+        file => file.name === this.largeInitImage.name,
       );
       this.finalImages.splice(index, 1);
       this.cropSection.remove();
@@ -405,7 +410,7 @@ export default {
 
     moveImage(direction) {
       const len = this.finalImages.length;
-      if (direction === "right") {
+      if (direction === 'right') {
         const moveThumb = this.finalImages.splice(len - 1, 1);
         this.finalImages = [moveThumb[0], ...this.finalImages];
       } else {
@@ -416,13 +421,13 @@ export default {
 
     fileSizeExceed() {
       this.$notify({
-        group: "all",
-        type: "warn",
+        group: 'all',
+        type: 'warn',
         text:
-          "The file size cannot be greater than 1 MB. Larger files will not upload"
+          'The file size cannot be greater than 1 MB. Larger files will not upload',
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

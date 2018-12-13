@@ -19,7 +19,7 @@
   </div>
   <div class='align-center'>Double click on the images to set as Featured image</div>
 </div>
-  
+
 </template>
 
 <script>
@@ -43,10 +43,10 @@ export default {
     },
 
     moveImage(direction) {
-      this.$emit('action', direction)
+      this.$emit('action', direction);
     },
 
-    doubleClicked(image){
+    doubleClicked(image) {
       image.featured = !image.featured;
     },
 
