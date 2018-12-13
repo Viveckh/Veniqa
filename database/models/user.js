@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 
+import WEIGHT_UNITS_ARRAY from '../reference-data-files/weightUnits.json'; 
+
 let colorSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -15,6 +17,18 @@ let colorSchema = new mongoose.Schema({
     }
 }, {_id: false});
 
+let weightSchema = new mongoose.Schema({
+    quantity: {
+        type: Number,
+        required: true
+    },
+    unit: {
+        type: String,
+        required: true,
+        enum: WEIGHT_UNITS_ARRAY
+    }
+}, {_id: false})
+
 let priceSchema = new mongoose.Schema({
     amount: {
         type: Number,
@@ -23,7 +37,7 @@ let priceSchema = new mongoose.Schema({
     currency: {
         type: String,
         required: true,
-        enum: ['USD', 'BDT', 'NPR']
+        enum: ['USD']
     }
 }, {_id: false})
 
@@ -36,6 +50,14 @@ let cartItemSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 1
+    },
+    aggregatedWeight: {
+        type: weightSchema,
+        required: true,
+        default: {
+            quantity: 0,
+            unit: 'LB'
+        }
     },
     aggregatedPrice: {
         type: priceSchema,
@@ -59,6 +81,26 @@ let cartItemSchema = new mongoose.Schema({
 let cartSchema = new mongoose.Schema({
     items: {
         type: [cartItemSchema]
+    },
+    totalWeight: {
+        type: weightSchema,
+        required: true
+    },
+    subTotalPrice: {
+        type: priceSchema,
+        required: true
+    },
+    serviceCharge: {
+        type: priceSchema,
+        required: true
+    },
+    shippingPrice: {
+        type: priceSchema,
+        required: true
+    },
+    tariffPrice: {
+        type: priceSchema,
+        required: true
     },
     totalPrice: {
         type: priceSchema,

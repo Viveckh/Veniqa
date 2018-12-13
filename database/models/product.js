@@ -21,6 +21,18 @@ let colorSchema = new mongoose.Schema({
     }
 }, {_id: false});
 
+let weightSchema = new mongoose.Schema({
+    quantity: {
+        type: Number,
+        required: true
+    },
+    unit: {
+        type: String,
+        required: true,
+        enum: WEIGHT_UNITS_ARRAY
+    }
+}, {_id: false})
+
 let priceSchema = new mongoose.Schema({
     amount: {
         type: Number,
@@ -71,12 +83,14 @@ let productSchema = new mongoose.Schema({
     subcategory: {
         type: String,
         required: true,
-        trim: true,
+        trim: true
+        /*
         validate: function(value) {
             // Find the selected category object and see if the subcategory exists in subcategories array
             let categoryObj = _.find(PRODUCT_CATEGORIES, {name: this.category})
             return categoryObj && categoryObj.subcategories && categoryObj.subcategories.includes(value);
         }
+        */
     },
     thumbnailUrls: {
         type: Array,
@@ -122,15 +136,8 @@ let productSchema = new mongoose.Schema({
         required: true
     },
     weight: {
-        quantity: {
-            type: Number,
-            required: true
-        },
-        unit: {
-            type: String,
-            required: true,
-            enum: WEIGHT_UNITS_ARRAY
-        }
+        type: weightSchema,
+        required: true
     },
     custom_attributes: {
         type: Map,
