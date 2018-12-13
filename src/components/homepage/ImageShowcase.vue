@@ -60,14 +60,15 @@ export default {
     },
 
     moveImage(direction) {
-      const len = this.images.length;
-      if (direction === 'right') {
-        const moveThumb = this.images.splice(len - 1, 1);
-        this.images = [moveThumb[0], ...this.images];
-      } else {
-        const moveThumb = this.images.splice(0, 1);
-        this.images = [...this.images, moveThumb[0]];
-      }
+      this.$emit('action', direction)
+      // const len = this.images.length;
+      // if (direction === 'right') {
+      //   const moveThumb = this.images.splice(len - 1, 1);
+      //   this.images = [moveThumb[0], ...this.images];
+      // } else {
+      //   const moveThumb = this.images.splice(0, 1);
+      //   this.images = [...this.images, moveThumb[0]];
+      // }
     },
   },
 };

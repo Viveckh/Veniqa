@@ -8,7 +8,6 @@
         description="Paste a remote URL."
         label="Remote Url"
         label-for="remote-url"
-        @
       >
         <b-form-input id="remote-url" v-model.trim="remoteUrl" @keyup.enter.native="loadImage()"></b-form-input>
       </b-form-group>
@@ -19,6 +18,7 @@
         v-if="finalImages.length > 0"
         :images="finalImages"
         @imageClick="imageChosenFromList"
+        @action="moveImage"
       />
     </div>
 
@@ -43,9 +43,10 @@
           v-model="cropSection"
           :width="size.standard.width"
           :height="size.standard.height"
-          :file-size-limit="300 * 1024"
+          :file-size-limit="fileSize"
           placeholder="Drop an image"
           accept="image/jpg, image/jpeg, image/png"
+          @file-size-exceed="fileSizeExceed"
           :show-loading="true"
           :prevent-white-space="true"
           @file-choose="fileChosenInLarge"
@@ -91,6 +92,14 @@ export default {
 
       showThumbnail: false,
 
+      /** 
+       * DTO
+       * {
+       *   name: '', // unique
+       *   largeUrl: '',
+       *   thumbnailUrl: ''
+       * }
+      */
       finalImages: [],
       imageInput: [], // This only gets the list of images.
 
@@ -104,6 +113,7 @@ export default {
           width: 300
         }
       },
+      fileSize: 1048576,
 
       remoteUrl: ''
     };
@@ -130,9 +140,12 @@ export default {
       }
     },
     fileUploaded() {
-      if (this.imageInput.length > 0) {
+      if (this.imageInput.length > 0 && this.imageInput.length < 6) {
         this.imageInput.forEach(file => {
-          if (
+          if(file.size > this.fileSize){
+            this.fileSizeExceed();
+          }
+          if ( file.size <= this.fileSize &&
             _.findIndex(this.finalImages, obj => obj.name === file.name) < 0
           ) {
             this.finalImages.push({
@@ -143,16 +156,18 @@ export default {
           }
         });
       }
+      else{
+        this.$notify({
+          group: 'all',
+          type: 'warn',
+          text: 'Only upto 5 images can be loaded. Please only select up to 5 images.'
+        })
+      }
     },
     imageChosenFromList(imageObj) {
       this.setImages(imageObj.largeUrl, imageObj.thumbnailUrl, imageObj.name);
-
-      // this.cropSection.refresh();
-      // this.thumbnailCrop.refresh();
     },
     loadImage(){
-      console.log("Load image trigger");
-
       let newObj = {
         name: 'remoteUrl'+this.finalImages.length,
         thumbnailUrl: this.remoteUrl,
@@ -165,11 +180,13 @@ export default {
       
     },
     fileChosenInLarge(file) {
+      if(file.size > this.fileSize) return;
       let newObj = {
         name: file.name,
         thumbnailUrl: URL.createObjectURL(file),
         largeUrl: URL.createObjectURL(file)
       };
+      
 
       let ind = _.findIndex(this.finalImages, obj => obj.name === newObj.name);
       if (ind < 0) {
@@ -215,6 +232,25 @@ export default {
       );
       this.finalImages.splice(index, 1);
       this.cropSection.remove();
+    },
+
+    moveImage(direction) {
+      const len = this.finalImages.length;
+      if (direction === 'right') {
+        const moveThumb = this.finalImages.splice(len - 1, 1);
+        this.finalImages = [moveThumb[0], ...this.finalImages];
+      } else {
+        const moveThumb = this.finalImages.splice(0, 1);
+        this.finalImages = [...this.finalImages, moveThumb[0]];
+      }
+    },
+
+    fileSizeExceed(){
+      this.$notify({
+        group: 'all',
+        type: 'warn',
+        text: 'The file size cannot be greater than 1 MB. Larger files will not upload'
+      })
     }
   }
 };
