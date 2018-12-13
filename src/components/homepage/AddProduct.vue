@@ -1,6 +1,17 @@
 
 <template>
   <div>
+    <div>
+      <div class="align-left">
+        Products
+      </div>
+      <div class="align-right">
+        <button class="btn btn-primary" @click="manageImages()">Manage Images</button>
+      </div>
+    </div>
+
+    <manage-photo/>
+
     <br>
     <div class="form-horizontal">
       <div class="form-group form-group-sm">
@@ -57,6 +68,7 @@
           >
         </div>
       </div>
+
       <div class="form-group form-group-sm">
         <label class="control-label col-sm-2" for="url">Item Url</label>
         <div class="col-sm-10">
@@ -149,10 +161,15 @@
 
 <script>
 import * as _ from 'lodash';
+import ManagePhoto from '@/components/homepage/ManagePhoto';
+
 
 export default {
   props: {
     data: { required: false, type: Object, default: null },
+  },
+  components: {
+    ManagePhoto,
   },
   created() {
     if (this.data != null) {
@@ -199,6 +216,8 @@ export default {
         ],
         sizes: ['XS', 'S', 'M', 'L'],
       },
+
+      showManagePhoto: false,
     };
   },
   computed: {
