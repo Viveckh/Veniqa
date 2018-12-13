@@ -1,16 +1,37 @@
 <template>
   <div id="manage-photo">
+    <b-row>
+      <b-col>
+        <font-awesome-icon icon="chevron-left"/>Back
+      </b-col>
+      <b-col>
+        <h2>Manage Images</h2>
+      </b-col>
+      <b-col>
+        <div class="align-right">
+          <div class="btn btn-primary" @click="saveAll()">Save All</div>
+        </div>
+      </b-col>
+    </b-row>
     <div>
-      <b-form-file :multiple="true" v-model="imageInput" @input="fileUploaded()" class="mt-3"></b-form-file>
-      <p class="align-center">OR</p>
-      <b-form-group
-        id="remoteUrl"
-        description="Paste a remote URL."
-        label="Remote Url"
-        label-for="remote-url"
-      >
-        <b-form-input id="remote-url" v-model.trim="remoteUrl" @keyup.enter.native="loadImage()"></b-form-input>
-      </b-form-group>
+      <b-row>
+        <b-col md="6">
+          <b-form-file :multiple="true" v-model="imageInput" @input="fileUploaded()" class="mt-3"></b-form-file> 
+        </b-col>
+        <b-col md="6">
+          <b-form-group
+            id="remoteUrl"
+            class="mt-3"
+          >
+            <b-form-input
+              id="remote-url"
+              v-model.trim="remoteUrl"
+              @keyup.enter.native="loadImage()"
+              placeholder="Paste a remote URL here"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+      </b-row>
     </div>
 
     <div class="image-displayer">
@@ -22,7 +43,7 @@
       />
     </div>
 
-    <b-row class="actions">
+    <b-row class="actions" v-if="finalImages.length > 0">
       <b-col>
         <div class="align-left">
           <button class="btn btn-secondary" @click="resetImagesModification()">Remove Image</button>
@@ -31,7 +52,6 @@
       </b-col>
       <b-col>
         <div class="align-right">
-          <button class="btn btn-primary">Save</button>
         </div>
       </b-col>
     </b-row>
@@ -92,14 +112,15 @@ export default {
 
       showThumbnail: false,
 
-      /** 
+      /**
        * DTO
        * {
        *   name: '', // unique
        *   largeUrl: '',
        *   thumbnailUrl: ''
+       *   featured: false
        * }
-      */
+       */
       finalImages: [],
       imageInput: [], // This only gets the list of images.
 
@@ -115,11 +136,15 @@ export default {
       },
       fileSize: 1048576,
 
-      remoteUrl: ''
+      remoteUrl: ""
     };
   },
 
   methods: {
+
+    async saveAll() {
+      
+    },
     async cropImage() {
       const largeUrl = await this.cropSection.promisedBlob("image/png");
       const thumbnailUrl = await this.thumbnailCrop.promisedBlob(
@@ -139,61 +164,70 @@ export default {
         );
       }
     },
+
+    /** 
+     * Runs when the file is uploaded through input box.
+    */
     fileUploaded() {
       if (this.imageInput.length > 0 && this.imageInput.length < 6) {
         this.imageInput.forEach(file => {
-          if(file.size > this.fileSize){
+          if (file.size > this.fileSize) {
             this.fileSizeExceed();
           }
-          if ( file.size <= this.fileSize &&
+          if (
+            file.size <= this.fileSize &&
             _.findIndex(this.finalImages, obj => obj.name === file.name) < 0
           ) {
             this.finalImages.push({
               name: file.name,
               thumbnailUrl: URL.createObjectURL(file),
-              largeUrl: URL.createObjectURL(file)
+              largeUrl: URL.createObjectURL(file),
+              normalUrl: URL.createObjectURL(file),
+              featured: false
             });
           }
         });
-      }
-      else{
+      } else {
         this.$notify({
-          group: 'all',
-          type: 'warn',
-          text: 'Only upto 5 images can be loaded. Please only select up to 5 images.'
-        })
+          group: "all",
+          type: "warn",
+          text:
+            "Only upto 5 images can be loaded. Please only select up to 5 images."
+        });
       }
     },
     imageChosenFromList(imageObj) {
       this.setImages(imageObj.largeUrl, imageObj.thumbnailUrl, imageObj.name);
     },
-    loadImage(){
+    loadImage() {
       let newObj = {
-        name: 'remoteUrl'+this.finalImages.length,
+        name: "remoteUrl" + this.finalImages.length,
         thumbnailUrl: this.remoteUrl,
-        largeUrl: this.remoteUrl
+        largeUrl: this.remoteUrl,
+        normalUrl: this.remoteUrl,
+        featured: false,
       };
 
       this.setImages(this.remoteUrl, this.remoteUrl, newObj.name);
       this.finalImages.push(newObj);
-      this.remoteUrl = '';
-      
+      this.remoteUrl = "";
     },
     fileChosenInLarge(file) {
-      if(file.size > this.fileSize) return;
+      if (file.size > this.fileSize) return;
       let newObj = {
         name: file.name,
         thumbnailUrl: URL.createObjectURL(file),
-        largeUrl: URL.createObjectURL(file)
+        largeUrl: URL.createObjectURL(file),
       };
-      
 
       let ind = _.findIndex(this.finalImages, obj => obj.name === newObj.name);
       if (ind < 0) {
         this.finalImages.push({
           name: file.name,
           thumbnailUrl: URL.createObjectURL(file),
-          largeUrl: URL.createObjectURL(file)
+          largeUrl: URL.createObjectURL(file),
+          normalUrl: URL.createObjectURL(file),
+          featured: false,
         });
 
         ind = this.finalImages.length - 1;
@@ -202,7 +236,6 @@ export default {
       newObj = this.finalImages[ind];
 
       this.setImages(newObj.largeUrl, newObj.thumbnailUrl, newObj.name);
-      
     },
 
     imageRemoveTrigger() {
@@ -236,7 +269,7 @@ export default {
 
     moveImage(direction) {
       const len = this.finalImages.length;
-      if (direction === 'right') {
+      if (direction === "right") {
         const moveThumb = this.finalImages.splice(len - 1, 1);
         this.finalImages = [moveThumb[0], ...this.finalImages];
       } else {
@@ -245,12 +278,13 @@ export default {
       }
     },
 
-    fileSizeExceed(){
+    fileSizeExceed() {
       this.$notify({
-        group: 'all',
-        type: 'warn',
-        text: 'The file size cannot be greater than 1 MB. Larger files will not upload'
-      })
+        group: "all",
+        type: "warn",
+        text:
+          "The file size cannot be greater than 1 MB. Larger files will not upload"
+      });
     }
   }
 };
