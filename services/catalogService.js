@@ -112,8 +112,13 @@ export default {
         }
     },
 
-    async getPresignedUrlsForCatalogImageUploads(productId, numberOfThumbnails, numberOfFeaturedImages, numberOfDetailedImages) {
+    async getPresignedUrlsForCatalogImageUploads(productId, numberOfThumbnailAndDetailedImages, numberOfFeaturedImages) {
         try {
+            // Limit the max number of images the urls can be requested for at once.
+            if (numberOfThumbnailAndDetailedImages > 7 || numberOfFeaturedImages > 7) {
+                return "max number of allowed images for each type is 7"
+            }
+
             let folderName, product;
             // If a productId was passed and the product is found, use its existing image urls to find corresponding s3 folder, otherwise generate a new folder name
             if (productId) {
@@ -135,27 +140,46 @@ export default {
             // Prepare the object which will contain the urls
             let response = {
                 thumbnailUrls: [],
-                featuredImageUrls: [],
-                detailedImageUrls: []
+                detailedImageUrls: [],
+                featuredImageUrls: []
             }
 
-            // Generate the thumbnail urls and push it to the response object
-            for (let index = 0; index < numberOfThumbnails; index++) {
+            // Generate the thumbnail and detailed image urls to push to the response object
+            for (let index = 0; index < numberOfThumbnailAndDetailedImages; index++) {
                 // If there is a previous file that can be replaced, use its name
-                let filename = (product && product.thumbnailUrls[index]) ? product.thumbnailUrls[index].split('/')[6] : await cryptoGen.generateRandomToken();
-                let objectKey = folderName + "/thumbnails/" + filename;
-                let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
+                let filename = (product && product.detailedImageUrls[index]) ? product.detailedImageUrls[index].split('/')[6] : await cryptoGen.generateRandomToken();
 
-                let presignedUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
+                // GENERATE LINKS FOR THE THUMBNAIL FIRST
+                let thumbnailObjectKey = folderName + "/thumbnails/" + filename;
+                let thumbnailLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + thumbnailObjectKey;
+
+                let thumbnailUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
                     Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
-                    Key: objectKey,
+                    Key: thumbnailObjectKey,
                     ContentType: 'image/png',
                     Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
                 });
 
                 response.thumbnailUrls.push({
-                    uploadUrl: presignedUploadUrl,
-                    liveUrl: objectLiveUrl
+                    uploadUrl: thumbnailUploadUrl,
+                    liveUrl: thumbnailLiveUrl
+                })
+
+
+                // GENERATE LINKS FOR THE DETAILED IMAGES NEXT
+                let detailedImageObjectKey = folderName + "/detailed-images/" + filename;
+                let detailedImageLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + detailedImageObjectKey;
+
+                let detailedImageUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
+                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Key: detailedImageObjectKey,
+                    ContentType: 'image/png',
+                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                });
+
+                response.detailedImageUrls.push({
+                    uploadUrl: detailedImageUploadUrl,
+                    liveUrl: detailedImageLiveUrl
                 })
             }
 
@@ -179,35 +203,16 @@ export default {
                 })
             }
 
-            // Generate the detailed image urls and push it to the response object
-            for (let index = 0; index < numberOfDetailedImages; index++) {
-                // If there is a previous file that can be replaced, use its name
-                let filename = (product && product.detailedImageUrls[index]) ? product.detailedImageUrls[index].split('/')[6] : await cryptoGen.generateRandomToken();
-                let objectKey = folderName + "/detailed-images/" + filename;
-                let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
-
-                let presignedUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
-                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
-                    Key: objectKey,
-                    ContentType: 'image/png',
-                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
-                });
-
-                response.detailedImageUrls.push({
-                    uploadUrl: presignedUploadUrl,
-                    liveUrl: objectLiveUrl
-                })
-            }
-
             // Get all the s3 keys associated with objects that need deletion
             // We are deleting keys only when presignedurl is requested for image updates, and the new requested count of images is lower than what has previously been saved.
             if (product) {
                 let objectsToDelete = [];
-                if (numberOfThumbnails < product.thumbnailUrls.length) {
-                    for (let index = numberOfThumbnails; index < product.thumbnailUrls.length; index++) {
-                        objectsToDelete.push({
-                            Key: folderName + '/thumbnails/' + product.thumbnailUrls[index].split('/')[6]
-                        })
+                if (numberOfThumbnailAndDetailedImages < product.detailedImageUrls.length) {
+                    for (let index = numberOfThumbnailAndDetailedImages; index < product.detailedImageUrls.length; index++) {
+                        objectsToDelete.push(
+                            { Key: folderName + '/thumbnails/' + product.thumbnailUrls[index].split('/')[6] },
+                            { Key: folderName + "/detailed-images/" + product.detailedImageUrls[index].split('/')[6] }
+                        )
                     }
                 }
                 if (numberOfFeaturedImages < product.featuredImageUrls.length) {
@@ -216,14 +221,6 @@ export default {
                             Key: folderName + "/featured-images/" + product.featuredImageUrls[index].split('/')[6]
                         })
                     }
-                }
-                if (numberOfDetailedImages < product.detailedImageUrls.length) {
-                    for (let index = numberOfDetailedImages; index < product.detailedImageUrls.length; index++) {
-                        objectsToDelete.push({
-                            Key: folderName + "/detailed-images/" + product.detailedImageUrls[index].split('/')[6]
-                        })
-                    }
-
                 }
 
                 if (objectsToDelete.length > 0) { 

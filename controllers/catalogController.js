@@ -79,7 +79,7 @@ export default {
     async getPresignedUrlsForCatalogImageUploads(req, res, next) {
         let response;
         try {
-            response = await catalogService.getPresignedUrlsForCatalogImageUploads(req.query.productId, req.query.numberOfThumbnails, req.query.numberOfFeaturedImages, req.query.numberOfDetailedImages);
+            response = await catalogService.getPresignedUrlsForCatalogImageUploads(req.query.productId, req.query.numberOfThumbnailAndDetailedImages, req.query.numberOfFeaturedImages);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }
