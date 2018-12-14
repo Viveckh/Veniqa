@@ -259,15 +259,15 @@ export default {
     },
     async handleAddProduct() {
       try {
-        let saveImageRes = await this.$refs.managephoto.saveAll();
-        if(saveImageRes) {
+        const saveImageRes = await this.$refs.managephoto.saveAll();
+        if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
-        if(err) this.preassignedUrls = err;
+        if (err) this.preassignedUrls = err;
         this.$notify({
           group: 'all',
           type: 'error',
@@ -277,15 +277,15 @@ export default {
     },
     async handleEditProduct() {
       try {
-        let saveImageRes = await this.$refs.managephoto.saveAll();
-        if(saveImageRes) {
+        const saveImageRes = await this.$refs.managephoto.saveAll();
+        if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
         await this.$store.dispatch('adminStore/editProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
-        if(err) this.preassignedUrls = err;
+        if (err) this.preassignedUrls = err;
         this.$notify({
           group: 'all',
           type: 'error',
