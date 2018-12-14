@@ -7,12 +7,12 @@
       draggable="false"
       v-show="key < displayLength"
       :key="key"
-      :src="image.displayUrl"
+      :src="image ? image.displayUrl: ''"
       @click="chooseImage(image, $event)"
       v-for="(image, key) in images"
       class="responsive-image image-config"
       @dblclick="doubleClicked(image)"
-      :class="{'featured': image.featured == true}"
+      :class="{'featured': image && image.featured == true}"
     >
 
     <font-awesome-icon icon="circle" @click="moveImage('left')"/>
