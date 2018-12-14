@@ -1,13 +1,15 @@
 
 <template>
   <div>
-    <manage-photo 
-      v-if="showManagePhoto" 
+    <manage-photo
+      v-show="showManagePhoto"
+      ref="managephoto"
       :detailedUrls="product.detailedImageUrls"
       :thumbnailPropUrls="product.thumbnailUrls"
       :featuredUrls="product.featuredUrls"
       :productId="product._id"
-      @complete="imageUploadComplete" 
+      :preassignedUrls="preassignedUrls"
+      @complete="imageUploadComplete"
       @cancel="showManagePhoto = false"/>
 
     <div v-if="!showManagePhoto">
@@ -191,6 +193,7 @@ export default {
   },
   data() {
     return {
+      preassignedUrls: null,
       product: {
         store: 'AMAZON',
         brand: 'BEVERLY HILLS KAY',
@@ -200,14 +203,14 @@ export default {
         category: 'Make-Up Kits',
         subcategory: 'Palettes',
         thumbnailUrls: [
-          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
-          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
+          // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
+          // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
         ],
         featuredImageUrls: [
-          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
+          // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
         ],
         detailedImageUrls: [
-          'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
+          // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
         ],
         price: {
           amount: 27.99,
@@ -256,9 +259,15 @@ export default {
     },
     async handleAddProduct() {
       try {
+        let saveImageRes = await this.$refs.managephoto.saveAll();
+        if(saveImageRes) {
+          this.imageUploadComplete(saveImageRes);
+          this.preassignedUrls = null;
+        }
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
+        if(err) this.preassignedUrls = err;
         this.$notify({
           group: 'all',
           type: 'error',
@@ -268,9 +277,15 @@ export default {
     },
     async handleEditProduct() {
       try {
+        let saveImageRes = await this.$refs.managephoto.saveAll();
+        if(saveImageRes) {
+          this.imageUploadComplete(saveImageRes);
+          this.preassignedUrls = null;
+        }
         await this.$store.dispatch('adminStore/editProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
+        if(err) this.preassignedUrls = err;
         this.$notify({
           group: 'all',
           type: 'error',

@@ -12,7 +12,8 @@
       <b-col>
         <div class="align-right">
           <div class="btn btn-secondary" @click="$emit('cancel')">Cancel</div>
-          <div class="btn btn-primary" @click="saveAll()">Save All</div>
+          <!-- <div class="btn btn-primary" @click="saveAll()">Save All</div> -->
+          <div class="btn btn-primary" @click="$emit('cancel')">Save All</div>
         </div>
       </b-col>
     </b-row>
@@ -126,6 +127,12 @@ export default {
       required: false,
       default: null,
       type: String
+    },
+
+    preassignedUrls: {
+      required: false,
+      default: null,
+      type: Object
     }
   },
   data() {
@@ -175,18 +182,13 @@ export default {
       // ASSUMPTION: The detailed urls and thumbnail urls are always going to be the same.
       this.finalImages = new Array(this.detailedUrls.length).fill(null);
 
-      let totalCallsToMake = this.detailedUrls.length * 2;
-      const done = _.after(totalCallsToMake, () => {
-        // console.log("Going in here")
-        // this.finalImages = [...this.finalImages];
-        // console.log("Final images", this.finalImages)
-      });
+      const totalCallsToMake = this.detailedUrls.length * 2;
 
       this.detailedUrls.forEach((imageUrl, index) => {
         // for (let index = 0; index < this.detailedUrls.length ; index++){
-        //For detailed images
+        // For detailed images
         // console.log("Sending to url", this.detailedUrls[index])
-        let newObj = {
+        const newObj = {
           name: this.getFileName(imageUrl),
           thumbnailBlob: null,
           largeBlob: null,
@@ -212,9 +214,11 @@ export default {
               this.detailedUrls[index]
             );
             // console.log("Adding image in index", index, "with url ", this.detailedUrls[index])
-            done();
+            // done();
           })
-          .catch(err => this.handleError("image"));
+          .catch(err => {
+            console.log(err)
+            this.handleError("image")});
 
         // For thumbnail images
         this.$axios({
@@ -229,7 +233,7 @@ export default {
               this.getFileName(imageUrl),
               { type: "image/png" }
             );
-            done();
+            // done();
           })
           .catch(err => this.handleError("image"));
       });
@@ -238,122 +242,141 @@ export default {
 
   methods: {
     getFileName(url) {
-      let splitted = url.split("/");
-      let filename = splitted[splitted.length - 1];
+      const splitted = url.split("/");
+      const filename = splitted[splitted.length - 1];
       return filename;
     },
     /**
      * This is where all the backend calls are made.
      */
-    async saveAll() {
-      const params = this.configureParams();
-      /**
-       * Data DTO
-       * detailedImageUrls: [
-       *   {
-       *      liveUrl: '',
-       *      uploadUrl: '',
-       *   }
-       * ],
-       * featuredImageUrls: [same as above],
-       * thumbnailUrls: [same as above]
-       *
-       */
-      const { data } = await this.$axios({
-        method: "get",
-        url: ProxyUrls.predefinedUrls,
-        params
-      });
+    saveAll() {
+      return new Promise(async(resolve, reject) => {
+        const params = this.configureParams();
+        /**
+         * Data DTO
+         * detailedImageUrls: [
+         *   {
+         *      liveUrl: '',
+         *      uploadUrl: '',
+         *   }
+         * ],
+         * featuredImageUrls: [same as above],
+         * thumbnailUrls: [same as above]
+         *
+         */
+        let data = null;
+        if(!this.preassignedUrls) {
+            try {
+            const res = await this.$axios({
+              method: "get",
+              url: ProxyUrls.predefinedUrls,
+              params
+            });
+            data = res.data;
+          } catch (error) {
+            console.log("Preassign error");
+            reject(false);
+          }
+        }else {
+          data = preassignedUrls;
+        }
+        
 
-      const totalCallsToMake =
-        data.detailedImageUrls.length +
-        data.thumbnailUrls.length +
-        data.featuredImageUrls.length;
+        const totalCallsToMake =
+          data.detailedImageUrls.length +
+          data.thumbnailUrls.length +
+          data.featuredImageUrls.length;
 
-      const done = _.after(totalCallsToMake, () => {
-        this.$notify({
-          group: "all",
-          type: "success",
-          text: "All the images have been successfully loaded"
+        const done = _.after(totalCallsToMake, () => {
+          this.$notify({
+            group: "all",
+            type: "success",
+            text: "All the images have been successfully loaded"
+          });
+          let newObj = {
+            detailedImageUrls: this.detailedImageUrls,
+            featuredImageUrls: this.featuredImageUrls,
+            thumbnailUrls: this.thumbnailUrls
+          }
+          // this.$emit("complete", newObj);
+
+          resolve(newObj);
         });
 
-        this.$emit("complete", {
-          detailedImageUrls: this.detailedImageUrls,
-          featuredImageUrls: this.featuredImageUrls,
-          thumbnailUrls: this.thumbnailUrls
-        });
-      });
+        this.detailedImageUrls = new Array(data.detailedImageUrls.length).fill(
+          ""
+        );
+        this.featuredImageUrls = new Array(data.featuredImageUrls.length).fill(
+          ""
+        );
+        this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill("");
 
-      this.detailedImageUrls = new Array(data.detailedImageUrls.length).fill(
-        ""
-      );
-      this.featuredImageUrls = new Array(data.featuredImageUrls.length).fill(
-        ""
-      );
-      this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill("");
-
-      /** This loop goes through each image there is and then asynchronously makes all the upload calls.
-       * done() is called everytime the request passes with success. This will run the done function from above
-       * after all the calls succeed.
-       *
-       * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
-       */
-      this.finalImages.forEach((imageObj, ind) => {
-        // Call for detailed image urls.
-        this.$axios({
-          headers: {
-            "Content-Type": "image/png"
-          },
-          method: "put",
-          url: data.detailedImageUrls[ind].uploadUrl,
-          data: imageObj.largeBlob,
-          withCredentials: false
-        })
-          .then(res => {
-            this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
-            done();
-          })
-          .catch(err => {
-            this.handleError(imageObj.name);
-          });
-
-        // Call for thumbnails
-        this.$axios({
-          headers: {
-            "Content-Type": "image/png"
-          },
-          method: "put",
-          url: data.thumbnailUrls[ind].uploadUrl,
-          data: imageObj.thumbnailBlob,
-          withCredentials: false
-        })
-          .then(res => {
-            this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
-            done();
-          })
-          .catch(err => {
-            this.handleError(imageObj.name);
-          });
-
-        // Call for Featured images.
-        if (imageObj.featured) {
+        /** This loop goes through each image there is and then asynchronously makes all the upload calls.
+         * done() is called everytime the request passes with success. This will run the done function from above
+         * after all the calls succeed.
+         *
+         * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
+         */
+        this.finalImages.forEach((imageObj, ind) => {
+          // Call for detailed image urls.
           this.$axios({
             headers: {
               "Content-Type": "image/png"
             },
             method: "put",
-            url: data.featuredImageUrls[ind].uploadUrl,
+            url: data.detailedImageUrls[ind].uploadUrl,
             data: imageObj.largeBlob,
             withCredentials: false
           })
             .then(res => {
-              this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
+              this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
               done();
             })
             .catch(err => {
               this.handleError(imageObj.name);
+              reject(data);
             });
-        }
+
+          // Call for thumbnails
+          this.$axios({
+            headers: {
+              "Content-Type": "image/png"
+            },
+            method: "put",
+            url: data.thumbnailUrls[ind].uploadUrl,
+            data: imageObj.thumbnailBlob,
+            withCredentials: false
+          })
+            .then(res => {
+              this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
+              done();
+            })
+            .catch(err => {
+              this.handleError(imageObj.name);
+              reject(data);
+            });
+
+          // Call for Featured images.
+          if (imageObj.featured) {
+            this.$axios({
+              headers: {
+                "Content-Type": "image/png"
+              },
+              method: "put",
+              url: data.featuredImageUrls[ind].uploadUrl,
+              data: imageObj.largeBlob,
+              withCredentials: false
+            })
+              .then(res => {
+                this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
+                done();
+              })
+              .catch(err => {
+                this.handleError(imageObj.name);
+                reject(data);
+              });
+          }
+        });
       });
     },
 
@@ -441,14 +464,14 @@ export default {
     },
     async loadImage() {
       try {
-        let { data } = await this.$axios({
+        const { data } = await this.$axios({
           withCredentials: false,
           method: "get",
           url: this.remoteUrl,
           responseType: "arraybuffer"
         });
 
-        let filename = this.getFileName(this.remoteUrl);
+        const filename = this.getFileName(this.remoteUrl);
         const newObj = {
           name: filename,
           thumbnailBlob: new File([data], filename, { type: "image/png" }),
@@ -461,7 +484,7 @@ export default {
         this.finalImages.push(newObj);
         this.remoteUrl = "";
       } catch (err) {
-        console.log("URL Error", err)
+        console.log("URL Error", err);
         this.handleError("url");
       }
     },
