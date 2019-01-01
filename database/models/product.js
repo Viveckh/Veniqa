@@ -4,47 +4,13 @@ import mongoosePaginator from 'mongoose-paginate';
 import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 import * as _ from 'lodash';
 
+import colorSchema from '../schemas/color';
+import weightSchema from '../schemas/weight';
+import priceSchema from '../schemas/price';
+
 import STORES_ARRAY from '../reference-data-files/stores.json';
-import WEIGHT_UNITS_ARRAY from '../reference-data-files/weightUnits.json'; 
 import PRODUCT_CATEGORIES from '../reference-data-files/product-categories.json'
 
-let colorSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    hexValue: {
-        type: String,
-        required: true,
-        validate: (value) => {
-            return validator.isHexColor(value)
-        }
-    }
-}, {_id: false});
-
-let weightSchema = new mongoose.Schema({
-    quantity: {
-        type: Number,
-        required: true
-    },
-    unit: {
-        type: String,
-        required: true,
-        enum: WEIGHT_UNITS_ARRAY
-    }
-}, {_id: false})
-
-let priceSchema = new mongoose.Schema({
-    amount: {
-        type: Number,
-        required: true
-    },
-    currency: {
-        type: String,
-        required: true,
-        enum: ['USD']
-    }
-}, {_id: false})
 
 let productSchema = new mongoose.Schema({
     store: {
