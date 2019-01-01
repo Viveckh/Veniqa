@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 
-import cartSchema from '../schemas/cart';
+import cartSchema from '../schemas/shoppingCart';
 import addressSchema from '../schemas/address';
 
 let userSchema = new mongoose.Schema({
