@@ -1,5 +1,6 @@
 import User from '../database/models/user';
 import Checkout from '../database/models/checkout';
+import CurrencyExchangeModel from '../database/models/exchangeRate';
 import cryptoGen from '../authentication/cryptoGen';
 import shoppingService from '../services/shoppingService';
 import * as _ from 'lodash';
@@ -43,12 +44,22 @@ export default {
                 });
 
                 // Add the payment info, right now a random token in generated, but that has to be adjusted based on paymentSource
-                checkout.payment_info.push({
-                    source: paymentSource,
-                    payment_id: await cryptoGen.generateRandomToken(),
-                    transaction_id: '000',
-                    amount: checkout.cart.totalPrice
-                })
+                if (paymentSource == 'BKASH') {
+                    let currency = 'BDT';
+                    let exchange_rate = await CurrencyExchangeModel.findOne({currency: currency}, '-_id currency one_usd_equals').exec();
+                    
+                    checkout.payment_info.push({
+                        source: 'BKASH',
+                        payment_id: await cryptoGen.generateRandomToken(),
+                        transaction_id: '000',
+                        amount_in_usd: checkout.cart.totalPrice,
+                        exchange_rate: exchange_rate, 
+                        amount_in_payment_currency: {
+                            amount: Math.round(checkout.cart.totalPrice.amount * exchange_rate.one_usd_equals * 100) / 100,
+                            currency: currency
+                        }
+                    })
+                }
 
                 checkout = await checkout.save();
                 if (checkout) {

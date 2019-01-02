@@ -9,7 +9,7 @@ let priceSchema = new mongoose.Schema({
     currency: {
         type: String,
         required: true,
-        enum: ['USD']
+        enum: ['USD', 'BDT', 'NPR']
     }
 }, {_id: false})
 

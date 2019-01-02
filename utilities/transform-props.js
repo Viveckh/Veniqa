@@ -103,7 +103,6 @@ function reducer(memo, transformer) {
   /** Code below was added on top of the module for custom enhancement */
   
   function castToString(arg) {
-    console.log(arg);
     return String(arg);
   }
 

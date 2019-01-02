@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 
 import priceSchema from './price';
+import exchangeRateSchema from './exchangeRate';
 
 let paymentSchema = new mongoose.Schema({
     source: {
@@ -17,7 +18,15 @@ let paymentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    amount: {
+    amount_in_usd: {
+        type: priceSchema,
+        required: true
+    },
+    exchange_rate: {
+        type: exchangeRateSchema,
+        required: false
+    },
+    amount_in_payment_currency: {
         type: priceSchema,
         required: true
     }
