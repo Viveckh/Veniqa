@@ -14,7 +14,7 @@ let cartItemSchema = new mongoose.Schema({
     },
     shipment_info: {
         type: shipmentSchema,
-        required: true
+        required: false
     },
     counts: {
         type: Number,
