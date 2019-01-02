@@ -4,7 +4,7 @@ export default {
     async initiateCheckout(req, res, next) {
         let response;
         try {
-            response = await orderService.initiateCheckout(req.user, req.body.cart, req.body.address, req.body.paymentSource);
+            response = await orderService.initiateCheckout(req.user, req.body.cart, req.body.addressId, req.body.paymentSource);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }

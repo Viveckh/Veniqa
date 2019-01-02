@@ -81,10 +81,16 @@ export default {
         }
     },
 
-    async getCart(userObj) {
+    async getCart(userObj, returnAllProductProps=false) {
         try {
+            let user;
             // find the user first and populate while searching
-            let user = await User.findOne({email: userObj.email}).populate('cart.items.product', '_id name brand store weight price thumbnailUrls').exec();
+            if (returnAllProductProps) {
+                user = await User.findOne({email: userObj.email}).populate('cart.items.product').exec();
+            }
+            else {
+                user = await User.findOne({email: userObj.email}).populate('cart.items.product', '_id name brand store weight price thumbnailUrls').exec();
+            }
 
             // Make sure the user exists and return their cart
             if (user) {
