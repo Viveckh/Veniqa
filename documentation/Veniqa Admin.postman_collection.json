@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "661b1541-173f-461f-96e7-41ce59de4955",
+		"_postman_id": "3bfeb637-bfcb-4c2a-b09a-7a92e1e777f0",
 		"name": "Veniqa Admin",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -74,15 +74,12 @@
 				},
 				{
 					"name": "validatePasswordResetToken",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"token\": \"\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{server}}/security/validatePasswordResetToken/f9ee5ab8cbd8ccdc8aff30519bad54615e1b9bfa",
@@ -330,7 +327,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/catalog/getPresignedUrlsForCatalogImageUploads?numberOfThumbnails=1&numberOfFeaturedImages=2&numberOfDetailedImages=2&productId=5c09591be7179a6ca083d15f",
+							"raw": "{{server}}/catalog/getPresignedUrlsForCatalogImageUploads?numberOfThumbnailAndDetailedImages=3&numberOfFeaturedImages=2&productId=5c09591be7179a6ca083d15f",
 							"host": [
 								"{{server}}"
 							],
@@ -340,15 +337,11 @@
 							],
 							"query": [
 								{
-									"key": "numberOfThumbnails",
-									"value": "1"
+									"key": "numberOfThumbnailAndDetailedImages",
+									"value": "3"
 								},
 								{
 									"key": "numberOfFeaturedImages",
-									"value": "2"
-								},
-								{
-									"key": "numberOfDetailedImages",
 									"value": "2"
 								},
 								{
@@ -414,10 +407,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Shopping",
-			"item": []
 		},
 		{
 			"name": "SuperAdmin",

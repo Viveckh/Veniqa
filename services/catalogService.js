@@ -35,7 +35,9 @@ export default {
             let product = new Product(productObj);
             product.auditLog = {
                 createdBy: {email: userObj.email, name: userObj.name},
-                updatedBy: {email: userObj.email, name: userObj.name}
+                updatedBy: {email: userObj.email, name: userObj.name},
+                createdOn: new Date(),
+                updatedOn: new Date()
             }
             product = await product.save();
 
@@ -83,6 +85,7 @@ export default {
             // Change audit related info
             let auditLog = await Product.findOne({_id: id}, '-_id auditLog').exec();
             auditLog.auditLog.updatedBy = {email: userObj.email, name: userObj.name};
+            auditLog.auditLog.updatedOn = new Date();
             productObj.auditLog = auditLog.auditLog;
             
             // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update

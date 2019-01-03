@@ -25,7 +25,6 @@ import indexRouter from './routes/index';
 import securityRouter from './routes/security';
 import superAdminRouter from './routes/superAdmin';
 import catalogRouter from './routes/catalog';
-import shoppingRouter from './routes/shopping';
 import referenceDataRouter from './routes/referenceData';
 
 // Imports for authentication
@@ -110,7 +109,6 @@ app.use('/', indexRouter);
 app.use('/security', securityRouter);
 app.use('/superAdmin', superAdminRouter);
 app.use('/catalog', catalogRouter);
-app.use('/shopping', shoppingRouter);
 app.use('/referenceData', referenceDataRouter);
 
 // catch 404 and forward to error handler
