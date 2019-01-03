@@ -10,4 +10,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/initiateCheckout', passportAuth.isAuthenticated, orderController.initiateCheckout);
 
+router.post('/completeCheckout', passportAuth.isAuthenticated, orderController.completeCheckout);
+
 module.exports = router;

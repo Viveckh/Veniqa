@@ -1,6 +1,7 @@
 import User from '../database/models/user';
 import Checkout from '../database/models/checkout';
 import CurrencyExchangeModel from '../database/models/exchangeRate';
+import Order from '../database/models/order';
 import cryptoGen from '../authentication/cryptoGen';
 import shoppingService from '../services/shoppingService';
 import * as _ from 'lodash';
@@ -77,6 +78,41 @@ export default {
             }
             else {
                 result = {status: "failed", errorDetails: "user not found"};
+            }
+            return result;
+        }
+        catch(err) {
+            console.log(err);
+            result = {status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async completeCheckout(userObj, paymentId){
+        let result = {};
+        try {
+            let checkout = await Checkout.findOne({'payment_info.payment_id': paymentId}).exec();
+
+            if (checkout) {
+                // Converting the mongoose object to a regular json object
+                let checkoutObj = checkout.toObject();
+                transformer.castValuesToString(checkoutObj, "_id")
+                let order = new Order(checkoutObj);
+
+                order = await order.save();
+                if (order) {
+                    await Checkout.remove({'payment_info.payment_id': paymentId}).exec()
+                    result = {
+                        status: "successful", 
+                        responseData: null
+                    };
+                }
+                else {
+                    result = {status: "failed", errorDetails: "order could not be saved"};
+                }
+            }
+            else {
+                result = {status: "failed", errorDetails: "checkout entry not found"};
             }
             return result;
         }
