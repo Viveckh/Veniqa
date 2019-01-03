@@ -41,7 +41,17 @@ export default {
                     cart: await shoppingService.getCart(userObj, true), // This has to be changed when orderCart and shoppingCart are different.
                     user_email: userObj.email,
                     mailing_address: userObj.addresses.id(addressId),
-                    payment_info: []
+                    payment_info: [],
+                    auditLog: {
+                        createdBy: {
+                            email: 'user@placeholder.com',
+                            name: 'CUSTOMER'
+                        },
+                        updatedBy: {
+                            email: 'user@placeholder.com',
+                            name: 'CUSTOMER'
+                        }
+                    }
                 });
 
                 // Add the payment info, right now a random token in generated, but that has to be adjusted based on paymentSource
@@ -98,6 +108,8 @@ export default {
                 let checkoutObj = checkout.toObject();
                 transformer.castValuesToString(checkoutObj, "_id")
                 let order = new Order(checkoutObj);
+                order.auditLog.createdAt = new Date();
+                order.auditLog.updatedAt = new Date();
 
                 order = await order.save();
                 if (order) {

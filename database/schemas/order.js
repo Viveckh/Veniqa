@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 
-import cartSchema from '../schemas/orderCart';
-import addressSchema from '../schemas/address';
-import paymentSchema from '../schemas/payment';
+import cartSchema from './orderCart';
+import addressSchema from './address';
+import paymentSchema from './payment';
+import commentSchema from './comment';
+import auditLogSchema from './auditLog';
 
 let orderSchema = new mongoose.Schema({
     overall_status: {
@@ -29,6 +31,14 @@ let orderSchema = new mongoose.Schema({
     },
     payment_info: {
         type: [paymentSchema],
+        required: true
+    },
+    comments: {
+        type: [commentSchema],
+        required: true
+    },
+    auditLog: {
+        type: auditLogSchema,
         required: true
     }
 });

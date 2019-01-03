@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import colorSchema from './color';
 import weightSchema from './weight';
 import priceSchema from './price';
+import auditLogSchema from './auditLog';
 
 import STORES_ARRAY from '../reference-data-files/stores.json';
 import PRODUCT_CATEGORIES from '../reference-data-files/product-categories.json'
@@ -118,6 +119,10 @@ let productSchema = new mongoose.Schema({
     },
     sizes: {
         type: [String],
+        required: false
+    },
+    auditLog: {
+        type: auditLogSchema,
         required: false
     }
 });
