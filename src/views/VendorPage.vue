@@ -48,7 +48,7 @@ export default {
         data: {
           searchFilters: {
             store: this.vendorMap[this.vendorName],
-            category: 'Make-Up',
+            category: 'Women’s Clothes',
           },
           pagingOptions: {
             page: 1,
