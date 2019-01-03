@@ -123,7 +123,7 @@ let productSchema = new mongoose.Schema({
     },
     auditLog: {
         type: auditLogSchema,
-        required: false
+        required: true
     }
 });
 
