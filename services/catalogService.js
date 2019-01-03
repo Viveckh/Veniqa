@@ -29,10 +29,14 @@ export default {
         }
     },
 
-    async addProductToCatalog(productObj){
+    async addProductToCatalog(productObj, userObj){
         let result = {};
         try {
             let product = new Product(productObj);
+            product.auditLog = {
+                createdBy: {email: userObj.email, name: userObj.name},
+                updatedBy: {email: userObj.email, name: userObj.name}
+            }
             product = await product.save();
 
             if (product){
@@ -67,7 +71,7 @@ export default {
         }
     },
 
-    async updateProductInCatalog(productObj) {
+    async updateProductInCatalog(productObj, userObj) {
         try {
             // Store the id and delete it from the received object, to prevent any accidental replacement of id field
             let id = productObj._id;
@@ -75,6 +79,11 @@ export default {
                 return "Missing product id";
             }
             delete productObj._id;
+
+            // Change audit related info
+            let auditLog = await Product.findOne({_id: id}, '-_id auditLog').exec();
+            auditLog.auditLog.updatedBy = {email: userObj.email, name: userObj.name};
+            productObj.auditLog = auditLog.auditLog;
             
             // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update
             let product = await Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).exec();

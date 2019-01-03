@@ -19,7 +19,7 @@ export default {
     async addProductToCatalog(req, res, next) {
         let response;
         try {
-            response = await catalogService.addProductToCatalog(req.body);
+            response = await catalogService.addProductToCatalog(req.body, req.user);
             if (response.errorDetails) {
                 return res.status(400).send(response);
             }
@@ -49,7 +49,7 @@ export default {
     async updateProductInCatalog(req, res, next) {
         let response;
         try {
-            response = await catalogService.updateProductInCatalog(req.body);
+            response = await catalogService.updateProductInCatalog(req.body, req.user);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }
