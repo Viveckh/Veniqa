@@ -25,5 +25,5 @@ export default {
   postAddress: '/user/addNewAddress',
   putAddress: '/user/updateAddress',
   getAddress: '/user/getAddresses',
-  deleteAddress: '/user/deleteAddress'
+  deleteAddress: '/user/deleteAddress',
 };

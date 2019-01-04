@@ -19,20 +19,19 @@ export default {
     async addressAction({ state, commit }, { address, action }) {
       try {
         let reqData = null;
-        if(action == 'post' || action == 'put'){
+        if (action == 'post' || action == 'put') {
           reqData = address;
-        }
-        else if (action == 'delete'){
+        } else if (action == 'delete') {
           reqData = {
-            addressId: address._id
-          }
+            addressId: address._id,
+          };
         }
         const { data } = await Vue.prototype.$axios({
           method: action,
-          url: ProxyUrls[action + 'Address'], //ProxyUrls.addressUrl,
+          url: ProxyUrls[`${action}Address`], // ProxyUrls.addressUrl,
           data: reqData,
         });
-        console.log(data.responseData)
+        console.log(data.responseData);
         commit('setAddresses', data.responseData);
         return true;
       } catch (err) {

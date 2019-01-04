@@ -211,35 +211,34 @@
 </template>
 
 <script>
-import ShippingDTO from "@/dto/ShippingAddress.json";
-import { mapGetters } from "vuex";
+import ShippingDTO from '@/dto/ShippingAddress.json';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "ShippingDetail",
+  name: 'ShippingDetail',
   props: {
     selected: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
   async created() {
     this.shippingDeet = ShippingDTO;
     await this.$store.dispatch('shippingStore/addressAction', {
       address: null,
-      action: 'get'
-    })
+      action: 'get',
+    });
   },
   data() {
     return {
       isShowAddAddress: false,
       shippingDeet: null,
-      description: "",
-      isUpdate: false
+      description: '',
+      isUpdate: false,
     };
   },
 
   methods: {
-    setPlace() {},
     showAddAddress() {
       this.isShowAddAddress = true;
     },
@@ -250,6 +249,7 @@ export default {
     cancelForm() {
       this.resetFields();
       this.isShowAddAddress = false;
+      this.isUpdate = false;
     },
 
     resetFields() {
@@ -263,68 +263,67 @@ export default {
     },
 
     chooseAddress(add) {
-      this.$emit("selected", add);
+      this.$emit('selected', add);
     },
 
-    editClicked(address){
+    editClicked(address) {
       this.isUpdate = true;
       this.shippingDeet = _.cloneDeep(address);
       this.isShowAddAddress = true;
     },
 
-    deleteClicked(address){
+    deleteClicked(address) {
       const cloned = _.cloneDeep(address);
       this.$store.dispatch('shippingStore/addressAction', {
         address: cloned,
-        action: 'delete'
-      })
+        action: 'delete',
+      });
     },
 
     async saveAddress() {
       for (const key in this.shippingDeet) {
         if (this.shippingDeet[key] == null) {
-          this.shippingDeet[key] = "";
+          this.shippingDeet[key] = '';
         }
       }
       if (
-        this.firstNameState &&
-        this.address1State &&
-        this.stateState &&
-        this.zipState &&
-        this.countryState && this.cityState
+        this.firstNameState
+        && this.address1State
+        && this.stateState
+        && this.zipState
+        && this.countryState && this.cityState
       ) {
         const cloned = _.cloneDeep(this.shippingDeet);
-        let res = await this.$store.dispatch('shippingStore/addressAction', {
+        const res = await this.$store.dispatch('shippingStore/addressAction', {
           address: cloned,
-          action: this.isUpdate ? 'put': 'post'
-        })
+          action: this.isUpdate ? 'put' : 'post',
+        });
 
-        if(res){
+        if (res) {
           this.isUpdate = false;
           // this.allAddresses.push(cloned);
-          this.$emit("selected", cloned);
+          this.$emit('selected', cloned);
 
           this.resetFields();
           this.isShowAddAddress = false;
         }
-        
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      allAddresses: "shippingStore/allAddresses"
+      allAddresses: 'shippingStore/allAddresses',
     }),
 
     cityState() {
       if (this.shippingDeet.city == null) return null;
-      return this.shippingDeet.city.length >=1;
+      return this.shippingDeet.city.length >= 1;
     },
 
     phoneState() {
       if (this.shippingDeet.mobilePhone == null) return null;
-      return this.shippingDeet.mobilePhone.length >=1;
+      return this.shippingDeet.mobilePhone.length >= 1;
     },
 
     firstNameState() {
@@ -350,8 +349,8 @@ export default {
     countryState() {
       if (this.shippingDeet.country == null) return null;
       return this.shippingDeet.country.length > 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
