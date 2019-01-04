@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-navbar toggleable="md" type="light" fixed="top" class="navbar-override">
+  <div >
+    <b-navbar toggleable="md" :type="navType()" fixed="top" :class="{'header-color': this.scrollPos > 50}">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand class="abs">
@@ -26,11 +26,11 @@
           <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
           <!-- <b-nav-item class="veniqa-nav" v-else> -->
-            <!-- {{nameOfUser}} -->
-            <b-nav-item-dropdown class="veniqa-nav" :text="nameOfUser" right v-else>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
-            </b-nav-item-dropdown>
+          <!-- {{nameOfUser}} -->
+          <b-nav-item-dropdown class="veniqa-nav" :text="nameOfUser" right v-else>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
           <!-- </b-nav-item> -->
           <b-nav-item class="veniqa-nav" to="/checkout">
             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
@@ -45,6 +45,14 @@
 <script>
 export default {
   name: 'HeaderMenu',
+  mounted() {
+    window.addEventListener('scroll', this.updateScroll);
+  },
+  data() {
+    return {
+      scrollPos: null,
+    };
+  },
   methods: {
     async logoutClicked() {
       try {
@@ -64,6 +72,17 @@ export default {
         });
       }
     },
+
+    updateScroll() {
+      this.scrollPos = window.scrollY;
+    },
+
+    navType() {
+      return this.scrollPos > 50 ? 'dark' : 'light';
+    },
+  },
+  destroy() {
+    window.removeEventListener('scroll', this.updateScroll);
   },
   computed: {
     nameOfUser() {
@@ -84,6 +103,10 @@ export default {
 <style lang="scss">
 @import "../assets/css/global.scss";
 
+.header-color{
+  background-color: $pitch-black;
+  color: white !important;
+}
 .veniqa-nav {
   padding: 5px 10px;
 }
@@ -145,6 +168,4 @@ export default {
     }
   }
 }
-
-
 </style>

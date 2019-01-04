@@ -7,8 +7,8 @@
           <div class="link" @click="openProductDetail(product._id)">
             <div
               class="img-cls"
-              :style="getPictureStyle(product.picture_urls[0])"
-              v-if="product.picture_urls.length > 0"
+              :style="getPictureStyle(product.thumbnailUrls[0])"
+              v-if="product.thumbnailUrls.length > 0"
             ></div>
 
             <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">

@@ -11,20 +11,28 @@ export default {
   mutations: {
     setAddresses(state, adds) {
       state.addresses.splice(0, state.addresses.length);
-      state.addresses.push(adds);
+      state.addresses.push(...adds);
     },
   },
 
   actions: {
     async addressAction({ state, commit }, { address, action }) {
       try {
+        let reqData = null;
+        if (action == 'post' || action == 'put') {
+          reqData = address;
+        } else if (action == 'delete') {
+          reqData = {
+            addressId: address._id,
+          };
+        }
         const { data } = await Vue.prototype.$axios({
           method: action,
-          url: ProxyUrls.addressUrl,
-          data: action == 'get' ? null : address,
+          url: ProxyUrls[`${action}Address`], // ProxyUrls.addressUrl,
+          data: reqData,
         });
-
-        commit(setAddresses, data);
+        console.log(data.responseData);
+        commit('setAddresses', data.responseData);
         return true;
       } catch (err) {
         return false;

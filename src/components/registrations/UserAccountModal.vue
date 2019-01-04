@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-row class="account-all">
-      <b-col md="5">
+      <b-col md="5"  class="account-cols">
         <div class="account-table">
           <div class="account-body">
             <div class="account-content image">
-              <img src="./../../assets/transparent-logo.png" alt="Logo" width="250px">
+              <img src="./../../assets/transparent-logo.png" alt="Logo" width="200px">
             </div>
           </div>
           <div class="account-body">
@@ -34,7 +34,7 @@
           </div>
         </div>
       </b-col>
-      <b-col md="7">
+      <b-col md="7" :class="'d-none d-md-table-cell'" class="account-cols">
         <div class="advertisement-bg"></div>
       </b-col>
     </b-row>
@@ -156,7 +156,8 @@ export default {
     .account-content {
       display: table-cell;
       vertical-align: middle;
-      padding-left: 30px;
+      padding-left: 3rem;
+      padding-right: 1.5rem;
     }
 
     .image {
@@ -167,7 +168,12 @@ export default {
 }
 
 .account-all {
-  height: 650px;
+  height: 100vh;
+
+  .account-cols{
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .advertisement-bg {

@@ -11,11 +11,21 @@
           v-bind:class="{'selected' : addressEqual(add)}"
           @click="chooseAddress(add)"
         >
-          {{add.firstName}} {{add.lastName}}
-          <br>
-          {{add.address1}} {{add.address2}}
-          <br>
-          {{add.state}} {{add.country}} {{add.zipCode}}
+          <b-row>
+            <b-col>
+              {{add.firstName}} {{add.lastName}}
+              <br>
+              {{add.addressLine1}} {{add.addressLine2}}
+              <br>
+              {{add.state}} {{add.country}} {{add.zipCode}}
+            </b-col>
+            <b-col>
+              <div class="align-right">
+                <a @click="editClicked(add)">Edit</a> &nbsp;&nbsp;&nbsp;
+                <a @click="deleteClicked(add)">Delete</a>
+              </div>
+            </b-col>
+          </b-row>
         </li>
       </ul>
     </div>
@@ -30,14 +40,13 @@
         placeholder="This is a placeholder text"
         @place_changed="setPlace"
         :select-first-on-enter="true">
-      </gmap-autocomplete> -->
-
+    </gmap-autocomplete>-->
     <!-- Input form to add new address for the user -->
     <transition
       name="shipping-form-anim"
       enter-active-class="animated slideInLeft faster"
       leave-active-class="animated slideOutLeft faster"
-      >
+    >
       <div v-if="isShowAddAddress" class="shipping-form">
         <hr>
         <b-row>
@@ -80,7 +89,7 @@
             type="text"
             name="text"
             :state="address1State"
-            v-model="shippingDeet.address1"
+            v-model="shippingDeet.addressLine1"
             placeholder="Enter your address"
             aria-describedby="address1State"
           ></b-form-input>
@@ -96,9 +105,43 @@
             id="address2"
             type="text"
             name="address2"
-            v-model="shippingDeet.address2"
+            v-model="shippingDeet.addressLine2"
             placeholder="Enter your address 2"
           ></b-form-input>
+        </b-form-group>
+
+        <b-form-group>
+          <label for="city">City:</label>
+          <b-form-input
+            id="city"
+            type="text"
+            name="text"
+            :state="cityState"
+            v-model="shippingDeet.city"
+            placeholder="Enter your city"
+            aria-describedby="cityStatee"
+          ></b-form-input>
+          <b-form-invalid-feedback id="cityStatee">
+            <!-- This will only be shown if the preceeding input has an invalid state -->
+            Please enter your city before continuing
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group>
+          <label for="phone">Phone:</label>
+          <b-form-input
+            id="phone"
+            type="number"
+            name="text"
+            :state="phoneState"
+            v-model="shippingDeet.mobilePhone"
+            placeholder="Enter your phone number"
+            aria-describedby="phoneStatee"
+          ></b-form-input>
+          <b-form-invalid-feedback id="phoneStatee">
+            <!-- This will only be shown if the preceeding input has an invalid state -->
+            Please enter your city before continuing
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <b-row>
@@ -159,7 +202,8 @@
         </b-row>
         <div class="action-buttons">
           <b-button variant="secondary" class="cancel-btn" @click="cancelForm()">Cancel</b-button>
-          <b-button class="primary-button" @click="saveAddress()">Save</b-button>
+          <b-button class="primary-button" v-if="!isUpdate" @click="saveAddress()">Save</b-button>
+          <b-button class="primary-button" v-else @click="saveAddress()">Edit</b-button>
         </div>
       </div>
     </transition>
@@ -178,22 +222,23 @@ export default {
       type: Object,
     },
   },
-  created() {
+  async created() {
     this.shippingDeet = ShippingDTO;
+    await this.$store.dispatch('shippingStore/addressAction', {
+      address: null,
+      action: 'get',
+    });
   },
   data() {
     return {
       isShowAddAddress: false,
       shippingDeet: null,
       description: '',
-
+      isUpdate: false,
     };
   },
 
   methods: {
-    setPlace() {
-
-    },
     showAddAddress() {
       this.isShowAddAddress = true;
     },
@@ -204,6 +249,7 @@ export default {
     cancelForm() {
       this.resetFields();
       this.isShowAddAddress = false;
+      this.isUpdate = false;
     },
 
     resetFields() {
@@ -220,7 +266,21 @@ export default {
       this.$emit('selected', add);
     },
 
-    saveAddress() {
+    editClicked(address) {
+      this.isUpdate = true;
+      this.shippingDeet = _.cloneDeep(address);
+      this.isShowAddAddress = true;
+    },
+
+    deleteClicked(address) {
+      const cloned = _.cloneDeep(address);
+      this.$store.dispatch('shippingStore/addressAction', {
+        address: cloned,
+        action: 'delete',
+      });
+    },
+
+    async saveAddress() {
       for (const key in this.shippingDeet) {
         if (this.shippingDeet[key] == null) {
           this.shippingDeet[key] = '';
@@ -231,19 +291,22 @@ export default {
         && this.address1State
         && this.stateState
         && this.zipState
-        && this.countryState
+        && this.countryState && this.cityState
       ) {
         const cloned = _.cloneDeep(this.shippingDeet);
+        const res = await this.$store.dispatch('shippingStore/addressAction', {
+          address: cloned,
+          action: this.isUpdate ? 'put' : 'post',
+        });
 
-        // this.$store.dispatch('shippingStore/addressAction', {
-        //   address: cloned,
-        //   action: 'post'
-        // })
-        this.allAddresses.push(cloned);
-        this.$emit('selected', cloned);
+        if (res) {
+          this.isUpdate = false;
+          // this.allAddresses.push(cloned);
+          this.$emit('selected', cloned);
 
-        this.resetFields();
-        this.isShowAddAddress = false;
+          this.resetFields();
+          this.isShowAddAddress = false;
+        }
       }
     },
   },
@@ -253,14 +316,24 @@ export default {
       allAddresses: 'shippingStore/allAddresses',
     }),
 
+    cityState() {
+      if (this.shippingDeet.city == null) return null;
+      return this.shippingDeet.city.length >= 1;
+    },
+
+    phoneState() {
+      if (this.shippingDeet.mobilePhone == null) return null;
+      return this.shippingDeet.mobilePhone.length >= 1;
+    },
+
     firstNameState() {
       if (this.shippingDeet.firstName == null) return null;
       return this.shippingDeet.firstName.length >= 1;
     },
 
     address1State() {
-      if (this.shippingDeet.address1 == null) return null;
-      return this.shippingDeet.address1.length > 0;
+      if (this.shippingDeet.addressLine1 == null) return null;
+      return this.shippingDeet.addressLine1.length > 0;
     },
 
     stateState() {
@@ -277,8 +350,6 @@ export default {
       if (this.shippingDeet.country == null) return null;
       return this.shippingDeet.country.length > 0;
     },
-
-
   },
 };
 </script>
@@ -298,7 +369,7 @@ export default {
   }
 }
 
-.shipping{
+.shipping {
   margin-top: 30px;
 }
 

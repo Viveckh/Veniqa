@@ -54,7 +54,7 @@ export default {
       }
 
       const toSend = _.map(products, p => ({
-        product_id: p._id,
+        product: p._id,
         counts: p.counts == 0 ? 1 : p.counts,
       }));
 

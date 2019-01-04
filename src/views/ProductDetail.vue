@@ -65,7 +65,7 @@ export default {
         if (data) {
           data.responseData.counts = 0;
           this.product = data.responseData;
-          this.product.picture_urls.forEach((picture, pid) => {
+          this.product.detailedImageUrls.forEach((picture, pid) => {
             this.productImages.normal_size.push({
               id: pid,
               url: picture,
@@ -73,6 +73,7 @@ export default {
           });
         }
       } catch (err) {
+        console.log(err);
         this.$notify({
           group: 'all',
           type: 'error',
