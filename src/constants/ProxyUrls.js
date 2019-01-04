@@ -21,9 +21,5 @@ export default {
   updateCart: '/shopping/updateCart',
 
   // Addresses
-  address: '/address',
-  postAddress: '/user/addNewAddress',
-  putAddress: '/user/updateAddress',
-  getAddress: '/user/getAddresses',
-  deleteAddress: '/user/deleteAddress',
+  address: '/user/address',
 };

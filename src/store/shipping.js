@@ -28,10 +28,9 @@ export default {
         }
         const { data } = await Vue.prototype.$axios({
           method: action,
-          url: ProxyUrls[`${action}Address`], // ProxyUrls.addressUrl,
+          url: ProxyUrls.address, // ProxyUrls.addressUrl,
           data: reqData,
         });
-        console.log(data.responseData);
         commit('setAddresses', data.responseData);
         return true;
       } catch (err) {
