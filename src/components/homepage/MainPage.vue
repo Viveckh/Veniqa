@@ -9,11 +9,34 @@
         </b-button>
       </div>
     </div>
+
+    <!-- Other contents go here. They are featured contents -->
+    <h1 class='featured-title'>Featured</h1>
+    <featured-product-view
+      :product="product"
+    />
   </div>
 </template>
 
 <script>
-export default {};
+import Product from '@/data/featuredProduct.json'
+import FeaturedProductView from '@/components/homepage/FeaturedProductView'
+
+export default {
+  name: 'MainPage',
+  components: {
+    FeaturedProductView
+  },
+  data() {
+    return {
+      product: null
+    }
+  },
+
+  created() {
+    this.product = Product
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -34,5 +57,10 @@ export default {};
   background-image: url(./../../assets/images/background.png);
   height: 100vh;
   background-size: cover;
+}
+
+.featured-title{
+  margin: 20px 0px;
+
 }
 </style>

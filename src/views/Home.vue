@@ -6,7 +6,7 @@
         <router-view/>
     </div>
 
-    <div class="space"></div>
+    <!-- <div class="space"></div> -->
     <footer-view/>
   </div>
 </template>
