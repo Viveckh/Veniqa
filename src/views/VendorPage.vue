@@ -64,7 +64,7 @@ export default {
         const transformed = [];
 
         res.data.docs.forEach((p) => {
-          transformed.push(_.assign(ProductDTO, p));
+          transformed.push(_.assign(_.cloneDeep(ProductDTO), p));
         });
 
         this.searchResult.push(...transformed);

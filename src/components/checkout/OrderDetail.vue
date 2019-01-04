@@ -42,7 +42,7 @@
         <b-col cols="8">
           <strong>Sub Total</strong>
         </b-col>
-        <b-col class="align-right">{{subtotal.currency}} {{subtotal.amount}}</b-col>
+        <b-col class="align-right">{{subtotal.currency}} {{parseFloat(subtotal.amount).toFixed(2)}}</b-col>
       </b-row>
 
       <b-row>
@@ -50,7 +50,7 @@
         <b-col cols="8">
           <strong>Service Charge</strong>
         </b-col>
-        <b-col class="align-right">{{serviceCharge.currency}} {{serviceCharge.amount}}</b-col>
+        <b-col class="align-right">{{serviceCharge.currency}} {{parseFloat(serviceCharge.amount).toFixed(2)}}</b-col>
       </b-row>
 
       <b-row>
@@ -58,7 +58,7 @@
         <b-col cols="8">
           <strong>Shipping Charge</strong>
         </b-col>
-        <b-col class="align-right">{{shippingPrice.currency}} {{shippingPrice.amount}}</b-col>
+        <b-col class="align-right">{{shippingPrice.currency}} {{parseFloat(shippingPrice.amount).toFixed(2)}}</b-col>
       </b-row>
 
       <b-row>
@@ -66,7 +66,7 @@
         <b-col cols="8">
           <strong>Tariff Charge</strong>
         </b-col>
-        <b-col class="align-right">{{tariffPrice.currency}} {{tariffPrice.amount}}</b-col>
+        <b-col class="align-right">{{tariffPrice.currency}} {{parseFloat(tariffPrice.amount).toFixed(2)}}</b-col>
       </b-row>
 
       <br>
@@ -75,7 +75,7 @@
         <b-col cols="8">
           <strong>Total</strong>
         </b-col>
-        <b-col class="align-right"><strong>{{cartTotal.currency}} {{cartTotal.amount}}</strong></b-col>
+        <b-col class="align-right"><strong>{{cartTotal.currency}} {{parseFloat(cartTotal.amount).toFixed(2)}}</strong></b-col>
       </b-row>
     </div>
 
