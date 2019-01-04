@@ -216,30 +216,30 @@
 </template>
 
 <script>
-import ShippingDTO from "@/dto/ShippingAddress.json";
-import { mapGetters } from "vuex";
+import ShippingDTO from '@/dto/ShippingAddress.json';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "ShippingDetail",
+  name: 'ShippingDetail',
   props: {
     selected: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
   async created() {
     this.shippingDeet = ShippingDTO;
-    await this.$store.dispatch("shippingStore/addressAction", {
+    await this.$store.dispatch('shippingStore/addressAction', {
       address: null,
-      action: "get"
+      action: 'get',
     });
   },
   data() {
     return {
       isShowAddAddress: false,
       shippingDeet: null,
-      description: "",
-      isUpdate: false
+      description: '',
+      isUpdate: false,
     };
   },
 
@@ -268,7 +268,7 @@ export default {
     },
 
     chooseAddress(add) {
-      this.$emit("selected", add);
+      this.$emit('selected', add);
     },
 
     editClicked(address) {
@@ -279,47 +279,47 @@ export default {
 
     deleteClicked(address) {
       const cloned = _.cloneDeep(address);
-      this.$store.dispatch("shippingStore/addressAction", {
+      this.$store.dispatch('shippingStore/addressAction', {
         address: cloned,
-        action: "delete"
+        action: 'delete',
       });
     },
 
     async saveAddress() {
       for (const key in this.shippingDeet) {
         if (this.shippingDeet[key] == null) {
-          this.shippingDeet[key] = "";
+          this.shippingDeet[key] = '';
         }
       }
       if (
-        this.firstNameState &&
-        this.address1State &&
-        this.stateState &&
-        this.zipState &&
-        this.countryState &&
-        this.cityState
+        this.firstNameState
+        && this.address1State
+        && this.stateState
+        && this.zipState
+        && this.countryState
+        && this.cityState
       ) {
         const cloned = _.cloneDeep(this.shippingDeet);
-        const res = await this.$store.dispatch("shippingStore/addressAction", {
+        const res = await this.$store.dispatch('shippingStore/addressAction', {
           address: cloned,
-          action: this.isUpdate ? "put" : "post"
+          action: this.isUpdate ? 'put' : 'post',
         });
 
         if (res) {
           this.isUpdate = false;
           // this.allAddresses.push(cloned);
-          this.$emit("selected", cloned);
+          this.$emit('selected', cloned);
 
           this.resetFields();
           this.isShowAddAddress = false;
         }
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      allAddresses: "shippingStore/allAddresses"
+      allAddresses: 'shippingStore/allAddresses',
     }),
 
     cityState() {
@@ -355,8 +355,8 @@ export default {
     countryState() {
       if (this.shippingDeet.country == null) return null;
       return this.shippingDeet.country.length > 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
