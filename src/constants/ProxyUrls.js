@@ -25,4 +25,11 @@ export default {
   refData: '/referenceData/getCatalogBundle',
   getProduct: '/catalog/getProductDetails',
   editProduct: '/catalog/updateProduct',
+
+  // User settings
+  roles: '/referenceData/getRoles',
+  allAdmins: '/superAdmin/getAllAdmins',
+  addAdmin: '/superAdmin/createAdmin',
+  deleteAdmin: '/superAdmin/deleteAdmin',
+  editAdmin: '/superAdmin/updateAdminAccess',
 };

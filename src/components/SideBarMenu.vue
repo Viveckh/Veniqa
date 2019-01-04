@@ -22,8 +22,8 @@
             Store Settings
           </a>
         </li>
-        <li>
-          <a href="#">
+        <li to="/adminsetting">
+          <a href="/adminsetting">
             <i class="fas fa-users"></i>
             User Settings
           </a>
