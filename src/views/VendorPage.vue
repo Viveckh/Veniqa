@@ -47,12 +47,14 @@ export default {
         method: 'post',
         data: {
           searchFilters: {
-            store: this.vendorMap[this.vendorName],
-            category: 'Women’s Clothes',
+            // store: this.vendorMap[this.vendorName],
+            // category: 'Women’s Clothes',
+            store: '',
+            category: '',
           },
           pagingOptions: {
             page: 1,
-            limit: 1,
+            limit: 10,
           },
         },
       });

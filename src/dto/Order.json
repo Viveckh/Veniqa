@@ -4,19 +4,25 @@
       "currency": "",
       "amount": 0
     },
-    "picture_urls": [],
+    "thumbnailUrls": [],
     "_id": "",
     "store": "",
     "brand": "",
-    "name": ""
+    "name": "",
+    "weight": {
+      "quantity": 0,
+      "unit": ""
+    }
   },
-  "additionalDetails": {
-    "counts": 0,
-    "aggregatedPrice": {
-      "currency": "",
-      "amount": 0
-    },
-    "_id": "",
-    "product_id": ""
-  }
+  "counts": 0,
+  "aggregatedPrice": {
+    "currency": "",
+    "amount": 0
+  },
+  "aggregatedWeight": {
+    "quantity": 0,
+    "unit": ""
+  },
+  "_id": "",
+  "product_id": ""
 }

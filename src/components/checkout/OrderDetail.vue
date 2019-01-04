@@ -24,9 +24,9 @@
             <span class="delete" @click="deleteSelected(item)">Delete</span>
           </b-col>
           <b-col class="align-right">
-            <b-form-select v-model="item.additionalDetails.counts" :options="countOptions" @input="updateCartItem(item)" class="mb-3" />
+            <b-form-select v-model="item.counts" :options="countOptions" @input="updateCartItem(item)" class="mb-3" />
           </b-col>
-          <b-col class="align-right">{{item ? item.additionalDetails.aggregatedPrice.currency : ''}} {{item ? item.additionalDetails.aggregatedPrice.amount : ''}}</b-col>
+          <b-col class="align-right">{{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}</b-col>
         </b-row>
       </li>
     </ul>
@@ -104,7 +104,7 @@ export default {
     },
 
     async updateCartItem(item) {
-      if (item.additionalDetails.counts > 0) {
+      if (item.counts > 0) {
         try {
           this.editMode = false;
           const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
