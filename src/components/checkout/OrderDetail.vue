@@ -1,8 +1,6 @@
 <template>
   <div class="order-detail align-left">
-    <h3>
-      Your Order
-    </h3>
+    <h3>Your Order</h3>
     <hr>
     <ul class="orders">
       <li v-for="(item, itemIndex) in orders" v-bind:key="itemIndex">
@@ -18,30 +16,74 @@
           <b-col md="5">
             <div class="order-desc" @click="gotoProduct(item.product._id)">
               {{item.product.name}}
-            <br>
-            <span style="font-size: 12px">Standard Shipping</span>
+              <br>
+              <span style="font-size: 12px">Standard Shipping</span>
             </div>
             <span class="delete" @click="deleteSelected(item)">Delete</span>
           </b-col>
           <b-col class="align-right">
-            <b-form-select v-model="item.counts" :options="countOptions" @input="updateCartItem(item)" class="mb-3" />
+            <b-form-select
+              v-model="item.counts"
+              :options="countOptions"
+              @input="updateCartItem(item)"
+              class="mb-3"
+            />
           </b-col>
-          <b-col class="align-right">{{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}</b-col>
+          <b-col
+            class="align-right"
+          >{{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}</b-col>
         </b-row>
       </li>
     </ul>
 
+    <div class="total-line" v-if="cartTotal && cartTotal.amount > 0">
+      <b-row>
+        <!-- <hr> -->
+        <b-col cols="8">
+          <strong>Sub Total</strong>
+        </b-col>
+        <b-col class="align-right">{{subtotal.currency}} {{subtotal.amount}}</b-col>
+      </b-row>
 
-    <b-row class="total-line" v-if="cartTotal && cartTotal.amount > 0">
-      <hr>
-      <b-col cols="8"><strong>Total</strong> </b-col>
-      <b-col class="align-right">{{cartTotal.currency}} {{cartTotal.amount}}</b-col>
-    </b-row>
+      <b-row>
+        <!-- <hr> -->
+        <b-col cols="8">
+          <strong>Service Charge</strong>
+        </b-col>
+        <b-col class="align-right">{{serviceCharge.currency}} {{serviceCharge.amount}}</b-col>
+      </b-row>
+
+      <b-row>
+        <!-- <hr> -->
+        <b-col cols="8">
+          <strong>Shipping Charge</strong>
+        </b-col>
+        <b-col class="align-right">{{shippingPrice.currency}} {{shippingPrice.amount}}</b-col>
+      </b-row>
+
+      <b-row>
+        <!-- <hr> -->
+        <b-col cols="8">
+          <strong>Tariff Charge</strong>
+        </b-col>
+        <b-col class="align-right">{{tariffPrice.currency}} {{tariffPrice.amount}}</b-col>
+      </b-row>
+
+      <br>
+      <b-row>
+        <!-- <hr> -->
+        <b-col cols="8">
+          <strong>Total</strong>
+        </b-col>
+        <b-col class="align-right"><strong>{{cartTotal.currency}} {{cartTotal.amount}}</strong></b-col>
+      </b-row>
+    </div>
 
     <div v-if="orders && orders.length <= 0" class="order-empty">
       <div class="content">
         <div>You have not ordered yet.
-          <br><br>
+          <br>
+          <br>
           <b-button @click="gotoDealPage()" class="primary-button">Go Get Orderin</b-button>
         </div>
       </div>
@@ -77,7 +119,6 @@ export default {
       };
     },
 
-
     gotoDealPage() {
       this.$router.push('/');
     },
@@ -107,14 +148,17 @@ export default {
       if (item.counts > 0) {
         try {
           this.editMode = false;
-          const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
+          const data = await this.$store.dispatch('cartStore/updateOrders', [
+            item,
+          ]);
           this.editMode = true;
         } catch (err) {
           this.editMode = true;
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'Cart could not be updated at the moment. Please try again later.',
+            text:
+              'Cart could not be updated at the moment. Please try again later.',
           });
         }
       }
@@ -122,10 +166,7 @@ export default {
 
     async deleteSelected(item) {
       try {
-        await this.$store.dispatch(
-          'cartStore/deleteOrders',
-          [item],
-        );
+        await this.$store.dispatch('cartStore/deleteOrders', [item]);
       } catch (err) {}
     },
   },
@@ -134,7 +175,10 @@ export default {
     ...mapGetters({
       orders: 'cartStore/getCart',
       cartTotal: 'cartStore/getTotal',
-
+      subtotal: 'cartStore/getSubTotal',
+      serviceCharge: 'cartStore/getServiceCharge',
+      shippingPrice: 'cartStore/getShippingPrice',
+      tariffPrice: 'cartStore/getTariffPrice',
     }),
 
     quantityState() {
@@ -158,7 +202,7 @@ export default {
   cursor: pointer;
 }
 
-.total-line{
+.total-line {
   padding: 10px;
 }
 .order-detail {
@@ -182,7 +226,7 @@ export default {
     padding: 0px;
     width: 100%;
 
-    .order-desc{
+    .order-desc {
       cursor: pointer;
     }
 

@@ -221,18 +221,16 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'ShippingDetail',
-  props: {
-    selected: {
-      required: true,
-      type: Object,
-    },
-  },
   async created() {
     this.shippingDeet = ShippingDTO;
     await this.$store.dispatch('shippingStore/addressAction', {
       address: null,
       action: 'get',
     });
+
+    if (this.allAddresses.length > 0 && !this.selectedAddress) {
+      this.$emit('selected', this.allAddresses[0]);
+    }
   },
   data() {
     return {
@@ -264,7 +262,7 @@ export default {
     },
 
     addressEqual(givenAdd) {
-      return _.isEqual(givenAdd, this.selected);
+      return _.isEqual(givenAdd, this.selectedAddress);
     },
 
     chooseAddress(add) {
@@ -320,6 +318,7 @@ export default {
   computed: {
     ...mapGetters({
       allAddresses: 'shippingStore/allAddresses',
+      selectedAddress: 'shippingStore/getSelectedAddress',
     }),
 
     cityState() {
