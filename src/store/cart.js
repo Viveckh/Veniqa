@@ -27,21 +27,21 @@ export default {
         // Here the assumption currently is that only one product will be there everytime since everything is local.
         if (foundIndex >= 0) {
           const order = state.cart[foundIndex];
-          order.additionalDetails.counts = parseInt(order.additionalDetails.counts) + 1;
-          order.additionalDetails.aggregatedPrice = {
-            currency: order.additionalDetails.aggregatedPrice.currency,
-            amount: parseFloat(order.product.price.amount) + parseFloat(order.additionalDetails.aggregatedPrice.amount),
+          order.counts = parseInt(order.counts) + 1;
+          order.aggregatedPrice = {
+            currency: order.aggregatedPrice.currency,
+            amount: parseFloat(order.product.price.amount) + parseFloat(order.aggregatedPrice.amount),
           };
           if (state.total.currency.length == 0) {
-            state.total.currency = order.additionalDetails.aggregatedPrice.currency;
+            state.total.currency = order.aggregatedPrice.currency;
           }
         } else {
           const order = _.cloneDeep(OrderDTO);
           order.product = _.cloneDeep(products[0]);
-          order.additionalDetails.counts = 1;
-          order.additionalDetails.product_id = products[0]._id;
-          order.additionalDetails._id = state.cart.length;
-          order.additionalDetails.aggregatedPrice = {
+          order.counts = 1;
+          order.product_id = products[0]._id;
+          order._id = state.cart.length;
+          order.aggregatedPrice = {
             currency: products[0].price.currency,
             amount: products[0].price.amount,
           };
@@ -96,11 +96,11 @@ export default {
       commit,
       rootGetters,
     }, cartItems) {
-      const deletedIds = _.map(cartItems, 'additionalDetails._id');
+      const deletedIds = _.map(cartItems, '_id');
 
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
-        _.remove(state.cart, order => deletedIds.indexOf(order.additionalDetails._id) >= 0);
+        _.remove(state.cart, order => deletedIds.indexOf(order._id) >= 0);
 
         commit('setLocalCart');
         return;
@@ -135,8 +135,8 @@ export default {
         // These commits don't do anything but are necessary because they help persist.
         const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
         if (updatedItem) {
-          updatedItem.additionalDetails.aggregatedPrice.amount = parseInt(updatedItem.additionalDetails.counts) * parseFloat(updatedItem.product.price.amount);
-          updatedItem.additionalDetails.aggregatedPrice.amount = updatedItem.additionalDetails.aggregatedPrice.amount.toFixed(2);
+          updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(updatedItem.product.price.amount);
+          updatedItem.aggregatedPrice.amount = updatedItem.aggregatedPrice.amount.toFixed(2);
           commit('setLocalCart');
           return true;
         }
@@ -147,9 +147,9 @@ export default {
       const orders = [];
       state.cart.forEach((item) => {
         orders.push({
-          product_id: item.additionalDetails.product_id,
-          _id: item.additionalDetails._id,
-          counts: item.additionalDetails.counts,
+          product: item.product._id,
+          _id: item._id,
+          counts: item.counts,
         });
       });
 
@@ -196,9 +196,9 @@ export default {
       let amount = 0; let
         currency = '';
       state.cart.forEach((item) => {
-        amount += parseFloat(item.additionalDetails.aggregatedPrice.amount);
+        amount += parseFloat(item.aggregatedPrice.amount);
         if (currency.length == 0) {
-          currency = item.additionalDetails.aggregatedPrice.currency;
+          currency = item.aggregatedPrice.currency;
         }
       });
       amount = amount.toFixed(2);
@@ -230,7 +230,7 @@ export default {
     getTotalItems(state) {
       let total = 0;
       state.cart.forEach((item) => {
-        total += parseInt(item.additionalDetails.counts);
+        total += parseInt(item.counts);
       });
 
       return total;

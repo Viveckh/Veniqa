@@ -110,39 +110,44 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group>
-          <label for="city">City:</label>
-          <b-form-input
-            id="city"
-            type="text"
-            name="text"
-            :state="cityState"
-            v-model="shippingDeet.city"
-            placeholder="Enter your city"
-            aria-describedby="cityStatee"
-          ></b-form-input>
-          <b-form-invalid-feedback id="cityStatee">
-            <!-- This will only be shown if the preceeding input has an invalid state -->
-            Please enter your city before continuing
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group>
-          <label for="phone">Phone:</label>
-          <b-form-input
-            id="phone"
-            type="number"
-            name="text"
-            :state="phoneState"
-            v-model="shippingDeet.mobilePhone"
-            placeholder="Enter your phone number"
-            aria-describedby="phoneStatee"
-          ></b-form-input>
-          <b-form-invalid-feedback id="phoneStatee">
-            <!-- This will only be shown if the preceeding input has an invalid state -->
-            Please enter your city before continuing
-          </b-form-invalid-feedback>
-        </b-form-group>
+        <b-row>
+          <b-col>
+            <b-form-group>
+              <label for="city">City:</label>
+              <b-form-input
+                id="city"
+                type="text"
+                name="text"
+                :state="cityState"
+                v-model="shippingDeet.city"
+                placeholder="Enter your city"
+                aria-describedby="cityStatee"
+              ></b-form-input>
+              <b-form-invalid-feedback id="cityStatee">
+                <!-- This will only be shown if the preceeding input has an invalid state -->
+                Please enter your city before continuing
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+          <b-col>
+            <b-form-group>
+              <label for="phone">Phone:</label>
+              <b-form-input
+                id="phone"
+                type="number"
+                name="text"
+                :state="phoneState"
+                v-model="shippingDeet.mobilePhone"
+                placeholder="Enter your phone number"
+                aria-describedby="phoneStatee"
+              ></b-form-input>
+              <b-form-invalid-feedback id="phoneStatee">
+                <!-- This will only be shown if the preceeding input has an invalid state -->
+                Please enter your city before continuing
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
 
         <b-row>
           <b-col>
@@ -291,7 +296,8 @@ export default {
         && this.address1State
         && this.stateState
         && this.zipState
-        && this.countryState && this.cityState
+        && this.countryState
+        && this.cityState
       ) {
         const cloned = _.cloneDeep(this.shippingDeet);
         const res = await this.$store.dispatch('shippingStore/addressAction', {
