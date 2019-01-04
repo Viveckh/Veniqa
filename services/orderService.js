@@ -44,13 +44,15 @@ export default {
                     payment_info: [],
                     auditLog: {
                         createdBy: {
-                            email: 'user@placeholder.com',
+                            email: userObj.email,
                             name: 'CUSTOMER'
                         },
                         updatedBy: {
-                            email: 'user@placeholder.com',
+                            email: userObj.email,
                             name: 'CUSTOMER'
-                        }
+                        },
+                        createdOn: new Date(),
+                        updatedOn: new Date()
                     }
                 });
 
@@ -108,8 +110,8 @@ export default {
                 let checkoutObj = checkout.toObject();
                 transformer.castValuesToString(checkoutObj, "_id")
                 let order = new Order(checkoutObj);
-                order.auditLog.createdAt = new Date();
-                order.auditLog.updatedAt = new Date();
+                order.auditLog.createdOn = new Date();
+                order.auditLog.updatedOn = new Date();
 
                 order = await order.save();
                 if (order) {

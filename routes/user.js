@@ -8,12 +8,12 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Users' });
 });
 
-router.post('/addNewAddress', passportAuth.isAuthenticated, userController.addNewAddress);
+router.post('/address', passportAuth.isAuthenticated, userController.addNewAddress);
 
-router.get('/getAddresses', passportAuth.isAuthenticated, userController.getAddresses);
+router.get('/address', passportAuth.isAuthenticated, userController.getAddresses);
 
-router.put('/updateAddress', passportAuth.isAuthenticated, userController.updateAddress);
+router.put('/address', passportAuth.isAuthenticated, userController.updateAddress);
 
-router.delete('/deleteAddress', passportAuth.isAuthenticated, userController.deleteAddress);
+router.delete('/address', passportAuth.isAuthenticated, userController.deleteAddress);
 
 module.exports = router;

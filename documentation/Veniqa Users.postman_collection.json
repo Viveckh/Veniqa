@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c5972cd1-37d9-4e71-8f8e-e3360465e157",
+		"_postman_id": "7cf522b6-10a6-4537-9d2a-e90968ee7c71",
 		"name": "Veniqa Users",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -154,15 +154,12 @@
 				},
 				{
 					"name": "validatePasswordResetToken",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"token\": \"\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{server}}/security/validatePasswordResetToken/3d421ad1d212b5a72177a3e8546ea8abaae85580",
@@ -254,24 +251,61 @@
 			]
 		},
 		{
-			"name": "Payments",
+			"name": "Orders",
 			"item": [
 				{
-					"name": "checkout",
+					"name": "initiateCheckout",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"cart\": {\n\t\t\"items\": [\n\t        {\n\t            \"counts\": 6,\n\t            \"aggregatedWeight\": {\n\t                \"quantity\": 19.2,\n\t                \"unit\": \"LB\"\n\t            },\n\t            \"aggregatedPrice\": {\n\t                \"amount\": 653.4,\n\t                \"currency\": \"USD\"\n\t            },\n\t            \"_id\": \"5c12e14a2e9266272a8c535c\",\n\t            \"product\": {\n\t                \"thumbnailUrls\": [\n\t                    \"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\",\n\t                    \"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8\"\n\t                ],\n\t                \"_id\": \"5c1039844703bd008136d2a0\",\n\t                \"store\": \"AMAZON\",\n\t                \"brand\": \"BEVERLY HILLS KAY\",\n\t                \"name\": \"Amrezy Highlighter LOL Damn Update\",\n\t                \"price\": {\n\t                    \"amount\": 108.9,\n\t                    \"currency\": \"USD\"\n\t                },\n\t                \"weight\": {\n\t                    \"quantity\": 3.2,\n\t                    \"unit\": \"LB\"\n\t                }\n\t            },\n\t            \"color\": {\n\t                \"name\": \"Brown\",\n\t                \"hexValue\": \"#DC143C\"\n\t            },\n\t            \"size\": \"S\"\n\t        }\n\t    ],\n\t    \"totalWeight\": {\n\t        \"quantity\": 19.2,\n\t        \"unit\": \"LB\"\n\t    },\n\t    \"subTotalPrice\": {\n\t        \"amount\": 653.4,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"serviceCharge\": {\n\t        \"amount\": 19.6,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"shippingPrice\": {\n\t        \"amount\": 288,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"tariffPrice\": {\n\t        \"amount\": 32.67,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"totalPrice\": {\n\t        \"amount\": 993.67,\n\t        \"currency\": \"USD\"\n\t    }\n\t},\n\t\"addressId\": \"5c1035aed8022d0e3050b852\",\n\t\"paymentSource\": \"BKASH\"\n}"
 						},
 						"url": {
-							"raw": "{{server}}/checkout",
+							"raw": "{{server}}/orders/initiateCheckout",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
-								"checkout"
+								"orders",
+								"initiateCheckout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completeCheckout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"paymentId\": \"016f2382cb32579a50c48bbebf866555b43ca533\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/completeCheckout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"completeCheckout"
 							]
 						}
 					},
@@ -466,7 +500,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "addNewAddresss",
+					"name": "address",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -482,20 +516,20 @@
 							"raw": "{\n\t\"firstName\": \"Arjun\",\n\t\"lastName\": \"Bastola\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
 						},
 						"url": {
-							"raw": "{{server}}/user/addNewAddress",
+							"raw": "{{server}}/user/address",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"user",
-								"addNewAddress"
+								"address"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getAddresses",
+					"name": "address",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -504,20 +538,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/user/getAddresses",
+							"raw": "{{server}}/user/address",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"user",
-								"getAddresses"
+								"address"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "updateAddress",
+					"name": "address",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -530,23 +564,23 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"_id\": \"5c103581d8022d0e3050b850\",\n\t\"firstName\": \"Vivek\",\n\t\"lastName\": \"Pandey\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
+							"raw": "{\n\t\"_id\": \"5c2ea24165b93c460b2ad66f\",\n\t\"firstName\": \"Vivek\",\n\t\"lastName\": \"Pandey\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
 						},
 						"url": {
-							"raw": "{{server}}/user/updateAddress",
+							"raw": "{{server}}/user/address",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"user",
-								"updateAddress"
+								"address"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "deleteAddress",
+					"name": "address",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -559,16 +593,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"addressId\": \"5c103581d8022d0e3050b850\"\n}"
+							"raw": "{\n\t\"addressId\": \"5c2ea24165b93c460b2ad66f\"\n}"
 						},
 						"url": {
-							"raw": "{{server}}/user/deleteAddress",
+							"raw": "{{server}}/user/address",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"user",
-								"deleteAddress"
+								"address"
 							]
 						}
 					},

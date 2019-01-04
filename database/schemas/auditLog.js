@@ -11,7 +11,15 @@ let auditLogSchema = new mongoose.Schema({
     updatedBy: {
         type: auditorSchema,
         required: true
+    },
+    createdOn: {
+        type: Date,
+        required: true
+    },
+    updatedOn: {
+        type: Date,
+        required: true
     }
-}, { _id: false, timestamps: true});
+}, { _id: false });
 
 module.exports = auditLogSchema;
