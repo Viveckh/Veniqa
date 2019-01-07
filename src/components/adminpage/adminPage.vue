@@ -1,9 +1,15 @@
 <template>
   <div class="col-md-12">
     <hr>
-
+    <button
+      v-if="!this.viewOperation"
+      type="button"
+      class="btn btn-secondary"
+      @click="handleAddButtonClick()"
+    >Add Admin</button>
+    <hr>
     <div class="row justify-content-left">
-      <div class="col-md-7">
+      <div v-if="!this.viewOperation" class="col-md-10">
         <div class="card">
           <header class="card-header">
             <h4 class="card-title mt-2">Admins</h4>
@@ -16,7 +22,6 @@
                   <th>Email</th>
                   <th>Permissions</th>
                   <th>Approved</th>
-                  <th></th>
                   <th></th>
                 </tr>
               </thead>
@@ -36,13 +41,13 @@
                     <div v-else>No</div>
                   </td>
                   <td>
+                    &nbsp;
                     <a @click="editAdmin(admin)">
                       <i class="fa fa-edit" style="color:green"></i>
                     </a>
-                  </td>
-                  <td>
+                    &nbsp;
                     <a @click="deleteAdmin(admin.email)">
-                      <i class="fa fa-trash" style="color:#FA8072"></i>
+                      <i class="fa fa-trash" style="color:red"></i>
                     </a>
                   </td>
                 </tr>
@@ -53,7 +58,7 @@
         </div>
         <!-- card.// -->
       </div>
-      <div class="col-md-3">
+      <div div v-if="this.viewOperation" class="col-md-6">
         <div class="card">
           <header class="card-header">
             <h4 v-if="!this.isAddView" class="card-title mt-2">Edit Admin Account</h4>
@@ -97,6 +102,21 @@
                   :select-size="6"
                 ></b-form-select>
               </div>
+              <div class="form-group">
+                <label>Approval Status</label>
+                <br>
+                <toggle-button
+                  v-model="user.approved"
+                  v-if="!this.isAddView"
+                  :labels="{checked: 'Yes', unchecked: 'No'}"
+                />
+                <toggle-button
+                  v-else
+                  :labels="{checked: 'Yes', unchecked: 'No'}"
+                  :value="true"
+                  disabled="true"
+                />
+              </div>
               <!-- form-group end.// -->
               <div class="form-group">
                 <button
@@ -109,7 +129,7 @@
                   v-else
                   type="button"
                   @click="handleAddAdmin()"
-                  class="btn btn-success"
+                  class="btn btn-warning"
                 >Add Admin</button>
                 &nbsp;
                 <button
@@ -141,8 +161,10 @@ export default {
         name: '',
         email: '',
         permissions: [],
+        approved: true,
       },
       isAddView: true,
+      viewOperation: false,
     };
   },
   async created() {
@@ -176,12 +198,17 @@ export default {
       return roles;
     },
     editAdmin(adminData) {
+      this.viewOperation = true;
       this.user = _.cloneDeep(adminData);
       this.isAddView = false;
       console.log(this.user);
     },
+    handleAddButtonClick() {
+      this.viewOperation = true;
+    },
     handleCancel() {
       this.isAddView = true;
+      this.viewOperation = false;
       this.user = {
         name: '',
         email: '',
@@ -197,6 +224,7 @@ export default {
           text: 'Successful',
         });
         this.isAddView = true;
+        this.viewOperation = false;
         this.user = {
           name: '',
           email: '',
@@ -219,6 +247,7 @@ export default {
           text: 'Edit Successful',
         });
         this.isAddView = true;
+        this.viewOperation = false;
         this.user = {
           name: '',
           email: '',

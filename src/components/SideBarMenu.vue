@@ -4,7 +4,7 @@
     <nav id="sidebar">
       <ul class="list-unstyled components">
         <li>
-          <a href="#">
+          <a href="/">
             <i class="fas fa-list"></i>
             Catalogs
           </a>
