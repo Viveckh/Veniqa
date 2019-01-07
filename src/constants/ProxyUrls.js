@@ -22,4 +22,6 @@ export default {
 
   // Addresses
   address: '/user/address',
+
+  initiateCheckout: 'orders/initiateCheckout',
 };

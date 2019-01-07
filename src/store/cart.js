@@ -6,9 +6,39 @@ export default {
   namespaced: true,
   state: {
     cart: [],
-    total: {},
+    totalPrice: {},
+    totalWeight: {},
+    subTotalPrice: {},
+    serviceCharge: {},
+    shippingPrice: {},
+    tariffPrice: {},
   },
   actions: {
+    async initiateCheckout({ state, commit }, { address, payment }) {
+      const reqData = {
+        cart: {
+          items: state.cart,
+          totalWeight: state.totalWeight,
+          subTotalPrice: state.subTotalPrice,
+          serviceCharge: state.serviceCharge,
+          shippingPrice: state.shippingPrice,
+          tariffPrice: state.tariffPrice,
+          totalPrice: state.totalPrice,
+        },
+        addressId: address._id,
+	      paymentSource: payment,
+      };
+      try {
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.initiateCheckout,
+          method: 'post',
+          data: reqData,
+        });
+      } catch (err) {
+        return false;
+      }
+    },
+
     async addToTheCart({
       state,
       commit,
@@ -210,7 +240,13 @@ export default {
     setCart(state, allCarts) {
       state.cart.splice(0, state.cart.length);
       const transformed = [];
-      state.total = allCarts.totalPrice;
+      state.totalPrice = allCarts.totalPrice;
+      state.totalWeight = allCarts.totalWeight;
+      state.subTotalPrice = allCarts.subTotalPrice;
+      state.serviceCharge = allCarts.serviceCharge;
+      state.shippingPrice = allCarts.shippingPrice;
+      state.tariffPrice = allCarts.tariffPrice;
+
       allCarts.items.forEach((item) => {
         transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
       });
@@ -224,7 +260,7 @@ export default {
     },
 
     getTotal(state) {
-      return state.total;
+      return state.totalPrice;
     },
 
     getTotalItems(state) {
@@ -235,5 +271,14 @@ export default {
 
       return total;
     },
+
+    getTotalWeight(state) {
+      return state.totalWeight;
+    },
+
+    getSubTotal(state) { return state.subTotalPrice; },
+    getServiceCharge(state) { return state.serviceCharge; },
+    getShippingPrice(state) { return state.shippingPrice; },
+    getTariffPrice(state) { return state.tariffPrice; },
   },
 };

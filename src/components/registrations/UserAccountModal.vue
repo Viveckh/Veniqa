@@ -80,11 +80,11 @@ export default {
 
           const toAdd = [];
           currentCartItems.forEach((item) => {
-            if (incomingProductIds.indexOf(item.additionalDetails.product_id) < 0) {
+            if (incomingProductIds.indexOf(item.product_id) < 0) {
               // Adding the product ID and the counts.
               toAdd.push({
-                _id: item.additionalDetails.product_id,
-                counts: item.additionalDetails.counts,
+                _id: item.product_id,
+                counts: item.counts,
               });
             }
           });

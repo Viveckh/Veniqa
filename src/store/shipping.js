@@ -6,12 +6,17 @@ export default {
   namespaced: true,
   state: {
     addresses: [],
+    selectedAddress: null,
   },
 
   mutations: {
     setAddresses(state, adds) {
       state.addresses.splice(0, state.addresses.length);
       state.addresses.push(...adds);
+    },
+
+    addressSelected(state, address) {
+      state.selectedAddress = address;
     },
   },
 
@@ -45,5 +50,7 @@ export default {
     allAddresses(state) {
       return state.addresses;
     },
+
+    getSelectedAddress(state) { return state.selectedAddress; },
   },
 };
