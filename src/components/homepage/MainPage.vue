@@ -14,28 +14,29 @@
     <h1 class='featured-title'>Featured</h1>
     <featured-product-view
       :product="product"
+      :type="2"
     />
   </div>
 </template>
 
 <script>
-import Product from '@/data/featuredProduct.json'
-import FeaturedProductView from '@/components/homepage/FeaturedProductView'
+import Product from '@/data/featuredProduct.json';
+import FeaturedProductView from '@/components/homepage/FeaturedProductView';
 
 export default {
   name: 'MainPage',
   components: {
-    FeaturedProductView
+    FeaturedProductView,
   },
   data() {
     return {
-      product: null
-    }
+      product: null,
+    };
   },
 
   created() {
-    this.product = Product
-  }
+    this.product = Product;
+  },
 };
 </script>
 
