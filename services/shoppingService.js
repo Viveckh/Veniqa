@@ -219,7 +219,7 @@ export default {
                 let product = item.product;
 
                 // If the product is populated, only then move further
-                if (product._id) {
+                if (product && product._id) {
                     // Recalculate things at the cart item level
                     item.aggregatedWeight.quantity = Math.round(item.counts * product.weight.quantity * 100) / 100;
                     item.aggregatedPrice.amount = Math.round(item.counts * product.price.amount * 100) / 100;
@@ -239,7 +239,7 @@ export default {
             for (let index of indexesToRemove) {
                 cart.items.splice(index, 1);
             }
-
+            
             // Calculate a few other things at the cart general level
             cart.serviceCharge.amount = Math.round(0.03 * cart.subTotalPrice.amount * 100) / 100; // 3% service charge on subtotalprice
             cart.shippingPrice.amount = Math.round(15 * cart.totalWeight.quantity * 100) / 100; //$15 per pound on total weight
