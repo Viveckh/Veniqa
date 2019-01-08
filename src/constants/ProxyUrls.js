@@ -32,4 +32,5 @@ export default {
   addAdmin: '/superAdmin/createAdmin',
   deleteAdmin: '/superAdmin/deleteAdmin',
   editAdmin: '/superAdmin/updateAdminAccess',
+  predefinedUrls: '/catalog/getPresignedUrlsForCatalogImageUploads',
 };

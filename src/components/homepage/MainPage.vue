@@ -1,6 +1,6 @@
 // src/pages/Admin/Products
 <template>
-  <div class="col-lg-11">
+  <div class="col-md-10">
     <div v-if="!isAddView">
       <button
         type="button"

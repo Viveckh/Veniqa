@@ -4,6 +4,8 @@ import "@/assets/css/colors.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Croppa from 'vue-croppa'
+
 
 import BootstrapVue from "bootstrap-vue";
 import store from "./store/store";
@@ -15,6 +17,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 import "@/assets/css/global.scss";
 import "@/assets/css/overrides.scss";
+import 'vue-croppa/dist/vue-croppa.css'
 
 import VueScrollTo from "vue-scrollto";
 import Notifications from "vue-notification";
@@ -27,10 +30,10 @@ import "animate.css";
 
 // Vue.use(VueScrollTo)
 Vue.use(Notifications);
-
 //Vue Toggle Button
 import ToggleButton from "vue-js-toggle-button";
 Vue.use(ToggleButton);
+Vue.use(Croppa);
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {
