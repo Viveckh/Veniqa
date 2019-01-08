@@ -95,45 +95,45 @@
 </template>
 
 <script>
-import ImageShowcase from '@/components/homepage/ImageShowcase';
-import ProxyUrls from '@/constants/ProxyUrls';
-import AWSParams from '@/constants/AwsParams';
+import ImageShowcase from "@/components/homepage/ImageShowcase";
+import ProxyUrls from "@/constants/ProxyUrls";
+import AWSParams from "@/constants/AwsParams";
 
 export default {
-  name: 'ManagePhoto',
+  name: "ManagePhoto",
   components: {
-    ImageShowcase,
+    ImageShowcase
   },
   props: {
     detailedUrls: {
       required: false,
       default: null,
-      type: Array,
+      type: Array
     },
 
     featuredUrls: {
       required: false,
       default: null,
-      type: Array,
+      type: Array
     },
 
     thumbnailPropUrls: {
       required: false,
       default: null,
-      type: Array,
+      type: Array
     },
 
     productId: {
       required: false,
       default: null,
-      type: String,
+      type: String
     },
 
     preassignedUrls: {
       required: false,
       default: null,
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
@@ -160,20 +160,20 @@ export default {
       size: {
         standard: {
           height: 800,
-          width: 600,
+          width: 600
         },
         thumbnail: {
           height: 400,
-          width: 300,
-        },
+          width: 300
+        }
       },
       fileSize: 104857600,
 
-      remoteUrl: '',
+      remoteUrl: "",
 
       detailedImageUrls: [],
       featuredImageUrls: [],
-      thumbnailUrls: [],
+      thumbnailUrls: []
     };
   },
 
@@ -193,57 +193,57 @@ export default {
           thumbnailBlob: null,
           largeBlob: null,
           displayUrl: imageUrl,
-          featured: false,
+          featured: false
         };
         this.finalImages[index] = _.cloneDeep(newObj);
 
         this.$axios({
           withCredentials: false,
-          method: 'get',
+          method: "get",
           url: this.detailedUrls[index],
-          responseType: 'arraybuffer',
+          responseType: "arraybuffer"
         })
-          .then((res) => {
+          .then(res => {
             this.finalImages[index].largeBlob = new File(
               [res.data],
               this.getFileName(imageUrl),
-              { type: 'image/png' },
+              { type: "image/png" }
             );
             this.finalImages[index].name = this.getFileName(imageUrl);
             this.finalImages[index].displayUrl = _.cloneDeep(
-              this.detailedUrls[index],
+              this.detailedUrls[index]
             );
             // console.log("Adding image in index", index, "with url ", this.detailedUrls[index])
             // done();
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
-            this.handleError('image');
+            this.handleError("image");
           });
 
         // For thumbnail images
         this.$axios({
           withCredentials: false,
-          method: 'get',
+          method: "get",
           url: this.thumbnailPropUrls[index],
-          responseType: 'arraybuffer',
+          responseType: "arraybuffer"
         })
-          .then((res) => {
+          .then(res => {
             this.finalImages[index].thumbnailBlob = new File(
               [res.data],
               this.getFileName(imageUrl),
-              { type: 'image/png' },
+              { type: "image/png" }
             );
             // done();
           })
-          .catch(err => this.handleError('image'));
+          .catch(err => this.handleError("image"));
       });
     }
   },
 
   methods: {
     getFileName(url) {
-      const splitted = url.split('/');
+      const splitted = url.split("/");
       const filename = splitted[splitted.length - 1];
       return filename;
     },
@@ -269,34 +269,42 @@ export default {
         if (!this.preassignedUrls) {
           try {
             const res = await this.$axios({
-              method: 'get',
+              method: "get",
               url: ProxyUrls.predefinedUrls,
-              params,
+              params
             });
             data = res.data;
           } catch (error) {
-            console.log('Preassign error');
+            console.log("Preassign error");
             reject(false);
           }
         } else {
           data = preassignedUrls;
         }
 
+        const totalCallsToMake =
+          data.detailedImageUrls.length +
+          data.thumbnailUrls.length +
+          data.featuredImageUrls.length;
 
-        const totalCallsToMake = data.detailedImageUrls.length
-          + data.thumbnailUrls.length
-          + data.featuredImageUrls.length;
-
+        if(totalCallsToMake == 0){
+          const newObj = {
+            detailedImageUrls: this.detailedImageUrls,
+            featuredImageUrls: this.featuredImageUrls,
+            thumbnailUrls: this.thumbnailUrls
+          };
+          resolve(newObj)
+        }
         const done = _.after(totalCallsToMake, () => {
           this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'All the images have been successfully loaded',
+            group: "all",
+            type: "success",
+            text: "All the images have been successfully loaded"
           });
           const newObj = {
             detailedImageUrls: this.detailedImageUrls,
             featuredImageUrls: this.featuredImageUrls,
-            thumbnailUrls: this.thumbnailUrls,
+            thumbnailUrls: this.thumbnailUrls
           };
           // this.$emit("complete", newObj);
 
@@ -304,12 +312,12 @@ export default {
         });
 
         this.detailedImageUrls = new Array(data.detailedImageUrls.length).fill(
-          '',
+          ""
         );
         this.featuredImageUrls = new Array(data.featuredImageUrls.length).fill(
-          '',
+          ""
         );
-        this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill('');
+        this.thumbnailUrls = new Array(data.thumbnailUrls.length).fill("");
 
         /** This loop goes through each image there is and then asynchronously makes all the upload calls.
          * done() is called everytime the request passes with success. This will run the done function from above
@@ -321,18 +329,18 @@ export default {
           // Call for detailed image urls.
           this.$axios({
             headers: {
-              'Content-Type': 'image/png',
+              "Content-Type": "image/png"
             },
-            method: 'put',
+            method: "put",
             url: data.detailedImageUrls[ind].uploadUrl,
             data: imageObj.largeBlob,
-            withCredentials: false,
+            withCredentials: false
           })
-            .then((res) => {
+            .then(res => {
               this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
               done();
             })
-            .catch((err) => {
+            .catch(err => {
               this.handleError(imageObj.name);
               reject(data);
             });
@@ -340,18 +348,18 @@ export default {
           // Call for thumbnails
           this.$axios({
             headers: {
-              'Content-Type': 'image/png',
+              "Content-Type": "image/png"
             },
-            method: 'put',
+            method: "put",
             url: data.thumbnailUrls[ind].uploadUrl,
             data: imageObj.thumbnailBlob,
-            withCredentials: false,
+            withCredentials: false
           })
-            .then((res) => {
+            .then(res => {
               this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
               done();
             })
-            .catch((err) => {
+            .catch(err => {
               this.handleError(imageObj.name);
               reject(data);
             });
@@ -360,18 +368,18 @@ export default {
           if (imageObj.featured) {
             this.$axios({
               headers: {
-                'Content-Type': 'image/png',
+                "Content-Type": "image/png"
               },
-              method: 'put',
+              method: "put",
               url: data.featuredImageUrls[ind].uploadUrl,
               data: imageObj.largeBlob,
-              withCredentials: false,
+              withCredentials: false
             })
-              .then((res) => {
+              .then(res => {
                 this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
                 done();
               })
-              .catch((err) => {
+              .catch(err => {
                 this.handleError(imageObj.name);
                 reject(data);
               });
@@ -382,9 +390,9 @@ export default {
 
     handleError(filename) {
       this.$notify({
-        group: 'all',
-        type: 'error',
-        text: `Image with name ${filename} could not be uploaded. Try again later.`,
+        group: "all",
+        type: "error",
+        text: `Image with name ${filename} could not be uploaded. Try again later.`
       });
     },
 
@@ -392,9 +400,9 @@ export default {
       let numberOfThumbnailAndDetailedImages = 0;
       let numberOfFeaturedImages = 0;
       // let numberOfDetailedImages = 0;
-      const productId = this.productId ? this.productId : '';
+      const productId = this.productId ? this.productId : "";
 
-      this.finalImages.forEach((imageObj) => {
+      this.finalImages.forEach(imageObj => {
         // Right now, everything is +1 except the featured images.
         // numberOfThumbnails += 1;
         // numberOfDetailedImages += 1;
@@ -405,22 +413,22 @@ export default {
       return {
         numberOfThumbnailAndDetailedImages,
         numberOfFeaturedImages,
-        productId,
+        productId
         // numberOfDetailedImages,
       };
     },
 
     async cropImage() {
-      const largeBlob = await this.cropSection.promisedBlob('image/png');
+      const largeBlob = await this.cropSection.promisedBlob("image/png");
       const thumbnailBlob = await this.thumbnailCrop.promisedBlob(
-        'image/png',
-        0.25,
+        "image/png",
+        0.25
       );
 
       // Checks the index in final images list with the file name.
       const index = _.findIndex(
         this.finalImages,
-        file => file.name === this.largeInitImage.name,
+        file => file.name === this.largeInitImage.name
       );
       if (index >= 0) {
         this.finalImages[index].largeBlob = largeBlob;
@@ -433,29 +441,29 @@ export default {
      */
     fileUploaded() {
       if (this.imageInput.length > 0 && this.imageInput.length < 6) {
-        this.imageInput.forEach((file) => {
+        this.imageInput.forEach(file => {
           if (file.size > this.fileSize) {
             this.fileSizeExceed();
           }
           if (
-            file.size <= this.fileSize
-            && _.findIndex(this.finalImages, obj => obj.name === file.name) < 0
+            file.size <= this.fileSize &&
+            _.findIndex(this.finalImages, obj => obj.name === file.name) < 0
           ) {
             this.finalImages.push({
               name: file.name,
               thumbnailBlob: file,
               largeBlob: file,
               displayUrl: URL.createObjectURL(file),
-              featured: false,
+              featured: false
             });
           }
         });
       } else {
         this.$notify({
-          group: 'all',
-          type: 'warn',
+          group: "all",
+          type: "warn",
           text:
-            'Only upto 5 images can be loaded. Please only select up to 5 images.',
+            "Only upto 5 images can be loaded. Please only select up to 5 images."
         });
       }
     },
@@ -466,26 +474,26 @@ export default {
       try {
         const { data } = await this.$axios({
           withCredentials: false,
-          method: 'get',
+          method: "get",
           url: this.remoteUrl,
-          responseType: 'arraybuffer',
+          responseType: "arraybuffer"
         });
 
         const filename = this.getFileName(this.remoteUrl);
         const newObj = {
           name: filename,
-          thumbnailBlob: new File([data], filename, { type: 'image/png' }),
-          largeBlob: new File([data], filename, { type: 'image/png' }),
+          thumbnailBlob: new File([data], filename, { type: "image/png" }),
+          largeBlob: new File([data], filename, { type: "image/png" }),
           displayUrl: this.remoteUrl,
-          featured: false,
+          featured: false
         };
 
         this.setImages(newObj.largeBlob, newObj.thumbnailBlob, newObj.name);
         this.finalImages.push(newObj);
-        this.remoteUrl = '';
+        this.remoteUrl = "";
       } catch (err) {
-        console.log('URL Error', err);
-        this.handleError('url');
+        console.log("URL Error", err);
+        this.handleError("url");
       }
     },
 
@@ -495,7 +503,7 @@ export default {
         name: file.name,
         thumbnailBlob: file,
         largeBlob: file,
-        displayUrl: URL.createObjectURL(file),
+        displayUrl: URL.createObjectURL(file)
       };
 
       let ind = _.findIndex(this.finalImages, obj => obj.name === newObj.name);
@@ -505,7 +513,7 @@ export default {
           thumbnailBlob: file,
           largeBlob: file,
           displayUrl: URL.createObjectURL(file),
-          featured: false,
+          featured: false
         });
 
         ind = this.finalImages.length - 1;
@@ -522,15 +530,19 @@ export default {
     },
 
     setImages(url, thumbUrl, name) {
-      this.thumbnailInitImage = {
-        url: URL.createObjectURL(thumbUrl),
-        name,
-      };
+      if (thumbUrl) {
+        this.thumbnailInitImage = {
+          url: URL.createObjectURL(thumbUrl),
+          name
+        };
+      }
 
-      this.largeInitImage = {
-        url: URL.createObjectURL(url),
-        name,
-      };
+      if (url) {
+        this.largeInitImage = {
+          url: URL.createObjectURL(url),
+          name
+        };
+      }
 
       this.thumbnailCrop.refresh();
       this.cropSection.refresh();
@@ -539,7 +551,7 @@ export default {
     resetImagesModification() {
       const index = _.findIndex(
         this.finalImages,
-        file => file.name === this.largeInitImage.name,
+        file => file.name === this.largeInitImage.name
       );
       this.finalImages.splice(index, 1);
       this.cropSection.remove();
@@ -547,7 +559,7 @@ export default {
 
     moveImage(direction) {
       const len = this.finalImages.length;
-      if (direction === 'right') {
+      if (direction === "right") {
         const moveThumb = this.finalImages.splice(len - 1, 1);
         this.finalImages = [moveThumb[0], ...this.finalImages];
       } else {
@@ -558,13 +570,13 @@ export default {
 
     fileSizeExceed() {
       this.$notify({
-        group: 'all',
-        type: 'warn',
+        group: "all",
+        type: "warn",
         text:
-          'The file size cannot be greater than 1 MB. Larger files will not upload',
+          "The file size cannot be greater than 1 MB. Larger files will not upload"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

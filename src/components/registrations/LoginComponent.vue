@@ -43,7 +43,7 @@
     <b-btn class="login-button" v-if="!forgotEnabled" @click="loginClicked()">Login</b-btn>
     <b-btn class="login-button" v-if="forgotEnabled" @click="resetPassword()">Reset Password</b-btn>
 
-    <p class="register-class" @click="register()">New User? Register here.</p>
+    <!-- <p class="register-class" @click="register()">New User? Register here.</p> -->
     <div class="modal-bottom"></div>
   </div>
 </template>
