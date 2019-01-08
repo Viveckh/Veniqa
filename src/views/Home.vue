@@ -13,8 +13,6 @@ import SideMenu from '@/components/SideBarMenu.vue';
 export default {
   name: 'home',
   components: {
-    // HeaderMenu,
-    // MainPage,
     HeaderMenu,
     SideMenu,
   },

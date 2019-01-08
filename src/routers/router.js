@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue';
 import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
+import AdminPage from '@/components/adminpage/adminPage.vue';
 
 Vue.use(Router);
 
@@ -21,6 +22,12 @@ const router = new Router({
         {
           path: '',
           component: MainPage,
+        },
+
+        {
+          path: 'adminsetting',
+          name: 'adminsetting',
+          component: AdminPage,
         },
 
         {

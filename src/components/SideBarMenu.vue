@@ -4,7 +4,7 @@
     <nav id="sidebar">
       <ul class="list-unstyled components">
         <li>
-          <a href="#">
+          <a href="/">
             <i class="fas fa-list"></i>
             Catalogs
           </a>
@@ -22,8 +22,8 @@
             Store Settings
           </a>
         </li>
-        <li>
-          <a href="#">
+        <li to="/adminsetting">
+          <a href="/adminsetting">
             <i class="fas fa-users"></i>
             User Settings
           </a>
