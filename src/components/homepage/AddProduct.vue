@@ -13,7 +13,7 @@
       @cancel="showManagePhoto = false"
     />
 
-    <div v-if="!showManagePhoto">
+    <div v-show="!showManagePhoto">
       <div class="product-head">
         <b-row>
           <b-col>
@@ -205,13 +205,123 @@
 
         <!-- Details -->
         <b-form-group horizontal :label-cols="2" label="Details" label-for="details">
-          <b-form-textarea
+          <!-- <b-form-textarea
             id="details"
             v-model="product.details_html"
             placeholder="Enter details"
             :rows="3"
             :max-rows="6"
-          />
+          />-->
+          <editor-menu-bar :editor="editor">
+            <div class="menubar" slot-scope="{ commands, isActive }">
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.bold() }"
+                @click="commands.bold"
+              >
+                <font-awesome-icon icon="bold"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.italic() }"
+                @click="commands.italic"
+              >
+                <font-awesome-icon icon="italic"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.strike() }"
+                @click="commands.strike"
+              >
+                <font-awesome-icon icon="strikethrough"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.underline() }"
+                @click="commands.underline"
+              >
+                <font-awesome-icon icon="underline"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.code() }"
+                @click="commands.code"
+              >
+                <font-awesome-icon icon="code"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.paragraph() }"
+                @click="commands.paragraph"
+              >
+                <font-awesome-icon icon="paragraph"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                @click="commands.heading({ level: 1 })"
+              >H1</button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                @click="commands.heading({ level: 2 })"
+              >H2</button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                @click="commands.heading({ level: 3 })"
+              >H3</button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.bullet_list() }"
+                @click="commands.bullet_list"
+              >
+                <font-awesome-icon icon="list-ul"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.ordered_list() }"
+                @click="commands.ordered_list"
+              >
+                <font-awesome-icon icon="list-ol"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.blockquote() }"
+                @click="commands.blockquote"
+              >
+                <font-awesome-icon icon="quote-left"/>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.code_block() }"
+                @click="commands.code_block"
+              >
+                <font-awesome-icon icon="code"/>
+              </button>
+
+              <button class="menubar__button" @click="commands.undo">
+                <font-awesome-icon icon="undo"/>
+              </button>
+
+              <button class="menubar__button" @click="commands.redo">
+                <font-awesome-icon icon="redo"/>
+              </button>
+            </div>
+          </editor-menu-bar>
+          <editor-content class="editor__content" :editor="editor"/>
         </b-form-group>
       </div>
 
@@ -240,6 +350,26 @@
 <script>
 import * as _ from 'lodash';
 import ManagePhoto from '@/components/homepage/ManagePhoto';
+// Import the editor
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History,
+} from 'tiptap-extensions';
 
 export default {
   props: {
@@ -247,6 +377,8 @@ export default {
   },
   components: {
     ManagePhoto,
+    EditorContent,
+    EditorMenuBar,
   },
   created() {
     if (this.data != null) {
@@ -255,6 +387,7 @@ export default {
   },
   data() {
     return {
+      editor: null,
       preassignedUrls: null,
       product: {
         store: 'AMAZON',
@@ -280,7 +413,7 @@ export default {
         },
         weight: {
           quantity: 3.2,
-          unit: 'OZ',
+          unit: 'LB',
         },
         custom_attributes: {
           color: 'light brilliant gold',
@@ -297,6 +430,40 @@ export default {
       showManagePhoto: false,
       images: null,
     };
+  },
+
+  mounted() {
+    this.editor = new Editor({
+      content: this.product.details_html,
+      extensions: [
+        new Blockquote(),
+        new BulletList(),
+        new CodeBlock(),
+        new HardBreak(),
+        new Heading({ levels: [1, 2, 3] }),
+        new ListItem(),
+        new OrderedList(),
+        new TodoItem(),
+        new TodoList(),
+        new Bold(),
+        new Code(),
+        new Italic(),
+        new Link(),
+        new Strike(),
+        new Underline(),
+        new History(),
+      ],
+
+      onUpdate: ({ getJSON, getHTML }) => {
+        // this.json = getJSON()
+        this.product.details_html = getHTML();
+      },
+    });
+
+    // console.log("Content", this.editor)
+  },
+  beforeDestroy() {
+    this.editor.destroy();
   },
   computed: {
     refdata() {
@@ -378,6 +545,7 @@ export default {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
+        console.log("Here", saveImageRes)
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
@@ -419,8 +587,55 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .product-head {
   margin-top: 1em;
 }
+
+.menubar {
+  margin-bottom: 1rem;
+  -webkit-transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+  transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+}
+
+.menubar__button {
+  font-weight: 700;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  color: #000;
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.2rem;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &.is-active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.editor__content{
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.2rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+
+  .ProseMirror:focus, .ProseMirror-focused{
+    outline: none !important;
+  }
+
+  p {
+    font-family: unset;
+    font-size: 0.875rem;
+    font-weight: unset;
+    line-height: 1em;
+    color: unset;
+    margin-bottom: 0px!important;
+}
+}
+
+
 </style>
