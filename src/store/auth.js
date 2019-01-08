@@ -7,6 +7,7 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
+    emailConfirmed: false,
   },
   actions: {
     async registerUser({
@@ -51,6 +52,7 @@ export default {
           commit('setEmail', data.email);
           commit('setName', data.name);
           commit('setSessionActive', true);
+          commit('setEmailConfirmed', data.emailConfirmed);
         }
         return data;
       } catch (err) {
@@ -134,5 +136,9 @@ export default {
     isSessionActive(state) {
       return state.isSessionActive;
     },
+
+    emailConfirmed(state){
+      return state.emailConfirmed;
+    }
   },
 };

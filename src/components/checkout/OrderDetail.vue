@@ -36,7 +36,7 @@
       </li>
     </ul>
 
-    <div class="total-line" v-if="cartTotal && cartTotal.amount > 0">
+    <div class="total-line" v-if="orders && orders.length > 0">
       <b-row>
         <!-- <hr> -->
         <b-col cols="8">

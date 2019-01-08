@@ -7,6 +7,7 @@ export default {
   forgotPassword: '/security/forgotPassword?email=',
   validateResetToken: '/security/validatePasswordResetToken/',
   resetPassword: '/security/resetPassword',
+  resendEmailConfirmation: '/security/resendEmailAddressConfirmationLink?email=',
 
   searchProduct: '/catalog/search',
   getProductDefinitionUrl: '/catalog/getProductDetails?productId=',
