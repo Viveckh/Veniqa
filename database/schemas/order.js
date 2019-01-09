@@ -7,11 +7,13 @@ import paymentSchema from './payment';
 import commentSchema from './comment';
 import auditLogSchema from './auditLog';
 
+import ORDER_STATUSES from '../reference-data-files/order-statuses.json';
+
 let orderSchema = new mongoose.Schema({
     overall_status: {
         type: String,
         required: true,
-        enum: ['PENDING', 'CONFIRMED', 'ORDERED', 'SHIPPED', 'DELIVERED', 'CANCELLED'],
+        enum: ORDER_STATUSES,
         default: 'PENDING'
     },
     cart: {

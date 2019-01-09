@@ -1,0 +1,8 @@
+[
+    "PENDING",
+    "CONFIRMED",
+    "ORDERED",
+    "SHIPPED",
+    "DELIVERED", 
+    "CANCELLED"
+]

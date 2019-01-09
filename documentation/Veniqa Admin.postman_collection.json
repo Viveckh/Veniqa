@@ -273,7 +273,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"_id\" : \"5c09591be7179a6ca083d15f\",\n    \"store\" : \"AMAZON\",\n    \"brand\" : \"BEVERLY HILLS\",\n    \"name\" : \"Amrezy Highlighter\",\n    \"item_url\" : \"https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product\",\n    \"category\" : \"Make-Up\",\n    \"subcategory\" : \"Palettes\",\n    \"thumbnailUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\",\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8\"\n    ],\n    \"featuredImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"detailedImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"price\" : {\n        \"amount\" : 27.99,\n        \"currency\" : \"USD\"\n    },\n    \"weight\" : {\n        \"quantity\" : 3.2,\n        \"unit\" : \"LB\"\n    },\n    \"custom_attributes\" : {\n        \"color\" : \"light brilliant gold\"\n    },\n    \"details_html\" : \"A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.\"\n}"
+							"raw": "{\n    \"_id\" : \"5c2e9eb525efee457d86e14a\",\n    \"store\" : \"AMAZON\",\n    \"brand\" : \"BEVERLY HILLS CALI\",\n    \"name\" : \"Amrezy Highlighter\",\n    \"item_url\" : \"https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product\",\n    \"category\" : \"Make-Up Kits\",\n    \"subcategory\" : \"Palettes\",\n    \"thumbnailUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\",\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8\"\n    ],\n    \"featuredImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"detailedImageUrls\": [\n    \t\"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\"\n    ],\n    \"price\" : {\n        \"amount\" : 27.99,\n        \"currency\" : \"USD\"\n    },\n    \"weight\" : {\n        \"quantity\" : 3.2,\n        \"unit\" : \"LB\"\n    },\n    \"custom_attributes\" : {\n        \"color\" : \"light brilliant gold\"\n    },\n    \"details_html\" : \"A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/updateProduct",
@@ -680,6 +680,68 @@
 							"path": [
 								"referenceData",
 								"getWeightUnits"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "orderList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderStatus\": \"PENDING\",\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/orderList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"orderList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/orders/order?orderId=5c2ea11b0aad6545e23442d3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"order"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "5c2ea11b0aad6545e23442d3"
+								}
 							]
 						}
 					},

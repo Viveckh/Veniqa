@@ -26,6 +26,7 @@ import securityRouter from './routes/security';
 import superAdminRouter from './routes/superAdmin';
 import catalogRouter from './routes/catalog';
 import referenceDataRouter from './routes/referenceData';
+import orderRouter from './routes/orders';
 
 // Imports for authentication
 import passport from 'passport';
@@ -110,6 +111,7 @@ app.use('/security', securityRouter);
 app.use('/superAdmin', superAdminRouter);
 app.use('/catalog', catalogRouter);
 app.use('/referenceData', referenceDataRouter);
+app.use('/orders', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
