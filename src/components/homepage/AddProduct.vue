@@ -162,6 +162,15 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <b-form-group horizontal :label-cols="2" label="Attributes">
+          <b-btn @click="showAttributes = true">Add Attributes</b-btn>
+
+          <b-modal v-model="showAttributes" size="lg" id="modal1" title="Add Attributes" hide-footer>
+            <custom-attributes :propValue="product.custom_attributes"/>
+            
+          </b-modal>
+        </b-form-group>
+
         <!-- Weight -->
         <b-form-group horizontal :label-cols="2" label="Weight" label-for="weight">
           <b-row>
@@ -350,6 +359,7 @@
 <script>
 import * as _ from 'lodash';
 import ManagePhoto from '@/components/homepage/ManagePhoto';
+import CustomAttributes from '@/components/homepage/CustomAttributes'
 // Import the editor
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
 import {
@@ -379,6 +389,7 @@ export default {
     ManagePhoto,
     EditorContent,
     EditorMenuBar,
+    CustomAttributes
   },
   created() {
     if (this.data != null) {
@@ -387,6 +398,7 @@ export default {
   },
   data() {
     return {
+      showAttributes: false,
       editor: null,
       preassignedUrls: null,
       product: {
@@ -415,9 +427,7 @@ export default {
           quantity: 3.2,
           unit: 'LB',
         },
-        custom_attributes: {
-          color: 'light brilliant gold',
-        },
+        custom_attributes: [],
         details_html:
           'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [

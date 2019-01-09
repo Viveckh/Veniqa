@@ -1,0 +1,36 @@
+.theme-material .tag-selector--input {
+  border: none;
+  border-bottom: 1px dotted #959595;
+  margin-bottom: 1.2em;
+}
+.theme-material .tag-selector--item {
+  background: #e6e6e6;
+  color: #434343;
+  margin-right: 8px;
+  padding-left: 12px;
+  border-radius: 32px;
+}
+.theme-material .tag-selector--item:hover {
+  background: #434343;
+  color: #fafafa;
+}
+.theme-material .tag-selector--item:hover .tag-selector--remove {
+  color: #fafafa;
+}
+.theme-material .tag-selector--remove {
+  width: 24px;
+  height: 24px;
+  color: #434343;
+  margin: 0px 4px;
+  vertical-align: top;
+}
+.theme-material .tag-selector--item,
+.theme-material .tag-selector-input {
+  height: 32px;
+  line-height: 32px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.theme-material .validation-message {
+  color: #a90014;
+}
