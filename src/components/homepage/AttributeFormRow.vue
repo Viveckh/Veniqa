@@ -1,6 +1,9 @@
 <template>
   <div class="attrib-row" v-bind:class="{'shaded': index % 2 == 1}">
       <b-row>
+        <b-col sm="1" class="min-padding">
+          <font-awesome-icon @click="deleteClicked()" style="cursor: pointer" icon="trash-alt"/>
+        </b-col>
         <b-col sm="2" class="min-padding">
           <b-form-input
             id="name"
@@ -50,7 +53,7 @@
             This field cannot be empty
           </b-form-invalid-feedback>
         </b-col>
-        <b-col class="min-padding" sm="6">
+        <b-col class="min-padding" sm="5">
           <div>
            <tag-selector classes="theme-material" name="tags" v-model="row.values"/>
 
@@ -61,51 +64,57 @@
 </template>
 
 <script>
-import TagSelector from 'vue-tag-selector'
+import TagSelector from 'vue-tag-selector';
 
 export default {
-  name: "AttributeFormRow",
+  name: 'AttributeFormRow',
   props: {
     row: {
       required: true,
-      type: Object
+      type: Object,
     },
     index: {
       required: true,
-      type: Number
-    }
+      type: Number,
+    },
   },
   components: {
-    TagSelector
+    TagSelector,
   },
   data() {
     return {
       allDataTypes: [
         'Boolean',
         'Array',
-        'Color'
-      ]
-    }
+        'Color',
+      ],
+    };
+  },
+
+  methods: {
+    deleteClicked() {
+      this.$emit('delete');
+    },
   },
 
   computed: {
     nameState() {
-      if(this.row.name == null) return null;
+      if (this.row.name == null) return null;
       return this.row.name.length > 0;
     },
 
     keyState() {
-      if(this.row.key == null) return null;
+      if (this.row.key == null) return null;
       return this.row.key.length > 0;
     },
 
     typeState() {
-      if(this.row.type == null) return null;
+      if (this.row.type == null) return null;
       return this.row.type.length > 0;
     },
 
 
-  }
+  },
 };
 </script>
 
@@ -130,4 +139,3 @@ export default {
   }
 }
 </style>
-

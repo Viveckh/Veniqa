@@ -165,9 +165,28 @@
         <b-form-group horizontal :label-cols="2" label="Attributes">
           <b-btn @click="showAttributes = true">Add Attributes</b-btn>
 
+          <table class="table table-sm attrib-table" v-if="product.custom_attributes.length > 0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Values</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(attrib, aind) in product.custom_attributes" v-bind:key="aind">
+                <td>{{attrib.name}}</td>
+                <td>{{attrib.key}}</td>
+                <td>{{attrib.type}}</td>
+                <td>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
+              </tr>
+            </tbody>
+          </table>
+
           <b-modal v-model="showAttributes" size="lg" id="modal1" title="Add Attributes" hide-footer>
-            <custom-attributes :propValue="product.custom_attributes"/>
-            
+            <custom-attributes :propValue="product.custom_attributes" @cancel="cancelAttribModal" @save="saveAttributes"/>
+
           </b-modal>
         </b-form-group>
 
@@ -359,7 +378,7 @@
 <script>
 import * as _ from 'lodash';
 import ManagePhoto from '@/components/homepage/ManagePhoto';
-import CustomAttributes from '@/components/homepage/CustomAttributes'
+import CustomAttributes from '@/components/homepage/CustomAttributes';
 // Import the editor
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
 import {
@@ -389,7 +408,7 @@ export default {
     ManagePhoto,
     EditorContent,
     EditorMenuBar,
-    CustomAttributes
+    CustomAttributes,
   },
   created() {
     if (this.data != null) {
@@ -532,6 +551,16 @@ export default {
         && this.unitState
       );
     },
+
+    cancelAttribModal() {
+      this.showAttributes = false;
+    },
+
+    saveAttributes(attribs) {
+      this.product.custom_attributes = [];
+      this.product.custom_attributes.push(...attribs);
+      this.showAttributes = false;
+    },
     /**
      * @param {Object} payload
      * {
@@ -555,7 +584,7 @@ export default {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
-        console.log("Here", saveImageRes)
+        console.log('Here', saveImageRes);
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
@@ -600,6 +629,11 @@ export default {
 <style lang="scss" >
 .product-head {
   margin-top: 1em;
+}
+
+.attrib-table{
+  font-size: 0.875rem;
+  margin: 10px 0px;
 }
 
 .menubar {
