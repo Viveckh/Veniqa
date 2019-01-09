@@ -1,8 +1,14 @@
-[
-    "PENDING",
-    "CONFIRMED",
-    "ORDERED",
-    "SHIPPED",
-    "DELIVERED", 
-    "CANCELLED"
-]
+{
+    "order_level":  [
+        "RECEIVED",
+        "CONFIRMED",
+        "IN-PROGRESS",
+        "COMPLETED", 
+        "CANCELLED"
+    ],
+    "order_line_level": [
+        "FULFILLING",
+        "SHIPPED",
+        "DELIVERED"
+    ]
+}

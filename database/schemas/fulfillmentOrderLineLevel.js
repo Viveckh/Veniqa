@@ -4,21 +4,19 @@ import validator from 'validator';
 import auditLogSchema from './auditLog';
 import priceSchema from './price';
 
-let shipmentSchema = new mongoose.Schema({
-    provider: {
+import STORES_ARRAY from '../reference-data-files/stores.json';
+
+let fulfillmentOrderLineLevelSchema = new mongoose.Schema({
+    store: {
         type: String,
-        enum: ['MYUS', 'USPS', 'UPS', 'FEDEX', 'DHL'],
+        enum: STORES_ARRAY,
         required: true
     },
-    tracking_number: {
-        type: String,
-        required: true
-    },
-    service: {
+    order_number: {
         type: String,
         required: true
     },
-    paid_postage: {
+    total_cost_price_of_item: {
         type: priceSchema,
         required: true
     },
@@ -28,4 +26,4 @@ let shipmentSchema = new mongoose.Schema({
     }
 }, {_id: false});
 
-module.exports = shipmentSchema;
+module.exports = fulfillmentOrderLineLevelSchema;

@@ -13,8 +13,8 @@ let orderSchema = new mongoose.Schema({
     overall_status: {
         type: String,
         required: true,
-        enum: ORDER_STATUSES,
-        default: 'PENDING'
+        enum: ORDER_STATUSES.order_level,
+        default: 'RECEIVED'
     },
     cart: {
         type: cartSchema,

@@ -5,15 +5,15 @@ import colorSchema from './color';
 import weightSchema from './weight';
 import priceSchema from './price';
 import productSchema from './product';
-import shipmentSchema from './shipment';
+import orderLineLevelProcessingSchema from './orderLineLevelProcessing';
 
 let cartItemSchema = new mongoose.Schema({
     product: {
         type: productSchema,
         required: true
     },
-    shipment_info: {
-        type: shipmentSchema,
+    order_line_level_processing_details: {
+        type: orderLineLevelProcessingSchema,
         required: false
     },
     counts: {
