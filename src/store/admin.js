@@ -107,6 +107,7 @@ export default {
           },
         });
         commit('setProducts', res.data.docs);
+        return res.data.docs;
       } catch (err) {
         throw new Error(err);
       }
