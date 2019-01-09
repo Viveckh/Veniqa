@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 
-import colorSchema from './color';
 import weightSchema from './weight';
 import priceSchema from './price';
 import productSchema from './product';
@@ -37,13 +36,9 @@ let cartItemSchema = new mongoose.Schema({
             currency: 'USD'
         }
     },
-    color: {
-        type: colorSchema,
-        required: false,
-    },
-    size: {
-        type: String,
-        required: false
+    customizations: {
+        type: Map,
+        of: String
     }
 });
 

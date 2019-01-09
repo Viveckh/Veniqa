@@ -15,21 +15,15 @@ let orderLineLevelProcessingSchema = new mongoose.Schema({
     },
     fulfillment_order_details: {
         type: fulfillmentOrderLineLevelSchema,
-        required: function() {
-            return this.status == 'FULFILLING';
-        }
+        required: false
     },
     shipment: {
         type: shipmentSchema,
-        required: function() {
-            return this.status == 'SHIPPED';
-        }
+        required: false
     },
     delivery: {
         type: auditLogSchema,
-        required: function(){
-            return this.status == 'DELIVERED';
-        }
+        required: false
     }
 });
 
