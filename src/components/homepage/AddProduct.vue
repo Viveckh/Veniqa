@@ -165,7 +165,7 @@
         <b-form-group horizontal :label-cols="2" label="Attributes">
           <b-btn @click="showAttributes = true">Add Attributes</b-btn>
 
-          <table class="table table-sm attrib-table" v-if="product.custom_attributes.length > 0">
+          <table class="table table-sm attrib-table" v-if="product.customizationOptions.length > 0">
             <thead>
               <tr>
                 <th>Name</th>
@@ -175,7 +175,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(attrib, aind) in product.custom_attributes" v-bind:key="aind">
+              <tr v-for="(attrib, aind) in product.customizationOptions" v-bind:key="aind">
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
@@ -446,7 +446,8 @@ export default {
           quantity: 3.2,
           unit: 'LB',
         },
-        custom_attributes: [],
+        custom_attributes: {},
+        customizationOptions:[],
         details_html:
           'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
@@ -557,8 +558,8 @@ export default {
     },
 
     saveAttributes(attribs) {
-      this.product.custom_attributes = [];
-      this.product.custom_attributes.push(...attribs);
+      this.product.customizationOptions = [];
+      this.product.customizationOptions.push(...attribs);
       this.showAttributes = false;
     },
     /**
