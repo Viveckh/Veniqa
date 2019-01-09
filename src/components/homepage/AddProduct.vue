@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div id="add-product">
     <manage-photo
       v-show="showManagePhoto"
       ref="managephoto"
@@ -179,12 +179,15 @@
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
-                <td>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
+                <td v-if="attrib.type ==='Color'">
+                  {{extractColorValues(attrib)}}
+                </td>
+                <td v-else>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
               </tr>
             </tbody>
           </table>
 
-          <b-modal v-model="showAttributes" size="lg" id="modal1" title="Add Attributes" hide-footer>
+          <b-modal v-model="showAttributes" centered id="modal1" title="Add Attributes" hide-footer>
             <custom-attributes :propValue="product.custom_attributes" @cancel="cancelAttribModal" @save="saveAttributes"/>
 
           </b-modal>
@@ -539,6 +542,9 @@ export default {
     },
   },
   methods: {
+    extractColorValues(attribute){
+      return _.map(attribute.values, 'name').join(' , ');
+    },
     validateForm() {
       return (
         this.productNameState
@@ -630,6 +636,12 @@ export default {
 <style lang="scss" >
 .product-head {
   margin-top: 1em;
+}
+
+#add-product{
+  .modal-dialog{
+    max-width: 80%!important;
+  }
 }
 
 .attrib-table{
