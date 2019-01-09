@@ -16,14 +16,20 @@
             Orders
           </a>
         </li>
+        <li @click="navigate('featured')">
+          <a>
+            <font-awesome-icon icon="star"/>
+            Featured Posts
+          </a>
+        </li>
         <li>
           <a href="#">
             <i class="fas fa-cog"></i>
             Store Settings
           </a>
         </li>
-        <li to="/adminsetting">
-          <a href="/adminsetting">
+        <li @click="navigate('adminsetting')">
+          <a>
             <i class="fas fa-users"></i>
             User Settings
           </a>
@@ -41,6 +47,11 @@
 export default {
   name: 'sidebar',
   components: {},
+  methods: {
+    navigate(path) {
+      this.$router.push(path);
+    },
+  },
 };
 </script>
 

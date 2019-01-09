@@ -447,7 +447,7 @@ export default {
           unit: 'LB',
         },
         custom_attributes: {},
-        customizationOptions:[],
+        customizationOptions: [],
         details_html:
           'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
