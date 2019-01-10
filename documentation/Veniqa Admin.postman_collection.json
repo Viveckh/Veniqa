@@ -746,6 +746,151 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "confirmOrder",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/confirmOrder",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"confirmOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelOrder",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/cancelOrder",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"cancelOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addComment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"comment\": \"This customer was a lil more cranky than normal.\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/addComment",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"addComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editComment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"commentId\": \"5c37ad9d81524b819f37be68\",\n\t\"comment\": \"This customer was actually not that bad after few minutes of talking.\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/editComment",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"editComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteComment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"commentId\": \"5c37ad7481524b819f37be5b\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/deleteComment",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"deleteComment"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

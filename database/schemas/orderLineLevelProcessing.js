@@ -25,6 +25,6 @@ let orderLineLevelProcessingSchema = new mongoose.Schema({
         type: auditLogSchema,
         required: false
     }
-});
+}, {_id: false});
 
 module.exports = orderLineLevelProcessingSchema;

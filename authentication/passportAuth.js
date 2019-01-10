@@ -57,7 +57,7 @@ export default {
 
                         // If the user's account has not been approved, make sure to prevent login
                         if (!user.approved) {
-                            console.log("Account not approved yet for login")
+                            console.log("Account not approved for access")
                             return done(null, false);
                         }
     

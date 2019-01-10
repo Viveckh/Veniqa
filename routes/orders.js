@@ -12,8 +12,14 @@ router.post('/orderList', passportAuth.isAuthenticated, passportAuth.canViewOrde
 
 router.get('/order', passportAuth.isAuthenticated, passportAuth.canViewOrders, orderController.getOrderDetails);
 
-//router.post('/confirmOrder', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.confirmOrder);
+router.post('/confirmOrder', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.confirmOrder);
 
-//router.post('/cancelOrder', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.cancelOrder);
+router.post('/cancelOrder', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.cancelOrder);
+
+router.post('/addComment', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.addComment);
+
+router.put('/editComment', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.editComment);
+
+router.delete('/deleteComment', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.deleteComment);
 
 module.exports = router;

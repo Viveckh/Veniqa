@@ -8,10 +8,6 @@ let commentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    author: {
-        type: auditorSchema,
-        required: true
-    },
     auditLog: {
         type: auditLogSchema,
         required: true
