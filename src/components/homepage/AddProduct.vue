@@ -163,7 +163,7 @@
         </b-form-group>
 
         <b-form-group horizontal :label-cols="2" label="Attributes">
-          <b-btn @click="showAttributes = true">Add Attributes</b-btn>
+          <b-btn size="sm" @click="showAttributes = true">Add Attributes</b-btn>
 
           <table class="table table-sm attrib-table" v-if="product.customizationOptions.length > 0">
             <thead>
@@ -362,13 +362,13 @@
             v-if="this.data != null"
             type="button"
             @click="handleEditProduct()"
-            class="btn btn-success"
+            class="btn btn-success btn-sm"
           >Edit Product</button>
           <button
             v-else
             type="button"
             @click="handleAddProduct()"
-            class="btn btn-success"
+            class="btn btn-success btn-sm"
           >Add Product</button>
           &nbsp;
           <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
