@@ -23,8 +23,8 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="product in products" v-if="products.length > 0">
+        <tbody v-if="products.length > 0" >
+          <tr v-for="(product, pid) in products" v-bind:key="pid">
             <td>
               <img :src="product.thumbnailUrls[0]" class="productTableImg">
             </td>

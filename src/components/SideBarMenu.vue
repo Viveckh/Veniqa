@@ -10,8 +10,8 @@
           </a>
         </li>
 
-        <li>
-          <a href="#">
+        <li @click="navigate('orders')">
+          <a>
             <i class="fas fa-archive"></i>
             Orders
           </a>

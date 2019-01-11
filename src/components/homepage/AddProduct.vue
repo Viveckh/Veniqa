@@ -165,7 +165,7 @@
         <b-form-group horizontal :label-cols="2" label="Attributes">
           <b-btn size="sm" @click="showAttributes = true">Add Attributes</b-btn>
 
-          <table class="table table-sm attrib-table" v-if="product.customizationOptions.length > 0">
+          <table class="table table-sm attrib-table" v-if="product.customizationOptions && product.customizationOptions.length > 0">
             <thead>
               <tr>
                 <th>Name</th>
