@@ -18,22 +18,21 @@
 
 <script>
 export default {
-  name: "OrdersView",
+  name: 'OrdersView',
 
   data() {
     return {
       currentTab: 'received',
-    }
+    };
   },
 
   methods: {
     tabClicked(tab) {
       this.currentTab = tab;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 </style>
-

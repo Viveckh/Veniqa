@@ -542,7 +542,7 @@ export default {
     },
   },
   methods: {
-    extractColorValues(attribute){
+    extractColorValues(attribute) {
       return _.map(attribute.values, 'name').join(' , ');
     },
     validateForm() {

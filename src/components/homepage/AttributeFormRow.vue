@@ -106,53 +106,53 @@
 </template>
 
 <script>
-import TagSelector from "vue-tag-selector";
+import TagSelector from 'vue-tag-selector';
 
 export default {
-  name: "AttributeFormRow",
+  name: 'AttributeFormRow',
   props: {
     row: {
       required: true,
-      type: Object
+      type: Object,
     },
     index: {
       required: true,
-      type: Number
-    }
+      type: Number,
+    },
   },
   components: {
-    TagSelector
+    TagSelector,
   },
   data() {
     return {
-      allDataTypes: ["Boolean", "Array", "Color"]
+      allDataTypes: ['Boolean', 'Array', 'Color'],
     };
   },
 
   methods: {
     deleteClicked() {
-      this.$emit("delete");
+      this.$emit('delete');
     },
 
-    deleteLine(ind){
-      this.row.values.splice(ind, 1)
+    deleteLine(ind) {
+      this.row.values.splice(ind, 1);
     },
 
-    addLine(){
+    addLine() {
       this.row.values.push({
         name: null,
         hexValue: null,
-      })
+      });
     },
 
-    typeChanged(){
-      if(this.row.type === 'Color'){
+    typeChanged() {
+      if (this.row.type === 'Color') {
         this.row.values = [{
           name: null,
-          hexValue: null
+          hexValue: null,
         }];
       }
-    }
+    },
   },
 
   computed: {
@@ -171,20 +171,20 @@ export default {
       return this.row.type.length > 0;
     },
 
-    hexState(){
+    hexState() {
       return (val) => {
-        if(val == null)return null;
+        if (val == null) return null;
         return val.length > 0;
-      }
+      };
     },
 
-    colorNameState(){
+    colorNameState() {
       return (val) => {
-        if(val == null) return null;
+        if (val == null) return null;
         return val.length > 0;
-      }
-    }
-  }
+      };
+    },
+  },
 };
 </script>
 
