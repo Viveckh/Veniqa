@@ -4,7 +4,7 @@ export default {
     async searchCatalog(req, res, next) {
         let response;
         try {
-            response = await catalogService.searchCatalog(req.body.searchFilters, req.body.pagingOptions);
+            response = await catalogService.searchCatalog(req.body.searchTerm, req.body.pagingOptions);
             if (response.code) {
                 return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
             }

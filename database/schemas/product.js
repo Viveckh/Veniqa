@@ -123,4 +123,6 @@ let productSchema = new mongoose.Schema({
     }
 });
 
+productSchema.index({store: 'text', brand: 'text', name: 'text', category: 'text', subcategory: 'text', details_html: 'text'});
+
 module.exports = productSchema;
