@@ -8,6 +8,7 @@ import AdminPage from '@/components/adminpage/adminPage.vue';
 import Featured from '@/views/Featured';
 import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
+import OrderDetail from '@/components/orders/OrderDetail';
 
 Vue.use(Router);
 
@@ -23,7 +24,7 @@ const router = new Router({
       },
       children: [
         {
-          path: '',
+          path: '/',
           component: MainPage,
         },
 
@@ -34,13 +35,18 @@ const router = new Router({
         },
 
         {
-          path: 'orders',
+          path: '/orders',
           // name: 'orders',
           component: OrdersComponent,
           children: [
             {
-              path: '',
+              path: '/',
               component: OrdersMainPage
+            },
+            {
+              path: 'orderdetail',
+              name:'orderdetail',
+              component: OrderDetail
             }
           ]
         },

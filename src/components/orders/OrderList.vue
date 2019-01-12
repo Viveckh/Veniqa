@@ -56,7 +56,7 @@ export default {
           throw new Error('Failed');
         }
         else {
-          
+          this.$router.push('orders/orderdetail')
         }
       } catch (error) {
         console.log("Error occured", error);

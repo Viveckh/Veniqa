@@ -31,19 +31,21 @@ export default {
   },
 
   async created() {
-    const status = 'RECEIVED';
-    this.$store.commit('orderStore/setOrderStatus', status);
-    try {
-      const data = await this.$store.dispatch(
-        'orderStore/getOrdersByStatus',
-        status,
-      );
-    } catch (error) {
-      this.$notify({
-        group: 'all',
-        type: 'error',
-        text: `Error occured while getting orders with status: ${status}`,
-      });
+    if(this.orderStatus.trim().length == 0){
+      const status = 'RECEIVED';
+      this.$store.commit('orderStore/setOrderStatus', status);
+      try {
+        const data = await this.$store.dispatch(
+          'orderStore/getOrdersByStatus',
+          status,
+        );
+      } catch (error) {
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: `Error occured while getting orders with status: ${status}`,
+        });
+      }
     }
   },
 
