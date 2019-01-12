@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 
-import auditLogSchema from './auditLog';
 import fulfillmentOrderLineLevelSchema from './fulfillmentOrderLineLevel';
 import shipmentSchema from './shipment';
+import deliverySchema from './delivery';
 
 import ORDER_STATUSES from '../reference-data-files/order-statuses.json';
 
@@ -22,7 +22,7 @@ let orderLineLevelProcessingSchema = new mongoose.Schema({
         required: false
     },
     delivery: {
-        type: auditLogSchema,
+        type: deliverySchema,
         required: false
     }
 }, {_id: false});

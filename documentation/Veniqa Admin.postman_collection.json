@@ -761,7 +761,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\"\n}"
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/confirmOrder",
@@ -800,6 +800,180 @@
 							"path": [
 								"orders",
 								"cancelOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "markItemAsFulfilling",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\",\n\t\"cartItemId\": \"5c12e14a2e9266272a8c535c\",\n\t\"store\": \"AMAZON\",\n\t\"orderNumber\": \"875884983\",\n\t\"totalCostPriceOfItemUSD\": \"25\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/markItemAsFulfilling",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"markItemAsFulfilling"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "markItemAsShipped",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\",\n\t\"cartItemId\": \"5c12e14a2e9266272a8c535c\",\n\t\"provider\": \"MYUS\",\n\t\"trackingNumber\": \"875884983\",\n\t\"service\": \"Next day\",\n\t\"paidPostageInUSD\": \"15\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/markItemAsShipped",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"markItemAsShipped"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "markItemAsDelivered",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\",\n\t\"cartItemId\": \"5c12e14a2e9266272a8c535c\",\n\t\"deliveryDate\": \"2015-03-25\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/markItemAsDelivered",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"markItemAsDelivered"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrderFulfillmentDetails",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\",\n\t\"cartItemId\": \"5c12e14a2e9266272a8c535c\",\n\t\"store\": \"AMAZON\",\n\t\"orderNumber\": \"875884993\",\n\t\"totalCostPriceOfItemUSD\": \"25\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/updateOrderFulfillmentDetails",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"updateOrderFulfillmentDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateShipmentDetails",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\",\n\t\"cartItemId\": \"5c12e14a2e9266272a8c535c\",\n\t\"provider\": \"MYUS\",\n\t\"trackingNumber\": \"875884993\",\n\t\"service\": \"No Rush Shipping\",\n\t\"paidPostageInUSD\": \"15.99\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/updateShipmentDetails",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"updateShipmentDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDeliveryDetails",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": \"5c3919795b42341726eadabb\",\n\t\"cartItemId\": \"5c12e14a2e9266272a8c535c\",\n\t\"deliveryDate\": \"2015-03-27\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/updateDeliveryDetails",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"updateDeliveryDetails"
 							]
 						}
 					},
@@ -848,7 +1022,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"commentId\": \"5c37ad9d81524b819f37be68\",\n\t\"comment\": \"This customer was actually not that bad after few minutes of talking.\"\n}"
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"commentId\": \"5c37c426b64e5083cdafb710\",\n\t\"comment\": \"This customer was actually not that bad after few minutes of talking.\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/editComment",
@@ -877,7 +1051,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"commentId\": \"5c37ad7481524b819f37be5b\"\n}"
+							"raw": "{\n\t\"orderId\": \"5c2ea11b0aad6545e23442d3\",\n\t\"commentId\": \"5c37c426b64e5083cdafb710\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/deleteComment",

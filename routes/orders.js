@@ -16,6 +16,18 @@ router.post('/confirmOrder', passportAuth.isAuthenticated, passportAuth.canManag
 
 router.post('/cancelOrder', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.cancelOrder);
 
+router.post('/markItemAsFulfilling', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.markItemAsFulfilling);
+
+router.post('/markItemAsShipped', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.markItemAsShipped);
+
+router.post('/markItemAsDelivered', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.markItemAsDelivered);
+
+router.put('/updateOrderFulfillmentDetails', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.updateOrderFulfillmentDetails);
+
+router.put('/updateShipmentDetails', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.updateShipmentDetails);
+
+router.put('/updateDeliveryDetails', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.updateDeliveryDetails);
+
 router.post('/addComment', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.addComment);
 
 router.put('/editComment', passportAuth.isAuthenticated, passportAuth.canManageOrders, orderController.editComment);
