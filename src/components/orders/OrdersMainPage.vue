@@ -22,7 +22,7 @@ import { mapGetters } from 'vuex';
 import OrderList from '@/components/orders/OrderList';
 
 export default {
-  name: 'OrdersView',
+  name: 'OrdersMainPage',
   components: {
     OrderList,
   },

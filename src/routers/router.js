@@ -6,7 +6,8 @@ import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
 import AdminPage from '@/components/adminpage/adminPage.vue';
 import Featured from '@/views/Featured';
-import OrdersComponent from '@/views/OrdersView';
+import OrdersMainPage from '@/components/orders/OrdersMainPage';
+import OrdersComponent from '@/views/OrderView';
 
 Vue.use(Router);
 
@@ -34,8 +35,14 @@ const router = new Router({
 
         {
           path: 'orders',
-          name: 'orders',
+          // name: 'orders',
           component: OrdersComponent,
+          children: [
+            {
+              path: '',
+              component: OrdersMainPage
+            }
+          ]
         },
 
         {

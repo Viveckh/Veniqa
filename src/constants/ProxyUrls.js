@@ -36,4 +36,5 @@ export default {
 
   // Order URLS
   getOrderByStatus: '/orders/orderList',
+  getSingleOrderById: '/orders/order?orderId='
 };
