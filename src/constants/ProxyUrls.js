@@ -33,4 +33,7 @@ export default {
   deleteAdmin: '/superAdmin/deleteAdmin',
   editAdmin: '/superAdmin/updateAdminAccess',
   predefinedUrls: '/catalog/getPresignedUrlsForCatalogImageUploads',
+
+  // Order URLS
+  getOrderByStatus: '/orders/orderList',
 };
