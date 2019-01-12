@@ -10,6 +10,11 @@ let paymentSchema = new mongoose.Schema({
         required: true,
         enum: ['BKASH', 'PAYPAL']
     },
+    type: {
+        type: String,
+        enum: ['AUTHORIZATION', 'CAPTURE', 'SALE', 'REFUND'],
+        required: true
+    },
     payment_id: {
         type: String,
         required: true

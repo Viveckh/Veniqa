@@ -1,0 +1,15 @@
+{
+    "order_level":  [
+        "RECEIVED",
+        "CONFIRMED",
+        "IN-PROGRESS",
+        "COMPLETED", 
+        "CANCELLED"
+    ],
+    "order_line_level": [
+        "PROCESSING",
+        "FULFILLING",
+        "SHIPPED",
+        "DELIVERED"
+    ]
+}

@@ -2,6 +2,6 @@
     "appService.zipIgnorePattern": [
         "node_modules{,/**}"
     ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/f52d0318-488a-482e-9ad5-2a903a057722/resourceGroups/appsvc_rg_linux_centralus/providers/Microsoft.Web/sites/veniqa",
-    "appService.deploySubpath": ""
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/f52d0318-488a-482e-9ad5-2a903a057722/resourceGroups/appsvc_rg_linux_centralus/providers/Microsoft.Web/sites/veniqa"
 }

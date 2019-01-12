@@ -1,16 +1,17 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+
 import auditLogSchema from './auditLog';
 
-let commentSchema = new mongoose.Schema({
-    content: {
-        type: String,
+let deliverySchema = new mongoose.Schema({
+    delivery_date: {
+        type: Date,
         required: true
     },
     auditLog: {
         type: auditLogSchema,
         required: true
     }
-});
+}, {_id: false});
 
-module.exports = commentSchema;
+module.exports = deliverySchema;

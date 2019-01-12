@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import * as _ from 'lodash';
 
-import colorSchema from './color';
 import weightSchema from './weight';
 import priceSchema from './price';
 import auditLogSchema from './auditLog';
+import customizationOptions from './customizationOptions';
 
 import STORES_ARRAY from '../reference-data-files/stores.json';
 import PRODUCT_CATEGORIES from '../reference-data-files/product-categories.json'
@@ -104,6 +104,10 @@ let productSchema = new mongoose.Schema({
         type: weightSchema,
         required: true
     },
+    customizationOptions: {
+        type: customizationOptions,
+        required: false
+    },
     custom_attributes: {
         type: Map,
         of: String
@@ -113,18 +117,12 @@ let productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    colors: {
-        type: [colorSchema],
-        required: false
-    },
-    sizes: {
-        type: [String],
-        required: false
-    },
     auditLog: {
         type: auditLogSchema,
         required: true
     }
 });
+
+productSchema.index({store: 'text', brand: 'text', name: 'text', category: 'text', subcategory: 'text', details_html: 'text'});
 
 module.exports = productSchema;

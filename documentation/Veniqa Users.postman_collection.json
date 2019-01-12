@@ -330,7 +330,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchFilters\": {\n\t\t\"store\": \"AMAZON\",\n\t\t\"category\": \"Make-Up Kits\"\n\t},\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+							"raw": "{\n\t\"searchTerm\": \"highlighter\",\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/search",
