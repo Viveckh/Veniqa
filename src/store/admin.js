@@ -91,8 +91,8 @@ export default {
     },
     async getAllProducts({ commit }) {
       try {
-        const res = await axios({
-          url: ProxyUrl.baseUrl + ProxyUrl.searchProduct,
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.searchProduct,
           withCredentials: true,
           method: 'post',
           data: {

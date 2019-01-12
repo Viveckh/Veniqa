@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div id="add-product">
     <manage-photo
       v-show="showManagePhoto"
       ref="managephoto"
@@ -163,9 +163,9 @@
         </b-form-group>
 
         <b-form-group horizontal :label-cols="2" label="Attributes">
-          <b-btn @click="showAttributes = true">Add Attributes</b-btn>
+          <b-btn size="sm" @click="showAttributes = true">Add Attributes</b-btn>
 
-          <table class="table table-sm attrib-table" v-if="product.customizationOptions.length > 0">
+          <table class="table table-sm attrib-table" v-if="product.customizationOptions && product.customizationOptions.length > 0">
             <thead>
               <tr>
                 <th>Name</th>
@@ -179,12 +179,15 @@
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
-                <td>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
+                <td v-if="attrib.type ==='Color'">
+                  {{extractColorValues(attrib)}}
+                </td>
+                <td v-else>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
               </tr>
             </tbody>
           </table>
 
-          <b-modal v-model="showAttributes" size="lg" id="modal1" title="Add Attributes" hide-footer>
+          <b-modal v-model="showAttributes" centered id="modal1" title="Add Attributes" hide-footer>
             <custom-attributes :propValue="product.custom_attributes" @cancel="cancelAttribModal" @save="saveAttributes"/>
 
           </b-modal>
@@ -359,13 +362,13 @@
             v-if="this.data != null"
             type="button"
             @click="handleEditProduct()"
-            class="btn btn-success"
+            class="btn btn-success btn-sm"
           >Edit Product</button>
           <button
             v-else
             type="button"
             @click="handleAddProduct()"
-            class="btn btn-success"
+            class="btn btn-success btn-sm"
           >Add Product</button>
           &nbsp;
           <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
@@ -539,6 +542,9 @@ export default {
     },
   },
   methods: {
+    extractColorValues(attribute) {
+      return _.map(attribute.values, 'name').join(' , ');
+    },
     validateForm() {
       return (
         this.productNameState
@@ -630,6 +636,12 @@ export default {
 <style lang="scss" >
 .product-head {
   margin-top: 1em;
+}
+
+#add-product{
+  .modal-dialog{
+    max-width: 80%!important;
+  }
 }
 
 .attrib-table{

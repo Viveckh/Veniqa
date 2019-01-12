@@ -179,7 +179,7 @@ export default {
     },
 
     removeProduct(ind) {
-      if (this.featuredProducts[ind]._id === this.previewProduct._id) {
+      if (this.previewProduct && this.featuredProducts[ind]._id === this.previewProduct._id) {
         this.previewProduct = null;
         this.showPreview = false;
       }
