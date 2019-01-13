@@ -1,7 +1,7 @@
 <template>
   <div class="general-padding" id="order-detail">
     <div v-if="openOrder">
-      <h3>Order Details</h3>
+      <h3><a><font-awesome-icon icon="chevron-left" @click="goToOrdersPage()"/></a> Order Details</h3>
 
       <p class="status">
         <b-row>
@@ -78,6 +78,11 @@ export default {
     async yesClicked() {
       await this.confirmOrder();
       this.showConfirmation = false;
+    },
+
+    goToOrdersPage(){
+      this.$store.commit('orderStore/setOpenOrder', null);
+      this.$router.push({path: '/orders'})
     },
 
     async confirmOrder() {
