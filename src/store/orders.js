@@ -14,7 +14,7 @@ export default {
   },
 
   mutations: {
-    setOpenOrder(state, order){
+    setOpenOrder(state, order) {
       state.openOrder = order;
     },
     setOrderStatus(state, val) {
@@ -58,27 +58,26 @@ export default {
       }
     },
 
-    async openOrderDetail({commit}, order){
-      if(!order || !order._id) return false;
-      let orderID = order._id;
+    async openOrderDetail({ commit }, order) {
+      if (!order || !order._id) return false;
+      const orderID = order._id;
 
       try {
-        let {data} = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.getSingleOrderById + orderID,
-          method: 'get'
+          method: 'get',
         });
 
-        if(data.httpStatus === 200){
+        if (data.httpStatus === 200) {
           commit('setOpenOrder', data.responseData);
           return true;
         }
-        else {
-          return false;
-        }
+
+        return false;
       } catch (error) {
         throw new Error(error);
       }
-    }
+    },
   },
 
   getters: {
@@ -90,8 +89,8 @@ export default {
       return state.orders;
     },
 
-    openOrder(state){
+    openOrder(state) {
       return state.openOrder;
-    }
+    },
   },
 };

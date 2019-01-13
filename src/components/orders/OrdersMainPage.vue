@@ -31,7 +31,7 @@ export default {
   },
 
   async created() {
-    if(this.orderStatus.trim().length == 0){
+    if (this.orderStatus.trim().length == 0) {
       const status = 'RECEIVED';
       this.$store.commit('orderStore/setOrderStatus', status);
       try {

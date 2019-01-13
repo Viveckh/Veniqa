@@ -41,14 +41,14 @@ const router = new Router({
           children: [
             {
               path: '/',
-              component: OrdersMainPage
+              component: OrdersMainPage,
             },
             {
               path: 'orderdetail',
-              name:'orderdetail',
-              component: OrderDetail
-            }
-          ]
+              name: 'orderdetail',
+              component: OrderDetail,
+            },
+          ],
         },
 
         {
