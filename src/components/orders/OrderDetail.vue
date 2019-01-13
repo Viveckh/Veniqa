@@ -13,8 +13,8 @@
       <hr>
 
       <div class="order-item-pane">
-        <div v-for="(item, itemInd) in openOrder.cart.items" v-bind:key="itemInd">
-          <single-list-item :data="item" :dataIndex="itemInd+1"/>
+        <div v-for="(item, itemInd) in openOrder.cart.items" v-bind:key="itemInd" :class="{'list-row': itemInd % 2 == 0}">
+          <single-list-item :data="item" :dataIndex="itemInd+1" :orderStatus="openOrder.overall_status"/>
         </div>
       </div>
     </div>

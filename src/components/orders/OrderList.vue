@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(order, orderId) in orders" v-bind:key="orderId">
+        <tr v-for="(order, orderId) in orders" v-bind:key="orderId" class="list-padding">
           <td>{{order._id}}</td>
           <td>{{order.overall_status}}</td>
           <td>{{order.cart.items.length}}</td>
@@ -77,5 +77,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.list-padding{
+  td{
+    padding: 10px 0px;
+  }
+}
 </style>
