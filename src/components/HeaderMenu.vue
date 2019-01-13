@@ -5,10 +5,10 @@
 
       <b-navbar-brand class="abs">
         <img
-          src="@/assets/transparent-logo.png"
+          src="@/assets/logo_transparent_blue_black.png"
           alt="VENIQA"
-          width="120px"
-          style="padding-top: 20px;"
+          width="180px"
+          style="padding-top: 5px;"
         >
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse" class="collapsible-content">
