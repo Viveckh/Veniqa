@@ -1,7 +1,7 @@
 <template>
   <div id="fulfilling">
     <div>
-      <b-modal centered title="Fulfill Order" visible ok-title="Fulfill" hide-footer>
+      <b-modal centered no-close-on-backdrop no-close-on-esc title="Fulfill Order" visible ok-title="Fulfill" hide-footer @hide="cancelClicked()">
         <b-form-group horizontal :label-cols="4" label="Store" label-for="store">
           <b-form-select
             v-model="detail.store"
@@ -128,9 +128,9 @@ export default {
         return;
       }
       const dataToSend = _.cloneDeep(this.detail);
+
       if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
       this.$emit('fulfill', dataToSend);
-      this.detail = null;
     },
 
     validateForm() {
@@ -154,22 +154,22 @@ export default {
 
   computed: {
     storeState() {
-      if (!this.detail || this.detail.store == null) return null;
+      if (this.detail == null || this.detail.store == null) return null;
       return this.detail.store.length > 0;
     },
 
     orderNumState() {
-      if (this.detail.orderNumber == null) return null;
+      if (this.detail == null || this.detail.orderNumber == null) return null;
       return this.detail.orderNumber.length > 0;
     },
 
     customStoreState() {
-      if (this.detail.customStore == null) return null;
+      if (this.detail == null || this.detail.customStore == null) return null;
       return this.detail.customStore.length > 0;
     },
 
     costState() {
-      if (this.detail.totalCostPriceOfItemUSD == null) return null;
+      if (this.detail == null || this.detail.totalCostPriceOfItemUSD == null) return null;
       return this.detail.totalCostPriceOfItemUSD > 0;
     },
   },
