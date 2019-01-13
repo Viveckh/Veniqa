@@ -1,18 +1,16 @@
 import shoppingService from "../services/shoppingService";
+import httpStatus from 'http-status-codes';
 
 export default {
     async addToCart(req, res, next) {
         let response;
         try {
             response = await shoppingService.addToCart(req.user, req.body);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Add to cart failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in addToCart Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -20,14 +18,11 @@ export default {
         let response;
         try {
             response = await shoppingService.getCart(req.user);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Getting cart failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in getCart Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -35,14 +30,11 @@ export default {
         let response;
         try {
             response = await shoppingService.updateCart(req.user, req.body.cartItems);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Updating cart failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in updateCart Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -50,14 +42,11 @@ export default {
         let response;
         try {
             response = await shoppingService.deleteFromCart(req.user, req.body.cartItemIds);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Deletion from cart failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in deleteFromCart Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 

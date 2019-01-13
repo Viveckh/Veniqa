@@ -3,7 +3,6 @@ import validator from 'validator';
 const Schema = mongoose.Schema;
 import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 
-import colorSchema from './color';
 import weightSchema from './weight';
 import priceSchema from './price';
 
@@ -34,13 +33,9 @@ let cartItemSchema = new mongoose.Schema({
             currency: 'USD'
         }
     },
-    color: {
-        type: colorSchema,
-        required: false,
-    },
-    size: {
-        type: String,
-        required: false
+    customizations: {
+        type: Map,
+        of: String
     }
 });
 
@@ -54,22 +49,6 @@ let cartSchema = new mongoose.Schema({
         required: true
     },
     subTotalPrice: {
-        type: priceSchema,
-        required: true
-    },
-    serviceCharge: {
-        type: priceSchema,
-        required: true
-    },
-    shippingPrice: {
-        type: priceSchema,
-        required: true
-    },
-    tariffPrice: {
-        type: priceSchema,
-        required: true
-    },
-    totalPrice: {
         type: priceSchema,
         required: true
     }
