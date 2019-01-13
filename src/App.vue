@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <notifications group="all" width="100%" position="bottom center" />
+    <notifications group="all" width="100%" position="bottom center"/>
 
     <router-view/>
   </div>
@@ -31,7 +31,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,14 +58,17 @@ body {
   margin: 0px !important;
 }
 
-.notifications{
-  .notification-wrapper{
-  width: 100vw;
+p {
+  color: #212529;
+}
+
+.notifications {
+  .notification-wrapper {
+    width: 100vw;
   }
 
-  span{
+  span {
     display: block;
   }
 }
-
 </style>

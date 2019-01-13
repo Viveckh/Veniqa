@@ -49,7 +49,7 @@ export default {
   components: {},
   methods: {
     navigate(path) {
-      this.$router.push(path);
+      this.$router.push({ path: `/${path}` });
     },
   },
 };

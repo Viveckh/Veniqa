@@ -51,8 +51,14 @@ export default {
 
     async openOrder(order) {
       try {
-        const isSuccess = await this.$store.dispatch('orderStore/openOrderDetail');
+        const isSuccess = await this.$store.dispatch('orderStore/openOrderDetail', order);
+        if (!isSuccess) {
+          throw new Error('Failed');
+        } else {
+          this.$router.push('orders/orderdetail');
+        }
       } catch (error) {
+        console.log('Error occured', error);
         this.$notify({
           group: 'all',
           type: 'error',

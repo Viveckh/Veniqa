@@ -10,9 +10,13 @@ export default {
     orderStatus: '',
 
     pagination: {},
+    openOrder: null,
   },
 
   mutations: {
+    setOpenOrder(state, order) {
+      state.openOrder = order;
+    },
     setOrderStatus(state, val) {
       state.orderStatus = val;
     },
@@ -53,6 +57,27 @@ export default {
         throw new Error(error);
       }
     },
+
+    async openOrderDetail({ commit }, order) {
+      if (!order || !order._id) return false;
+      const orderID = order._id;
+
+      try {
+        const { data } = await Vue.prototype.$axios({
+          url: ProxyUrl.getSingleOrderById + orderID,
+          method: 'get',
+        });
+
+        if (data.httpStatus === 200) {
+          commit('setOpenOrder', data.responseData);
+          return true;
+        }
+
+        return false;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
 
   getters: {
@@ -62,6 +87,10 @@ export default {
 
     orders(state) {
       return state.orders;
+    },
+
+    openOrder(state) {
+      return state.openOrder;
     },
   },
 };
