@@ -12,7 +12,7 @@
         </b-col>
         <b-col md="3">
           <span v-if="data.order_line_level_processing_details">
-            Status:
+            
             <span class="item-status">{{data.order_line_level_processing_details.status}}</span>
           </span>
         </b-col>
@@ -20,7 +20,9 @@
           <div v-if="data.order_line_level_processing_details">
             <div class="align-right">
               <b-btn
-                v-if="data.order_line_level_processing_details.status == 'PROCESSING'"
+                variant="primary"
+                size="sm"
+                v-if="data.order_line_level_processing_details.status == 'PROCESSING' && orderStatus != 'RECEIVED'"
               >Mark as fulfilling</b-btn>
             </div>
           </div>
@@ -121,11 +123,6 @@ export default {
     }
   }
 
-  .item-status {
-    padding: 3px 15px;
-    border-radius: 15px;
-    color: white;
-    background-color: $primary-green;
-  }
+
 }
 </style>

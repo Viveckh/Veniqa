@@ -137,3 +137,10 @@ a{
 .header-margin-top{
   margin-top: 1rem;
 }
+
+.item-status {
+  padding: 3px 15px;
+  border-radius: 15px;
+  color: white;
+  background-color: $primary-green;
+}
