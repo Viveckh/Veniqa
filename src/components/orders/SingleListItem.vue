@@ -5,7 +5,10 @@
         <b-col md="6">
           {{data.product.brand}}
           <br>
-          <strong>{{data.product.name}}</strong>
+          <strong>{{data.product.name}}</strong><br>
+          <a :href="data.product.item_url" target="_blank" style="color: blue">Product Url</a> | 
+          <a :href="'https://www.google.com'" target="_blank" style="color: blue">Veniqa Url</a>
+          
         </b-col>
         <b-col md="3">
           <span v-if="data.order_line_level_processing_details">
@@ -16,7 +19,9 @@
         <b-col md="3">
           <div v-if="data.order_line_level_processing_details">
             <div class="align-right">
-              <b-btn v-if="data.order_line_level_processing_details.status == 'PROCESSING'">Mark as fulfilling</b-btn>
+              <b-btn
+                v-if="data.order_line_level_processing_details.status == 'PROCESSING'"
+              >Mark as fulfilling</b-btn>
             </div>
           </div>
         </b-col>
@@ -58,15 +63,17 @@
       </div>
 
       <div :id="'item'+dataIndex" class="collapse" aria-labelledby="headingOne">
-        <div
-          class="card-body"
-        >Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+        <div class="card-body">
+          <item-order-description :item="data" :orderStatus="orderStatus"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
+
 export default {
   name: "SingleListItem",
   props: {
@@ -84,6 +91,10 @@ export default {
       required: true,
       type: String
     }
+  },
+
+  components: {
+    ItemOrderDescription
   },
 
   data() {
