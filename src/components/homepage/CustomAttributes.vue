@@ -2,7 +2,7 @@
   <div id="custom-attribute">
     <b-btn @click="addRow()" size="sm">Add a row</b-btn>
     <div class="attrib-space"></div>
-    <div v-for="(attrib, aInd) in attributes" v-bind:key="aInd" class="form-row" v-bind:class="{'row': aInd % 2 == 0}">
+    <div v-for="(attrib, aInd) in attributes" v-bind:key="aInd" class="form-row" v-bind:class="{'list-row': aInd % 2 == 0}">
       <attribute-row :index="aInd" :row="attrib" @delete="deleteRow(aInd)"/>
     </div>
     <div class="space" v-if="attributes.length ==0"></div>
@@ -91,9 +91,7 @@ export default {
 <style lang="scss" scoped>
 
 #custom-attribute{
-  .row {
-    background: #f6f5f3;
-  }
+
 
   .form-row{
     margin: 5px 0px;
