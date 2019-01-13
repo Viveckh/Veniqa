@@ -37,6 +37,24 @@ export default {
   },
 
   actions: {
+    async fulfillItem({ commit, state }, fulfillmentDetail) {
+      try {
+        const { data } = await Vue.prototype.$axios({
+          method: 'POST',
+          url: ProxyUrl.fulfillOrder,
+          data: fulfillmentDetail,
+        });
+
+        if (data.httpStatus == 200) {
+          commit('setOpenOrder', data.responseData);
+          return true;
+        }
+
+        return false;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     /**
      *Confirm the open order (state.openOrder)
      *
@@ -64,6 +82,7 @@ export default {
         throw new Error(error);
       }
     },
+
     async getOrdersByStatus({ commit }, status) {
       let reqObj = {
         orderStatus: status,

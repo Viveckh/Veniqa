@@ -36,6 +36,7 @@
             :data="item"
             :dataIndex="itemInd+1"
             :orderStatus="openOrder.overall_status"
+            :order="openOrder"
           />
         </div>
       </div>
