@@ -392,7 +392,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[{\n\t\"product\": \"5c1039844703bd008136d2a0\",\n\t\"color\": {\n\t\t\"name\": \"Brown\",\n\t\t\"hexValue\": \"#DC143C\"\n\t},\n\t\"counts\": 2,\n\t\"size\": \"S\"\n}]"
+							"raw": "[{\n\t\"product\": \"5c3920c4e0bdef00918f6a04\",\n\t\"counts\": 2,\n\t\"customizations\": {\n\t\t\"size\": \"S\"\n\t}\n}]"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/addToCart",
@@ -421,7 +421,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cartItems\": [\n\t\t{\n\t\t\t\"_id\": \"5c12e581ec100827fb75f5cf\",\n\t\t\t\"product\": \"5c1039844703bd008136d2a0\",\n\t\t\t\"counts\": 5,\n\t\t\t\"color\": {\n                \"name\": \"Black\",\n                \"hexValue\": \"#000000\"\n            },\n            \"size\": \"M\"\n\t\t\t\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"cartItems\": [\n\t\t{\n\t\t\t\"_id\": \"5c3ade8f908d26990c884d26\",\n\t\t\t\"product\": \"5c3920c4e0bdef00918f6a04\",\n\t\t\t\"counts\": 5,\n\t\t\t\"customizations\": {\n\t\t\t\t\"size\": \"M\"\n\t\t\t}\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/updateCart",
@@ -479,7 +479,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cartItemIds\": [\n\t\t\"5c12e581ec100827fb75f5cf\"\n\t]\n}"
+							"raw": "{\n\t\"cartItemIds\": [\n\t\t\"5c3add6a944f7498fe0eded5\"\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/deleteFromCart",
