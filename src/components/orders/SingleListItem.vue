@@ -6,9 +6,9 @@
           {{data.product.brand}}
           <br>
           <strong>{{data.product.name}}</strong><br>
-          <a :href="data.product.item_url" target="_blank" style="color: blue">Product Url</a> | 
+          <a :href="data.product.item_url" target="_blank" style="color: blue">Product Url</a> |
           <a :href="'https://www.google.com'" target="_blank" style="color: blue">Veniqa Url</a>
-          
+
         </b-col>
         <b-col md="3">
           <span v-if="data.order_line_level_processing_details">
@@ -42,7 +42,7 @@
         </b-col>
         <b-col sm="6" v-if="data.order_line_level_processing_details">
           <strong>Store:</strong>
-          {{data.order_line_level_processing_details.store}}
+          {{data.product.store}}
           <br>
         </b-col>
       </b-row>
@@ -75,31 +75,31 @@
 import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
 
 export default {
-  name: "SingleListItem",
+  name: 'SingleListItem',
   props: {
     data: {
       required: true,
-      type: Object
+      type: Object,
     },
 
     dataIndex: {
       required: true,
-      type: Number
+      type: Number,
     },
 
     orderStatus: {
       required: true,
-      type: String
-    }
+      type: String,
+    },
   },
 
   components: {
-    ItemOrderDescription
+    ItemOrderDescription,
   },
 
   data() {
     return {};
-  }
+  },
 };
 </script>
 

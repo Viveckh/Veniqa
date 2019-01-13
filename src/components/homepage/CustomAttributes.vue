@@ -91,7 +91,7 @@ export default {
 <style lang="scss" scoped>
 
 #custom-attribute{
-  
+
 
   .form-row{
     margin: 5px 0px;

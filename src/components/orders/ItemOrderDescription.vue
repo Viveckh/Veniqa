@@ -110,38 +110,38 @@
 import moment from 'moment';
 
 export default {
-  name: "ItemOrderDescription",
+  name: 'ItemOrderDescription',
   props: {
     item: {
       required: true,
-      type: Object
+      type: Object,
     },
 
     orderStatus: {
       required: true,
-      type: String
-    }
+      type: String,
+    },
   },
 
   data() {
     return {
-      DATE_FORMAT: "dddd, MMMM Do YYYY, h:mm:ss a",
-    }
+      DATE_FORMAT: 'dddd, MMMM Do YYYY, h:mm:ss a',
+    };
   },
 
   methods: {
-    formattedDate(dateString){
-      let obj = moment(dateString);
-      return obj.format(this.DATE_FORMAT)
-    }
+    formattedDate(dateString) {
+      const obj = moment(dateString);
+      return obj.format(this.DATE_FORMAT);
+    },
   },
 
   computed: {
     displayFulfillmentOrder() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status != "PROCESSING" &&
-        this.orderStatus != "RECEIVED"
+        this.item.order_line_level_processing_details.status != 'PROCESSING'
+        && this.orderStatus != 'RECEIVED'
       );
     },
 
@@ -153,16 +153,16 @@ export default {
     displayShipment() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status != "PROCESSING" &&
-        this.orderStatus != "RECEIVED" &&
-        this.item.order_line_level_processing_details.status != "FULFILLING"
+        this.item.order_line_level_processing_details.status != 'PROCESSING'
+        && this.orderStatus != 'RECEIVED'
+        && this.item.order_line_level_processing_details.status != 'FULFILLING'
       );
     },
 
     displayDelivery() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status == "DELIVERED"
+        this.item.order_line_level_processing_details.status == 'DELIVERED'
       );
     },
 
@@ -172,8 +172,8 @@ export default {
 
     deliveryDetail() {
       return this.item.order_line_level_processing_details.delivery;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -185,4 +185,3 @@ export default {
   }
 }
 </style>
-
