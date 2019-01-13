@@ -5,7 +5,6 @@
         <tr>
           <th>Order ID</th>
           <th>Order Status</th>
-          <th>Total Items</th>
           <th>Total Weight</th>
           <th>Price</th>
           <th>Actions</th>
@@ -15,7 +14,6 @@
         <tr v-for="(order, orderId) in orders" v-bind:key="orderId" class="list-padding">
           <td>{{order._id}}</td>
           <td>{{order.overall_status}}</td>
-          <td>{{order.cart.items.length}}</td>
           <td>{{order.cart.totalWeight.quantity}} {{order.cart.totalWeight.unit}}</td>
           <td>$ {{paymentInfo(order.payment_info)}}</td>
           <td>
@@ -79,7 +77,8 @@ export default {
 <style lang="scss" scoped>
 .list-padding{
   td{
-    padding: 10px 0px;
+    padding: 0.3rem;
+    padding-top: 10px;
   }
 }
 </style>
