@@ -254,7 +254,36 @@
 			"name": "Orders",
 			"item": [
 				{
-					"name": "initiateCheckout",
+					"name": "createCheckout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"addressId\": \"5c3cb47ad818c59ff5e73de9\",\n\t\"shippingMethod\": \"No Rush Shipping\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/createCheckout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"createCheckout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaymentToken",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -267,16 +296,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cart\": {\n\t\t\"items\": [\n\t        {\n\t            \"counts\": 6,\n\t            \"aggregatedWeight\": {\n\t                \"quantity\": 19.2,\n\t                \"unit\": \"LB\"\n\t            },\n\t            \"aggregatedPrice\": {\n\t                \"amount\": 653.4,\n\t                \"currency\": \"USD\"\n\t            },\n\t            \"_id\": \"5c12e14a2e9266272a8c535c\",\n\t            \"product\": {\n\t                \"thumbnailUrls\": [\n\t                    \"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f\",\n\t                    \"https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8\"\n\t                ],\n\t                \"_id\": \"5c1039844703bd008136d2a0\",\n\t                \"store\": \"AMAZON\",\n\t                \"brand\": \"BEVERLY HILLS KAY\",\n\t                \"name\": \"Amrezy Highlighter LOL Damn Update\",\n\t                \"price\": {\n\t                    \"amount\": 108.9,\n\t                    \"currency\": \"USD\"\n\t                },\n\t                \"weight\": {\n\t                    \"quantity\": 3.2,\n\t                    \"unit\": \"LB\"\n\t                }\n\t            },\n\t            \"color\": {\n\t                \"name\": \"Brown\",\n\t                \"hexValue\": \"#DC143C\"\n\t            },\n\t            \"size\": \"S\"\n\t        }\n\t    ],\n\t    \"totalWeight\": {\n\t        \"quantity\": 19.2,\n\t        \"unit\": \"LB\"\n\t    },\n\t    \"subTotalPrice\": {\n\t        \"amount\": 653.4,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"serviceCharge\": {\n\t        \"amount\": 19.6,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"shippingPrice\": {\n\t        \"amount\": 288,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"tariffPrice\": {\n\t        \"amount\": 32.67,\n\t        \"currency\": \"USD\"\n\t    },\n\t    \"totalPrice\": {\n\t        \"amount\": 993.67,\n\t        \"currency\": \"USD\"\n\t    }\n\t},\n\t\"addressId\": \"5c1035aed8022d0e3050b852\",\n\t\"paymentSource\": \"BKASH\"\n}"
+							"raw": "{\n\t\"checkoutId\": \"5c3cdcfa0db149a1a320c790\",\n\t\"paymentSource\": \"BKASH\"\n}"
 						},
 						"url": {
-							"raw": "{{server}}/orders/initiateCheckout",
+							"raw": "{{server}}/orders/createPaymentToken",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"orders",
-								"initiateCheckout"
+								"createPaymentToken"
 							]
 						}
 					},
@@ -296,7 +325,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"paymentId\": \"016f2382cb32579a50c48bbebf866555b43ca533\"\n}"
+							"raw": "{\n\t\"paymentSource\": \"BKASH\",\n\t\"paymentId\": \"bae46a9c711cabb6355b179fd51dc95ab0207b43\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/completeCheckout",

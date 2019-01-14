@@ -8,7 +8,9 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Orders' });
 });
 
-router.post('/initiateCheckout', passportAuth.isAuthenticated, orderController.initiateCheckout);
+router.post('/createCheckout', passportAuth.isAuthenticated, orderController.createCheckout);
+
+router.post('/createPaymentToken', passportAuth.isAuthenticated, orderController.createPaymentToken);
 
 router.post('/completeCheckout', passportAuth.isAuthenticated, orderController.completeCheckout);
 

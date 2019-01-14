@@ -93,7 +93,7 @@ export default {
         }
     },
 
-    async getCart(userObj, returnAllProductProps=false) {
+    async getCart(userObj, returnAllProductProps=false, save=true) {
         let result = {};
         try {
             let user;
@@ -121,8 +121,10 @@ export default {
             // Call the recalculate cart function 
             user.cart = this.recalculatePopulatedCart(user.cart);
             
-            // Save with recalculated cart, and interestingly it seems to unpopulate the additional sections added during populate function above automatically
-            user = await user.save()
+            // If save is true, save the recalculated cart, and interestingly it seems to unpopulate the additional sections added during populate function above automatically
+            if (save) {
+                user = await user.save()
+            }
 
             // If saving is unsuccessful, return failure message
             if (!(user && user.cart)) {
