@@ -9,7 +9,6 @@ import STORES_ARRAY from '../reference-data-files/stores.json';
 let fulfillmentOrderLineLevelSchema = new mongoose.Schema({
     store: {
         type: String,
-        enum: STORES_ARRAY,
         required: true
     },
     order_number: {
