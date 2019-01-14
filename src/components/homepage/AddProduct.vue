@@ -165,7 +165,7 @@
         <b-form-group horizontal :label-cols="2" label="Attributes">
           <b-btn size="sm" @click="showAttributes = true">Add Attributes</b-btn>
 
-          <table class="table table-sm attrib-table" v-if="product.customizationOptions && product.customizationOptions.length > 0">
+          <table class="table table-sm attrib-table" v-if="product.customizationOptions.customizations && product.customizationOptions.customizations.length > 0">
             <thead>
               <tr>
                 <th>Name</th>
@@ -175,7 +175,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(attrib, aind) in product.customizationOptions" v-bind:key="aind">
+              <tr v-for="(attrib, aind) in product.customizationOptions.customizations" v-bind:key="aind">
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
@@ -188,7 +188,7 @@
           </table>
 
           <b-modal v-model="showAttributes" centered id="modal1" title="Add Attributes" hide-footer>
-            <custom-attributes :propValue="product.custom_attributes" @cancel="cancelAttribModal" @save="saveAttributes"/>
+            <custom-attributes :propValue="product.customizationOptions.customizations" @cancel="cancelAttribModal" @save="saveAttributes"/>
 
           </b-modal>
         </b-form-group>
@@ -450,7 +450,9 @@ export default {
           unit: 'LB',
         },
         custom_attributes: {},
-        customizationOptions: [],
+        customizationOptions: {
+          customizations: []
+        },
         details_html:
           'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
@@ -564,8 +566,8 @@ export default {
     },
 
     saveAttributes(attribs) {
-      this.product.customizationOptions = [];
-      this.product.customizationOptions.push(...attribs);
+      this.product.customizationOptions.customizations = [];
+      this.product.customizationOptions.customizations.push(...attribs);
       this.showAttributes = false;
     },
     /**
