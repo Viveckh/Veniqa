@@ -31,9 +31,9 @@ export default {
   },
 
   async created() {
-    if (this.orderStatus.trim().length == 0) {
-      const status = 'RECEIVED';
-      this.$store.commit('orderStore/setOrderStatus', status);
+    const status = this.orderStatus.trim().length == 0 ? 'RECEIVED' : this.orderStatus;
+
+    this.$store.commit('orderStore/setOrderStatus', status);
       try {
         const data = await this.$store.dispatch(
           'orderStore/getOrdersByStatus',
@@ -46,7 +46,6 @@ export default {
           text: `Error occured while getting orders with status: ${status}`,
         });
       }
-    }
   },
 
   methods: {
