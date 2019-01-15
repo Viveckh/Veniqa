@@ -9,6 +9,7 @@
     "devstart": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "aws-sdk": "^2.372.0",
     "bcrypt-nodejs": "0.0.3",
     "connect-redis": "^3.4.0",

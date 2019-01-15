@@ -1,6 +1,6 @@
 import User from '../database/models/user';
 import cryptoGen from '../authentication/cryptoGen';
-import emailService from './emailService';
+import emailService from './emailServiceSendgrid';
 
 export default {
     async createAdmin(userObj) {
