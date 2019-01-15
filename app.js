@@ -66,7 +66,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Configure sessions
 app.use(session({
   genid: (req) => {
-    console.log("[SESSION]: Generating new session id: ", req.sessionID);
     return uuidv4() // Use UUIDs for session IDs
   },
   store: new RedisStore({

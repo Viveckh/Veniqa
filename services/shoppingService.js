@@ -42,7 +42,7 @@ export default {
 
                 // Check to see if the product and choice combos already exists in user's cart
                 let index = _.findIndex(user.cart.items, (item) => {
-                    if (_.isEqual(item.product.toString(), entry.product) && _.isEqual(item.customizations.toJSON(), entry.customizations)) {
+                    if (_.isEqual(item.product.toString(), entry.product) && _.isEqual(item.customizations ? item.customizations.toJSON() : item.customizations, entry.customizations)) {
                         return true;
                     }
                     return false;
