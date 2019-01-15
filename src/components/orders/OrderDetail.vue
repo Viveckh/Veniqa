@@ -80,9 +80,9 @@ export default {
       this.showConfirmation = false;
     },
 
-    goToOrdersPage(){
+    goToOrdersPage() {
       this.$store.commit('orderStore/setOpenOrder', null);
-      this.$router.push({path: '/orders'})
+      this.$router.push({ path: '/orders' });
     },
 
     async confirmOrder() {

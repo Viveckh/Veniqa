@@ -39,4 +39,6 @@ export default {
   getSingleOrderById: '/orders/order?orderId=',
   confirmOrder: '/orders/confirmOrder',
   fulfillOrder: '/orders/markItemAsFulfilling',
+  markShipped: '/orders/markItemAsShipped',
+  markDelivered: '/orders/markItemAsDelivered',
 };

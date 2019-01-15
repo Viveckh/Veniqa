@@ -75,7 +75,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <div class="footer">
+        <div class="footer-modal">
           <hr>
           <div class="align-right">
             <b-btn @click="cancelClicked()" size="sm">Cancel</b-btn>
@@ -179,9 +179,7 @@ export default {
 <style lang="scss" scoped>
 #fulfilling {
   .footer {
-    button {
-      margin-left: 10px;
-    }
+
   }
 }
 </style>
