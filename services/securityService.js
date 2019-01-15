@@ -1,7 +1,7 @@
 import User from '../database/models/user';
 import cryptoGen from '../authentication/cryptoGen';
 import tokenValidityConfig from '../properties/tokenValidity';
-import emailService from './emailService';
+import emailService from './emailServiceSendgrid';
 
 /**
  * This service performs security related tasks, like signup

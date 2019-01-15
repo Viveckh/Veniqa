@@ -31,7 +31,7 @@ let customizationOptionsSchema = new mongoose.Schema({
 
 var docArray = customizationOptionsSchema.path('customizations');
 
-docArray.discriminator('colorsArray', new mongoose.Schema({
+docArray.discriminator('Colors', new mongoose.Schema({
     values: {
         type: [colorSchema],
         required: true,
@@ -44,7 +44,7 @@ docArray.discriminator('colorsArray', new mongoose.Schema({
     }
 }, {_id: false}));
 
-docArray.discriminator('stringArray', new mongoose.Schema({
+docArray.discriminator('Array', new mongoose.Schema({
     values: {
         type: [String],
         required: true,
@@ -57,7 +57,7 @@ docArray.discriminator('stringArray', new mongoose.Schema({
     }
 }, {_id: false}))
 
-docArray.discriminator('toggle', new mongoose.Schema({
+docArray.discriminator('Toggle', new mongoose.Schema({
     values: {
         type: [String], 
         required: true,
