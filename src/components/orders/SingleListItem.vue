@@ -27,8 +27,9 @@
 
               <b-btn
                 variant="primary"
-                size="sm" disabled
+                size="sm"
                 v-if="data.order_line_level_processing_details.status == 'FULFILLING' && orderStatus != 'RECEIVED'"
+                @click="shippingModalShow = true"
               >Mark as shipped</b-btn>
             </div>
           </div>
@@ -83,12 +84,19 @@
       @cancel="fulfillingModalShow = false"
       @fulfill="fulfillItemOrder"
     />
+
+    <shipping-modal
+      v-if="shippingModalShow"
+      @cancel="shippingModalShow = false"
+      @ship="markAsShipped"
+    />
   </div>
 </template>
 
 <script>
 import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
 import FulfillingModal from '@/components/orders/FulfillingModal';
+import ShippingModal from '@/components/orders/ShippingModal';
 
 export default {
   name: 'SingleListItem',
@@ -117,15 +125,43 @@ export default {
   components: {
     ItemOrderDescription,
     FulfillingModal,
+    ShippingModal,
   },
 
   data() {
     return {
       fulfillingModalShow: false,
+      shippingModalShow: false,
     };
   },
 
   methods: {
+    async markAsShipped(shippingDetails) {
+      if (!shippingDetails) return;
+
+      shippingDetails.orderId = this.order._id;
+      shippingDetails.cartItemId = this.data._id;
+
+      try {
+        const isSuccess = await this.$store.dispatch('orderStore/markAsShipped', shippingDetails);
+        if (isSuccess) {
+          this.shippingModalShow = false;
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text: 'The item has been marked as shipped.',
+          });
+        }
+      } catch (error) {
+        console.log('Error', error);
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'An error occured while trying to fulfill the order. Please try again later.',
+        });
+      }
+    },
+
     async fulfillItemOrder(fulfillDetails) {
       if (!fulfillDetails) return;
       fulfillDetails.cartItemId = this.data._id;

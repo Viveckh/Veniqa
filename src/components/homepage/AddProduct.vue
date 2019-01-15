@@ -451,7 +451,7 @@ export default {
         },
         custom_attributes: {},
         customizationOptions: {
-          customizations: []
+          customizations: [],
         },
         details_html:
           'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',

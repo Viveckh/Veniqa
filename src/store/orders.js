@@ -37,6 +37,25 @@ export default {
   },
 
   actions: {
+    async markAsShipped({ commit, state }, shippingDetail) {
+      try {
+        const { data } = await Vue.prototype.$axios({
+          method: 'POST',
+          url: ProxyUrl.markShipped,
+          data: shippingDetail,
+        });
+
+        if (data.httpStatus == 200) {
+          commit('setOpenOrder', data.responseData);
+          return true;
+        }
+
+        return false;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+
     async fulfillItem({ commit, state }, fulfillmentDetail) {
       try {
         const { data } = await Vue.prototype.$axios({

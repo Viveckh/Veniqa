@@ -21,30 +21,30 @@
 
 <script>
 export default {
-  name: "ConfirmationPage",
+  name: 'ConfirmationPage',
   props: {
     title: {
       required: false,
       type: String,
-      default: "Are you sure?"
+      default: 'Are you sure?',
     },
 
     text: {
       required: false,
       type: String,
-      default: "Please choose Yes/No"
-    }
+      default: 'Please choose Yes/No',
+    },
   },
 
   methods: {
     yesTriggered() {
-      this.$emit("yes");
+      this.$emit('yes');
     },
 
     noTriggered() {
-      this.$emit("no");
-    }
-  }
+      this.$emit('no');
+    },
+  },
 };
 </script>
 
