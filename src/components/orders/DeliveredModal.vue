@@ -1,0 +1,79 @@
+<template>
+  <div id="delivered">
+    <div>
+      <b-modal
+        centered
+        no-close-on-backdrop
+        no-close-on-esc
+        title="Delivery Info"
+        visible
+        ok-title="Fulfill"
+        hide-footer
+        @hide="cancelClicked()"
+      >
+        <b-row>
+          <b-col md="4">Delivery Date</b-col>
+          <b-col md="8">
+            <datetime type="datetime" v-model="detail.deliveryDate" class="theme-orange"></datetime>
+          </b-col>
+        </b-row>
+
+        <div class="footer-modal">
+          <hr>
+          <div class="align-right">
+            <b-btn @click="cancelClicked()" size="sm">Cancel</b-btn>
+            <b-btn @click="okClicked()" variant="primary" size="sm">Mark as Shipped</b-btn>
+          </div>
+        </div>
+      </b-modal>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'DeliveredModal',
+  data() {
+    return {
+      detail: null,
+    };
+  },
+
+  created() {
+    this.detail = {
+      deliveryDate: null,
+    };
+
+    if (this.deliveryDetail) {
+      this.detail.deliveryDate = this.deliveryDetail.delivery_date;
+    }
+  },
+
+  methods: {
+    okClicked() {
+      const validate = this.validateForm();
+      if (!validate || validate == null) {
+        return;
+      }
+      const dataToSend = _.cloneDeep(this.detail);
+
+      // if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
+      this.$emit('delivered', dataToSend);
+    },
+
+    cancelClicked() {
+      this.$emit('cancel');
+      this.detail = null;
+    },
+
+    validateForm() {
+      return this.detail.deliveryDate != null;
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+#delivered {
+}
+</style>

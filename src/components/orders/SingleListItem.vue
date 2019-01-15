@@ -31,6 +31,13 @@
                 v-if="data.order_line_level_processing_details.status == 'FULFILLING' && orderStatus != 'RECEIVED'"
                 @click="shippingModalShow = true"
               >Mark as shipped</b-btn>
+
+              <b-btn
+                variant="primary"
+                size="sm"
+                v-if="data.order_line_level_processing_details.status == 'SHIPPED' && orderStatus != 'RECEIVED'"
+                @click="deliveredModalShow = true"
+              >Mark as Delivered</b-btn>
             </div>
           </div>
         </b-col>
@@ -90,6 +97,12 @@
       @cancel="shippingModalShow = false"
       @ship="markAsShipped"
     />
+
+    <delivered-modal
+      v-if="deliveredModalShow"
+      @cancel="deliveredModalShow = false"
+      @delivered="markAsDelivered"
+    />
   </div>
 </template>
 
@@ -97,6 +110,8 @@
 import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
 import FulfillingModal from '@/components/orders/FulfillingModal';
 import ShippingModal from '@/components/orders/ShippingModal';
+import DeliveredModal from '@/components/orders/DeliveredModal';
+import moment from 'moment';
 
 export default {
   name: 'SingleListItem',
@@ -126,16 +141,50 @@ export default {
     ItemOrderDescription,
     FulfillingModal,
     ShippingModal,
+    DeliveredModal,
   },
 
   data() {
     return {
       fulfillingModalShow: false,
       shippingModalShow: false,
+      deliveredModalShow: false,
     };
   },
 
   methods: {
+    async markAsDelivered(deliveryDetail) {
+      if (!deliveryDetail) return;
+      deliveryDetail.orderId = this.order._id;
+      deliveryDetail.cartItemId = this.data._id;
+
+      deliveryDetail.deliveryDate = moment(
+        deliveryDetail.deliveryDate,
+      ).format();
+
+      try {
+        const isSuccess = await this.$store.dispatch(
+          'orderStore/markAsDelivered',
+          deliveryDetail,
+        );
+        if (isSuccess) {
+          this.deliveredModalShow = false;
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text: 'The item has been marked as shipped.',
+          });
+        }
+      } catch (error) {
+        console.log('Error', error);
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text:
+            'An error occured while trying to fulfill the order. Please try again later.',
+        });
+      }
+    },
     async markAsShipped(shippingDetails) {
       if (!shippingDetails) return;
 
@@ -143,7 +192,10 @@ export default {
       shippingDetails.cartItemId = this.data._id;
 
       try {
-        const isSuccess = await this.$store.dispatch('orderStore/markAsShipped', shippingDetails);
+        const isSuccess = await this.$store.dispatch(
+          'orderStore/markAsShipped',
+          shippingDetails,
+        );
         if (isSuccess) {
           this.shippingModalShow = false;
           this.$notify({
@@ -157,7 +209,8 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'An error occured while trying to fulfill the order. Please try again later.',
+          text:
+            'An error occured while trying to fulfill the order. Please try again later.',
         });
       }
     },
@@ -167,7 +220,10 @@ export default {
       fulfillDetails.cartItemId = this.data._id;
       fulfillDetails.orderId = this.order._id;
       try {
-        const isSuccess = await this.$store.dispatch('orderStore/fulfillItem', fulfillDetails);
+        const isSuccess = await this.$store.dispatch(
+          'orderStore/fulfillItem',
+          fulfillDetails,
+        );
 
         if (isSuccess) {
           this.fulfillingModalShow = false;
@@ -182,7 +238,8 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'An error occured while trying to fulfill the order. Please try again later.',
+          text:
+            'An error occured while trying to fulfill the order. Please try again later.',
         });
       }
     },
