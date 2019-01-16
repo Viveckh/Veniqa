@@ -24,7 +24,7 @@ export default {
     async getProductDetails(productId) {
         let result = {};
         try {
-            let product = await Product.findOne({_id: productId}).exec()
+            let product = await Product.findOne({_id: productId}).populate('tariff').exec()
             if (product) {
                 result = {status: "successful", responseData: product};
             } 

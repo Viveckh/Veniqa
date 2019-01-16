@@ -23,6 +23,7 @@ let getDBConnection = async() => {
 getDBConnection();
 
 // Initializing the models and registering them to their models
+require("./models/tariffRate");
 require("./models/product")
 require("./models/user");
 

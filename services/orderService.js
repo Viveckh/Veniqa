@@ -95,11 +95,13 @@ export default {
             orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject();
             transformer.castValuesToString(orderCartFromSavedCheckout, "_id")
 
+            /*
             console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
             console.log("------------------------------------")
             console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
             console.log("------------------------------------")
             console.log("checking if checkout cart ids got modified", checkout.cart);
+            */
 
             // If what is in checkout record does not match what was freshly calculated, return a failure msg
             if (!_.isEqual(freshCalculatedCart, orderCartFromSavedCheckout)) {
@@ -220,16 +222,18 @@ export default {
             transformer.castValuesToString(shoppingCart, "_id")
 
             let tariffPriceInUSD = 0;
-
             // Calculating tariff
-            // TODO: Proper tariff rates need to be extracted from files
             for (let item of shoppingCart.items) {
-                tariffPriceInUSD += Math.round(0.05 * item.aggregatedPrice.amount * 100) / 100; // 5% tariff by default on all items for now
+                // TODO: Select proper country while calculating tariff
+                let tariffRate = item.product.tariff.rates['Nepal'] / 100; // This is freshly populated from the get cart above, so tariff will always be up to date value
+                tariffPriceInUSD += Math.round(tariffRate * item.aggregatedPrice.amount * 100) / 100;
             }
+
+            // Calculating shipping price
+            let shippingPriceInUSD = await this.calculateShippingPrice(shoppingCart.totalWeight.quantity)
 
             // Add other necessary key-values about pricing details necessary for it to be a qualified order cart
             let serviceChargeInUSD = Math.round(0.05 * shoppingCart.subTotalPrice.amount * 100) / 100; // 5% service charge on subtotalprice
-            let shippingPriceInUSD = Math.round(15 * shoppingCart.totalWeight.quantity * 100) / 100; //$15 per pound on total weight
             let totalPriceInUSD = Math.round((shoppingCart.subTotalPrice.amount + tariffPriceInUSD + serviceChargeInUSD + shippingPriceInUSD) * 100) / 100;
 
             shoppingCart['serviceCharge'] = {amount: serviceChargeInUSD, currency: 'USD'}; 
@@ -242,5 +246,11 @@ export default {
         catch(err) {
             throw err;
         }  
+    },
+
+    async calculateShippingPrice(country, shippingMethod, weight) {
+        let number_of_ten_pound_volumes = weight / 10;
+        let single_digit_volume = weight % 10;
+        return 15;
     }
 }

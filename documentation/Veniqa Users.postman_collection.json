@@ -102,7 +102,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"random\"\n}"
+							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"randomly\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/security/login",
@@ -384,7 +384,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/catalog/getProductDetails?productId=5c12d7bf3cd3920081f32ff6",
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c3fa7a557e8ccb8b6a0d188",
 							"host": [
 								"{{server}}"
 							],
@@ -395,7 +395,7 @@
 							"query": [
 								{
 									"key": "productId",
-									"value": "5c12d7bf3cd3920081f32ff6"
+									"value": "5c3fa7a557e8ccb8b6a0d188"
 								}
 							]
 						}
@@ -421,7 +421,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[{\n\t\"product\": \"5c3920c4e0bdef00918f6a04\",\n\t\"counts\": 2,\n\t\"customizations\": {\n\t\t\"size\": \"S\"\n\t}\n}]"
+							"raw": "[{\n\t\"product\": \"5c3fa7a557e8ccb8b6a0d188\",\n\t\"counts\": 2,\n\t\"customizations\": {\n\t\t\"size\": \"S\"\n\t}\n}]"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/addToCart",
