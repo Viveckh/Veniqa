@@ -18,7 +18,7 @@
         placeholder="Enter Email"
         aria-describedby="usernameFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="usernameFeedback">
+      <b-form-invalid-feedback id="usernameFeedback" class="align-left">
         <!-- This will only be shown if the preceeding input has an invalid state -->
         Enter a valid email address
       </b-form-invalid-feedback>
@@ -29,13 +29,12 @@
       v-if="!forgotEnabled"
         type="password"
         name="password"
-        :state="passwordState"
         v-model="password"
         @keyup.native.enter="loginClicked()"
         placeholder="Enter Password"
         aria-describedby="passwordFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="passwordFeedback">Enter at least 6 characters.</b-form-invalid-feedback>
+      <!-- <b-form-invalid-feedback id="passwordFeedback">Enter at least 6 characters.</b-form-invalid-feedback> -->
     </b-form-group>
 
     <p class="forget-password" v-if="!forgotEnabled" @click="forgetPassword()">Forgot Password?</p>
@@ -75,7 +74,7 @@ export default {
     },
 
     loginClicked() {
-      if (this.usernameState && this.passwordState) {
+      if (this.usernameState) {
         this.$emit('login', {
           email: this.username,
           password: this.password,
@@ -116,11 +115,6 @@ export default {
       if (this.username.length == 0) return null;
       return this.validEmail(this.username);
     },
-
-    passwordState() {
-      if (this.password.length == 0) return null;
-      return this.password.length > 6;
-    },
   },
 };
 </script>
@@ -134,7 +128,7 @@ export default {
 .header {
   // margin: 50px 0px;
   color: #267871;
-
+  
   h2{
     margin-bottom: 1em;
   }
