@@ -16,7 +16,7 @@
         placeholder="Enter your full name"
         aria-describedby="nameFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="nameFeedback">
+      <b-form-invalid-feedback id="nameFeedback" class="align-left">
         <!-- This will only be shown if the preceeding input has an invalid state -->
         The name field cannot be empty.
       </b-form-invalid-feedback>
@@ -32,7 +32,7 @@
         placeholder="Enter Username"
         aria-describedby="usernameFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="usernameFeedback">
+      <b-form-invalid-feedback id="usernameFeedback" class="align-left">
         <!-- This will only be shown if the preceeding input has an invalid state -->
         Enter a valid email address
       </b-form-invalid-feedback>
@@ -48,7 +48,7 @@
         placeholder="Enter a password"
         aria-describedby="passwordFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="passwordFeedback">Enter at least 7 characters.</b-form-invalid-feedback>
+      <b-form-invalid-feedback id="passwordFeedback" class="align-left">Enter at least 7 characters.</b-form-invalid-feedback>
     </b-form-group>
 
     <b-form-group>
@@ -61,7 +61,7 @@
         placeholder="Re-enter the password"
         aria-describedby="confirmPasswordFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="confirmPasswordFeedback">It should match the password entered. </b-form-invalid-feedback>
+      <b-form-invalid-feedback id="confirmPasswordFeedback" class="align-left">It should match the password entered. </b-form-invalid-feedback>
     </b-form-group>
 
     <b-form-group>
@@ -74,7 +74,7 @@
         placeholder="Enter a phone number"
         aria-describedby="phoneFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="phoneFeedback">Phone number invalid.</b-form-invalid-feedback>
+      <b-form-invalid-feedback id="phoneFeedback" class="align-left">Phone number invalid.</b-form-invalid-feedback>
     </b-form-group>
 
     <div class="modal-bottom"></div>
