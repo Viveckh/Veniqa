@@ -20,4 +20,12 @@ router.get('/getRoles', passportAuth.isAuthenticated, referenceDataController.ge
 
 router.get('/getWeightUnits', passportAuth.isAuthenticated, referenceDataController.getWeightUnits);
 
+router.get('/tariffList', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.getTariffList);
+
+router.post('/tariff', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.addTariffCategory);
+
+router.get('/tariff', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.getTariffCategory);
+
+router.put('/tariff', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.updateTariffCategory);
+
 module.exports = router;

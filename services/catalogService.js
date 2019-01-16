@@ -53,10 +53,10 @@ export default {
     async getProductDetails(productId) {
         let result = {};
         try {
-            let product = await Product.findOne({_id: productId}).exec()
+            let product = await Product.findOne({_id: productId}).populate('tariff').exec()
             if (product) {
                 result = {status: "successful", responseData: product};
-            } 
+            }
             else { 
                 result = {status: "failed", errorDetails: "product not found"};
             }
@@ -84,7 +84,7 @@ export default {
             productObj.auditLog = auditLog.auditLog;
             
             // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update
-            let product = await Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).exec();
+            let product = await Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).populate('tariff').exec();
             if (product) {
                 return product;
             }
