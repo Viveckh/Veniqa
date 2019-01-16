@@ -35,12 +35,6 @@
       <font-awesome-icon icon="plus"/>&nbsp;&nbsp; Add a new address
     </a>
 
-    <!-- This is the google maps implementation which doesn't work right now due to billing -->
-    <!-- <gmap-autocomplete :value="description"
-        placeholder="This is a placeholder text"
-        @place_changed="setPlace"
-        :select-first-on-enter="true">
-    </gmap-autocomplete>-->
     <!-- Input form to add new address for the user -->
     <transition
       name="shipping-form-anim"
@@ -57,6 +51,7 @@
                 id="firstName"
                 type="text"
                 name="firstName"
+                size="sm"
                 :state="firstNameState"
                 v-model="shippingDeet.firstName"
                 placeholder="Enter your first name"
@@ -73,6 +68,7 @@
               <label for="lastName">Last Name:</label>
               <b-form-input
                 id="lastName"
+                size="sm"
                 type="text"
                 name="lastName"
                 v-model="shippingDeet.lastName"
@@ -87,6 +83,7 @@
           <b-form-input
             id="address1"
             type="text"
+                size="sm"
             name="text"
             :state="address1State"
             v-model="shippingDeet.addressLine1"
@@ -105,6 +102,7 @@
             id="address2"
             type="text"
             name="address2"
+                size="sm"
             v-model="shippingDeet.addressLine2"
             placeholder="Enter your address 2"
           ></b-form-input>
@@ -119,6 +117,7 @@
                 type="text"
                 name="text"
                 :state="cityState"
+                size="sm"
                 v-model="shippingDeet.city"
                 placeholder="Enter your city"
                 aria-describedby="cityStatee"
@@ -137,6 +136,7 @@
                 type="number"
                 name="text"
                 :state="phoneState"
+                size="sm"
                 v-model="shippingDeet.mobilePhone"
                 placeholder="Enter your phone number"
                 aria-describedby="phoneStatee"
@@ -157,6 +157,7 @@
                 id="state"
                 type="text"
                 name="state"
+                size="sm"
                 :state="stateState"
                 v-model="shippingDeet.state"
                 placeholder="Your State"
@@ -175,6 +176,7 @@
                 id="zip"
                 type="number"
                 name="zip"
+                size="sm"
                 :state="zipState"
                 v-model="shippingDeet.zipCode"
                 placeholder="Enter your Zip Code."
@@ -189,15 +191,14 @@
           <b-col>
             <b-form-group>
               <label for="country">Country</label>
-              <b-form-input
-                id="country"
-                type="text"
-                name="country"
-                :state="countryState"
+              <b-form-select
                 v-model="shippingDeet.country"
-                placeholder="Enter your country name"
-                aria-describedby="countryFeedback"
-              ></b-form-input>
+                :options="countryOptions"
+                size="sm"
+                :state="countryState"
+                name="country"
+                id="country"
+              />
               <b-form-invalid-feedback id="countryFeedback">
                 <!-- This will only be shown if the preceeding input has an invalid state -->
                 The country cannot be empty.
@@ -238,6 +239,9 @@ export default {
       shippingDeet: null,
       description: '',
       isUpdate: false,
+      countryOptions: [
+        'Bangladesh'
+      ]
     };
   },
 
