@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../assets/css/global.scss";
 
 .veniqa-button:hover {
