@@ -34,9 +34,31 @@ export default {
         pages: payload.pages,
       };
     },
+
+    setComments(state, payload) {
+      if (state.openOrder) {
+        state.openOrder.comments = payload;
+      }
+    },
   },
 
   actions: {
+    async commentRequest({ commit, state }, reqData) {
+      try {
+        reqData.url = ProxyUrl[`${reqData.method}Comment`];
+        const { data } = await Vue.prototype.$axios(reqData);
+
+        if (!data) throw new Error("Data doesn't exist");
+
+        if (data.httpStatus == 200) {
+          commit('setComments', data.responseData);
+          return true;
+        }
+        return false;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     async cancelOrder({ commit, state }, orderId) {
       try {
         const { data } = await Vue.prototype.$axios({

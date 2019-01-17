@@ -49,6 +49,8 @@
           />
         </div>
       </div>
+
+      <comments-section/>
     </div>
 
     <confirmation-page v-if="showConfirmation" @yes="yesClicked" @no="showConfirmation = false"/>
@@ -65,12 +67,14 @@
 import { mapGetters } from 'vuex';
 import SingleListItem from '@/components/orders/SingleListItem';
 import ConfirmationPage from '@/components/common/ConfirmationPage';
+import CommentsSection from '@/components/orders/CommentsSection';
 
 export default {
   name: 'OrderDetail',
   components: {
     SingleListItem,
     ConfirmationPage,
+    CommentsSection,
   },
   data() {
     return {
@@ -164,7 +168,8 @@ export default {
     }
   }
 
-  .order-item-pane {
+  .comments {
+    margin-top: 1rem;
   }
 }
 </style>

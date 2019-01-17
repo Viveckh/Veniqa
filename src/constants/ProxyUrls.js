@@ -42,4 +42,9 @@ export default {
   markShipped: '/orders/markItemAsShipped',
   markDelivered: '/orders/markItemAsDelivered',
   cancelOrder: '/orders/cancelOrder',
+
+  // Comments
+  postComment: '/orders/addComment',
+  deleteComment: '/orders/deleteComment',
+  putComment: '/orders/editComment',
 };
