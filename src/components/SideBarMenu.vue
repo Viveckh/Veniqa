@@ -34,6 +34,12 @@
             User Settings
           </a>
         </li>
+        <li @click="navigate('tarrifsetting')">
+          <a>
+            <i class="fa fa-plane"></i>
+            Tarrifs Setting
+          </a>
+        </li>
       </ul>
     </nav>
     <router-view/>

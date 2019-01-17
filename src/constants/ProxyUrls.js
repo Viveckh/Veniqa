@@ -41,4 +41,9 @@ export default {
   fulfillOrder: '/orders/markItemAsFulfilling',
   markShipped: '/orders/markItemAsShipped',
   markDelivered: '/orders/markItemAsDelivered',
+
+  //Tarrif URLs
+  allTarrifs: '/referenceData/tariffList',
+  editTarrif: '/referenceData/tariff',
+  addTarrif: '/referenceData/tariff'
 };

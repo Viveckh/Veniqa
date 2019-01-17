@@ -5,6 +5,7 @@ import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
 import AdminPage from '@/components/adminpage/adminPage.vue';
+import TarrifPage from '@/components/tarrifpage/tarrifpage.vue';
 import Featured from '@/views/Featured';
 import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
@@ -32,6 +33,12 @@ const router = new Router({
           path: 'adminsetting',
           name: 'adminsetting',
           component: AdminPage,
+        },
+
+        {
+          path: 'tarrifsetting',
+          name: 'tarrifetting',
+          component: TarrifPage,
         },
 
         {
