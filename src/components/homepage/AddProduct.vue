@@ -404,7 +404,7 @@
             class="btn btn-success btn-sm"
           >Add Product</button>
           &nbsp;
-          <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
+          <button type="button" class="btn btn-danger btn-sm" @click="goBack()">Cancel</button>
         </div>
       </div>
     </div>
