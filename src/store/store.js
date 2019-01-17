@@ -7,6 +7,7 @@ import CartStore from '@/store/cart';
 import AuthStore from '@/store/auth';
 import AdminStore from '@/store/admin';
 import UserStore from '@/store/users';
+import TariffStore from '@/store/tariff.js';
 import OrderStore from '@/store/orders';
 
 const vuexLocal = new VuexPersistence({
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     adminStore: AdminStore,
     userStore: UserStore,
     orderStore: OrderStore,
+    tariffStore: TariffStore,
   },
 
   // This plugin automatically make the data from stores persist by saving it into local storage.

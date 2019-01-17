@@ -5,7 +5,7 @@
         <div class="account-table">
           <div class="account-body">
             <div class="account-content image">
-              <img src="./../../assets/transparent-logo.png" alt="Logo" width="250px">
+              <img src="./../../assets/logo.png" alt="Logo" width="250px">
             </div>
           </div>
           <div class="account-body">

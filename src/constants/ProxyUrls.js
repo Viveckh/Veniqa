@@ -46,8 +46,14 @@ export default {
   editDelivered: '/orders/updateDeliveryDetails',
   cancelOrder: '/orders/cancelOrder',
 
+  //Tariff URLs
+  allTariffs: '/referenceData/tariffList',
+  editTariff: '/referenceData/tariff',
+  addTariff: '/referenceData/tariff'
+  
   // Comments
   postComment: '/orders/addComment',
   deleteComment: '/orders/deleteComment',
   putComment: '/orders/editComment',
+
 };
