@@ -49,7 +49,7 @@ export default {
   //Tariff URLs
   allTariffs: '/referenceData/tariffList',
   editTariff: '/referenceData/tariff',
-  addTariff: '/referenceData/tariff'
+  addTariff: '/referenceData/tariff',
   
   // Comments
   postComment: '/orders/addComment',
