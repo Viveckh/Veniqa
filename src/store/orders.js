@@ -121,12 +121,12 @@ export default {
       }
     },
 
-    async fulfillItem({ commit, state }, fulfillmentDetail) {
+    async fulfillItem({ commit, state }, payload) {
       try {
         const { data } = await Vue.prototype.$axios({
-          method: 'POST',
-          url: ProxyUrl.fulfillOrder,
-          data: fulfillmentDetail,
+          method: payload.editMode ? 'PUT' : 'POST',
+          url: payload.editMode ? ProxyUrl.editFulfillOrder : ProxyUrl.fulfillOrder,
+          data: payload.fulfillmentDetail,
         });
 
         if (data.httpStatus == 200) {

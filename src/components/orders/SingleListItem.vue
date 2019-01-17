@@ -80,7 +80,7 @@
 
       <div :id="'item'+dataIndex" class="collapse" aria-labelledby="headingOne">
         <div class="card-body">
-          <item-order-description :item="data" :orderStatus="orderStatus"/>
+          <item-order-description :item="data" :orderStatus="orderStatus" @edit="editButtonClicked"/>
         </div>
       </div>
     </div>
@@ -88,60 +88,61 @@
     <fulfilling-modal
       v-if="fulfillingModalShow"
       :fulfillItem="data.order_line_level_processing_details ? data.order_line_level_processing_details.fulfillment_order_details : null"
-      @cancel="fulfillingModalShow = false"
+      @cancel="closeModal()"
+      :editMode="editMode"
       @fulfill="fulfillItemOrder"
     />
 
     <shipping-modal
       v-if="shippingModalShow"
-      @cancel="shippingModalShow = false"
+      @cancel="closeModal()"
       @ship="markAsShipped"
     />
 
     <delivered-modal
       v-if="deliveredModalShow"
-      @cancel="deliveredModalShow = false"
+      @cancel="closeModal()"
       @delivered="markAsDelivered"
     />
   </div>
 </template>
 
 <script>
-import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
-import FulfillingModal from '@/components/orders/FulfillingModal';
-import ShippingModal from '@/components/orders/ShippingModal';
-import DeliveredModal from '@/components/orders/DeliveredModal';
-import moment from 'moment';
+import ItemOrderDescription from "@/components/orders/ItemOrderDescription";
+import FulfillingModal from "@/components/orders/FulfillingModal";
+import ShippingModal from "@/components/orders/ShippingModal";
+import DeliveredModal from "@/components/orders/DeliveredModal";
+import moment from "moment";
 
 export default {
-  name: 'SingleListItem',
+  name: "SingleListItem",
   props: {
     data: {
       required: true,
-      type: Object,
+      type: Object
     },
 
     dataIndex: {
       required: true,
-      type: Number,
+      type: Number
     },
 
     orderStatus: {
       required: true,
-      type: String,
+      type: String
     },
 
     order: {
       required: true,
-      type: Object,
-    },
+      type: Object
+    }
   },
 
   components: {
     ItemOrderDescription,
     FulfillingModal,
     ShippingModal,
-    DeliveredModal,
+    DeliveredModal
   },
 
   data() {
@@ -149,39 +150,52 @@ export default {
       fulfillingModalShow: false,
       shippingModalShow: false,
       deliveredModalShow: false,
+      editMode: false,
     };
   },
 
   methods: {
+    closeModal() {
+      this.fulfillingModalShow = false;
+      this.shippingModalShow = false;
+      this.deliveredModalShow = false;
+      this.editMode = false;
+    },
+    editButtonClicked(value){
+      if(value === 'fulfillment'){
+        this.fulfillingModalShow = true;
+        this.editMode = true;
+      }
+    },
     async markAsDelivered(deliveryDetail) {
       if (!deliveryDetail) return;
       deliveryDetail.orderId = this.order._id;
       deliveryDetail.cartItemId = this.data._id;
 
       deliveryDetail.deliveryDate = moment(
-        deliveryDetail.deliveryDate,
+        deliveryDetail.deliveryDate
       ).format();
 
       try {
         const isSuccess = await this.$store.dispatch(
-          'orderStore/markAsDelivered',
-          deliveryDetail,
+          "orderStore/markAsDelivered",
+          deliveryDetail
         );
         if (isSuccess) {
           this.deliveredModalShow = false;
           this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'The item has been marked as shipped.',
+            group: "all",
+            type: "success",
+            text: "The item has been marked as shipped."
           });
         }
       } catch (error) {
-        console.log('Error', error);
+        console.log("Error", error);
         this.$notify({
-          group: 'all',
-          type: 'error',
+          group: "all",
+          type: "error",
           text:
-            'An error occured while trying to fulfill the order. Please try again later.',
+            "An error occured while trying to fulfill the order. Please try again later."
         });
       }
     },
@@ -193,57 +207,64 @@ export default {
 
       try {
         const isSuccess = await this.$store.dispatch(
-          'orderStore/markAsShipped',
-          shippingDetails,
+          "orderStore/markAsShipped",
+          shippingDetails
         );
         if (isSuccess) {
           this.shippingModalShow = false;
           this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'The item has been marked as shipped.',
+            group: "all",
+            type: "success",
+            text: "The item has been marked as shipped."
           });
         }
       } catch (error) {
-        console.log('Error', error);
+        console.log("Error", error);
         this.$notify({
-          group: 'all',
-          type: 'error',
+          group: "all",
+          type: "error",
           text:
-            'An error occured while trying to fulfill the order. Please try again later.',
+            "An error occured while trying to fulfill the order. Please try again later."
         });
       }
     },
 
-    async fulfillItemOrder(fulfillDetails) {
+    async fulfillItemOrder(fulfillDetails, editMode) {
       if (!fulfillDetails) return;
       fulfillDetails.cartItemId = this.data._id;
       fulfillDetails.orderId = this.order._id;
+
       try {
-        const isSuccess = await this.$store.dispatch(
-          'orderStore/fulfillItem',
-          fulfillDetails,
-        );
+        let isSuccess = false;
+
+          isSuccess = await this.$store.dispatch(
+            "orderStore/fulfillItem",
+            {
+              fulfillmentDetail: fulfillDetails,
+              editMode: editMode
+            }
+          );
+        
 
         if (isSuccess) {
           this.fulfillingModalShow = false;
           this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'The item has been fulfilled.',
+            group: "all",
+            type: "success",
+            text: "The item has been fulfilled."
           });
         }
       } catch (error) {
-        console.log('Error', error);
+        console.log("Error", error);
         this.$notify({
-          group: 'all',
-          type: 'error',
+          group: "all",
+          type: "error",
           text:
-            'An error occured while trying to fulfill the order. Please try again later.',
+            "An error occured while trying to fulfill the order. Please try again later."
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

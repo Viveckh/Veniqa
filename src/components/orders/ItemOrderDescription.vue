@@ -40,7 +40,16 @@
       <b-col md="6">
         <!-- Fulfillment Details -->
         <div v-if="displayFulfillmentOrder">
-          <h6>Fulfillment Details</h6>
+          <b-row>
+            <b-col md="6">
+              <h6>Fulfillment Details</h6>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right icon">
+                <font-awesome-icon v-b-tooltip.hover title="Edit" icon="edit" @click="editClicked('fulfillment')"/>
+              </div>
+            </b-col>
+          </b-row>
           <hr>
           <b-row>
             <b-col md="4">
@@ -96,9 +105,7 @@
             <b-col md="4">
               <strong>Delivered On</strong>
             </b-col>
-            <b-col md="8">
-              {{formattedDate(deliveryDetail.delivery_date)}}
-            </b-col>
+            <b-col md="8">{{formattedDate(deliveryDetail.delivery_date)}}</b-col>
           </b-row>
         </div>
       </b-col>
@@ -107,25 +114,25 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 
 export default {
-  name: 'ItemOrderDescription',
+  name: "ItemOrderDescription",
   props: {
     item: {
       required: true,
-      type: Object,
+      type: Object
     },
 
     orderStatus: {
       required: true,
-      type: String,
-    },
+      type: String
+    }
   },
 
   data() {
     return {
-      DATE_FORMAT: 'dddd, MMMM Do YYYY, h:mm:ss a',
+      DATE_FORMAT: "dddd, MMMM Do YYYY, h:mm:ss a"
     };
   },
 
@@ -134,14 +141,18 @@ export default {
       const obj = moment(dateString);
       return obj.format(this.DATE_FORMAT);
     },
+
+    editClicked(status) {
+      this.$emit("edit", status);
+    }
   },
 
   computed: {
     displayFulfillmentOrder() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status != 'PROCESSING'
-        && this.orderStatus != 'RECEIVED'
+        this.item.order_line_level_processing_details.status != "PROCESSING" &&
+        this.orderStatus != "RECEIVED"
       );
     },
 
@@ -153,16 +164,16 @@ export default {
     displayShipment() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status != 'PROCESSING'
-        && this.orderStatus != 'RECEIVED'
-        && this.item.order_line_level_processing_details.status != 'FULFILLING'
+        this.item.order_line_level_processing_details.status != "PROCESSING" &&
+        this.orderStatus != "RECEIVED" &&
+        this.item.order_line_level_processing_details.status != "FULFILLING"
       );
     },
 
     displayDelivery() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status == 'DELIVERED'
+        this.item.order_line_level_processing_details.status == "DELIVERED"
       );
     },
 
@@ -172,8 +183,8 @@ export default {
 
     deliveryDetail() {
       return this.item.order_line_level_processing_details.delivery;
-    },
-  },
+    }
+  }
 };
 </script>
 
