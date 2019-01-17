@@ -22,7 +22,8 @@
           <hr>
           <div class="align-right">
             <b-btn @click="cancelClicked()" size="sm">Cancel</b-btn>
-            <b-btn @click="okClicked()" variant="primary" size="sm">Mark as Shipped</b-btn>
+            <b-btn v-if="!editMode" @click="okClicked()" variant="primary" size="sm">Mark as Shipped</b-btn>
+            <b-btn v-else @click="editClicked()" variant="primary" size="sm">Edit</b-btn>
           </div>
         </div>
       </b-modal>
@@ -33,6 +34,18 @@
 <script>
 export default {
   name: 'DeliveredModal',
+  props: {
+    deliveryDetail: {
+      required: false,
+      type: Object,
+    },
+
+    editMode: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       detail: null,
@@ -59,6 +72,17 @@ export default {
 
       // if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
       this.$emit('delivered', dataToSend);
+    },
+
+    editClicked() {
+      const validate = this.validateForm();
+      if (!validate || validate == null) {
+        return;
+      }
+      const dataToSend = _.cloneDeep(this.detail);
+
+      // if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
+      this.$emit('delivered', dataToSend, true);
     },
 
     cancelClicked() {

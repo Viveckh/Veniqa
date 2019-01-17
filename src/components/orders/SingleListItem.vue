@@ -80,7 +80,11 @@
 
       <div :id="'item'+dataIndex" class="collapse" aria-labelledby="headingOne">
         <div class="card-body">
-          <item-order-description :item="data" :orderStatus="orderStatus" @edit="editButtonClicked"/>
+          <item-order-description
+            :item="data"
+            :orderStatus="orderStatus"
+            @edit="editButtonClicked"
+          />
         </div>
       </div>
     </div>
@@ -95,54 +99,58 @@
 
     <shipping-modal
       v-if="shippingModalShow"
+      :shippingDetail="data.order_line_level_processing_details ? data.order_line_level_processing_details.shipment : null"
       @cancel="closeModal()"
+      :editMode="editMode"
       @ship="markAsShipped"
     />
 
     <delivered-modal
       v-if="deliveredModalShow"
       @cancel="closeModal()"
+      :deliveryDetail="data.order_line_level_processing_details ? data.order_line_level_processing_details.delivery : null"
+      :editMode="editMode"
       @delivered="markAsDelivered"
     />
   </div>
 </template>
 
 <script>
-import ItemOrderDescription from "@/components/orders/ItemOrderDescription";
-import FulfillingModal from "@/components/orders/FulfillingModal";
-import ShippingModal from "@/components/orders/ShippingModal";
-import DeliveredModal from "@/components/orders/DeliveredModal";
-import moment from "moment";
+import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
+import FulfillingModal from '@/components/orders/FulfillingModal';
+import ShippingModal from '@/components/orders/ShippingModal';
+import DeliveredModal from '@/components/orders/DeliveredModal';
+import moment from 'moment';
 
 export default {
-  name: "SingleListItem",
+  name: 'SingleListItem',
   props: {
     data: {
       required: true,
-      type: Object
+      type: Object,
     },
 
     dataIndex: {
       required: true,
-      type: Number
+      type: Number,
     },
 
     orderStatus: {
       required: true,
-      type: String
+      type: String,
     },
 
     order: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
 
   components: {
     ItemOrderDescription,
     FulfillingModal,
     ShippingModal,
-    DeliveredModal
+    DeliveredModal,
   },
 
   data() {
@@ -161,45 +169,53 @@ export default {
       this.deliveredModalShow = false;
       this.editMode = false;
     },
-    editButtonClicked(value){
-      if(value === 'fulfillment'){
+    editButtonClicked(value) {
+      if (value === 'fulfillment') {
         this.fulfillingModalShow = true;
-        this.editMode = true;
+      } else if (value === 'shipment') {
+        this.shippingModalShow = true;
+      } else if (value === 'delivery') {
+        this.deliveredModalShow = true;
       }
+      this.editMode = true;
     },
-    async markAsDelivered(deliveryDetail) {
+
+    async markAsDelivered(deliveryDetail, editMode) {
       if (!deliveryDetail) return;
       deliveryDetail.orderId = this.order._id;
       deliveryDetail.cartItemId = this.data._id;
 
       deliveryDetail.deliveryDate = moment(
-        deliveryDetail.deliveryDate
+        deliveryDetail.deliveryDate,
       ).format();
 
       try {
         const isSuccess = await this.$store.dispatch(
-          "orderStore/markAsDelivered",
-          deliveryDetail
+          'orderStore/markAsDelivered',
+          {
+            deliveryDetail,
+            editMode,
+          },
         );
         if (isSuccess) {
           this.deliveredModalShow = false;
           this.$notify({
-            group: "all",
-            type: "success",
-            text: "The item has been marked as shipped."
+            group: 'all',
+            type: 'success',
+            text: 'The item has been marked as shipped.',
           });
         }
       } catch (error) {
-        console.log("Error", error);
+        console.log('Error', error);
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "An error occured while trying to fulfill the order. Please try again later."
+            'An error occured while trying to fulfill the order. Please try again later.',
         });
       }
     },
-    async markAsShipped(shippingDetails) {
+    async markAsShipped(shippingDetails, editMode) {
       if (!shippingDetails) return;
 
       shippingDetails.orderId = this.order._id;
@@ -207,24 +223,27 @@ export default {
 
       try {
         const isSuccess = await this.$store.dispatch(
-          "orderStore/markAsShipped",
-          shippingDetails
+          'orderStore/markAsShipped',
+          {
+            shippingDetails,
+            editMode,
+          },
         );
         if (isSuccess) {
-          this.shippingModalShow = false;
+          this.closeModal();
           this.$notify({
-            group: "all",
-            type: "success",
-            text: "The item has been marked as shipped."
+            group: 'all',
+            type: 'success',
+            text: 'The item has been marked as shipped.',
           });
         }
       } catch (error) {
-        console.log("Error", error);
+        console.log('Error', error);
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "An error occured while trying to fulfill the order. Please try again later."
+            'An error occured while trying to fulfill the order. Please try again later.',
         });
       }
     },
@@ -237,34 +256,30 @@ export default {
       try {
         let isSuccess = false;
 
-          isSuccess = await this.$store.dispatch(
-            "orderStore/fulfillItem",
-            {
-              fulfillmentDetail: fulfillDetails,
-              editMode: editMode
-            }
-          );
-        
+        isSuccess = await this.$store.dispatch('orderStore/fulfillItem', {
+          fulfillmentDetail: fulfillDetails,
+          editMode,
+        });
 
         if (isSuccess) {
-          this.fulfillingModalShow = false;
+          this.closeModal();
           this.$notify({
-            group: "all",
-            type: "success",
-            text: "The item has been fulfilled."
+            group: 'all',
+            type: 'success',
+            text: 'The item has been fulfilled.',
           });
         }
       } catch (error) {
-        console.log("Error", error);
+        console.log('Error', error);
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "An error occured while trying to fulfill the order. Please try again later."
+            'An error occured while trying to fulfill the order. Please try again later.',
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

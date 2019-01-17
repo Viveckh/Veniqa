@@ -1,7 +1,16 @@
 <template>
   <div id="fulfilling">
     <div>
-      <b-modal centered no-close-on-backdrop no-close-on-esc title="Fulfill Order" visible ok-title="Fulfill" hide-footer @hide="cancelClicked()">
+      <b-modal
+        centered
+        no-close-on-backdrop
+        no-close-on-esc
+        title="Fulfill Order"
+        visible
+        ok-title="Fulfill"
+        hide-footer
+        @hide="cancelClicked()"
+      >
         <b-form-group horizontal :label-cols="4" label="Store" label-for="store">
           <b-form-select
             v-model="detail.store"
@@ -104,7 +113,7 @@ export default {
       required: false,
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   data() {
@@ -198,7 +207,6 @@ export default {
 <style lang="scss" scoped>
 #fulfilling {
   .footer {
-
   }
 }
 </style>

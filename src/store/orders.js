@@ -43,10 +43,15 @@ export default {
   },
 
   actions: {
-    async commentRequest({ commit, state }, reqData) {
+    async commentRequest({
+      commit,
+      state,
+    }, reqData) {
       try {
         reqData.url = ProxyUrl[`${reqData.method}Comment`];
-        const { data } = await Vue.prototype.$axios(reqData);
+        const {
+          data,
+        } = await Vue.prototype.$axios(reqData);
 
         if (!data) throw new Error("Data doesn't exist");
 
@@ -59,9 +64,14 @@ export default {
         throw new Error(error);
       }
     },
-    async cancelOrder({ commit, state }, orderId) {
+    async cancelOrder({
+      commit,
+      state,
+    }, orderId) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.cancelOrder,
           method: 'POST',
           data: {
@@ -83,11 +93,19 @@ export default {
         throw new Error(error);
       }
     },
-    async markAsDelivered({ commit, state }, deliveryDetail) {
+    async markAsDelivered({
+      commit,
+      state,
+    }, {
+      deliveryDetail,
+      editMode,
+    }) {
       try {
-        const { data } = await Vue.prototype.$axios({
-          method: 'POST',
-          url: ProxyUrl.markDelivered,
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          method: editMode ? 'PUT' : 'POST',
+          url: editMode ? ProxyUrl.editDelivered : ProxyUrl.markDelivered,
           data: deliveryDetail,
         });
 
@@ -102,12 +120,20 @@ export default {
       }
     },
 
-    async markAsShipped({ commit, state }, shippingDetail) {
+    async markAsShipped({
+      commit,
+      state,
+    }, {
+      shippingDetails,
+      editMode,
+    }) {
       try {
-        const { data } = await Vue.prototype.$axios({
-          method: 'POST',
-          url: ProxyUrl.markShipped,
-          data: shippingDetail,
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          method: editMode ? 'PUT' : 'POST',
+          url: editMode ? ProxyUrl.editShipped : ProxyUrl.markShipped,
+          data: shippingDetails,
         });
 
         if (data.httpStatus == 200) {
@@ -121,9 +147,14 @@ export default {
       }
     },
 
-    async fulfillItem({ commit, state }, payload) {
+    async fulfillItem({
+      commit,
+      state,
+    }, payload) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           method: payload.editMode ? 'PUT' : 'POST',
           url: payload.editMode ? ProxyUrl.editFulfillOrder : ProxyUrl.fulfillOrder,
           data: payload.fulfillmentDetail,
@@ -144,13 +175,18 @@ export default {
      *
      * @param {*} {commit}
      */
-    async confirmOrder({ commit, state }) {
+    async confirmOrder({
+      commit,
+      state,
+    }) {
       if (!state.openOrder || state.openOrder == null) return false;
       const reqObj = {
         orderId: state.openOrder._id,
       };
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrl.confirmOrder,
           data: reqObj,
@@ -167,7 +203,9 @@ export default {
       }
     },
 
-    async getOrdersByStatus({ commit }, status) {
+    async getOrdersByStatus({
+      commit,
+    }, status) {
       let reqObj = {
         orderStatus: status,
       };
@@ -175,7 +213,9 @@ export default {
       reqObj = _.assignIn(reqObj, PageSetup);
 
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.getOrderByStatus,
           method: 'post',
           data: reqObj,
@@ -188,12 +228,16 @@ export default {
       }
     },
 
-    async openOrderDetail({ commit }, order) {
+    async openOrderDetail({
+      commit,
+    }, order) {
       if (!order || !order._id) return false;
       const orderID = order._id;
 
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.getSingleOrderById + orderID,
           method: 'get',
         });

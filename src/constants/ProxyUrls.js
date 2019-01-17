@@ -41,7 +41,9 @@ export default {
   fulfillOrder: '/orders/markItemAsFulfilling',
   editFulfillOrder: '/orders/updateOrderFulfillmentDetails',
   markShipped: '/orders/markItemAsShipped',
+  editShipped: '/orders/updateShipmentDetails',
   markDelivered: '/orders/markItemAsDelivered',
+  editDelivered: '/orders/updateDeliveryDetails',
   cancelOrder: '/orders/cancelOrder',
 
   // Comments
