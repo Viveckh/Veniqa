@@ -1,15 +1,15 @@
 <template>
   <div class="col-md-12">
-    <hr>
+   
     <button
       v-if="!this.viewOperation"
       type="button"
-      class="btn btn-secondary"
+      class="au-btn au-btn-icon au-btn--green"
       @click="handleAddButtonClick()"
     >Add Tariff</button>
     <hr>
     <div class="row justify-content-left">
-      <div v-if="!this.viewOperation" class="col-md-10">
+      <div v-if="!this.viewOperation" class="col-md-12">
         <div class="card">
           <header class="card-header">
             <h4 class="card-title mt-2">Tariffs</h4>
@@ -92,19 +92,19 @@
                   v-if="!this.isAddView"
                   type="button"
                   @click="handleEditTariff()"
-                  class="btn btn-warning"
+                  class="au-btn au-btn-icon au-btn--green"
                 >Edit Tariff</button>
                 <button
                   v-else
                   type="button"
                   @click="handleAddTariff()"
-                  class="btn btn-warning"
+                  class="au-btn au-btn-icon au-btn--green"
                 >Add Tariff</button>
                 &nbsp;
                 <button
                   type="button"
                   @click="handleCancel()"
-                  class="btn btn-secondary"
+                  class="au-btn au-btn-icon au-btn--green"
                 >Cancel</button>
               </div>
             </div>

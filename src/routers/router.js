@@ -29,6 +29,11 @@ const router = new Router({
           path: '/',
           component: MainPage,
         },
+        {
+          path: 'catalog',
+          name: 'catalog',
+          component: MainPage,
+        },
 
         {
           path: 'adminsetting',

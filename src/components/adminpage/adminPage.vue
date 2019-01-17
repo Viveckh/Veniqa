@@ -1,21 +1,20 @@
 <template>
   <div class="col-md-12">
-    <hr>
     <button
       v-if="!this.viewOperation"
       type="button"
-      class="btn btn-secondary"
+      class="au-btn au-btn-icon au-btn--green"
       @click="handleAddButtonClick()"
     >Add Admin</button>
     <hr>
     <div class="row justify-content-left">
-      <div v-if="!this.viewOperation" class="col-md-10">
+      <div v-if="!this.viewOperation" class="col-md-12">
         <div class="card">
           <header class="card-header">
             <h4 class="card-title mt-2">Admins</h4>
           </header>
           <article class="card-body">
-            <table class="table table-striped">
+            <table class="table table-striped table table-sm">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -123,19 +122,19 @@
                   v-if="!this.isAddView"
                   type="button"
                   @click="handleEditAdmin()"
-                  class="btn btn-warning"
+                  class="au-btn au-btn-icon au-btn--green"
                 >Edit Admin</button>
                 <button
                   v-else
                   type="button"
                   @click="handleAddAdmin()"
-                  class="btn btn-warning"
+                  class="au-btn au-btn-icon au-btn--green"
                 >Add Admin</button>
                 &nbsp;
                 <button
                   type="button"
                   @click="handleCancel()"
-                  class="btn btn-secondary"
+                  class="au-btn au-btn-icon au-btn--green"
                 >Cancel</button>
               </div>
             </div>
