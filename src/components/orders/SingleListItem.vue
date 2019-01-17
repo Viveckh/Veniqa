@@ -80,7 +80,11 @@
 
       <div :id="'item'+dataIndex" class="collapse" aria-labelledby="headingOne">
         <div class="card-body">
-          <item-order-description :item="data" :orderStatus="orderStatus"/>
+          <item-order-description
+            :item="data"
+            :orderStatus="orderStatus"
+            @edit="editButtonClicked"
+          />
         </div>
       </div>
     </div>
@@ -88,19 +92,24 @@
     <fulfilling-modal
       v-if="fulfillingModalShow"
       :fulfillItem="data.order_line_level_processing_details ? data.order_line_level_processing_details.fulfillment_order_details : null"
-      @cancel="fulfillingModalShow = false"
+      @cancel="closeModal()"
+      :editMode="editMode"
       @fulfill="fulfillItemOrder"
     />
 
     <shipping-modal
       v-if="shippingModalShow"
-      @cancel="shippingModalShow = false"
+      :shippingDetail="data.order_line_level_processing_details ? data.order_line_level_processing_details.shipment : null"
+      @cancel="closeModal()"
+      :editMode="editMode"
       @ship="markAsShipped"
     />
 
     <delivered-modal
       v-if="deliveredModalShow"
-      @cancel="deliveredModalShow = false"
+      @cancel="closeModal()"
+      :deliveryDetail="data.order_line_level_processing_details ? data.order_line_level_processing_details.delivery : null"
+      :editMode="editMode"
       @delivered="markAsDelivered"
     />
   </div>
@@ -149,11 +158,29 @@ export default {
       fulfillingModalShow: false,
       shippingModalShow: false,
       deliveredModalShow: false,
+      editMode: false,
     };
   },
 
   methods: {
-    async markAsDelivered(deliveryDetail) {
+    closeModal() {
+      this.fulfillingModalShow = false;
+      this.shippingModalShow = false;
+      this.deliveredModalShow = false;
+      this.editMode = false;
+    },
+    editButtonClicked(value) {
+      if (value === 'fulfillment') {
+        this.fulfillingModalShow = true;
+      } else if (value === 'shipment') {
+        this.shippingModalShow = true;
+      } else if (value === 'delivery') {
+        this.deliveredModalShow = true;
+      }
+      this.editMode = true;
+    },
+
+    async markAsDelivered(deliveryDetail, editMode) {
       if (!deliveryDetail) return;
       deliveryDetail.orderId = this.order._id;
       deliveryDetail.cartItemId = this.data._id;
@@ -165,7 +192,10 @@ export default {
       try {
         const isSuccess = await this.$store.dispatch(
           'orderStore/markAsDelivered',
-          deliveryDetail,
+          {
+            deliveryDetail,
+            editMode,
+          },
         );
         if (isSuccess) {
           this.deliveredModalShow = false;
@@ -185,7 +215,7 @@ export default {
         });
       }
     },
-    async markAsShipped(shippingDetails) {
+    async markAsShipped(shippingDetails, editMode) {
       if (!shippingDetails) return;
 
       shippingDetails.orderId = this.order._id;
@@ -194,10 +224,13 @@ export default {
       try {
         const isSuccess = await this.$store.dispatch(
           'orderStore/markAsShipped',
-          shippingDetails,
+          {
+            shippingDetails,
+            editMode,
+          },
         );
         if (isSuccess) {
-          this.shippingModalShow = false;
+          this.closeModal();
           this.$notify({
             group: 'all',
             type: 'success',
@@ -215,18 +248,21 @@ export default {
       }
     },
 
-    async fulfillItemOrder(fulfillDetails) {
+    async fulfillItemOrder(fulfillDetails, editMode) {
       if (!fulfillDetails) return;
       fulfillDetails.cartItemId = this.data._id;
       fulfillDetails.orderId = this.order._id;
+
       try {
-        const isSuccess = await this.$store.dispatch(
-          'orderStore/fulfillItem',
-          fulfillDetails,
-        );
+        let isSuccess = false;
+
+        isSuccess = await this.$store.dispatch('orderStore/fulfillItem', {
+          fulfillmentDetail: fulfillDetails,
+          editMode,
+        });
 
         if (isSuccess) {
-          this.fulfillingModalShow = false;
+          this.closeModal();
           this.$notify({
             group: 'all',
             type: 'success',

@@ -1,7 +1,16 @@
 <template>
   <div id="fulfilling">
     <div>
-      <b-modal centered no-close-on-backdrop no-close-on-esc title="Fulfill Order" visible ok-title="Fulfill" hide-footer @hide="cancelClicked()">
+      <b-modal
+        centered
+        no-close-on-backdrop
+        no-close-on-esc
+        title="Fulfill Order"
+        visible
+        ok-title="Fulfill"
+        hide-footer
+        @hide="cancelClicked()"
+      >
         <b-form-group horizontal :label-cols="4" label="Store" label-for="store">
           <b-form-select
             v-model="detail.store"
@@ -79,7 +88,8 @@
           <hr>
           <div class="align-right">
             <b-btn @click="cancelClicked()" size="sm">Cancel</b-btn>
-            <b-btn @click="okClicked()" variant="primary" size="sm">Fulfill</b-btn>
+            <b-btn v-if="!editMode" @click="okClicked()" variant="primary" size="sm">Fulfill</b-btn>
+            <b-btn v-else @click="editClicked()" variant="primary" size="sm">Edit</b-btn>
           </div>
         </div>
       </b-modal>
@@ -98,6 +108,12 @@ export default {
       required: false,
       type: Object,
     },
+
+    editMode: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -113,6 +129,7 @@ export default {
     if (this.fulfillItem) {
       this.detail.orderNumber = this.fulfillItem.order_number;
       this.detail.totalCostPriceOfItemUSD = this.fulfillItem.total_cost_price_of_item.amount;
+      this.detail.store = this.fulfillItem.store;
 
       if (this.stores.indexOf(this.detail.store) < 0) {
         this.detail.customStore = this.detail.store;
@@ -131,6 +148,17 @@ export default {
 
       if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
       this.$emit('fulfill', dataToSend);
+    },
+
+    editClicked() {
+      const validate = this.validateForm();
+      if (!validate || validate == null) {
+        return;
+      }
+      const dataToSend = _.cloneDeep(this.detail);
+
+      if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
+      this.$emit('fulfill', dataToSend, true);
     },
 
     validateForm() {
@@ -179,7 +207,6 @@ export default {
 <style lang="scss" scoped>
 #fulfilling {
   .footer {
-
   }
 }
 </style>

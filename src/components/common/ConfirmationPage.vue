@@ -4,7 +4,7 @@
       id="modal-center"
       no-close-on-backdrop
       no-close-on-esc
-      size="sm"
+      size="md"
       visible
       centered
       :title="title"
@@ -14,7 +14,7 @@
       @hide="noTriggered()"
       @cancel="noTriggered()"
     >
-      <p class="my-4">{{text}}</p>
+      <p>{{text}}</p>
     </b-modal>
   </div>
 </template>

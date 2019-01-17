@@ -39,11 +39,21 @@ export default {
   getSingleOrderById: '/orders/order?orderId=',
   confirmOrder: '/orders/confirmOrder',
   fulfillOrder: '/orders/markItemAsFulfilling',
+  editFulfillOrder: '/orders/updateOrderFulfillmentDetails',
   markShipped: '/orders/markItemAsShipped',
+  editShipped: '/orders/updateShipmentDetails',
   markDelivered: '/orders/markItemAsDelivered',
+  editDelivered: '/orders/updateDeliveryDetails',
+  cancelOrder: '/orders/cancelOrder',
 
   //Tariff URLs
   allTariffs: '/referenceData/tariffList',
   editTariff: '/referenceData/tariff',
   addTariff: '/referenceData/tariff'
+  
+  // Comments
+  postComment: '/orders/addComment',
+  deleteComment: '/orders/deleteComment',
+  putComment: '/orders/editComment',
+
 };
