@@ -11,7 +11,7 @@
         </form>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" >
           <i class="fas fa-lock"></i>
           Logout
         </a>

@@ -10,6 +10,7 @@ import Featured from '@/views/Featured';
 import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
 import OrderDetail from '@/components/orders/OrderDetail';
+import PageNotFound from '@/views/notfound.vue';
 
 Vue.use(Router);
 
@@ -106,6 +107,7 @@ const router = new Router({
           path: 'checkout',
           component: Checkout,
         },
+        
       ],
     },
 
@@ -122,6 +124,11 @@ const router = new Router({
     {
       path: '/login',
       component: Login,
+    },
+    {
+      path: '*',
+      name: 'PageNotFound',
+      component: PageNotFound,
     },
   ],
 });

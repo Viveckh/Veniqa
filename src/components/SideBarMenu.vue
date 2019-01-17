@@ -22,8 +22,8 @@
             Featured Posts
           </a>
         </li>
-        <li>
-          <a href="#">
+        <li @click="navigate('storesetting')">
+          <a>
             <i class="fas fa-cog"></i>
             Store Settings
           </a>
