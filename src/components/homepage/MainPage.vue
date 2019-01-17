@@ -1,10 +1,10 @@
 // src/pages/Admin/Products
 <template>
-  <div class="col-md-10">
+  <div class="col-md-12">
     <div v-if="!isAddView">
       <button
         type="button"
-        class="btn btn-secondary"
+        class="au-btn au-btn-icon au-btn--green"
         style="margin:10px;"
         @click="addProductFunc()"
       >
@@ -38,7 +38,7 @@
             </td>
             <td>
               <a @click="deleteProduct(product._id)">
-                <i class="fa fa-trash" style="color:#FA8072"></i>
+                <i class="fa fa-trash" style="color:red"></i>
               </a>
             </td>
           </tr>

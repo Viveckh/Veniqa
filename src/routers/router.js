@@ -5,10 +5,12 @@ import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
 import AdminPage from '@/components/adminpage/adminPage.vue';
+import TariffPage from '@/components/tariffpage/tariffpage.vue';
 import Featured from '@/views/Featured';
 import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
 import OrderDetail from '@/components/orders/OrderDetail';
+import PageNotFound from '@/views/notfound.vue';
 
 Vue.use(Router);
 
@@ -27,11 +29,22 @@ const router = new Router({
           path: '/',
           component: MainPage,
         },
+        {
+          path: 'catalog',
+          name: 'catalog',
+          component: MainPage,
+        },
 
         {
           path: 'adminsetting',
           name: 'adminsetting',
           component: AdminPage,
+        },
+
+        {
+          path: 'tariffsetting',
+          name: 'tariffetting',
+          component: TariffPage,
         },
 
         {
@@ -99,6 +112,7 @@ const router = new Router({
           path: 'checkout',
           component: Checkout,
         },
+        
       ],
     },
 
@@ -115,6 +129,11 @@ const router = new Router({
     {
       path: '/login',
       component: Login,
+    },
+    {
+      path: '*',
+      name: 'PageNotFound',
+      component: PageNotFound,
     },
   ],
 });
