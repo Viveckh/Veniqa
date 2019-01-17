@@ -70,7 +70,6 @@ export default {
       }
       const dataToSend = _.cloneDeep(this.detail);
 
-      // if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
       this.$emit('delivered', dataToSend);
     },
 
@@ -81,7 +80,6 @@ export default {
       }
       const dataToSend = _.cloneDeep(this.detail);
 
-      // if (dataToSend.store === 'CUSTOM') dataToSend.store = dataToSend.customStore;
       this.$emit('delivered', dataToSend, true);
     },
 
