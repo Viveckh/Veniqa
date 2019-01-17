@@ -240,7 +240,8 @@ export default {
       description: '',
       isUpdate: false,
       countryOptions: [
-        'Bangladesh'
+        'Bangladesh',
+        'Nepal'
       ]
     };
   },
