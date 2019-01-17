@@ -34,10 +34,10 @@
             User Settings
           </a>
         </li>
-        <li @click="navigate('tarrifsetting')">
+        <li @click="navigate('tariffsetting')">
           <a>
             <i class="fa fa-plane"></i>
-            Tarrifs Setting
+            Tariffs Setting
           </a>
         </li>
       </ul>

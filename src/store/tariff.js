@@ -6,49 +6,49 @@ import * as _ from 'lodash';
 export default {
   namespaced: true,
   state: {
-    tarrifs: [],
+    tariffs: [],
   },
 
   actions: {
     
-    async getTarrifs({ commit }) {
+    async getTariffs({ commit }) {
       try {
         const res = await axios({
-          url: ProxyUrl.baseUrl + ProxyUrl.allTarrifs,
+          url: ProxyUrl.baseUrl + ProxyUrl.allTariffs,
           withCredentials: true,
           method: 'get',
           data: {},
         });
-        console.log("Tarrifs", res.data.responseData);
-        commit('setTarrifs', res.data.responseData);
+        console.log("Tariffs", res.data.responseData);
+        commit('setTariffs', res.data.responseData);
       } catch (err) {
         throw new Error(err);
       }
     },
-    async addTarrif({ dispatch }, tarrif) {
+    async addTariff({ dispatch }, tariff) {
       try {
         const res = await Vue.prototype.$axios({
-          url: ProxyUrl.addTarrif,
+          url: ProxyUrl.addTariff,
           withCredentials: true,
           method: 'post',
-          data: tarrif,
+          data: tariff,
         });
-        dispatch('getTarrifs');
+        dispatch('getTariffs');
       } catch (err) {
         console.log(err);
         throw new Error(err);
       }
     },
-    async editTarrif({ dispatch }, tarrif) {
+    async editTariff({ dispatch }, tariff) {
       try {
         const res = await Vue.prototype.$axios({
-          url: ProxyUrl.editTarrif,
+          url: ProxyUrl.editTariff,
           withCredentials: true,
           method: 'put',
-          data: tarrif,
+          data: tariff,
         });
 
-        dispatch('getTarrifs');
+        dispatch('getTariffs');
       } catch (err) {
         console.log(err);
         throw new Error(err);
@@ -58,15 +58,15 @@ export default {
   },
   mutations: {
   
-    setTarrifs(state, payload) {
-      state.tarrifs = payload;
-      console.log("Here", state.tarrifs);
+    setTariffs(state, payload) {
+      state.tariffs = payload;
+      console.log("Here", state.tariffs);
     },
   },
   getters: {
    
-    gettarrifs(state) {
-      return state.tarrifs;
+    gettariffs(state) {
+      return state.tariffs;
     },
   },
 };

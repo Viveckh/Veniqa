@@ -6,33 +6,33 @@
       type="button"
       class="btn btn-secondary"
       @click="handleAddButtonClick()"
-    >Add Tarrif</button>
+    >Add Tariff</button>
     <hr>
     <div class="row justify-content-left">
       <div v-if="!this.viewOperation" class="col-md-10">
         <div class="card">
           <header class="card-header">
-            <h4 class="card-title mt-2">Tarrifs</h4>
+            <h4 class="card-title mt-2">Tariffs</h4>
           </header>
           <article class="card-body">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Tarrif Type</th>
+                  <th>Tariff Type</th>
                   <th>Nepal Rate</th>
                   <th>Bangladesh Rate</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="tarrif in tarrifs" v-if="tarrifs.length > 0">
-                  <td>{{tarrif.name}}</td>
-                  <td>{{tarrif.rates.Nepal}}%</td>
-                  <td>{{tarrif.rates.Bangladesh}}%</td>
+                <tr v-for="tariff in tariffs" v-if="tariffs.length > 0">
+                  <td>{{tariff.name}}</td>
+                  <td>{{tariff.rates.Nepal}}%</td>
+                  <td>{{tariff.rates.Bangladesh}}%</td>
                  
                   <td>
                     &nbsp;
-                    <a @click="editTarrif(tarrif)">
+                    <a @click="editTariff(tariff)">
                       <i class="fa fa-edit" style="color:green"></i>
                     </a>
                   </td>
@@ -47,22 +47,21 @@
       <div div v-if="this.viewOperation" class="col-md-6">
         <div class="card">
           <header class="card-header">
-            <h4 v-if="!this.isAddView" class="card-title mt-2">Edit Tarrif</h4>
-            <h4 v-else class="card-title mt-2">Add Tarrif</h4>
+            <h4 v-if="!this.isAddView" class="card-title mt-2">Edit Tariff</h4>
+            <h4 v-else class="card-title mt-2">Add Tariff</h4>
           </header>
           <article class="card-body">
             <div>
               <div class="form-row">
                 <div class="col form-group">
-                  <label>Tarrif Type</label>
+                  <label>Tariff Type</label>
                   <input
                     v-if="!this.isAddView"
-                    disabled
                     type="text"
                     class="form-control"
-                    v-model="tarrif.name"
+                    v-model="tariff.name"
                   >
-                  <input v-else type="text" class="form-control" v-model="tarrif.name">
+                  <input v-else type="text" class="form-control" v-model="tariff.name">
                 </div>
                 <div class="col form-group">
                   <label>Nepal Rate</label>
@@ -71,9 +70,9 @@
                     
                     type="number"
                     class="form-control"
-                    v-model="tarrif.rates.Nepal"
+                    v-model="tariff.rates.Nepal"
                   >
-                  <input v-else type="number" class="form-control" v-model="tarrif.rates.Nepal">
+                  <input v-else type="number" class="form-control" v-model="tariff.rates.Nepal">
                 </div>
                 <div class="col form-group">
                   <label>Bangladesh Rate</label>
@@ -81,9 +80,9 @@
                     v-if="!this.isAddView"
                     type="number"
                     class="form-control"
-                    v-model="tarrif.rates.Bangladesh"
+                    v-model="tariff.rates.Bangladesh"
                   >
-                  <input v-else type="number" class="form-control" v-model="tarrif.rates.Bangladesh">
+                  <input v-else type="number" class="form-control" v-model="tariff.rates.Bangladesh">
                 </div>
               </div>
             
@@ -92,15 +91,15 @@
                 <button
                   v-if="!this.isAddView"
                   type="button"
-                  @click="handleEditTarrif()"
+                  @click="handleEditTariff()"
                   class="btn btn-warning"
-                >Edit Tarrif</button>
+                >Edit Tariff</button>
                 <button
                   v-else
                   type="button"
-                  @click="handleAddTarrif()"
+                  @click="handleAddTariff()"
                   class="btn btn-warning"
-                >Add Tarrif</button>
+                >Add Tariff</button>
                 &nbsp;
                 <button
                   type="button"
@@ -126,8 +125,7 @@ export default {
   components: {},
   data() {
     return {
-     
-      tarrif:{
+      tariff:{
           name: '',
           rates: {
               "Nepal": 0,
@@ -139,19 +137,19 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch('tarrifStore/getTarrifs');
+    await this.$store.dispatch('tariffStore/getTariffs');
   },
   computed: {
-    tarrifs() {
-      return this.$store.getters['tarrifStore/gettarrifs'];
+    tariffs() {
+      return this.$store.getters['tariffStore/gettariffs'];
     },
   },
   methods: {
-    editTarrif(tarrifData) {
+    editTariff(tariffData) {
       this.viewOperation = true;
-      this.tarrif = _.cloneDeep(tarrifData);
+      this.tariff = _.cloneDeep(tariffData);
       this.isAddView = false;
-      console.log(this.user);
+      console.log(this.tariff);
     },
     handleAddButtonClick() {
       this.viewOperation = true;
@@ -159,15 +157,17 @@ export default {
     handleCancel() {
       this.isAddView = true;
       this.viewOperation = false;
-      this.user = {
-        name: '',
-        email: '',
-        permissions: [],
+      this.tariff = {
+         name: '',
+          rates: {
+              "Nepal": 0,
+              "Bangladesh": 0,
+          }
       };
     },
-    async handleAddTarrif() {
+    async handleAddTariff() {
       try {
-        await this.$store.dispatch('tarrifStore/addTarrif', this.tarrif);
+        await this.$store.dispatch('tariffStore/addTariff', this.tariff);
         this.$notify({
           group: 'all',
           type: 'success',
@@ -175,22 +175,24 @@ export default {
         });
         this.isAddView = true;
         this.viewOperation = false;
-        this.user = {
-          name: '',
-          email: '',
-          permissions: [],
+        this.tariff = {
+           name: '',
+          rates: {
+              "Nepal": 0,
+              "Bangladesh": 0,
+          }
         };
       } catch (err) {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error adding/editing Tarrif',
+          text: 'There was an error adding/editing Tariff',
         });
       }
     },
-    async handleEditTarrif() {
+    async handleEditTariff() {
       try {
-        await this.$store.dispatch('tarrifStore/editTarrif', this.tarrif);
+        await this.$store.dispatch('tariffStore/editTariff', this.tariff);
         this.$notify({
           group: 'all',
           type: 'success',
@@ -198,10 +200,12 @@ export default {
         });
         this.isAddView = true;
         this.viewOperation = false;
-        this.user = {
+        this.tariff = {
           name: '',
-          email: '',
-          permissions: [],
+          rates: {
+              "Nepal": 0,
+              "Bangladesh": 0,
+          }
         };
       } catch (err) {
         this.$notify({
