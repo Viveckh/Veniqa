@@ -1,7 +1,11 @@
 <template>
   <div class="general-padding" id="order-detail">
     <div v-if="openOrder">
-      <h3><a><font-awesome-icon icon="chevron-left" @click="goToOrdersPage()"/></a> Order Details</h3>
+      <h3>
+        <a>
+          <font-awesome-icon icon="chevron-left" @click="goToOrdersPage()"/>
+        </a> Order Details
+      </h3>
 
       <p class="status">
         <b-row>
@@ -17,7 +21,12 @@
                 v-if="openOrder.overall_status === 'RECEIVED'"
                 @click="showConfirmation = true"
               >Confirm Order</b-btn>
-              <b-btn variant="danger" disabled size="sm" @click="cancel()">Cancel Order</b-btn>
+              <b-btn
+                variant="danger"
+                v-if="openOrder.overall_status == 'RECEIVED'"
+                size="sm"
+                @click="cancelConfirmation = true"
+              >Cancel Order</b-btn>
             </div>
           </b-col>
         </b-row>
@@ -43,6 +52,12 @@
     </div>
 
     <confirmation-page v-if="showConfirmation" @yes="yesClicked" @no="showConfirmation = false"/>
+    <confirmation-page
+      v-if="cancelConfirmation"
+      text="Are you sure you want to cancel the order?"
+      @yes="cancelOrder"
+      @no="cancelConfirmation = false"
+    />
   </div>
 </template>
 
@@ -60,6 +75,7 @@ export default {
   data() {
     return {
       showConfirmation: false,
+      cancelConfirmation: false,
     };
   },
 
@@ -70,9 +86,30 @@ export default {
   },
 
   methods: {
-    cancel() {
-      this.$store.commit('orderStore/setOpenOrder', null);
-      this.$router.push({ path: '/orders' });
+    async cancelOrder() {
+      try {
+        const isSuccess = await this.$store.dispatch(
+          'orderStore/cancelOrder',
+          this.openOrder._id,
+        );
+        if (isSuccess) {
+          this.$router.push({ path: '/orders' });
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text: 'Successfully cancelled the order.',
+          });
+        } else {
+          throw new Error('It wasn not a successful request');
+        }
+      } catch (error) {
+        console.log('Error', error);
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'Error occured while cancelling. Please try again later.',
+        });
+      }
     },
 
     async yesClicked() {

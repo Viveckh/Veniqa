@@ -41,4 +41,5 @@ export default {
   fulfillOrder: '/orders/markItemAsFulfilling',
   markShipped: '/orders/markItemAsShipped',
   markDelivered: '/orders/markItemAsDelivered',
+  cancelOrder: '/orders/cancelOrder',
 };

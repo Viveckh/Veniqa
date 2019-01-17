@@ -37,6 +37,30 @@ export default {
   },
 
   actions: {
+    async cancelOrder({ commit, state }, orderId) {
+      try {
+        const { data } = await Vue.prototype.$axios({
+          url: ProxyUrl.cancelOrder,
+          method: 'POST',
+          data: {
+            orderId,
+          },
+        });
+
+        if (!data) {
+          throw new Error('No Data');
+        }
+        if (data.httpStatus == 200) {
+          commit('setOpenOrder', null);
+          return true;
+        }
+
+        console.log('HTTP', data.httpStatus == 200);
+        return false;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     async markAsDelivered({ commit, state }, deliveryDetail) {
       try {
         const { data } = await Vue.prototype.$axios({
