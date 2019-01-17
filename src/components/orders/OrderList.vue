@@ -5,17 +5,15 @@
         <tr>
           <th>Order ID</th>
           <th>Order Status</th>
-          <th>Total Items</th>
           <th>Total Weight</th>
           <th>Price</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(order, orderId) in orders" v-bind:key="orderId">
+        <tr v-for="(order, orderId) in orders" v-bind:key="orderId" class="list-padding">
           <td>{{order._id}}</td>
           <td>{{order.overall_status}}</td>
-          <td>{{order.cart.items.length}}</td>
           <td>{{order.cart.totalWeight.quantity}} {{order.cart.totalWeight.unit}}</td>
           <td>$ {{paymentInfo(order.payment_info)}}</td>
           <td>
@@ -51,8 +49,14 @@ export default {
 
     async openOrder(order) {
       try {
-        const isSuccess = await this.$store.dispatch('orderStore/openOrderDetail');
+        const isSuccess = await this.$store.dispatch('orderStore/openOrderDetail', order);
+        if (!isSuccess) {
+          throw new Error('Failed');
+        } else {
+          this.$router.push('orders/orderdetail');
+        }
       } catch (error) {
+        console.log('Error occured', error);
         this.$notify({
           group: 'all',
           type: 'error',
@@ -71,5 +75,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.list-padding{
+  td{
+    padding: 0.3rem;
+    padding-top: 10px;
+  }
+}
 </style>

@@ -22,7 +22,7 @@ import { mapGetters } from 'vuex';
 import OrderList from '@/components/orders/OrderList';
 
 export default {
-  name: 'OrdersView',
+  name: 'OrdersMainPage',
   components: {
     OrderList,
   },
@@ -31,7 +31,8 @@ export default {
   },
 
   async created() {
-    const status = 'RECEIVED';
+    const status = this.orderStatus.trim().length == 0 ? 'RECEIVED' : this.orderStatus;
+
     this.$store.commit('orderStore/setOrderStatus', status);
     try {
       const data = await this.$store.dispatch(

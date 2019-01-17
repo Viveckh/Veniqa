@@ -55,7 +55,7 @@
         </b-form-invalid-feedback>
       </b-col>
       <b-col class="min-padding" sm="5">
-        <div v-if="row.type === 'Color'" style="margin-top: 2.2em;">
+        <div v-if="row.type === 'Colors'" style="margin-top: 2.2em;">
           <b-row v-for="(val, vind) in row.values" v-bind:key="vind" style="margin: 10px 0px;">
             <b-col sm="1">
               <a><font-awesome-icon v-if="vind > 0" icon="trash-alt" @click="deleteLine(vind)"/></a>
@@ -125,7 +125,7 @@ export default {
   },
   data() {
     return {
-      allDataTypes: ['Boolean', 'Array', 'Color'],
+      allDataTypes: ['Toggle', 'Array', 'Colors'],
     };
   },
 
@@ -146,7 +146,7 @@ export default {
     },
 
     typeChanged() {
-      if (this.row.type === 'Color') {
+      if (this.row.type === 'Colors') {
         this.row.values = [{
           name: null,
           hexValue: null,

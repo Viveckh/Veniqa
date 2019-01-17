@@ -11,7 +11,7 @@
       </b-col>
       <b-col>
         <div class="align-right">
-          <div class="btn btn-secondary" @click="$emit('cancel')">Cancel</div>
+          <div class="au-btn au-btn-icon au-btn--green" @click="$emit('cancel')">Cancel</div>
           <!-- <div class="btn btn-primary" @click="saveAll()">Save All</div> -->
           <div class="btn btn-primary" @click="$emit('cancel')">Save All</div>
         </div>
@@ -47,7 +47,7 @@
     <b-row class="actions" v-if="finalImages.length > 0">
       <b-col>
         <div class="align-left">
-          <button class="btn btn-secondary" @click="resetImagesModification()">Remove Image</button>
+          <button class="au-btn au-btn-icon au-btn--green" @click="resetImagesModification()">Remove Image</button>
           <button class="btn btn-primary" @click="cropImage()">Done Cropping</button>
         </div>
       </b-col>

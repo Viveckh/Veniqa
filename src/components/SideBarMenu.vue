@@ -1,43 +1,251 @@
 <template>
-  <div class="wrapper">
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-      <ul class="list-unstyled components">
-        <li>
-          <a href="/">
+<div class="animsition">
+    <div class="page-wrapper">
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar2">
+            <div class="logo">
+                <a href="#">
+                    <img src="./../assets/logo.png"" alt="Cool Admin" />
+                </a>
+            </div>
+            <div class="menu-sidebar2__content js-scrollbar1">
+                <div class="account2">
+                    <div class="image img-cir img-120">
+                        <img src="https://www.tenforums.com/geek/gars/images/2/types/thumb__ser.png" alt="Admin" />
+                    </div>
+                    <h4 class="name">Admin</h4>
+                    <a href="#">Sign out</a>
+                </div>
+                <nav class="navbar-sidebar2">
+                    <ul class="list-unstyled navbar__list">
+                        <li class="nav-item">
+          <a class="nav-link" @click="navigate('catalog')" >
             <i class="fas fa-list"></i>
             Catalogs
           </a>
         </li>
 
-        <li @click="navigate('orders')">
-          <a>
+        <li class="nav-item" @click="navigate('orders')">
+          <a class="nav-link">
             <i class="fas fa-archive"></i>
             Orders
           </a>
         </li>
-        <li @click="navigate('featured')">
-          <a>
+        <li class="nav-item" @click="navigate('featured')">
+          <a class="nav-link">
             <font-awesome-icon icon="star"/>
             Featured Posts
           </a>
         </li>
-        <li>
-          <a href="#">
-            <i class="fas fa-cog"></i>
-            Store Settings
-          </a>
-        </li>
-        <li @click="navigate('adminsetting')">
-          <a>
+        <li class="nav-item" @click="navigate('adminsetting')">
+          <a class="nav-link">
             <i class="fas fa-users"></i>
             User Settings
           </a>
         </li>
-      </ul>
-    </nav>
-    <router-view/>
-  </div>
+        <li class="nav-item" @click="navigate('tariffsetting')">
+          <a class="nav-link">
+            <i class="fa fa-plane"></i>
+            Tariffs Setting
+          </a>
+        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container2">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop2">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap2">
+                            <div class="logo d-block d-lg-none">
+                                <a href="#">
+                                    <img src="images/icon/logo-white.png" alt="CoolAdmin" />
+                                </a>
+                            </div>
+                            <div class="header-button2">
+                                <div class="header-button-item js-item-menu">
+                                    <i class="zmdi zmdi-search"></i>
+                                    <div class="search-dropdown js-dropdown">
+                                        <form action="">
+                                            <input class="au-input au-input--full au-input--h65" type="text" placeholder="Search for datas &amp; reports..." />
+                                            <span class="search-dropdown__icon">
+                                                <i class="zmdi zmdi-search"></i>
+                                            </span>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="header-button-item has-noti js-item-menu">
+                                    <i class="zmdi zmdi-notifications"></i>
+                                    <div class="notifi-dropdown js-dropdown">
+                                        <div class="notifi__title">
+                                            <p>You have 3 Notifications</p>
+                                        </div>
+                                        <div class="notifi__item">
+                                            <div class="bg-c1 img-cir img-40">
+                                                <i class="zmdi zmdi-email-open"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>You got a email notification</p>
+                                                <span class="date">April 12, 2018 06:50</span>
+                                            </div>
+                                        </div>
+                                        <div class="notifi__item">
+                                            <div class="bg-c2 img-cir img-40">
+                                                <i class="zmdi zmdi-account-box"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>Your account has been blocked</p>
+                                                <span class="date">April 12, 2018 06:50</span>
+                                            </div>
+                                        </div>
+                                        <div class="notifi__item">
+                                            <div class="bg-c3 img-cir img-40">
+                                                <i class="zmdi zmdi-file-text"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>You got a new file</p>
+                                                <span class="date">April 12, 2018 06:50</span>
+                                            </div>
+                                        </div>
+                                        <div class="notifi__footer">
+                                            <a href="#">All notifications</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-button-item mr-0 js-sidebar-btn">
+                                    <i class="zmdi zmdi-menu"></i>
+                                </div>
+                                <div class="setting-menu js-right-sidebar d-none d-lg-block">
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-account"></i>Account</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-settings"></i>Setting</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                        </div>
+                                    </div>
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-globe"></i>Language</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-pin"></i>Location</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-email"></i>Email</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-notifications"></i>Notifications</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
+                <div class="logo">
+                    <a href="#">
+                        <img src="images/icon/logo-white.png" alt="Cool Admin" />
+                    </a>
+                </div>
+                <div class="menu-sidebar2__content js-scrollbar2">
+                    <div class="account2">
+                        <div class="image img-cir img-120">
+                            <img src="https://www.tenforums.com/geek/gars/images/2/types/thumb__ser.png" alt="Admin" />
+                        </div>
+                        <h4 class="name">Admin</h4>
+                        <a href="#">Sign out</a>
+                    </div>
+                    <nav class="navbar-sidebar2">
+                        <ul class="list-unstyled navbar__list">
+                            <li class="nav-item">
+          <a class="nav-link" @click="navigate('catalog')" >
+            <i class="fas fa-list"></i>
+            Catalogs
+          </a>
+        </li>
+
+        <li class="nav-item" @click="navigate('orders')">
+          <a class="nav-link">
+            <i class="fas fa-archive"></i>
+            Orders
+          </a>
+        </li>
+        <li class="nav-item" @click="navigate('featured')">
+          <a class="nav-link">
+            <font-awesome-icon icon="star"/>
+            Featured Posts
+          </a>
+        </li>
+        <li class="nav-item" @click="navigate('adminsetting')">
+          <a class="nav-link">
+            <i class="fas fa-users"></i>
+            User Settings
+          </a>
+        </li>
+        <li class="nav-item" @click="navigate('tariffsetting')">
+          <a class="nav-link">
+            <i class="fa fa-plane"></i>
+            Tariffs Setting
+          </a>
+        </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <!-- END HEADER DESKTOP-->
+
+            <br><br>
+
+            <!-- STATISTIC-->
+            <section class="statistic">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="statistic__item">
+                                     <router-view/>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © VENIQA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+</div>
 </template>
 
 <script>
@@ -49,7 +257,7 @@ export default {
   components: {},
   methods: {
     navigate(path) {
-      this.$router.push(path);
+      this.$router.push({ path: `/${path}` });
     },
   },
 };
@@ -60,244 +268,11 @@ export default {
     DEMO STYLE
 */
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-body {
-  font-family: "Poppins", sans-serif;
-  background: #fafafa;
+
+@import "./../assets/css/dashboard.css";
+@import url('https://fonts.googleapis.com/css?family=Cairo');
+body{
+font-family: 'Cairo', sans-serif !important;
 }
 
-p {
-  font-family: "Poppins", sans-serif;
-  font-size: 1.1em;
-  font-weight: 300;
-  line-height: 1.7em;
-  color: #999;
-}
-
-a,
-a:hover,
-a:focus {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.navbar {
-  padding: 15px 10px;
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-btn {
-  box-shadow: none;
-  outline: none !important;
-  border: none;
-}
-
-.line {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed #ddd;
-  margin: 40px 0;
-}
-
-i,
-span {
-  display: inline-block;
-}
-
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-.wrapper {
-  display: flex;
-  align-items: stretch;
-}
-
-#sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  background: #343a40;
-  color: #fff;
-  transition: all 0.3s;
-  min-height: 1300px;
-}
-
-#sidebar.active {
-  min-width: 80px;
-  max-width: 80px;
-  text-align: center;
-}
-
-#sidebar.active .sidebar-header h3,
-#sidebar.active .CTAs {
-  display: none;
-}
-
-#sidebar.active .sidebar-header strong {
-  display: block;
-}
-
-#sidebar ul li a {
-  text-align: left;
-}
-
-#sidebar.active ul li a {
-  padding: 20px 10px;
-  text-align: center;
-  font-size: 0.85em;
-}
-
-#sidebar.active ul li a i {
-  margin-right: 0;
-  display: block;
-  font-size: 1.8em;
-  margin-bottom: 5px;
-}
-
-#sidebar.active ul ul a {
-  padding: 10px !important;
-}
-
-#sidebar.active .dropdown-toggle::after {
-  top: auto;
-  bottom: 10px;
-  right: 50%;
-  -webkit-transform: translateX(50%);
-  -ms-transform: translateX(50%);
-  transform: translateX(50%);
-}
-
-#sidebar .sidebar-header {
-  padding: 20px;
-  background: white;
-}
-
-#sidebar .sidebar-header strong {
-  display: none;
-  font-size: 1.8em;
-}
-
-#sidebar ul.components {
-  border-bottom: 1px solid white;
-}
-
-#sidebar ul li a {
-  padding: 10px;
-  font-size: 1.1em;
-  display: block;
-  color: white;
-}
-
-#sidebar ul li a:hover {
-  color: black;
-  background: #fff;
-}
-
-#sidebar ul li a i {
-  margin-right: 10px;
-}
-
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-  color: black;
-  background: whitesmoke;
-}
-
-a[data-toggle="collapse"] {
-  position: relative;
-}
-
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
-ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: #6d7fcc;
-}
-
-ul.CTAs {
-  padding: 20px;
-}
-
-ul.CTAs a {
-  text-align: center;
-  font-size: 0.9em !important;
-  display: block;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
-#content {
-  width: 100%;
-  padding: 20px;
-  min-height: 100vh;
-  transition: all 0.3s;
-}
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-  #sidebar {
-    min-width: 80px;
-    max-width: 80px;
-    text-align: center;
-    margin-left: -80px !important;
-  }
-  .dropdown-toggle::after {
-    top: auto;
-    bottom: 10px;
-    right: 50%;
-    -webkit-transform: translateX(50%);
-    -ms-transform: translateX(50%);
-    transform: translateX(50%);
-  }
-  #sidebar.active {
-    margin-left: 0 !important;
-  }
-  #sidebar .sidebar-header h3,
-  #sidebar .CTAs {
-    display: none;
-  }
-  #sidebar .sidebar-header strong {
-    display: block;
-  }
-  #sidebar ul li a {
-    padding: 20px 10px;
-  }
-  #sidebar ul li a span {
-    font-size: 0.85em;
-  }
-  #sidebar ul li a i {
-    margin-right: 0;
-    display: block;
-  }
-  #sidebar ul ul a {
-    padding: 10px !important;
-  }
-  #sidebar ul li a i {
-    font-size: 1.3em;
-  }
-  #sidebar {
-    margin-left: 0;
-  }
-  #sidebarCollapse span {
-    display: none;
-  }
-}
 </style>

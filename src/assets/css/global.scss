@@ -129,3 +129,52 @@ a{
     margin: 20px 0px;
   }
 }
+
+.list-row {
+  background: #f6f5f3;
+}
+
+.header-margin-top{
+  margin-top: 1rem;
+}
+
+.item-status {
+  padding: 3px 15px;
+  border-radius: 15px;
+  color: white;
+  background-color: $primary-green;
+}
+
+.footer-modal{
+  button {
+    margin-left: 10px;
+  }
+}
+
+.theme-orange .vdatetime-popup__header,
+.theme-orange .vdatetime-calendar__month__day--selected > span > span,
+.theme-orange .vdatetime-calendar__month__day--selected:hover > span > span {
+  background: #FF9800;
+}
+
+.theme-orange .vdatetime-year-picker__item--selected,
+.theme-orange .vdatetime-time-picker__item--selected,
+.theme-orange .vdatetime-popup__actions__button {
+  color: #ff9800;
+}
+
+.vdatetime-overlay{
+  background: transparent!important;
+}
+
+.vdatetime-input{
+  height: calc(1.8125rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.icon:hover{
+  cursor: pointer;
+}

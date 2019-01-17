@@ -1,0 +1,175 @@
+<template>
+  <div class="general-padding" id="order-detail">
+    <div v-if="openOrder">
+      <h3>
+        <a>
+          <font-awesome-icon icon="chevron-left" @click="goToOrdersPage()"/>
+        </a> Order Details
+      </h3>
+
+      <p class="status">
+        <b-row>
+          <b-col md="6">
+            Order Status:
+            <span class="item-status">{{openOrder.overall_status}}</span>
+          </b-col>
+          <b-col md="6">
+            <div class="align-right">
+              <b-btn
+                variant="success"
+                size="sm"
+                v-if="openOrder.overall_status === 'RECEIVED'"
+                @click="showConfirmation = true"
+              >Confirm Order</b-btn>
+              <b-btn
+                variant="danger"
+                v-if="openOrder.overall_status == 'RECEIVED'"
+                size="sm"
+                @click="cancelConfirmation = true"
+              >Cancel Order</b-btn>
+            </div>
+          </b-col>
+        </b-row>
+      </p>
+
+      <h5>All Ordered Items</h5>
+      <hr>
+
+      <div class="order-item-pane">
+        <div
+          v-for="(item, itemInd) in openOrder.cart.items"
+          v-bind:key="itemInd"
+          :class="{'list-row': itemInd % 2 == 0}"
+        >
+          <single-list-item
+            :data="item"
+            :dataIndex="itemInd+1"
+            :orderStatus="openOrder.overall_status"
+            :order="openOrder"
+          />
+        </div>
+      </div>
+
+      <comments-section/>
+    </div>
+
+    <confirmation-page v-if="showConfirmation" @yes="yesClicked" @no="showConfirmation = false"/>
+    <confirmation-page
+      v-if="cancelConfirmation"
+      text="Are you sure you want to cancel the order?"
+      @yes="cancelOrder"
+      @no="cancelConfirmation = false"
+    />
+  </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+import SingleListItem from '@/components/orders/SingleListItem';
+import ConfirmationPage from '@/components/common/ConfirmationPage';
+import CommentsSection from '@/components/orders/CommentsSection';
+
+export default {
+  name: 'OrderDetail',
+  components: {
+    SingleListItem,
+    ConfirmationPage,
+    CommentsSection,
+  },
+  data() {
+    return {
+      showConfirmation: false,
+      cancelConfirmation: false,
+    };
+  },
+
+  created() {
+    if (this.openOrder == null) {
+      this.$router.push({ path: '/orders' });
+    }
+  },
+
+  methods: {
+    async cancelOrder() {
+      try {
+        const isSuccess = await this.$store.dispatch(
+          'orderStore/cancelOrder',
+          this.openOrder._id,
+        );
+        if (isSuccess) {
+          this.$router.push({ path: '/orders' });
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text: 'Successfully cancelled the order.',
+          });
+        } else {
+          throw new Error('It wasn not a successful request');
+        }
+      } catch (error) {
+        console.log('Error', error);
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'Error occured while cancelling. Please try again later.',
+        });
+      }
+    },
+
+    async yesClicked() {
+      await this.confirmOrder();
+      this.showConfirmation = false;
+    },
+
+    goToOrdersPage() {
+      this.$store.commit('orderStore/setOpenOrder', null);
+      this.$router.push({ path: '/orders' });
+    },
+
+    async confirmOrder() {
+      try {
+        const isSuccess = await this.$store.dispatch('orderStore/confirmOrder');
+
+        if (isSuccess) {
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text: 'Order was confirmed.',
+          });
+        }
+      } catch (error) {
+        console.log('Error', error);
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text:
+            'Order could not be confirmed at the moment. Please try again later.',
+        });
+      }
+    },
+  },
+
+  computed: {
+    ...mapGetters({
+      openOrder: 'orderStore/openOrder',
+    }),
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#order-detail {
+  font-size: 0.875rem;
+
+  .status {
+    button {
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+  }
+
+  .comments {
+    margin-top: 1rem;
+  }
+}
+</style>
