@@ -12,7 +12,8 @@ export default {
             email: userObj.email,
             password: cryptoGen.createPasswordHash(userObj.password),
             name: userObj.name,
-            emailConfirmationToken: await cryptoGen.generateRandomToken()
+            emailConfirmationToken: await cryptoGen.generateRandomToken(),
+            referral_token: await cryptoGen.generateFriendlyToken(4)
         });
 
         try {

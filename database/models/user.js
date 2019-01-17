@@ -25,6 +25,11 @@ let userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    referral_token: {
+        type: String,
+        required: true,
+        unique: true
+    },
     emailConfirmationToken: String,
     passwordResetToken: String,
     passwordResetExpires: Date,

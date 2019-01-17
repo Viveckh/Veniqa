@@ -15,6 +15,20 @@ export default {
             });     
         })
     },
+
+    generateFriendlyToken(length=4) {
+        return new Promise((resolve, reject) => {
+            // generate reset token
+            crypto.randomBytes(length, (err, buf) => {
+                if(err) {
+                    return reject(err);
+                }
+                const token = buf.toString('hex');
+                resolve(token);
+            });     
+        })
+    },
+
     createPasswordHash(password) {
         return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
     }
