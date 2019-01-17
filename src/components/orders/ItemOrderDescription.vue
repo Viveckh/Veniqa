@@ -40,7 +40,21 @@
       <b-col md="6">
         <!-- Fulfillment Details -->
         <div v-if="displayFulfillmentOrder">
-          <h6>Fulfillment Details</h6>
+          <b-row>
+            <b-col md="6">
+              <h6>Fulfillment Details</h6>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right icon">
+                <font-awesome-icon
+                  v-b-tooltip.hover
+                  title="Edit"
+                  icon="edit"
+                  @click="editClicked('fulfillment')"
+                />
+              </div>
+            </b-col>
+          </b-row>
           <hr>
           <b-row>
             <b-col md="4">
@@ -63,7 +77,21 @@
         </div>
 
         <div v-if="displayShipment">
-          <h6 class="header-margin-top">Shipment</h6>
+          <b-row>
+            <b-col md="6">
+              <h6 class="header-margin-top">Shipment</h6>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right icon header-margin-top">
+                <font-awesome-icon
+                  v-b-tooltip.hover
+                  title="Edit"
+                  icon="edit"
+                  @click="editClicked('shipment')"
+                />
+              </div>
+            </b-col>
+          </b-row>
           <hr>
           <b-row>
             <b-col md="4">
@@ -90,15 +118,27 @@
         </div>
 
         <div v-if="displayDelivery">
-          <h6 class="header-margin-top">Delivery</h6>
+          <b-row>
+            <b-col md="6">
+              <h6 class="header-margin-top">Delivery</h6>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right icon header-margin-top">
+                <font-awesome-icon
+                  v-b-tooltip.hover
+                  title="Edit"
+                  icon="edit"
+                  @click="editClicked('delivery')"
+                />
+              </div>
+            </b-col>
+          </b-row>
           <hr>
           <b-row>
             <b-col md="4">
               <strong>Delivered On</strong>
             </b-col>
-            <b-col md="8">
-              {{formattedDate(deliveryDetail.delivery_date)}}
-            </b-col>
+            <b-col md="8">{{formattedDate(deliveryDetail.delivery_date)}}</b-col>
           </b-row>
         </div>
       </b-col>
@@ -133,6 +173,10 @@ export default {
     formattedDate(dateString) {
       const obj = moment(dateString);
       return obj.format(this.DATE_FORMAT);
+    },
+
+    editClicked(status) {
+      this.$emit('edit', status);
     },
   },
 

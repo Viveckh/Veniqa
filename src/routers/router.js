@@ -13,7 +13,7 @@ import OrderDetail from '@/components/orders/OrderDetail';
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
