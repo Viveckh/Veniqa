@@ -123,51 +123,47 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-            <!-- Price -->
-            <b-form-group horizontal :label-cols="2" label="Price" label-for="price">
-              <b-form-input
-                id="price"
-                type="number"
-                step="0.01"
-                name="price"
-                :state="priceState"
-                v-model="product.price.amount"
-                placeholder="Enter the price of the product"
-                aria-describedby="priceFeedback"
-                size="sm"
-              ></b-form-input>
+        <!-- Price -->
+        <b-form-group horizontal :label-cols="2" label="Price" label-for="price">
+          <b-form-input
+            id="price"
+            type="number"
+            step="0.01"
+            name="price"
+            :state="priceState"
+            v-model="product.price.amount"
+            placeholder="Enter the price of the product"
+            aria-describedby="priceFeedback"
+            size="sm"
+          ></b-form-input>
 
-              <b-form-invalid-feedback id="priceFeedback">
-                <!-- This will only be shown if the preceeding input has an invalid state -->
-                This field cannot be empty or negative.
-              </b-form-invalid-feedback>
-            </b-form-group>
-            <b-form-group
-              horizontal
-              :label-cols="2"
-              label="Tariff Category"
-              label-for="tariffcategory"
-            >
-              <b-form-select 
-                v-model="product.tariff"
-                class="mb-3"
-                size="sm"
-                id="tariffcategory"
-                name="tariffcategory"
-                :state="tariffState"
-                aria-describedby="tariffFeedback"
-              >
-                <option v-for="(tariff, tid) in tariffCategories" v-bind:key="tid" :value="tariff._id">
-                  {{tariff.name}}
-                </option>
-                
-              </b-form-select>
+          <b-form-invalid-feedback id="priceFeedback">
+            <!-- This will only be shown if the preceeding input has an invalid state -->
+            This field cannot be empty or negative.
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group horizontal :label-cols="2" label="Tariff Category" label-for="tariffcategory">
+          <b-form-select
+            v-model="product.tariff"
+            class="mb-3"
+            size="sm"
+            id="tariffcategory"
+            name="tariffcategory"
+            :state="tariffState"
+            aria-describedby="tariffFeedback"
+          >
+            <option
+              v-for="(tariff, tid) in tariffCategories"
+              v-bind:key="tid"
+              :value="tariff._id"
+            >{{tariff.name}}</option>
+          </b-form-select>
 
-              <b-form-invalid-feedback id="tariffFeedback">
-                <!-- This will only be shown if the preceeding input has an invalid state -->
-                This field cannot be empty
-              </b-form-invalid-feedback>
-            </b-form-group>
+          <b-form-invalid-feedback id="tariffFeedback">
+            <!-- This will only be shown if the preceeding input has an invalid state -->
+            This field cannot be empty
+          </b-form-invalid-feedback>
+        </b-form-group>
 
         <!-- Item URL -->
         <b-form-group horizontal :label-cols="2" label="Item URL" label-for="itemurl">
@@ -404,7 +400,11 @@
             class="btn btn-success btn-sm"
           >Add Product</button>
           &nbsp;
-          <button type="button" class="btn btn-danger btn-sm" @click="goBack()">Cancel</button>
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            @click="goBack()"
+          >Cancel</button>
         </div>
       </div>
     </div>
@@ -545,8 +545,8 @@ export default {
     }),
 
     tariffState() {
-      // if(this.product.tariff == null) return null;
-      return this.product.tariff && this.product.tariff.length > 0;
+      if(this.product.tariff == null) return null;
+      return this.product.tariff.length > 0;
     },
 
     productNameState() {
@@ -592,6 +592,8 @@ export default {
       return _.map(attribute.values, "name").join(" , ");
     },
     validateForm() {
+      if(this.tariffState == null) {
+        this.product.tariff = '';}
       return (
         this.productNameState &&
         this.storeState &&
@@ -601,7 +603,7 @@ export default {
         this.priceState &&
         this.itemurlState &&
         this.weightState &&
-        this.unitState
+        this.unitState && this.tariffState
       );
     },
 
