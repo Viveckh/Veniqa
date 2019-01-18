@@ -21,21 +21,21 @@
               <b-btn
                 variant="primary"
                 size="sm"
-                v-if="data.order_line_level_processing_details.status == 'PROCESSING' && orderStatus != 'RECEIVED'"
+                v-if="data.order_line_level_processing_details.status == 'PROCESSING' && orderStatus != 'RECEIVED' && permissionGranted"
                 @click="fulfillingModalShow = true"
               >Mark as fulfilling</b-btn>
 
               <b-btn
                 variant="primary"
                 size="sm"
-                v-if="data.order_line_level_processing_details.status == 'FULFILLING' && orderStatus != 'RECEIVED'"
+                v-if="data.order_line_level_processing_details.status == 'FULFILLING' && orderStatus != 'RECEIVED' && permissionGranted"
                 @click="shippingModalShow = true"
               >Mark as shipped</b-btn>
 
               <b-btn
                 variant="primary"
                 size="sm"
-                v-if="data.order_line_level_processing_details.status == 'SHIPPED' && orderStatus != 'RECEIVED'"
+                v-if="data.order_line_level_processing_details.status == 'SHIPPED' && orderStatus != 'RECEIVED' && permissionGranted"
                 @click="deliveredModalShow = true"
               >Mark as Delivered</b-btn>
             </div>
@@ -121,6 +121,8 @@ import FulfillingModal from '@/components/orders/FulfillingModal';
 import ShippingModal from '@/components/orders/ShippingModal';
 import DeliveredModal from '@/components/orders/DeliveredModal';
 import moment from 'moment';
+import { mapGetters } from 'vuex';
+import Permission from '@/constants/permissions'
 
 export default {
   name: 'SingleListItem',
@@ -280,6 +282,17 @@ export default {
       }
     },
   },
+
+  computed: {
+    ...mapGetters({
+      permissions: 'authStore/permissions'
+    }) ,
+
+    permissionGranted() {
+      if(this.permissions.indexOf(Permission.SUPERADMIN) >=0) return true;
+      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
+    }
+  }
 };
 </script>
 

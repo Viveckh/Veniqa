@@ -11,6 +11,7 @@ import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
 import OrderDetail from '@/components/orders/OrderDetail';
 import PageNotFound from '@/views/notfound.vue';
+import _ from 'lodash';
 
 Vue.use(Router);
 
@@ -39,18 +40,28 @@ const router = new Router({
           path: 'adminsetting',
           name: 'adminsetting',
           component: AdminPage,
+          meta: {
+            SUPERADMIN: true,
+          }
         },
 
         {
           path: 'tariffsetting',
           name: 'tariffetting',
           component: TariffPage,
+          meta: {
+            SUPERADMIN: true,
+          }
         },
 
         {
           path: '/orders',
-          // name: 'orders',
           component: OrdersComponent,
+          meta: {
+            // Doing a basic route level permission.
+            ORDER_VIEW: true,
+            ORDER_MANAGE: true,
+          },
           children: [
             {
               path: '/',
@@ -146,7 +157,27 @@ router.beforeEach((to, from, next) => {
         path: '/login',
       });
     } else {
-      next();
+      let userPermissions = localStorage.getItem('permissions');
+      
+      let moveForward = to.matched.some(rec => {
+        let keys = Object.keys(rec.meta);
+        
+        if(keys.length == 0) return true;
+        if(userPermissions && userPermissions.indexOf('SUPERADMIN') >=0) return true;
+        if(_.intersection(keys, userPermissions) > 0){
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+
+      if(moveForward){
+        next();
+      }
+      else{
+        next('catalog');
+      }
     }
   } else {
     next();

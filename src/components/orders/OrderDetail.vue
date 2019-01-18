@@ -18,12 +18,12 @@
               <b-btn
                 variant="success"
                 size="sm"
-                v-if="openOrder.overall_status === 'RECEIVED'"
+                v-if="openOrder.overall_status === 'RECEIVED' && permissionGranted"
                 @click="showConfirmation = true"
               >Confirm Order</b-btn>
               <b-btn
                 variant="danger"
-                v-if="openOrder.overall_status == 'RECEIVED'"
+                v-if="openOrder.overall_status == 'RECEIVED' && permissionGranted"
                 size="sm"
                 @click="cancelConfirmation = true"
               >Cancel Order</b-btn>
@@ -68,6 +68,7 @@ import { mapGetters } from 'vuex';
 import SingleListItem from '@/components/orders/SingleListItem';
 import ConfirmationPage from '@/components/common/ConfirmationPage';
 import CommentsSection from '@/components/orders/CommentsSection';
+import Permission from '@/constants/permissions';
 
 export default {
   name: 'OrderDetail',
@@ -152,7 +153,13 @@ export default {
   computed: {
     ...mapGetters({
       openOrder: 'orderStore/openOrder',
+      permissions: 'authStore/permissions'
     }),
+
+    permissionGranted() {
+      if(this.permissions.indexOf(Permission.SUPERADMIN) >=0) return true;
+      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
+    }
   },
 };
 </script>

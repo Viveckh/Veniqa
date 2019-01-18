@@ -7,6 +7,7 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
+    permissions: []
   },
   actions: {
     async registerUser({ state, commit }, payload) {
@@ -46,6 +47,7 @@ export default {
           commit('setEmail', res.data.email);
           commit('setName', res.data.name);
           commit('setSessionActive', true);
+          commit('setPermissions', res.data.permissions);
         }
         return res;
       } catch (err) {
@@ -69,6 +71,11 @@ export default {
     },
   },
   mutations: {
+    setPermissions(state, payload){
+      state.permissions = payload;
+      localStorage.setItem('permissions', payload)
+    },
+    
     setEmail(state, email) {
       state.email = email;
       localStorage.setItem('email', email);
@@ -103,5 +110,9 @@ export default {
     isSessionActive(state) {
       return state.isSessionActive;
     },
+
+    permissions(state){
+      return state.permissions;
+    }
   },
 };

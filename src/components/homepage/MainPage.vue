@@ -7,6 +7,7 @@
         class="au-btn au-btn-icon au-btn--green"
         style="margin:10px;"
         @click="addProductFunc()"
+        v-if="permissionGranted"
       >
         <i class="fa fa-plus"></i>
         Add a Product
@@ -32,12 +33,12 @@
             <td>${{product.price.amount}}</td>
             <td>{{product.store}}</td>
             <td>
-              <a @click="editProductFunc(product._id)">
+              <a @click="editProductFunc(product._id)" v-if="permissionGranted">
                 <i class="fa fa-edit" style="color:green"></i>
               </a>
             </td>
             <td>
-              <a @click="deleteProduct(product._id)">
+              <a @click="deleteProduct(product._id)" v-if="permissionGranted">
                 <i class="fa fa-trash" style="color:red"></i>
               </a>
             </td>
@@ -51,6 +52,8 @@
 
 <script>
 import AddProduct from '@/components/homepage/AddProduct.vue';
+import Permission from "@/constants/permissions";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -70,6 +73,15 @@ export default {
     products() {
       return this.$store.getters['adminStore/allProducts'];
     },
+
+    permissionGranted() {
+      if(this.permissions.indexOf(Permission.SUPERADMIN) >=0) return true;
+      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >=0;
+    },
+
+    ...mapGetters({
+      permissions: 'authStore/permissions'
+    })
   },
   methods: {
     deleteProduct(id) {
