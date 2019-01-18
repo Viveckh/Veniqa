@@ -79,6 +79,9 @@ const router = new Router({
           path: 'featured',
           name: 'featured',
           component: Featured,
+          meta: {
+            SUPERADMIN: true
+          }
         },
 
         {
