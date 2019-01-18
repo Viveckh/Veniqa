@@ -141,9 +141,9 @@ export default {
       return state;
     },
 
-    tariffCategories(state){
-      return state.tariffCategories
-    }
+    tariffCategories(state) {
+      return state.tariffCategories;
+    },
   },
 };
 

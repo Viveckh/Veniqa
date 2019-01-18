@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-12">
-   
+
     <button
       v-if="!this.viewOperation"
       type="button"
@@ -29,7 +29,7 @@
                   <td>{{tariff.name}}</td>
                   <td>{{tariff.rates.Nepal}}%</td>
                   <td>{{tariff.rates.Bangladesh}}%</td>
-                 
+
                   <td>
                     &nbsp;
                     <a @click="editTariff(tariff)">
@@ -67,7 +67,7 @@
                   <label>Nepal Rate</label>
                   <input
                     v-if="!this.isAddView"
-                    
+
                     type="number"
                     class="form-control"
                     v-model="tariff.rates.Nepal"
@@ -85,7 +85,7 @@
                   <input v-else type="number" class="form-control" v-model="tariff.rates.Bangladesh">
                 </div>
               </div>
-            
+
               <!-- form-group end.// -->
               <div class="form-group">
                 <button
@@ -125,12 +125,12 @@ export default {
   components: {},
   data() {
     return {
-      tariff:{
-          name: '',
-          rates: {
-              "Nepal": 0,
-              "Bangladesh": 0,
-          }
+      tariff: {
+        name: '',
+        rates: {
+          Nepal: 0,
+          Bangladesh: 0,
+        },
       },
       isAddView: true,
       viewOperation: false,
@@ -158,11 +158,11 @@ export default {
       this.isAddView = true;
       this.viewOperation = false;
       this.tariff = {
-         name: '',
-          rates: {
-              "Nepal": 0,
-              "Bangladesh": 0,
-          }
+        name: '',
+        rates: {
+          Nepal: 0,
+          Bangladesh: 0,
+        },
       };
     },
     async handleAddTariff() {
@@ -176,11 +176,11 @@ export default {
         this.isAddView = true;
         this.viewOperation = false;
         this.tariff = {
-           name: '',
+          name: '',
           rates: {
-              "Nepal": 0,
-              "Bangladesh": 0,
-          }
+            Nepal: 0,
+            Bangladesh: 0,
+          },
         };
       } catch (err) {
         this.$notify({
@@ -203,9 +203,9 @@ export default {
         this.tariff = {
           name: '',
           rates: {
-              "Nepal": 0,
-              "Bangladesh": 0,
-          }
+            Nepal: 0,
+            Bangladesh: 0,
+          },
         };
       } catch (err) {
         this.$notify({

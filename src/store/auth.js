@@ -7,6 +7,7 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
+    permissions: [],
   },
   actions: {
     async registerUser({ state, commit }, payload) {
@@ -46,10 +47,28 @@ export default {
           commit('setEmail', res.data.email);
           commit('setName', res.data.name);
           commit('setSessionActive', true);
+          commit('setPermissions', res.data.permissions);
         }
         return res;
       } catch (err) {
         throw new Error(err);
+      }
+    },
+
+    async logout({state, commit}, payload){
+      try {
+        let {data} = await Vue.prototype.$axios({
+          method: 'get',
+          url: ProxyUrls.logoutUrl
+        });
+
+        if(data){
+          commit('logout')
+          return true;
+        }
+        else throw new Error('Could not be fulfilled');
+      } catch (error) {
+        throw new Error(error);
       }
     },
 
@@ -69,6 +88,11 @@ export default {
     },
   },
   mutations: {
+    setPermissions(state, payload) {
+      state.permissions = payload;
+      localStorage.setItem('permissions', payload);
+    },
+
     setEmail(state, email) {
       state.email = email;
       localStorage.setItem('email', email);
@@ -86,6 +110,16 @@ export default {
         localStorage.removeItem('name');
       }
     },
+
+    logout(state){
+      state.isSessionActive = false;
+      state.permissions = [];
+      state.name = '';
+      state.email = '';
+      localStorage.removeItem('email');
+      localStorage.removeItem('name');
+      localStorage.removeItem('permissions');
+    }
   },
   getters: {
     getName(state) {
@@ -102,6 +136,10 @@ export default {
 
     isSessionActive(state) {
       return state.isSessionActive;
+    },
+
+    permissions(state) {
+      return state.permissions;
     },
   },
 };
