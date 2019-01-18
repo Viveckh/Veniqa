@@ -281,7 +281,7 @@
               >
                 <font-awesome-icon icon="bold"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.italic() }"
@@ -289,7 +289,7 @@
               >
                 <font-awesome-icon icon="italic"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.strike() }"
@@ -297,7 +297,7 @@
               >
                 <font-awesome-icon icon="strikethrough"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.underline() }"
@@ -305,7 +305,7 @@
               >
                 <font-awesome-icon icon="underline"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code() }"
@@ -313,7 +313,7 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.paragraph() }"
@@ -321,25 +321,25 @@
               >
                 <font-awesome-icon icon="paragraph"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                 @click="commands.heading({ level: 1 })"
               >H1</button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                 @click="commands.heading({ level: 2 })"
               >H2</button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                 @click="commands.heading({ level: 3 })"
               >H3</button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.bullet_list() }"
@@ -347,7 +347,7 @@
               >
                 <font-awesome-icon icon="list-ul"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.ordered_list() }"
@@ -355,7 +355,7 @@
               >
                 <font-awesome-icon icon="list-ol"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.blockquote() }"
@@ -363,7 +363,7 @@
               >
                 <font-awesome-icon icon="quote-left"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code_block() }"
@@ -371,11 +371,11 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-              
+
               <button class="menubar__button" @click="commands.undo">
                 <font-awesome-icon icon="undo"/>
               </button>
-              
+
               <button class="menubar__button" @click="commands.redo">
                 <font-awesome-icon icon="redo"/>
               </button>
@@ -412,12 +412,12 @@
 </template>
 
 <script>
-import * as _ from "lodash";
-import ManagePhoto from "@/components/homepage/ManagePhoto";
-import CustomAttributes from "@/components/homepage/CustomAttributes";
+import * as _ from 'lodash';
+import ManagePhoto from '@/components/homepage/ManagePhoto';
+import CustomAttributes from '@/components/homepage/CustomAttributes';
 // Import the editor
-import { Editor, EditorContent, EditorMenuBar } from "tiptap";
-import { mapGetters } from "vuex";
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import { mapGetters } from 'vuex';
 import {
   Blockquote,
   CodeBlock,
@@ -434,18 +434,18 @@ import {
   Link,
   Strike,
   Underline,
-  History
-} from "tiptap-extensions";
+  History,
+} from 'tiptap-extensions';
 
 export default {
   props: {
-    data: { required: false, type: Object, default: null }
+    data: { required: false, type: Object, default: null },
   },
   components: {
     ManagePhoto,
     EditorContent,
     EditorMenuBar,
-    CustomAttributes
+    CustomAttributes,
   },
   created() {
     if (this.data != null) {
@@ -458,13 +458,13 @@ export default {
       editor: null,
       preassignedUrls: null,
       product: {
-        store: "AMAZON",
-        brand: "BEVERLY HILLS KAY",
-        name: "Amrezy Highlighter",
+        store: 'AMAZON',
+        brand: 'BEVERLY HILLS KAY',
+        name: 'Amrezy Highlighter',
         item_url:
-          "https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product",
-        category: "Make-Up Kits",
-        subcategory: "Palettes",
+          'https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product',
+        category: 'Make-Up Kits',
+        subcategory: 'Palettes',
         thumbnailUrls: [
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
@@ -477,28 +477,28 @@ export default {
         ],
         price: {
           amount: 27.99,
-          currency: "USD"
+          currency: 'USD',
         },
         tariff: null,
         weight: {
           quantity: 3.2,
-          unit: "LB"
+          unit: 'LB',
         },
         custom_attributes: {},
         customizationOptions: {
-          customizations: []
+          customizations: [],
         },
         details_html:
-          "A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.",
+          'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
-          { name: "Black", hexValue: "#000000" },
-          { name: "Brown", hexValue: "#435ADF" }
+          { name: 'Black', hexValue: '#000000' },
+          { name: 'Brown', hexValue: '#435ADF' },
         ],
-        sizes: ["XS", "S", "M", "L"]
+        sizes: ['XS', 'S', 'M', 'L'],
       },
 
       showManagePhoto: false,
-      images: null
+      images: null,
     };
   },
 
@@ -521,13 +521,13 @@ export default {
         new Link(),
         new Strike(),
         new Underline(),
-        new History()
+        new History(),
       ],
 
       onUpdate: ({ getJSON, getHTML }) => {
         // this.json = getJSON()
         this.product.details_html = getHTML();
-      }
+      },
     });
 
     // console.log("Content", this.editor)
@@ -537,15 +537,15 @@ export default {
   },
   computed: {
     refdata() {
-      return this.$store.getters["adminStore/allStateData"];
+      return this.$store.getters['adminStore/allStateData'];
     },
 
     ...mapGetters({
-      tariffCategories: "adminStore/tariffCategories"
+      tariffCategories: 'adminStore/tariffCategories',
     }),
 
     tariffState() {
-      if(this.product.tariff == null) return null;
+      if (this.product.tariff == null) return null;
       return this.product.tariff.length > 0;
     },
 
@@ -585,25 +585,26 @@ export default {
 
     unitState() {
       return this.product.weight.unit.length > 0;
-    }
+    },
   },
   methods: {
     extractColorValues(attribute) {
-      return _.map(attribute.values, "name").join(" , ");
+      return _.map(attribute.values, 'name').join(' , ');
     },
     validateForm() {
-      if(this.tariffState == null) {
-        this.product.tariff = '';}
+      if (this.tariffState == null) {
+        this.product.tariff = '';
+      }
       return (
-        this.productNameState &&
-        this.storeState &&
-        this.brandState &&
-        this.categoryState &&
-        this.subcategoryState &&
-        this.priceState &&
-        this.itemurlState &&
-        this.weightState &&
-        this.unitState && this.tariffState
+        this.productNameState
+        && this.storeState
+        && this.brandState
+        && this.categoryState
+        && this.subcategoryState
+        && this.priceState
+        && this.itemurlState
+        && this.weightState
+        && this.unitState && this.tariffState
       );
     },
 
@@ -629,7 +630,7 @@ export default {
       _.assign(this.product, payload);
     },
     goBack() {
-      this.$emit("cancelTrigger");
+      this.$emit('cancelTrigger');
     },
     async handleAddProduct() {
       if (!this.validateForm()) return;
@@ -639,15 +640,15 @@ export default {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
-        console.log("Here", saveImageRes);
-        await this.$store.dispatch("adminStore/addProduct", this.product);
-        this.$emit("cancelTrigger");
+        console.log('Here', saveImageRes);
+        await this.$store.dispatch('adminStore/addProduct', this.product);
+        this.$emit('cancelTrigger');
       } catch (err) {
         if (err) this.preassignedUrls = err;
         this.$notify({
-          group: "all",
-          type: "error",
-          text: "There was an error"
+          group: 'all',
+          type: 'error',
+          text: 'There was an error',
         });
       }
     },
@@ -659,25 +660,25 @@ export default {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
-        await this.$store.dispatch("adminStore/editProduct", this.product);
-        this.$emit("cancelTrigger");
+        await this.$store.dispatch('adminStore/editProduct', this.product);
+        this.$emit('cancelTrigger');
       } catch (err) {
         if (err) this.preassignedUrls = err;
         this.$notify({
-          group: "all",
-          type: "error",
-          text: "There was an error"
+          group: 'all',
+          type: 'error',
+          text: 'There was an error',
         });
       }
     },
     getSubCategory() {
-      const refState = this.$store.getters["adminStore/allStateData"];
+      const refState = this.$store.getters['adminStore/allStateData'];
       const x = _.find(refState.refDataPayload.product_categories, {
-        name: this.product.category
+        name: this.product.category,
       }).subcategories;
       return x;
-    }
-  }
+    },
+  },
 };
 </script>
 

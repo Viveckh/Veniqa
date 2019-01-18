@@ -52,8 +52,8 @@
 
 <script>
 import AddProduct from '@/components/homepage/AddProduct.vue';
-import Permission from "@/constants/permissions";
-import { mapGetters } from "vuex";
+import Permission from '@/constants/permissions';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -75,13 +75,13 @@ export default {
     },
 
     permissionGranted() {
-      if(this.permissions.indexOf(Permission.SUPERADMIN) >=0) return true;
-      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >=0;
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
+      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
     },
 
     ...mapGetters({
-      permissions: 'authStore/permissions'
-    })
+      permissions: 'authStore/permissions',
+    }),
   },
   methods: {
     deleteProduct(id) {

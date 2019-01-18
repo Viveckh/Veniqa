@@ -7,7 +7,7 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
-    permissions: []
+    permissions: [],
   },
   actions: {
     async registerUser({ state, commit }, payload) {
@@ -71,11 +71,11 @@ export default {
     },
   },
   mutations: {
-    setPermissions(state, payload){
+    setPermissions(state, payload) {
       state.permissions = payload;
-      localStorage.setItem('permissions', payload)
+      localStorage.setItem('permissions', payload);
     },
-    
+
     setEmail(state, email) {
       state.email = email;
       localStorage.setItem('email', email);
@@ -111,8 +111,8 @@ export default {
       return state.isSessionActive;
     },
 
-    permissions(state){
+    permissions(state) {
       return state.permissions;
-    }
+    },
   },
 };

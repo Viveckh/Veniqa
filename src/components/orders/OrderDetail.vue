@@ -153,13 +153,13 @@ export default {
   computed: {
     ...mapGetters({
       openOrder: 'orderStore/openOrder',
-      permissions: 'authStore/permissions'
+      permissions: 'authStore/permissions',
     }),
 
     permissionGranted() {
-      if(this.permissions.indexOf(Permission.SUPERADMIN) >=0) return true;
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
       return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
-    }
+    },
   },
 };
 </script>

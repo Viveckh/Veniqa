@@ -42,7 +42,7 @@ const router = new Router({
           component: AdminPage,
           meta: {
             SUPERADMIN: true,
-          }
+          },
         },
 
         {
@@ -51,7 +51,7 @@ const router = new Router({
           component: TariffPage,
           meta: {
             SUPERADMIN: true,
-          }
+          },
         },
 
         {
@@ -123,7 +123,7 @@ const router = new Router({
           path: 'checkout',
           component: Checkout,
         },
-        
+
       ],
     },
 
@@ -157,25 +157,22 @@ router.beforeEach((to, from, next) => {
         path: '/login',
       });
     } else {
-      let userPermissions = localStorage.getItem('permissions');
-      
-      let moveForward = to.matched.some(rec => {
-        let keys = Object.keys(rec.meta);
-        
-        if(keys.length == 0) return true;
-        if(userPermissions && userPermissions.indexOf('SUPERADMIN') >=0) return true;
-        if(_.intersection(keys, userPermissions) > 0){
+      const userPermissions = localStorage.getItem('permissions');
+
+      const moveForward = to.matched.some((rec) => {
+        const keys = Object.keys(rec.meta);
+
+        if (keys.length == 0) return true;
+        if (userPermissions && userPermissions.indexOf('SUPERADMIN') >= 0) return true;
+        if (_.intersection(keys, userPermissions) > 0) {
           return true;
         }
-        else {
-          return false;
-        }
-      })
+        return false;
+      });
 
-      if(moveForward){
+      if (moveForward) {
         next();
-      }
-      else{
+      } else {
         next('catalog');
       }
     }

@@ -152,7 +152,7 @@
 <script>
 import moment from 'moment';
 import { mapGetters } from 'vuex';
-import Permission from '@/constants/permissions'
+import Permission from '@/constants/permissions';
 
 export default {
   name: 'ItemOrderDescription',
@@ -187,11 +187,11 @@ export default {
 
   computed: {
     ...mapGetters({
-      permissions: 'authStore/permissions'
+      permissions: 'authStore/permissions',
     }),
 
     permissionGranted() {
-      if(this.permissions.indexOf(Permission.SUPERADMIN) >=0) return true;
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
       return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
     },
     displayFulfillmentOrder() {

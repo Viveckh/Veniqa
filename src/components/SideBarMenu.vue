@@ -224,7 +224,7 @@
                                      <router-view/>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
