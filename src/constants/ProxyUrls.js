@@ -2,6 +2,7 @@ export default {
   // baseUrl: 'https://veniqa.azurewebsites.net',
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
+  logoutUrl: '/security/logout',
   isSessionActive: '/security/isLoggedIn',
   forgotPassword: '/security/forgotPassword?email=',
   validateResetToken: '/security/validatePasswordResetToken/',

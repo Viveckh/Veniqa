@@ -55,6 +55,23 @@ export default {
       }
     },
 
+    async logout({state, commit}, payload){
+      try {
+        let {data} = await Vue.prototype.$axios({
+          method: 'get',
+          url: ProxyUrls.logoutUrl
+        });
+
+        if(data){
+          commit('logout')
+          return true;
+        }
+        else throw new Error('Could not be fulfilled');
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+
     async initiateAppSession({ state, commit }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
@@ -93,6 +110,16 @@ export default {
         localStorage.removeItem('name');
       }
     },
+
+    logout(state){
+      state.isSessionActive = false;
+      state.permissions = [];
+      state.name = '';
+      state.email = '';
+      localStorage.removeItem('email');
+      localStorage.removeItem('name');
+      localStorage.removeItem('permissions');
+    }
   },
   getters: {
     getName(state) {

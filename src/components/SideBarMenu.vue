@@ -17,7 +17,7 @@
               >
             </div>
             <h4 class="name">Admin</h4>
-            <a href="#">Sign out</a>
+            <a @click="signout()">Sign out</a>
           </div>
           <nav class="navbar-sidebar2">
             <ul class="list-unstyled navbar__list">
@@ -270,6 +270,28 @@ export default {
   methods: {
     navigate(path) {
       this.$router.push({ path: `/${path}` });
+    },
+
+    async signout() {
+      try {
+        let isSuccess = await this.$store.dispatch('authStore/logout');
+        if(isSuccess) {
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text: 'Logout successful'
+          });
+
+          this.$router.push('/login')
+        }
+      } catch (error) {
+        console.error(error);
+        this.$notify({
+          group: 'all',
+          type: 'error',
+          text: 'Logout was unsuccessful. Please try again later.'
+        })
+      }
     }
   },
 
