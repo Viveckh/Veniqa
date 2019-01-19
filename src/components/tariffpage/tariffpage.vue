@@ -1,12 +1,19 @@
 <template>
   <div class="col-md-12">
+    <div class="d-flex">
+      <div>
+        <button
+          v-if="!this.viewOperation"
+          type="button"
+          class="au-btn au-btn-icon au-btn--green"
+          @click="handleAddButtonClick()"
+        >+ Add Tariff</button>
+      </div>
+      <div class="ml-auto">
+        <input class="form-control" v-model="query" type="text" placeholder="Search Tariffs">
+      </div>
+    </div>
 
-    <button
-      v-if="!this.viewOperation"
-      type="button"
-      class="au-btn au-btn-icon au-btn--green"
-      @click="handleAddButtonClick()"
-    >Add Tariff</button>
     <hr>
     <div class="row justify-content-left">
       <div v-if="!this.viewOperation" class="col-md-12">
@@ -15,7 +22,7 @@
             <h4 class="card-title mt-2">Tariffs</h4>
           </header>
           <article class="card-body">
-            <table class="table table-striped">
+            <table class="table table-striped" id="content_loop">
               <thead>
                 <tr>
                   <th>Tariff Type</th>
@@ -25,7 +32,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="tariff in tariffs" v-if="tariffs.length > 0">
+                <tr
+                  v-for="tariff in tariffs"
+                  v-if="tariffs.length > 0 && tariff.name.toUpperCase().includes(query.toUpperCase())"
+                >
                   <td>{{tariff.name}}</td>
                   <td>{{tariff.rates.Nepal}}%</td>
                   <td>{{tariff.rates.Bangladesh}}%</td>
@@ -67,7 +77,6 @@
                   <label>Nepal Rate</label>
                   <input
                     v-if="!this.isAddView"
-
                     type="number"
                     class="form-control"
                     v-model="tariff.rates.Nepal"
@@ -82,7 +91,12 @@
                     class="form-control"
                     v-model="tariff.rates.Bangladesh"
                   >
-                  <input v-else type="number" class="form-control" v-model="tariff.rates.Bangladesh">
+                  <input
+                    v-else
+                    type="number"
+                    class="form-control"
+                    v-model="tariff.rates.Bangladesh"
+                  >
                 </div>
               </div>
 
@@ -104,7 +118,7 @@
                 <button
                   type="button"
                   @click="handleCancel()"
-                  class="au-btn au-btn-icon au-btn--green"
+                  class="au-btn au-btn-icon au-btn--cancel"
                 >Cancel</button>
               </div>
             </div>
@@ -134,6 +148,7 @@ export default {
       },
       isAddView: true,
       viewOperation: false,
+      query: '',
     };
   },
   async created() {

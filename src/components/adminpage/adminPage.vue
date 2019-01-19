@@ -1,11 +1,19 @@
 <template>
   <div class="col-md-12">
-    <button
-      v-if="!this.viewOperation"
-      type="button"
-      class="au-btn au-btn-icon au-btn--green"
-      @click="handleAddButtonClick()"
-    >Add Admin</button>
+    <div class="d-flex">
+      <div>
+        <button
+          v-if="!this.viewOperation"
+          type="button"
+          class="au-btn au-btn-icon au-btn--green"
+          @click="handleAddButtonClick()"
+        >+ Add Admin</button>
+      </div>
+      <div class="ml-auto">
+        <input class="form-control" v-model="query" type="text" placeholder="Search Admins">
+      </div>
+    </div>
+
     <hr>
     <div class="row justify-content-left">
       <div v-if="!this.viewOperation" class="col-md-12">
@@ -14,7 +22,7 @@
             <h4 class="card-title mt-2">Admins</h4>
           </header>
           <article class="card-body">
-            <table class="table table-striped table table-sm">
+            <table id="content_loop" class="table table-striped">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -25,7 +33,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="admin in admins" v-if="admins.length > 0">
+                <tr
+                  v-for="admin in admins"
+                  v-if="admins.length > 0 && admin.name.toUpperCase().includes(query.toUpperCase())"
+                >
                   <td>{{admin.name}}</td>
                   <td>{{admin.email}}</td>
                   <td>
@@ -57,7 +68,7 @@
         </div>
         <!-- card.// -->
       </div>
-      <div div v-if="this.viewOperation" class="col-md-6">
+      <div div v-if="this.viewOperation" class="col-md-8">
         <div class="card">
           <header class="card-header">
             <h4 v-if="!this.isAddView" class="card-title mt-2">Edit Admin Account</h4>
@@ -134,7 +145,7 @@
                 <button
                   type="button"
                   @click="handleCancel()"
-                  class="au-btn au-btn-icon au-btn--green"
+                  class="au-btn au-btn-icon au-btn--cancel"
                 >Cancel</button>
               </div>
             </div>
@@ -162,6 +173,7 @@ export default {
         permissions: [],
         approved: true,
       },
+      query: '',
       isAddView: true,
       viewOperation: false,
     };
