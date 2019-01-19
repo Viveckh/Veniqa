@@ -263,9 +263,10 @@
 <script>
 // @ is an alias to /src
 import Permission from '@/constants/permissions';
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+
 export default {
-  name: "sidebar",
+  name: 'sidebar',
   components: {},
   methods: {
     navigate(path) {
@@ -274,41 +275,47 @@ export default {
 
     async signout() {
       try {
-        let isSuccess = await this.$store.dispatch('authStore/logout');
-        if(isSuccess) {
+        const isSuccess = await this.$store.dispatch('authStore/logout');
+        if (isSuccess) {
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'Logout successful'
+            text: 'Logout successful',
           });
 
-          this.$router.push('/login')
+          this.$router.push('/login');
         }
       } catch (error) {
         console.error(error);
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Logout was unsuccessful. Please try again later.'
-        })
+          text: 'Logout was unsuccessful. Please try again later.',
+        });
       }
-    }
+    },
   },
 
   computed: {
-      ...mapGetters({
-          permissions: 'authStore/permissions',
-      }),
+    ...mapGetters({
+      permissions: 'authStore/permissions',
+    }),
 
-      isSuperAdmin() {
-          return this.permissions && this.permissions.indexOf(Permission.SUPERADMIN) >=0;
-      },
+    isSuperAdmin() {
+      return (
+        this.permissions && this.permissions.indexOf(Permission.SUPERADMIN) >= 0
+      );
+    },
 
-      orderPermissionGranted() {
-        if(this.isSuperAdmin) return true;
-        return this.permissions && (this.permissions.indexOf(Permission.ORDER_VIEW) >=0 || this.permissions.indexOf(Permission.ORDER_MANAGE) >=0 );
-      },
-  }
+    orderPermissionGranted() {
+      if (this.isSuperAdmin) return true;
+      return (
+        this.permissions
+        && (this.permissions.indexOf(Permission.ORDER_VIEW) >= 0
+          || this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0)
+      );
+    },
+  },
 };
 </script>
 
