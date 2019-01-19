@@ -15,10 +15,6 @@ export default {
 
   async created() {
     await this.$store.dispatch('authStore/initiateAppSession');
-
-    if (this.isSessionActive) {
-      this.$store.dispatch('cartStore/getCart');
-    }
   },
 
   computed: {
