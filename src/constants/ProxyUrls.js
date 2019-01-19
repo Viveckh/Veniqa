@@ -2,6 +2,7 @@ export default {
   // baseUrl: 'https://veniqa.azurewebsites.net',
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
+  logoutUrl: '/security/logout',
   isSessionActive: '/security/isLoggedIn',
   forgotPassword: '/security/forgotPassword?email=',
   validateResetToken: '/security/validatePasswordResetToken/',
@@ -46,11 +47,11 @@ export default {
   editDelivered: '/orders/updateDeliveryDetails',
   cancelOrder: '/orders/cancelOrder',
 
-  //Tariff URLs
+  // Tariff URLs
   allTariffs: '/referenceData/tariffList',
   editTariff: '/referenceData/tariff',
-  addTariff: '/referenceData/tariff'
-  
+  addTariff: '/referenceData/tariff',
+
   // Comments
   postComment: '/orders/addComment',
   deleteComment: '/orders/deleteComment',

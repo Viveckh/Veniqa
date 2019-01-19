@@ -2,48 +2,66 @@
 <template>
   <div class="col-md-12">
     <div v-if="!isAddView">
-      <button
-        type="button"
-        class="au-btn au-btn-icon au-btn--green"
-        style="margin:10px;"
-        @click="addProductFunc()"
-      >
-        <i class="fa fa-plus"></i>
-        Add a Product
-      </button>
+      <div class="d-flex">
+        <div>
+          <button
+            type="button"
+            class="au-btn au-btn-icon au-btn--green"
+            @click="addProductFunc()"
+            v-if="permissionGranted"
+          >+ Add Catalog</button>
+        </div>
+        <div class="ml-auto">
+          <input class="form-control" v-model="query" type="text" placeholder="Search Catalogs">
+        </div>
+      </div>
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Manufacturer</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody v-if="products.length > 0" >
-          <tr v-for="(product, pid) in products" v-bind:key="pid">
-            <td>
-              <img :src="product.thumbnailUrls[0]" class="productTableImg">
-            </td>
-            <td>{{product.name}}</td>
-            <td>${{product.price.amount}}</td>
-            <td>{{product.store}}</td>
-            <td>
-              <a @click="editProductFunc(product._id)">
-                <i class="fa fa-edit" style="color:green"></i>
-              </a>
-            </td>
-            <td>
-              <a @click="deleteProduct(product._id)">
-                <i class="fa fa-trash" style="color:red"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <hr>
+
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title mt-2">Catalog</h4>
+        </header>
+        <article class="card-body">
+          <table class="table table-striped" id="content_loop">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Vendor</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody v-if="products.length > 0">
+              <tr
+                v-for="(product, pid) in products"
+                v-bind:key="pid"
+                v-if="product.name.toUpperCase().includes(query.toUpperCase())"
+              >
+                <td>
+                  <img :src="product.thumbnailUrls[0]" class="productTableImg">
+                </td>
+                <td>{{product.name}}</td>
+                <td>${{product.price.amount}}</td>
+                <td>{{product.store}}</td>
+                <td>
+                  <a @click="editProductFunc(product._id)" v-if="permissionGranted">
+                    <i class="fa fa-edit" style="color:green"></i>
+                  </a>
+                </td>
+                <td>
+                  <a @click="deleteProduct(product._id)" v-if="permissionGranted">
+                    <i class="fa fa-trash" style="color:red"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+        <!-- card-body end .// -->
+      </div>
     </div>
     <add-product v-if="isAddView" @cancelTrigger="isAddView=false" :data="editProductData"/>
   </div>
@@ -51,6 +69,8 @@
 
 <script>
 import AddProduct from '@/components/homepage/AddProduct.vue';
+import Permission from '@/constants/permissions';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -60,6 +80,7 @@ export default {
     return {
       isAddView: false,
       editProductData: null,
+      query: '',
     };
   },
   async created() {
@@ -70,6 +91,18 @@ export default {
     products() {
       return this.$store.getters['adminStore/allProducts'];
     },
+
+    permissionGranted() {
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
+      return (
+        this.permissions
+        && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0
+      );
+    },
+
+    ...mapGetters({
+      permissions: 'authStore/permissions',
+    }),
   },
   methods: {
     deleteProduct(id) {

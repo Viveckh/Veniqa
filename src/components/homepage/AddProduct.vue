@@ -142,6 +142,28 @@
             This field cannot be empty or negative.
           </b-form-invalid-feedback>
         </b-form-group>
+        <b-form-group horizontal :label-cols="2" label="Tariff Category" label-for="tariffcategory">
+          <b-form-select
+            v-model="product.tariff"
+            class="mb-3"
+            size="sm"
+            id="tariffcategory"
+            name="tariffcategory"
+            :state="tariffState"
+            aria-describedby="tariffFeedback"
+          >
+            <option
+              v-for="(tariff, tid) in tariffCategories"
+              v-bind:key="tid"
+              :value="tariff._id"
+            >{{tariff.name}}</option>
+          </b-form-select>
+
+          <b-form-invalid-feedback id="tariffFeedback">
+            <!-- This will only be shown if the preceeding input has an invalid state -->
+            This field cannot be empty
+          </b-form-invalid-feedback>
+        </b-form-group>
 
         <!-- Item URL -->
         <b-form-group horizontal :label-cols="2" label="Item URL" label-for="itemurl">
@@ -165,7 +187,10 @@
         <b-form-group horizontal :label-cols="2" label="Attributes">
           <b-btn size="sm" @click="showAttributes = true">Add Attributes</b-btn>
 
-          <table class="table table-sm attrib-table" v-if="product.customizationOptions.customizations && product.customizationOptions.customizations.length > 0">
+          <table
+            class="table table-sm attrib-table"
+            v-if="product.customizationOptions.customizations && product.customizationOptions.customizations.length > 0"
+          >
             <thead>
               <tr>
                 <th>Name</th>
@@ -175,21 +200,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(attrib, aind) in product.customizationOptions.customizations" v-bind:key="aind">
+              <tr
+                v-for="(attrib, aind) in product.customizationOptions.customizations"
+                v-bind:key="aind"
+              >
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
-                <td v-if="attrib.type ==='Color'">
-                  {{extractColorValues(attrib)}}
-                </td>
+                <td v-if="attrib.type ==='Color'">{{extractColorValues(attrib)}}</td>
                 <td v-else>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
               </tr>
             </tbody>
           </table>
 
           <b-modal v-model="showAttributes" centered id="modal1" title="Add Attributes" hide-footer>
-            <custom-attributes :propValue="product.customizationOptions.customizations" @cancel="cancelAttribModal" @save="saveAttributes"/>
-
+            <custom-attributes
+              :propValue="product.customizationOptions.customizations"
+              @cancel="cancelAttribModal"
+              @save="saveAttributes"
+            />
           </b-modal>
         </b-form-group>
 
@@ -371,7 +400,11 @@
             class="btn btn-success btn-sm"
           >Add Product</button>
           &nbsp;
-          <button type="button" class="btn btn-danger" @click="goBack()">Cancel</button>
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            @click="goBack()"
+          >Cancel</button>
         </div>
       </div>
     </div>
@@ -384,6 +417,7 @@ import ManagePhoto from '@/components/homepage/ManagePhoto';
 import CustomAttributes from '@/components/homepage/CustomAttributes';
 // Import the editor
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import { mapGetters } from 'vuex';
 import {
   Blockquote,
   CodeBlock,
@@ -445,6 +479,7 @@ export default {
           amount: 27.99,
           currency: 'USD',
         },
+        tariff: null,
         weight: {
           quantity: 3.2,
           unit: 'LB',
@@ -505,6 +540,15 @@ export default {
       return this.$store.getters['adminStore/allStateData'];
     },
 
+    ...mapGetters({
+      tariffCategories: 'adminStore/tariffCategories',
+    }),
+
+    tariffState() {
+      if (this.product.tariff == null) return null;
+      return this.product.tariff.length > 0;
+    },
+
     productNameState() {
       return this.product.name.length > 0;
     },
@@ -548,6 +592,9 @@ export default {
       return _.map(attribute.values, 'name').join(' , ');
     },
     validateForm() {
+      if (this.tariffState == null) {
+        this.product.tariff = '';
+      }
       return (
         this.productNameState
         && this.storeState
@@ -557,7 +604,7 @@ export default {
         && this.priceState
         && this.itemurlState
         && this.weightState
-        && this.unitState
+        && this.unitState && this.tariffState
       );
     },
 
@@ -593,7 +640,6 @@ export default {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
-        console.log('Here', saveImageRes);
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
@@ -640,13 +686,13 @@ export default {
   margin-top: 1em;
 }
 
-#add-product{
-  .modal-dialog{
-    max-width: 80%!important;
+#add-product {
+  .modal-dialog {
+    max-width: 80% !important;
   }
 }
 
-.attrib-table{
+.attrib-table {
   font-size: 0.875rem;
   margin: 10px 0px;
 }
@@ -675,14 +721,15 @@ export default {
   }
 }
 
-.editor__content{
-    padding: 0.5rem 0.5rem;
-    border-radius: 0.2rem;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
+.editor__content {
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.2rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
 
-  .ProseMirror:focus, .ProseMirror-focused{
+  .ProseMirror:focus,
+  .ProseMirror-focused {
     outline: none !important;
   }
 
@@ -692,9 +739,7 @@ export default {
     font-weight: unset;
     line-height: 1em;
     color: unset;
-    margin-bottom: 0px!important;
+    margin-bottom: 0px !important;
+  }
 }
-}
-
-
 </style>

@@ -11,6 +11,7 @@ export default {
     categories: [],
     subcategories: [],
     refDataPayload: [],
+    tariffCategories: [],
   },
 
   actions: {
@@ -126,6 +127,7 @@ export default {
       state.categories = _.map(payload.product_categories, 'name');
       state.refDataPayload = payload || {};
       state.subcategories = [];
+      state.tariffCategories = payload.tariff_categories || [];
       // console.log(state);
     },
   },
@@ -137,6 +139,10 @@ export default {
     allStateData(state) {
       console.log('Returned State: ', state);
       return state;
+    },
+
+    tariffCategories(state) {
+      return state.tariffCategories;
     },
   },
 };

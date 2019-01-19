@@ -50,6 +50,7 @@
                   v-b-tooltip.hover
                   title="Edit"
                   icon="edit"
+                  v-if="permissionGranted"
                   @click="editClicked('fulfillment')"
                 />
               </div>
@@ -87,6 +88,7 @@
                   v-b-tooltip.hover
                   title="Edit"
                   icon="edit"
+                  v-if="permissionGranted"
                   @click="editClicked('shipment')"
                 />
               </div>
@@ -128,6 +130,7 @@
                   v-b-tooltip.hover
                   title="Edit"
                   icon="edit"
+                  v-if="permissionGranted"
                   @click="editClicked('delivery')"
                 />
               </div>
@@ -148,6 +151,8 @@
 
 <script>
 import moment from 'moment';
+import { mapGetters } from 'vuex';
+import Permission from '@/constants/permissions';
 
 export default {
   name: 'ItemOrderDescription',
@@ -181,6 +186,14 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      permissions: 'authStore/permissions',
+    }),
+
+    permissionGranted() {
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
+      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
+    },
     displayFulfillmentOrder() {
       if (!this.item.order_line_level_processing_details) return false;
       return (

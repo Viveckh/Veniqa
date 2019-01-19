@@ -11,6 +11,7 @@ import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
 import OrderDetail from '@/components/orders/OrderDetail';
 import PageNotFound from '@/views/notfound.vue';
+import _ from 'lodash';
 
 Vue.use(Router);
 
@@ -39,18 +40,28 @@ const router = new Router({
           path: 'adminsetting',
           name: 'adminsetting',
           component: AdminPage,
+          meta: {
+            SUPERADMIN: true,
+          },
         },
 
         {
           path: 'tariffsetting',
           name: 'tariffetting',
           component: TariffPage,
+          meta: {
+            SUPERADMIN: true,
+          },
         },
 
         {
           path: '/orders',
-          // name: 'orders',
           component: OrdersComponent,
+          meta: {
+            // Doing a basic route level permission.
+            ORDER_VIEW: true,
+            ORDER_MANAGE: true,
+          },
           children: [
             {
               path: '/',
@@ -68,6 +79,9 @@ const router = new Router({
           path: 'featured',
           name: 'featured',
           component: Featured,
+          meta: {
+            SUPERADMIN: true
+          }
         },
 
         {
@@ -112,7 +126,7 @@ const router = new Router({
           path: 'checkout',
           component: Checkout,
         },
-        
+
       ],
     },
 
@@ -146,7 +160,24 @@ router.beforeEach((to, from, next) => {
         path: '/login',
       });
     } else {
-      next();
+      const userPermissions = localStorage.getItem('permissions');
+
+      const moveForward = to.matched.some((rec) => {
+        const keys = Object.keys(rec.meta);
+
+        if (keys.length == 0) return true;
+        if (userPermissions && userPermissions.indexOf('SUPERADMIN') >= 0) return true;
+        if (_.intersection(keys, userPermissions) > 0) {
+          return true;
+        }
+        return false;
+      });
+
+      if (moveForward) {
+        next();
+      } else {
+        next('catalog');
+      }
     }
   } else {
     next();

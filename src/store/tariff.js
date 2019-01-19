@@ -10,7 +10,7 @@ export default {
   },
 
   actions: {
-    
+
     async getTariffs({ commit }) {
       try {
         const res = await axios({
@@ -19,7 +19,7 @@ export default {
           method: 'get',
           data: {},
         });
-        console.log("Tariffs", res.data.responseData);
+        console.log('Tariffs', res.data.responseData);
         commit('setTariffs', res.data.responseData);
       } catch (err) {
         throw new Error(err);
@@ -54,17 +54,17 @@ export default {
         throw new Error(err);
       }
     },
-   
+
   },
   mutations: {
-  
+
     setTariffs(state, payload) {
       state.tariffs = payload;
-      console.log("Here", state.tariffs);
+      console.log('Here', state.tariffs);
     },
   },
   getters: {
-   
+
     gettariffs(state) {
       return state.tariffs;
     },
