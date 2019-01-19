@@ -15,8 +15,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
   conf => {
     let startIndex = conf.baseURL.length;
-    let temp = conf.url.substring(startIndex, conf.url.length);
-    if (SilentUrls.includes(temp)) {
+
+    if (!SilentUrls.includes(conf.url)) {
       eventHub.$emit('before-request');
     }
     return conf;
