@@ -26,6 +26,7 @@ import { FingerprintSpinner } from "epic-spinners";
 import axios from "axios";
 import { eventHub } from "@/utils/EventHub";
 
+
 export default {
   name: "app",
   components: {
@@ -60,10 +61,10 @@ export default {
   },
 
   methods: {
-    setLoading() {
+    setLoading(val) {
+      console.log(val,'is val')
         this.refCount++;
         this.isLoading = true;
-
     },
 
     unsetLoading() {
