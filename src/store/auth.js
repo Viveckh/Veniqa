@@ -81,6 +81,7 @@ export default {
       if (res && res.data == true) {
         commit('setEmail', localStorage.getItem('email'));
         commit('setName', localStorage.getItem('name'));
+        commit('setPermissions', localStorage.getItem('permissions'));
         commit('setSessionActive', true);
       } else {
         commit('setSessionActive', false);
@@ -108,6 +109,7 @@ export default {
       if (!val) {
         localStorage.removeItem('email');
         localStorage.removeItem('name');
+        localStorage.removeItem('permissions');
       }
     },
 
