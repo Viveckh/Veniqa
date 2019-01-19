@@ -483,6 +483,11 @@ section {
     background: #63c76a;
 }
 
+.au-btn--cancel {
+    background: #d8a861;
+}
+
+
 .au-btn--green:hover {
     background: #59bd60;
 }
