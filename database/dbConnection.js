@@ -9,14 +9,14 @@ let getDBConnection = async() => {
         // Establish a mongoose connection to mongodb
         dbConnection = await mongoose.connect(config.url, config.options, (error) => {
                         if (error) {
-                            logger.error("Could not establish connection to database", error)
+                            logger.error("Could not establish connection to database", {meta: error})
                             return;
                         }
                         logger.info("MongoDB connection was successful");
                     });
     }
     catch(err) {
-        logger.error("Error connecting to the database", err)
+        logger.error("Error connecting to the database", {meta: err})
     }
     return dbConnection;
 }

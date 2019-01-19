@@ -1,6 +1,7 @@
 var LocalStrategy   = require('passport-local').Strategy;
 import bCrypt from 'bcrypt-nodejs';
 import User from '../database/models/user';
+import logger from '../logging/logger'
 
 export default {
     initializePassport(passport) {
@@ -14,13 +15,13 @@ export default {
 
         // Passport needs to be able to serialize and deserialize users to support persistent login sessions
         passport.serializeUser(function(user, done) {
-            //console.log('serializing user: ');console.log(user);
+            //logger.debug('serializing user', {meta: user});
             done(null, user._id);
         });
 
         passport.deserializeUser(function(id, done) {
             User.findById(id, function(err, user) {
-                //console.log('deserializing user:',user);
+                //logger.debug('deserializing user', {meta: user});
                 done(err, user);
             });
         });
@@ -45,18 +46,18 @@ export default {
                         }
                         // Username does not exist, log the error and redirect back
                         if (!user){
-                            console.log('User Not Found with username '+ username);
+                            logger.verbose('User Not Found with username', {meta: username});
                             return done(null, false);                 
                         }
                         // User exists but wrong password, log the error 
                         if (!isValidPassword(user, password)){
-                            console.log('Invalid Password');
+                            logger.verbose('Invalid Password');
                             return done(null, false); // redirect back to login page
                         }
                         /*
                         // If user has not confirmed their email address yet, make sure to not log them in
                         if (user.emailConfirmationToken) {
-                            console.log('Email confirmation pending')
+                            logger.verbose('Email confirmation pending')
                             return done(null, false);
                         }
                         */

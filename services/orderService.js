@@ -7,6 +7,7 @@ import shoppingService from '../services/shoppingService';
 import * as _ from 'lodash';
 import transformer from '../utilities/transform-props';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger'
 
 export default {
     async createCheckout(addressId, shippingMethod, userObj) {
@@ -66,7 +67,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in createCheckout Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -96,11 +97,11 @@ export default {
             transformer.castValuesToString(orderCartFromSavedCheckout, "_id")
 
             /*
-            console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
-            console.log("------------------------------------")
-            console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
-            console.log("------------------------------------")
-            console.log("checking if checkout cart ids got modified", checkout.cart);
+            logger.debug("fresh order cart", {meta: freshCalculatedCart});
+            logger.debug("------------------------------------")
+            logger.debug("saved order cart", {meta: orderCartFromSavedCheckout});
+            logger.debug("------------------------------------")
+            logger.debug("checking if checkout cart ids got modified", {meta: checkout.cart});
             */
 
             // If what is in checkout record does not match what was freshly calculated, return a failure msg
@@ -154,7 +155,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in createPaymentToken Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -201,7 +202,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in completeCheckout Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

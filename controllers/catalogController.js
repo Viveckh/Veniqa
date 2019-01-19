@@ -1,4 +1,5 @@
 import catalogService from "../services/catalogService";
+import logger from '../logging/logger'
 
 export default {
     async searchCatalog(req, res, next) {
@@ -11,7 +12,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Catalog search failed => ", err);
+            logger.error("Error in searchCatalog Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -26,7 +27,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Get products failed => ", err);
+            logger.error("Error in getProductDetails Controller", {meta: err});
             return res.status(500).send({ status: "failed", errorDetails: err});
         }
     }

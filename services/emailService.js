@@ -1,14 +1,15 @@
 import nodemailer from 'nodemailer';
 import emailConfig from '../properties/email';
 import frontEndUrls from '../properties/frontEndUrls';
+import logger from '../logging/logger'
 let transporter = nodemailer.createTransport(emailConfig.credentials)
 
 // verify connection configuration
 transporter.verify(function(error, success) {
     if (error) {
-         console.log(error);
+         logger.error("Error while connecting to email service", {meta: error});
     } else {
-         console.log('Email Service is up and ready to go');
+         logger.info('Email Service is up and ready to go');
     }
 });
 
@@ -25,9 +26,9 @@ export default {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                return console.log(error);
+                return logger.error("Error while sending email", {meta: error});
             }
-            console.log('Message sent: %s', info.messageId);
+            logger.verbose('Email sent', {meta: info});
         });
     },
 
@@ -43,9 +44,9 @@ export default {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                return console.log(error);
+                return logger.error("Error while sending email", {meta: error});
             }
-            console.log('Message sent: %s', info.messageId);
+            logger.verbose('Email sent', {meta: info});
         });
     },
 
@@ -61,9 +62,9 @@ export default {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                return console.log(error);
+                return logger.error("Error while sending email", {meta: error});
             }
-            console.log('Message sent: %s', info.messageId);
+            logger.verbose('Email sent', {meta: info});
         });
     }
 }

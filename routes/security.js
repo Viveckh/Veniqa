@@ -50,8 +50,7 @@ router.get('/logout', (req, res, next) => {
         else {
             return res.status(500).send("server error - could not log out")
         }
-    }     
-    console.log("after logout", req.session)
+    }
 });
 
 router.route('/resendEmailAddressConfirmationLink').get(securityController.resendEmailAddressConfirmationLink)

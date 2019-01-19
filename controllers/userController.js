@@ -1,4 +1,5 @@
 import userService from '../services/userService';
+import logger from '../logging/logger'
 
 export default {
     async addNewAddress(req, res, next) {
@@ -11,7 +12,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Adding new address failed => ", err);
+            logger.error("Error in addNewAddress Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -26,7 +27,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Getting user addresses failed => ", err);
+            logger.error("Error in getAddresses Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -41,7 +42,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Updating user address failed => ", err);
+            logger.error("Error in updateAddress Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -56,7 +57,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Deleting user address failed => ", err);
+            logger.error("Error in deleteAddress Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     }

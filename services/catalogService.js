@@ -1,4 +1,5 @@
 import Product from '../database/models/product';
+import logger from '../logging/logger'
 
 export default {
     async searchCatalog(searchTerm, pagingOptions) {
@@ -16,7 +17,7 @@ export default {
             return products;
         }   
         catch(err) {
-            console.log("[ERROR]: Catalog search failed => ", err)
+            logger.error("Error in searchCatalog Service", {meta: err})
             return err;
         }
     },
@@ -34,6 +35,7 @@ export default {
             return result;  
         }
         catch(err) {
+            logger.error("Error in getProductDetails Service", {meta: err})
             result = {status: "failed", errorDetails: err};
             return result;
         }

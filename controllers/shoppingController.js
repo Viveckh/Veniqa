@@ -1,5 +1,6 @@
 import shoppingService from "../services/shoppingService";
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger'
 
 export default {
     async addToCart(req, res, next) {
@@ -9,7 +10,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in addToCart Controller ->", err);
+            logger.error("Error in addToCart Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -21,7 +22,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getCart Controller ->", err);
+            logger.error("Error in getCart Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -33,7 +34,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateCart Controller ->", err);
+            logger.error("Error in updateCart Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -45,7 +46,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in deleteFromCart Controller ->", err);
+            logger.error("Error in deleteFromCart Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },

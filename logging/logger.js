@@ -18,7 +18,8 @@ const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.colorize(),
     winston.format.timestamp(),
-    winston.format.simple()
+    winston.format.align(),
+    winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message} ${info.meta}`)
   ),
   transports: [
     new winston.transports.File({ 
@@ -28,9 +29,7 @@ const logger = winston.createLogger({
     new winston.transports.File({ 
       filename: 'logging/logs/combined.log'
     }),
-    new winston.transports.Console({ 
-      format: winston.format.simple()
-    }),
+    new winston.transports.Console({}),
   ],
   exceptionHandlers: [
     new winston.transports.File({ filename: 'logging/logs/exceptions.log'}),

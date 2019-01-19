@@ -3,6 +3,7 @@ import User from '../database/models/user';
 import Product from '../database/models/product';
 import httpStatus from 'http-status-codes';
 import * as _ from 'lodash';
+import logger from '../logging/logger'
 
 export default {
     async addToCart(userObj, cartEntriesToProcess) {
@@ -87,7 +88,7 @@ export default {
             return updatedCartResponse;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in addToCart Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -137,7 +138,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getCart Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -182,7 +183,7 @@ export default {
             return updatedCartResponse;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in updateCart Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -213,7 +214,7 @@ export default {
             return updatedCartResponse;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in deleteFromCart Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

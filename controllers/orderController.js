@@ -1,5 +1,6 @@
 import orderService from '../services/orderService';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger'
 
 export default {
     async createCheckout(req, res, next) {
@@ -9,7 +10,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in createCheckout Controller ->", err);
+            logger.error("Error in createCheckout Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -21,7 +22,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in createPaymentToken Controller ->", err);
+            logger.error("Error in createPaymentToken Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -33,7 +34,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in completeCheckout Controller ->", err);
+            logger.error("Error in completeCheckout Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }

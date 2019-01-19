@@ -1,5 +1,6 @@
 import User from '../database/models/user';
 import * as _ from 'lodash';
+import logger from '../logging/logger'
 
 export default {
     async addNewAddress(userObj, addressObj) {
@@ -37,7 +38,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in addNewAddress Service", {meta: err});
             result = {status: "failed", errorDetails: err};
             return result;
         }
@@ -58,7 +59,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getAddresses Service", {meta: err});
             result = {status: "failed", errorDetails: err};
             return result;
         }
@@ -103,7 +104,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in updateAddress Service", {meta: err});
             result = {status: "failed", errorDetails: err};
             return result;
         }
@@ -140,7 +141,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in deleteAddress Service", {meta: err});
             result = {status: "failed", errorDetails: err};
             return result;
         }

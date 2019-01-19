@@ -1,4 +1,5 @@
 import securityService from '../services/securityService';
+import logger from '../logging/logger';
 
 export default {
     async signup(req, res, next) {
@@ -11,7 +12,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: User signup failed => ", err);
+            logger.error("Error in signup Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -27,7 +28,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Sending email confirmation link failed => ", err);
+            logger.error("Error in resendEmailAddressConfirmationLink Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -42,7 +43,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Confirming email address failed => ", err);
+            logger.error("Error in confirmEmailAddress Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -57,7 +58,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Forgot password action failed => ", err);
+            logger.error("Error in forgotPassword Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -72,7 +73,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Password reset token validation failed => ", err);
+            logger.error("Error in validatePasswordResetToken Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     },
@@ -87,7 +88,7 @@ export default {
             return res.status(200).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Password reset failed => ", err);
+            logger.error("Error in resetPassword Controller", {meta: err});
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
         }
     }

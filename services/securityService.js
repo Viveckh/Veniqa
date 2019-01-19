@@ -2,6 +2,7 @@ import User from '../database/models/user';
 import cryptoGen from '../authentication/cryptoGen';
 import tokenValidityConfig from '../properties/tokenValidity';
 import emailService from './emailServiceSendgrid';
+import logger from '../logging/logger';
 
 /**
  * This service performs security related tasks, like signup
@@ -19,14 +20,14 @@ export default {
         try {
             user = await user.save();
             if (user) {
-                console.log("[DB]: User inserted => ", user);
+                logger.info("User inserted", {meta: user});
                 emailService.emailEmailConfirmationInstructions(user.email, user.name, user.emailConfirmationToken)
                 return {email: user.email, name: user.name};
             }
             return {errMsg: 'could not create user'};
         }
         catch(err) {
-            console.log("[ERROR]: User insertion failed => ", err)
+            logger.error("Error in signup Service", {meta: err});
             return err;
         }
     },
@@ -43,7 +44,6 @@ export default {
 
                 // Overwrite the user variable with result from the new save.
                 user = await user.save();
-                console.log(user);
                 if (user) {
                     emailService.emailEmailConfirmationInstructions(user.email, user.name, user.emailConfirmationToken)
                     return true;
@@ -52,7 +52,7 @@ export default {
             return {errMsg: 'Email is already confirmed or does not exist in system.'};
         }
         catch(err) {
-            console.log(err)
+            logger.error("Error in resendEmailAddressConfirmationLink Service", {meta: err})
             return false;
         }
     },
@@ -67,7 +67,6 @@ export default {
 
                 // Overwrite the user variable with result from the new save.
                 user = await user.save();
-                console.log(user)
                 if (user) {
                     return true;
                 }
@@ -75,7 +74,7 @@ export default {
             return false;
         }
         catch(err) {
-            console.log(err)
+            logger.error("Error in confirmEmailAddress Service", {meta: err})
             return false;
         }
     },
@@ -92,7 +91,6 @@ export default {
 
                 // Overwrite the user variable with result from the new save.
                 user = await user.save();
-                console.log(user)
                 if (user) {
                     emailService.emailPasswordResetInstructions(user.email, user.name, user.passwordResetToken);
                     return true;
@@ -101,7 +99,7 @@ export default {
             return false;
         }
         catch(err) {
-            console.log(err)
+            logger.error("Error in forgotPassword Service", {meta: err});
             return false;
         }
     },
@@ -115,7 +113,7 @@ export default {
             return false;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in isPasswordResetTokenValid Service", {meta: err});
             return false;
         }
     },
@@ -132,7 +130,6 @@ export default {
 
                 // Overwrite the user variable with result from the new save.
                 user = await user.save();
-                console.log(user)
                 if (user) {
                     emailService.emailPasswordResetConfirmation(user.email, user.name);
                     return true;
@@ -141,7 +138,7 @@ export default {
             return false;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in resetPassword Service", {meta: err});
             return false;
         }
     }
