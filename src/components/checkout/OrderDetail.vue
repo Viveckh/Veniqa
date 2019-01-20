@@ -39,7 +39,7 @@
     <div class="total-line" v-if="orders && orders.length > 0">
       <b-row>
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
           <strong>Total Weight</strong>
         </b-col>
         <b-col
@@ -49,54 +49,52 @@
 
       <b-row>
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
           <strong>Sub Total</strong>
         </b-col>
         <b-col class="align-right">{{subtotal.currency}} {{parseFloat(subtotal.amount).toFixed(2)}}</b-col>
       </b-row>
 
-      <div hidden>
-        <b-row>
-          <!-- <hr> -->
-          <b-col cols="8">
-            <strong>Service Charge</strong>
-          </b-col>
-          <b-col
-            class="align-right"
-          >{{serviceCharge.currency}} {{parseFloat(serviceCharge.amount).toFixed(2)}}</b-col>
-        </b-row>
+      <b-row v-if="serviceCharge">
+        <!-- <hr> -->
+        <b-col cols="8" class="align-right">
+          <strong>Service Charge</strong>
+        </b-col>
+        <b-col
+          class="align-right"
+        >{{serviceCharge.currency}} {{parseFloat(serviceCharge.amount).toFixed(2)}}</b-col>
+      </b-row>
 
-        <b-row>
-          <!-- <hr> -->
-          <b-col cols="8">
-            <strong>Shipping Charge</strong>
-          </b-col>
-          <b-col
-            class="align-right"
-          >{{shippingPrice.currency}} {{parseFloat(shippingPrice.amount).toFixed(2)}}</b-col>
-        </b-row>
+      <b-row v-if="shippingPrice">
+        <!-- <hr> -->
+        <b-col cols="8" class="align-right">
+          <strong>Shipping Charge</strong>
+        </b-col>
+        <b-col
+          class="align-right"
+        >{{shippingPrice.currency}} {{parseFloat(shippingPrice.amount).toFixed(2)}}</b-col>
+      </b-row>
 
-        <b-row>
-          <!-- <hr> -->
-          <b-col cols="8">
-            <strong>Tariff Charge</strong>
-          </b-col>
-          <b-col
-            class="align-right"
-          >{{tariffPrice.currency}} {{parseFloat(tariffPrice.amount).toFixed(2)}}</b-col>
-        </b-row>
+      <b-row v-if="tariffPrice">
+        <!-- <hr> -->
+        <b-col cols="8" class="align-right">
+          <strong>Tariff Charge</strong>
+        </b-col>
+        <b-col
+          class="align-right"
+        >{{tariffPrice.currency}} {{parseFloat(tariffPrice.amount).toFixed(2)}}</b-col>
+      </b-row>
 
-        <br>
-        <b-row>
-          <!-- <hr> -->
-          <b-col cols="8">
-            <strong>Total</strong>
-          </b-col>
-          <b-col class="align-right">
-            <strong>{{cartTotal.currency}} {{parseFloat(cartTotal.amount).toFixed(2)}}</strong>
-          </b-col>
-        </b-row>
-      </div>
+      <br>
+      <b-row v-if="cartTotal">
+        <!-- <hr> -->
+        <b-col cols="8" class="align-right">
+          <strong>Total</strong>
+        </b-col>
+        <b-col class="align-right">
+          <strong>{{cartTotal.currency}} {{parseFloat(cartTotal.amount).toFixed(2)}}</strong>
+        </b-col>
+      </b-row>
     </div>
 
     <div v-if="orders && orders.length <= 0" class="order-empty">
@@ -112,16 +110,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import notification from '@/services/NotificationService';
+import { mapGetters } from "vuex";
+import notification from "@/services/NotificationService";
 
 export default {
-  name: 'OrderDetail',
+  name: "OrderDetail",
   data() {
     return {
       editMode: true,
       selectedItems: [],
-      countOptions: [],
+      countOptions: []
     };
   },
 
@@ -132,16 +130,16 @@ export default {
   methods: {
     orderPicture(img) {
       return {
-        'background-image': `url(${img})`,
-        width: '100%',
-        height: '70px',
-        'background-size': 'contain',
-        'background-repeat': 'no-repeat',
+        "background-image": `url(${img})`,
+        width: "100%",
+        height: "70px",
+        "background-size": "contain",
+        "background-repeat": "no-repeat"
       };
     },
 
     gotoDealPage() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
 
     async gotoProduct(pid) {
@@ -169,17 +167,17 @@ export default {
       if (item.counts > 0) {
         try {
           this.editMode = false;
-          const data = await this.$store.dispatch('cartStore/updateOrders', [
-            item,
+          const data = await this.$store.dispatch("cartStore/updateOrders", [
+            item
           ]);
-          notification.success(this, 'The cart has been successfully updated.');
+          notification.success(this, "The cart has been successfully updated.");
           this.editMode = true;
         } catch (err) {
           this.editMode = true;
-          console.log('Error', err);
+          console.log("Error", err);
           notification.error(
             this,
-            'Cart could not be updated at the moment. Please try again later.',
+            "Cart could not be updated at the moment. Please try again later."
           );
         }
       }
@@ -187,26 +185,26 @@ export default {
 
     async deleteSelected(item) {
       try {
-        await this.$store.dispatch('cartStore/deleteOrders', [item]);
+        await this.$store.dispatch("cartStore/deleteOrders", [item]);
       } catch (err) {}
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
-      orders: 'cartStore/getCart',
-      cartTotal: 'cartStore/getTotal',
-      subtotal: 'cartStore/getSubTotal',
-      serviceCharge: 'cartStore/getServiceCharge',
-      shippingPrice: 'cartStore/getShippingPrice',
-      tariffPrice: 'cartStore/getTariffPrice',
-      totalWeight: 'cartStore/getTotalWeight',
+      orders: "cartStore/getCart",
+      cartTotal: "cartStore/getTotal",
+      subtotal: "cartStore/getSubTotal",
+      serviceCharge: "cartStore/getServiceCharge",
+      shippingPrice: "cartStore/getShippingPrice",
+      tariffPrice: "cartStore/getTariffPrice",
+      totalWeight: "cartStore/getTotalWeight"
     }),
 
     quantityState() {
       return qty => qty >= 1;
-    },
-  },
+    }
+  }
 };
 </script>
 

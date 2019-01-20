@@ -42,7 +42,9 @@ export default {
       if (!payload) return null;
 
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data
+        } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.loginUrl,
           data: payload,
@@ -60,9 +62,13 @@ export default {
       }
     },
 
-    async logout({ commit }) {
+    async logout({
+      commit
+    }) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data
+        } = await Vue.prototype.$axios({
           method: 'get',
           url: ProxyUrls.logoutUrl,
         });

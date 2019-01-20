@@ -21,46 +21,63 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { FingerprintSpinner } from 'epic-spinners';
-import axios from 'axios';
-import { eventHub } from '@/utils/EventHub';
-
+import { mapGetters } from "vuex";
+import { FingerprintSpinner } from "epic-spinners";
+import axios from "axios";
+import { eventHub } from "@/utils/EventHub";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    FingerprintSpinner,
+    FingerprintSpinner
   },
 
   async created() {
-    eventHub.$on('before-request', this.setLoading);
-    eventHub.$on('request-error', this.unsetLoading);
-    eventHub.$on('after-response', this.unsetLoading);
-    eventHub.$on('response-error', this.unsetLoading);
+    eventHub.$on("before-request", this.setLoading);
+    eventHub.$on("request-error", this.unsetLoading);
+    eventHub.$on("after-response", this.unsetLoading);
+    eventHub.$on("response-error", this.unsetLoading);
 
-    await this.$store.dispatch('authStore/initiateAppSession');
+    await this.$store.dispatch("authStore/initiateAppSession");
 
     if (this.isSessionActive) {
-      this.$store.dispatch('cartStore/getCart');
+      this.initiateApp();
     }
   },
 
   data() {
     return {
       refCount: 0,
-      isLoading: false,
+      isLoading: false
     };
   },
 
   beforeDestroy() {
-    eventHub.$off('before-request', this.setLoading);
-    eventHub.$off('request-error', this.unsetLoading);
-    eventHub.$off('after-response', this.unsetLoading);
-    eventHub.$off('response-error', this.unsetLoading);
+    eventHub.$off("before-request", this.setLoading);
+    eventHub.$off("request-error", this.unsetLoading);
+    eventHub.$off("after-response", this.unsetLoading);
+    eventHub.$off("response-error", this.unsetLoading);
   },
 
   methods: {
+    async initiateApp() {
+      try {
+        await this.$store.dispatch("cartStore/getCart");
+        await this.$store.dispatch("shippingStore/addressAction", {
+          address: null,
+          action: "get"
+        });
+
+        if (this.checkoutInitiated) {
+          let reqObj = {
+            address: this.selectedAddress,
+            shippingMethod: this.shippingMethod
+          };
+
+          await this.$store.dispatch("cartStore/createCheckout", reqObj);
+        }
+      } catch (error) {}
+    },
     setLoading() {
       this.refCount++;
       this.isLoading = true;
@@ -71,15 +88,17 @@ export default {
         this.refCount--;
         this.isLoading = this.refCount > 0;
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
-      // isLoading: "loaderStore/isLoading"
-    }),
-  },
+      isSessionActive: "authStore/isSessionActive",
+      shippingMethod: "shippingStore/shippingMethod",
+      selectedAddress: "shippingStore/getSelectedAddress",
+      checkoutInitiated: "cartStore/checkoutInitiated"
+    })
+  }
 };
 </script>
 

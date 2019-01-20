@@ -26,7 +26,7 @@
 
     <b-form-group>
       <b-form-input
-      v-if="!forgotEnabled"
+        v-if="!forgotEnabled"
         type="password"
         name="password"
         v-model="password"
@@ -44,21 +44,19 @@
 
     <p class="register-class" @click="register()">New User? Register here.</p>
     <div class="modal-bottom"></div>
-
-
   </div>
 </template>
 
 <script>
-import ProxyUrl from '@/constants/ProxyUrls';
+import ProxyUrl from "@/constants/ProxyUrls";
 
 export default {
-  name: 'LoginComponent',
+  name: "LoginComponent",
   data() {
     return {
-      username: '',
-      password: '',
-      forgotEnabled: false,
+      username: "",
+      password: "",
+      forgotEnabled: false
     };
   },
   methods: {
@@ -70,14 +68,14 @@ export default {
     forgetPassword() {
       // this.$emit('forgotPassword', this.usernameState ? this.username : '');
       this.forgotEnabled = true;
-      this.password = '';
+      this.password = "";
     },
 
     loginClicked() {
       if (this.usernameState) {
-        this.$emit('login', {
+        this.$emit("login", {
           email: this.username,
-          password: this.password,
+          password: this.password
         });
       }
     },
@@ -86,36 +84,38 @@ export default {
       if (this.usernameState) {
         try {
           const { data } = await this.$axios({
-            method: 'get',
-            url: ProxyUrl.forgotPassword + this.username,
+            method: "get",
+            url: ProxyUrl.forgotPassword + this.username
           });
-          this.$emit('close');
+          this.$emit("close");
 
           this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'The email was just sent. Please check your email and follow the instructions.',
+            group: "all",
+            type: "success",
+            text:
+              "The email was just sent. Please check your email and follow the instructions."
           });
         } catch (err) {
           this.$notify({
-            group: 'all',
-            type: 'error',
-            text: 'The email could not be sent right now. Please try again later',
+            group: "all",
+            type: "error",
+            text:
+              "The email could not be sent right now. Please try again later"
           });
         }
       }
     },
 
     register() {
-      this.$emit('register');
-    },
+      this.$emit("register");
+    }
   },
   computed: {
     usernameState() {
       if (this.username.length == 0) return null;
       return this.validEmail(this.username);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -129,7 +129,7 @@ export default {
   // margin: 50px 0px;
   color: #267871;
 
-  h2{
+  h2 {
     margin-bottom: 1em;
   }
 }

@@ -1,23 +1,23 @@
 export default {
-  success(context, t) {
+  success(context, t, group) {
     context.$notify({
-      group: 'toast',
+      group: group ? group : 'toast',
       type: 'success',
       text: t,
     });
   },
 
-  warn(context, t) {
+  warn(context, t, group) {
     context.$notify({
-      group: 'toast',
+      group: group ? group : 'toast',
       type: 'warn',
       text: t,
     });
   },
 
-  error(context, t) {
+  error(context, t, group) {
     context.$notify({
-      group: 'toast',
+      group: group ? group : 'toast',
       type: 'error',
       text: t,
     });

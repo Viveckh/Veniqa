@@ -17,12 +17,12 @@
     <div class="checkout-button">
       <div v-if="isSessionActive">
         <b-button
-          v-if="this.$store.getters['authStore/emailConfirmed']"
+          v-if="emailConfirmed && !checkoutInitiated"
           size="lg"
           class="full-width primary-button"
           @click="handleCheckout()"
         >Get Final Prices</b-button>
-        <div v-else>
+        <div v-else-if="!emailConfirmed">
           <p>You cannot checkout currently because your email address has not been confirmed. Please click below to resend the confirmation email</p>
           <b-button
             class="primary-button"
@@ -63,8 +63,23 @@ export default {
   },
 
   methods: {
-    addressSelected(selected) {
+    async addressSelected(selected) {
       this.$store.commit("shippingStore/addressSelected", selected);
+      if (!this.checkoutInitiated) return;
+      try {
+        const isSuccess = await this.$store.dispatch(
+          "cartStore/createCheckout",
+          {
+            address: this.selectedAddress,
+            shippingMethod: this.shippingMethod
+          }
+        );
+      } catch (error) {
+        notification.error(
+          this,
+          "Something went haywire while trying to recalculate the prices. Please try again by changing address."
+        );
+      }
     },
 
     async handleCheckout() {
@@ -111,7 +126,9 @@ export default {
     ...mapGetters({
       selectedAddress: "shippingStore/getSelectedAddress",
       shippingMethod: "shippingStore/shippingMethod",
-      isSessionActive: "authStore/isSessionActive"
+      isSessionActive: "authStore/isSessionActive",
+      checkoutInitiated: "cartStore/checkoutInitiated",
+      emailConfirmed: "authStore/emailConfirmed"
     })
   }
 };

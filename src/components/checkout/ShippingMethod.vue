@@ -5,7 +5,13 @@
     <div v-if="isSessionActive">
       <b-form-group>
         <label for="method">Method</label>
-        <b-form-select v-model="shippingMethod" size="sm" name="method" id="method">
+        <b-form-select
+          v-model="shippingMethod"
+          size="sm"
+          name="method"
+          id="method"
+          @input="selected()"
+        >
           <option :value="null" disabled>Please select an option</option>
           <option v-for="(ship,sid) in shippingMethods" v-bind:key="sid" :value="ship">{{ship.name}}</option>
         </b-form-select>
@@ -22,6 +28,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import notification from "@/services/NotificationService";
+
 export default {
   name: "ShippingMethod",
   data() {
@@ -36,11 +44,30 @@ export default {
           name: "Expedited shipping"
         },
         {
-          _id: 'No Rush Shipping',
-          name: 'No Rush Shipping'
+          _id: "No Rush Shipping",
+          name: "No Rush Shipping"
         }
       ]
     };
+  },
+  methods: {
+    async selected() {
+      if (!this.checkoutInitiated) return;
+      try {
+        const isSuccess = await this.$store.dispatch(
+          "cartStore/createCheckout",
+          {
+            address: this.selectedAddress,
+            shippingMethod: this.shippingMethod
+          }
+        );
+      } catch (error) {
+        notification.error(
+          this,
+          "Something went haywire while trying to recalculate the prices. Please try again by changing address."
+        );
+      }
+    }
   },
   computed: {
     shippingMethod: {
@@ -54,7 +81,9 @@ export default {
     },
 
     ...mapGetters({
-      isSessionActive: "authStore/isSessionActive"
+      isSessionActive: "authStore/isSessionActive",
+      selectedAddress: "shippingStore/getSelectedAddress",
+      checkoutInitiated: "cartStore/checkoutInitiated"
     })
   }
 };

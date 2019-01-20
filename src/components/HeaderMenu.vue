@@ -1,6 +1,11 @@
 <template>
-  <div >
-    <b-navbar toggleable="md" :type="navType()" fixed="top" :class="{'header-color': this.scrollPos > 50}">
+  <div>
+    <b-navbar
+      toggleable="md"
+      :type="navType()"
+      fixed="top"
+      :class="{'header-color': this.scrollPos > 50}"
+    >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand class="abs">
@@ -44,31 +49,32 @@
 
 <script>
 export default {
-  name: 'HeaderMenu',
+  name: "HeaderMenu",
   mounted() {
-    window.addEventListener('scroll', this.updateScroll);
+    window.addEventListener("scroll", this.updateScroll);
   },
   data() {
     return {
-      scrollPos: null,
+      scrollPos: null
     };
   },
   methods: {
     async logoutClicked() {
       try {
-        const res = await this.$store.dispatch('authStore/logout');
+        const res = await this.$store.dispatch("authStore/logout");
         this.$notify({
-          group: 'all',
-          type: 'success',
-          text: 'You have been successfully logged out.',
+          group: "all",
+          type: "success",
+          text: "You have been successfully logged out."
         });
 
-        this.$store.commit('cartStore/resetOrders');
+        this.$store.commit("cartStore/resetOrders");
+        this.$store.commit("shippingStore/resetAddresses");
       } catch (err) {
         this.$notify({
-          group: 'all',
-          type: 'error',
-          text: 'Sorry but we could not log you out at the moment.',
+          group: "all",
+          type: "error",
+          text: "Sorry but we could not log you out at the moment."
         });
       }
     },
@@ -78,32 +84,32 @@ export default {
     },
 
     navType() {
-      return this.scrollPos > 50 ? 'dark' : 'light';
-    },
+      return this.scrollPos > 50 ? "dark" : "light";
+    }
   },
   destroy() {
-    window.removeEventListener('scroll', this.updateScroll);
+    window.removeEventListener("scroll", this.updateScroll);
   },
   computed: {
     nameOfUser() {
-      return this.$store.getters['authStore/getFirstName'];
+      return this.$store.getters["authStore/getFirstName"];
     },
 
     userSessionActive() {
-      return this.$store.getters['authStore/isSessionActive'];
+      return this.$store.getters["authStore/isSessionActive"];
     },
 
     totalOrders() {
-      return this.$store.getters['cartStore/getTotalItems'];
-    },
-  },
+      return this.$store.getters["cartStore/getTotalItems"];
+    }
+  }
 };
 </script>
 
 <style lang="scss">
 @import "../assets/css/global.scss";
 
-.header-color{
+.header-color {
   background-color: $pitch-black;
   color: white !important;
 }

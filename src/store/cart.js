@@ -12,28 +12,46 @@ export default {
     serviceCharge: {},
     shippingPrice: {},
     tariffPrice: {},
+    checkoutInitiated: false,
   },
   actions: {
-    async createCheckout({ state, commit }, { address, shippingMethod }) {
+    async createCheckout({
+      state,
+      commit
+    }, {
+      address,
+      shippingMethod
+    }) {
       const reqData = {
         shippingMethod: shippingMethod._id,
         addressId: address._id,
-	      // paymentSource: payment,
       };
       try {
-        const res = await Vue.prototype.$axios({
+        const {
+          data
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.createCheckout,
           method: 'post',
           data: reqData,
         });
+
+        if (data.httpStatus === 200) {
+          commit('setCart', data.responseData.cart);
+          commit('setCheckoutInitiated', true);
+          return true;
+        } else {
+          commit('setCheckoutInitiated', false);
+          throw new Error(data.httpStatus);
+        }
       } catch (err) {
-        return false;
+        throw new Error(err);
       }
     },
 
     async addToTheCart({
       state,
       commit,
+      dispatch,
       rootGetters,
     }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
@@ -81,17 +99,30 @@ export default {
       }));
 
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
           data: toSend,
         });
 
         if (data.httpStatus === 200) {
-          commit('setCart', data.responseData);
-          return true;
-        }
-        throw new Error(data.httpStatus);
+          if (state.checkoutInitiated) {
+            let reqObj = {
+              address: rootGetters['shippingStore/getSelectedAddress'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+            };
+
+            await dispatch('createCheckout', reqObj);
+          } else {
+            commit('setCart', data.responseData);
+            return true;
+          }
+
+
+        } else
+          throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
       }
@@ -101,6 +132,7 @@ export default {
       state,
       commit,
       dispatch,
+      rootGetters
     }) {
       try {
         const {
@@ -121,6 +153,7 @@ export default {
       state,
       commit,
       rootGetters,
+      dispatch
     }, cartItems) {
       const deletedIds = _.map(cartItems, '_id');
 
@@ -144,7 +177,16 @@ export default {
         });
 
         if (data.httpStatus === 200) {
-          commit('setCart', data.responseData);
+          if (state.checkoutInitiated) {
+            let reqObj = {
+              address: rootGetters['shippingStore/getSelectedAddress'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+            };
+
+            await dispatch('createCheckout', reqObj);
+          } else {
+            commit('setCart', data.responseData);
+          }
         }
       } catch (err) {
         throw new Error(err);
@@ -154,6 +196,7 @@ export default {
     async updateOrders({
       state,
       commit,
+      dispatch,
       rootGetters,
     }, payloadArray) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
@@ -161,7 +204,8 @@ export default {
         // These commits don't do anything but are necessary because they help persist.
         const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
         if (updatedItem) {
-          updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(updatedItem.product.price.amount);
+          updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(
+            updatedItem.product.price.amount);
           updatedItem.aggregatedPrice.amount = updatedItem.aggregatedPrice.amount.toFixed(2);
           commit('setLocalCart');
           return true;
@@ -191,18 +235,39 @@ export default {
         });
 
         if (data.httpStatus === 200) {
-          commit('setCart', data.responseData);
-          return data;
-        } throw new Error(data.httpStatus);
+          if (state.checkoutInitiated) {
+            let reqObj = {
+              address: rootGetters['shippingStore/getSelectedAddress'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+            };
+
+            await dispatch('createCheckout', reqObj);
+          } else {
+            commit('setCart', data.responseData);
+            return data;
+          }
+        } else {
+          throw new Error(data.httpStatus);
+        }
       } catch (err) {
         throw new Error(err);
       }
     },
   },
   mutations: {
+    setCheckoutInitiated(state, val) {
+      state.checkoutInitiated = val;
+    },
     resetOrders(state) {
       state.cart = [];
-      state.total = {};
+      state.totalWeight = {};
+      state.subTotalPrice = {};
+
+      state.totalPrice = {};
+      state.serviceCharge = {};
+      state.shippingPrice = {};
+      state.tariffPrice = {};
+      state.checkoutInitiated = false;
     },
     appendToCart(state, newProducts) {
       newProducts.forEach((pr) => {
@@ -220,7 +285,8 @@ export default {
     setLocalCart(state) {
       state.cart = [...state.cart];
 
-      let amount = 0; let
+      let amount = 0;
+      let
         currency = '';
       state.cart.forEach((item) => {
         amount += parseFloat(item.aggregatedPrice.amount);
@@ -237,12 +303,13 @@ export default {
     setCart(state, allCarts) {
       state.cart.splice(0, state.cart.length);
       const transformed = [];
-      // state.totalPrice = allCarts.totalPrice;
       state.totalWeight = allCarts.totalWeight;
       state.subTotalPrice = allCarts.subTotalPrice;
-      // state.serviceCharge = allCarts.serviceCharge;
-      // state.shippingPrice = allCarts.shippingPrice;
-      // state.tariffPrice = allCarts.tariffPrice;
+
+      state.totalPrice = allCarts.totalPrice ? allCarts.totalPrice : null;
+      state.serviceCharge = allCarts.serviceCharge ? allCarts.serviceCharge : null;
+      state.shippingPrice = allCarts.shippingPrice ? allCarts.shippingPrice : null;
+      state.tariffPrice = allCarts.tariffPrice ? allCarts.tariffPrice : null;
 
       allCarts.items.forEach((item) => {
         transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
@@ -273,9 +340,21 @@ export default {
       return state.totalWeight;
     },
 
-    getSubTotal(state) { return state.subTotalPrice; },
-    getServiceCharge(state) { return state.serviceCharge; },
-    getShippingPrice(state) { return state.shippingPrice; },
-    getTariffPrice(state) { return state.tariffPrice; },
+    getSubTotal(state) {
+      return state.subTotalPrice;
+    },
+    getServiceCharge(state) {
+      return state.serviceCharge;
+    },
+    getShippingPrice(state) {
+      return state.shippingPrice;
+    },
+    getTariffPrice(state) {
+      return state.tariffPrice;
+    },
+
+    checkoutInitiated(state) {
+      return state.checkoutInitiated;
+    }
   },
 };

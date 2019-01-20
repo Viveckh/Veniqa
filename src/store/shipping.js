@@ -23,13 +23,21 @@ export default {
     setShippingMethod(state, payload) {
       state.shippingMethod = payload;
     },
+
+    resetAddresses(state) {
+      state.shippingMethod = null;
+      state.addresses = [];
+      state.selectedAddress = null;
+    }
   },
 
   actions: {
     async addressAction({
       state,
       commit,
-      getters
+      getters,
+      rootGetters,
+      dispatch
     }, {
       address,
       action
@@ -51,7 +59,20 @@ export default {
           url: ProxyUrls.address, // ProxyUrls.addressUrl,
           data: reqData,
         });
-        commit('setAddresses', data.responseData);
+        if (rootGetters['cartStore/checkoutInitiated'] && action != 'get') {
+          let reqObj = {
+            address: state.selectedAddress,
+            shippingMethod: state.shippingMethod,
+          };
+          await dispatch('cartStore/createCheckout', reqObj, {
+            root: true
+          });
+        } else {
+          commit('setAddresses', data.responseData);
+          if (action == 'get' && state.selectedAddress == null && state.addresses.length > 0) {
+            commit('addressSelected', state.addresses[0])
+          }
+        }
         return true;
       } catch (err) {
         return false;
