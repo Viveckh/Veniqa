@@ -89,16 +89,19 @@ export default {
       }));
 
       try {
-        const res = await Vue.prototype.$axios({
+        const {data} = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
           data: toSend,
         });
 
-        commit('setCart', res.data);
-        return true;
+        if(data.httpStatus === 200){
+          commit('setCart', data.responseData);
+          return true;
+        }
+        else throw new Error(data.httpStatus)
       } catch (err) {
-        return false;
+        throw new Error(err);
       }
     },
 
@@ -114,8 +117,10 @@ export default {
           method: 'get',
           url: ProxyUrl.getCart,
         });
-
-        commit('setCart', data);
+        if(data.httpStatus === 200){
+          commit('setCart', data.responseData);
+        }
+        else throw new Error(data.httpStatus)
       } catch (err) {
         throw new Error(err);
       }
@@ -147,8 +152,8 @@ export default {
           },
         });
 
-        if (data) {
-          commit('setCart', data);
+        if (data.httpStatus === 200) {
+          commit('setCart', data.responseData);
         }
       } catch (err) {
         throw new Error(err);
@@ -194,10 +199,12 @@ export default {
           },
         });
 
-        commit('setCart', data);
-        return data;
+        if(data.httpStatus === 200){
+          commit('setCart', data.responseData);
+          return data;
+        }else throw new Error(data.httpStatus);
+       
       } catch (err) {
-        console.log("Couldn't update the order");
         throw new Error(err);
       }
     },
@@ -240,12 +247,12 @@ export default {
     setCart(state, allCarts) {
       state.cart.splice(0, state.cart.length);
       const transformed = [];
-      state.totalPrice = allCarts.totalPrice;
+      // state.totalPrice = allCarts.totalPrice;
       state.totalWeight = allCarts.totalWeight;
       state.subTotalPrice = allCarts.subTotalPrice;
-      state.serviceCharge = allCarts.serviceCharge;
-      state.shippingPrice = allCarts.shippingPrice;
-      state.tariffPrice = allCarts.tariffPrice;
+      // state.serviceCharge = allCarts.serviceCharge;
+      // state.shippingPrice = allCarts.shippingPrice;
+      // state.tariffPrice = allCarts.tariffPrice;
 
       allCarts.items.forEach((item) => {
         transformed.push(_.assign(_.cloneDeep(OrderDTO), item));

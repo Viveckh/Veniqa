@@ -10,6 +10,7 @@ $primary-red: hsl(348, 100%, 61%);
 .primary-button{
   background-image: $gradient-color;
   border: none;
+  
   &:hover{
     border: none;
     box-shadow: 3px 6px 20px 1px #2E3532;
@@ -19,8 +20,10 @@ $primary-red: hsl(348, 100%, 61%);
     border: none;
     box-shadow: unset;
   }
+}
 
-
+.full-width {
+  width: 100%;
 }
 
 .inline-list{

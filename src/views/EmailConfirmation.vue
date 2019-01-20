@@ -68,6 +68,7 @@ export default {
 
         if (data) {
           this.value = true;
+          this.$router.push('/')
         } else {
           this.value = false;
         }

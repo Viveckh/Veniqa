@@ -61,8 +61,7 @@ export default {
   },
 
   methods: {
-    setLoading(val) {
-      console.log(val, 'is val');
+    setLoading() {
       this.refCount++;
       this.isLoading = true;
     },

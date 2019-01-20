@@ -82,18 +82,22 @@ export default {
       const res = await Vue.prototype.$axios({
         method: 'get',
         url: ProxyUrls.isSessionActive,
-        // withCredentials: true,
       });
       if (res && res.data == true) {
         commit('setEmail', localStorage.getItem('email'));
         commit('setName', localStorage.getItem('name'));
         commit('setSessionActive', true);
+        commit('setEmailConfirmed', true);
       } else {
         commit('setSessionActive', false);
       }
     },
   },
   mutations: {
+    setEmailConfirmed(state, val){
+      state.emailConfirmed = val;
+      localStorage.setItem('emailConfirmed', val);
+    },
     setEmail(state, email) {
       state.email = email;
       localStorage.setItem('email', email);
@@ -109,6 +113,7 @@ export default {
       if (!val) {
         localStorage.removeItem('email');
         localStorage.removeItem('name');
+        localStorage.removeItem('emailConfirmed');
       }
     },
 
@@ -117,6 +122,7 @@ export default {
       state.email = '';
       localStorage.removeItem('email');
       localStorage.removeItem('name');
+      localStorage.removeItem('emailConfirmed');
       state.isSessionActive = false;
     },
   },
