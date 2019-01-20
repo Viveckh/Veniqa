@@ -25,4 +25,6 @@ export default {
   address: '/user/address',
 
   createCheckout: 'orders/createCheckout',
+  createPaymentToken: 'orders/createPaymentToken',
+  completeCheckout: 'orders/completeCheckout',
 };

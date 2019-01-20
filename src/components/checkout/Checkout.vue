@@ -29,6 +29,11 @@
             @click="resendEmailConfirmation()"
           >Resend Email Confirmation</b-button>
         </div>
+
+        <div v-if="checkoutInitiated">
+          <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn> &nbsp;&nbsp;
+          <b-btn disabled class="primary-button">Pay with Khalti</b-btn>
+        </div>
       </div>
       <div v-else>
         <p>You need to log in first before starting checkout process</p>
@@ -63,6 +68,15 @@ export default {
   },
 
   methods: {
+    async handlePayment() {
+      try {
+        const success = await this.$store.dispatch('cartStore/pay');
+      } catch (error) {
+        console.log(error);
+        const msg = error.httpStatus ? '' : error.response.data.errorDetails;
+        notification.error(this, `Error: ${msg}`, 'all');
+      }
+    },
     async addressSelected(selected) {
       this.$store.commit('shippingStore/addressSelected', selected);
       if (!this.checkoutInitiated) return;
