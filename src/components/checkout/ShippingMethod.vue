@@ -27,27 +27,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import notification from "@/services/NotificationService";
+import { mapGetters } from 'vuex';
+import notification from '@/services/NotificationService';
 
 export default {
-  name: "ShippingMethod",
+  name: 'ShippingMethod',
   data() {
     return {
       shippingMethods: [
         {
-          _id: "20 day shipping",
-          name: "20 day shipping"
+          _id: '20 day shipping',
+          name: '20 day shipping',
         },
         {
-          _id: "Expedited Shipping",
-          name: "Expedited shipping"
+          _id: 'Expedited Shipping',
+          name: 'Expedited shipping',
         },
         {
-          _id: "No Rush Shipping",
-          name: "No Rush Shipping"
-        }
-      ]
+          _id: 'No Rush Shipping',
+          name: 'No Rush Shipping',
+        },
+      ],
     };
   },
   methods: {
@@ -55,37 +55,37 @@ export default {
       if (!this.checkoutInitiated) return;
       try {
         const isSuccess = await this.$store.dispatch(
-          "cartStore/createCheckout",
+          'cartStore/createCheckout',
           {
             address: this.selectedAddress,
-            shippingMethod: this.shippingMethod
-          }
+            shippingMethod: this.shippingMethod,
+          },
         );
       } catch (error) {
         notification.error(
           this,
-          "Something went haywire while trying to recalculate the prices. Please try again by changing address."
+          'Something went haywire while trying to recalculate the prices. Please try again by changing address.',
         );
       }
-    }
+    },
   },
   computed: {
     shippingMethod: {
       get() {
-        return this.$store.getters["shippingStore/shippingMethod"];
+        return this.$store.getters['shippingStore/shippingMethod'];
       },
 
       set(val) {
-        this.$store.commit("shippingStore/setShippingMethod", val);
-      }
+        this.$store.commit('shippingStore/setShippingMethod', val);
+      },
     },
 
     ...mapGetters({
-      isSessionActive: "authStore/isSessionActive",
-      selectedAddress: "shippingStore/getSelectedAddress",
-      checkoutInitiated: "cartStore/checkoutInitiated"
-    })
-  }
+      isSessionActive: 'authStore/isSessionActive',
+      selectedAddress: 'shippingStore/getSelectedAddress',
+      checkoutInitiated: 'cartStore/checkoutInitiated',
+    }),
+  },
 };
 </script>
 
@@ -94,4 +94,3 @@ export default {
   margin-top: 1rem;
 }
 </style>
-

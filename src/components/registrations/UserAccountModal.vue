@@ -42,106 +42,106 @@
 </template>
 
 <script>
-import LoginComponent from "@/components/registrations/LoginComponent";
-import RegisterComponent from "@/components/registrations/RegisterComponent";
-import ProxyUrls from "@/constants/ProxyUrls.js";
-import ForgotPassword from "@/components/registrations/ForgotPasswordComponent";
+import LoginComponent from '@/components/registrations/LoginComponent';
+import RegisterComponent from '@/components/registrations/RegisterComponent';
+import ProxyUrls from '@/constants/ProxyUrls.js';
+import ForgotPassword from '@/components/registrations/ForgotPasswordComponent';
 
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "UserAccountModal",
+  name: 'UserAccountModal',
   components: {
     LoginComponent,
     RegisterComponent,
-    ForgotPassword
+    ForgotPassword,
   },
   data() {
     return {
       showLogin: true,
-      activePanel: "login",
-      showFailure: false
+      activePanel: 'login',
+      showFailure: false,
     };
   },
 
   methods: {
     closeModal() {
-      this.$emit("loginSuccess");
+      this.$emit('loginSuccess');
     },
     async login(userInfo) {
       try {
-        this.$store.commit("loaderStore/setLoader");
-        const data = await this.$store.dispatch("authStore/login", userInfo);
+        this.$store.commit('loaderStore/setLoader');
+        const data = await this.$store.dispatch('authStore/login', userInfo);
         if (data.cart && data.cart.items.length > 0) {
-          const incomingProductIds = _.map(data.cart, "product_id");
+          const incomingProductIds = _.map(data.cart, 'product_id');
           // Update the cart values.
-          const currentCartItems = this.$store.getters["cartStore/getCart"];
+          const currentCartItems = this.$store.getters['cartStore/getCart'];
 
           const toAdd = [];
-          currentCartItems.forEach(item => {
+          currentCartItems.forEach((item) => {
             if (incomingProductIds.indexOf(item.product_id) < 0) {
               // Adding the product ID and the counts.
               toAdd.push({
                 _id: item.product_id,
-                counts: item.counts
+                counts: item.counts,
               });
             }
           });
           if (toAdd.length > 0) {
-            this.$store.dispatch("cartStore/addToTheCart", toAdd);
+            this.$store.dispatch('cartStore/addToTheCart', toAdd);
           } else {
-            this.$store.dispatch("cartStore/getCart");
+            this.$store.dispatch('cartStore/getCart');
           }
         }
-        this.$emit("loginSuccess");
+        this.$emit('loginSuccess');
 
         this.$notify({
-          group: "all",
-          type: "success",
-          text: "Successfully logged in"
+          group: 'all',
+          type: 'success',
+          text: 'Successfully logged in',
         });
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
-          text: "User credentials are not correct. Please try again"
+          group: 'all',
+          type: 'error',
+          text: 'User credentials are not correct. Please try again',
         });
       }
-      this.$store.commit("loaderStore/unsetLoader");
+      this.$store.commit('loaderStore/unsetLoader');
     },
 
     async register(userInfo) {
       try {
         const res = await this.$store.dispatch(
-          "authStore/registerUser",
-          userInfo
+          'authStore/registerUser',
+          userInfo,
         );
 
-        this.$emit("loginSuccess");
+        this.$emit('loginSuccess');
         this.$notify({
-          group: "all",
-          type: "success",
+          group: 'all',
+          type: 'success',
           text:
-            "User successfully created. Please check your inbox to confirm email"
+            'User successfully created. Please check your inbox to confirm email',
         });
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "User could not be created at the moment. Please check if you already have an account."
+            'User could not be created at the moment. Please check if you already have an account.',
         });
       }
     },
 
     navigateToRegister() {
-      this.activePanel = "registration";
+      this.activePanel = 'registration';
     },
 
     navigateToLogin() {
-      this.activePanel = "login";
-    }
-  }
+      this.activePanel = 'login';
+    },
+  },
 };
 </script>
 

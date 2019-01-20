@@ -17,10 +17,10 @@ export default {
   actions: {
     async createCheckout({
       state,
-      commit
+      commit,
     }, {
       address,
-      shippingMethod
+      shippingMethod,
     }) {
       const reqData = {
         shippingMethod: shippingMethod._id,
@@ -28,7 +28,7 @@ export default {
       };
       try {
         const {
-          data
+          data,
         } = await Vue.prototype.$axios({
           url: ProxyUrl.createCheckout,
           method: 'post',
@@ -39,10 +39,9 @@ export default {
           commit('setCart', data.responseData.cart);
           commit('setCheckoutInitiated', true);
           return true;
-        } else {
-          commit('setCheckoutInitiated', false);
-          throw new Error(data.httpStatus);
         }
+        commit('setCheckoutInitiated', false);
+        throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
       }
@@ -100,7 +99,7 @@ export default {
 
       try {
         const {
-          data
+          data,
         } = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
@@ -109,7 +108,7 @@ export default {
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
-            let reqObj = {
+            const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
               shippingMethod: rootGetters['shippingStore/shippingMethod'],
             };
@@ -119,10 +118,7 @@ export default {
             commit('setCart', data.responseData);
             return true;
           }
-
-
-        } else
-          throw new Error(data.httpStatus);
+        } else throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
       }
@@ -132,7 +128,7 @@ export default {
       state,
       commit,
       dispatch,
-      rootGetters
+      rootGetters,
     }) {
       try {
         const {
@@ -153,7 +149,7 @@ export default {
       state,
       commit,
       rootGetters,
-      dispatch
+      dispatch,
     }, cartItems) {
       const deletedIds = _.map(cartItems, '_id');
 
@@ -178,7 +174,7 @@ export default {
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
-            let reqObj = {
+            const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
               shippingMethod: rootGetters['shippingStore/shippingMethod'],
             };
@@ -205,7 +201,8 @@ export default {
         const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
         if (updatedItem) {
           updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(
-            updatedItem.product.price.amount);
+            updatedItem.product.price.amount,
+          );
           updatedItem.aggregatedPrice.amount = updatedItem.aggregatedPrice.amount.toFixed(2);
           commit('setLocalCart');
           return true;
@@ -236,7 +233,7 @@ export default {
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
-            let reqObj = {
+            const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
               shippingMethod: rootGetters['shippingStore/shippingMethod'],
             };
@@ -355,6 +352,6 @@ export default {
 
     checkoutInitiated(state) {
       return state.checkoutInitiated;
-    }
+    },
   },
 };

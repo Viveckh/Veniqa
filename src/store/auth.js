@@ -43,7 +43,7 @@ export default {
 
       try {
         const {
-          data
+          data,
         } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.loginUrl,
@@ -63,11 +63,11 @@ export default {
     },
 
     async logout({
-      commit
+      commit,
     }) {
       try {
         const {
-          data
+          data,
         } = await Vue.prototype.$axios({
           method: 'get',
           url: ProxyUrls.logoutUrl,

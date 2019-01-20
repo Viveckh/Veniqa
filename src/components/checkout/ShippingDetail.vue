@@ -329,7 +329,7 @@ export default {
     ...mapGetters({
       allAddresses: 'shippingStore/allAddresses',
       selectedAddress: 'shippingStore/getSelectedAddress',
-      isSessionActive: 'authStore/isSessionActive'
+      isSessionActive: 'authStore/isSessionActive',
     }),
 
     cityState() {

@@ -48,15 +48,15 @@
 </template>
 
 <script>
-import ProxyUrl from "@/constants/ProxyUrls";
+import ProxyUrl from '@/constants/ProxyUrls';
 
 export default {
-  name: "LoginComponent",
+  name: 'LoginComponent',
   data() {
     return {
-      username: "",
-      password: "",
-      forgotEnabled: false
+      username: '',
+      password: '',
+      forgotEnabled: false,
     };
   },
   methods: {
@@ -68,14 +68,14 @@ export default {
     forgetPassword() {
       // this.$emit('forgotPassword', this.usernameState ? this.username : '');
       this.forgotEnabled = true;
-      this.password = "";
+      this.password = '';
     },
 
     loginClicked() {
       if (this.usernameState) {
-        this.$emit("login", {
+        this.$emit('login', {
           email: this.username,
-          password: this.password
+          password: this.password,
         });
       }
     },
@@ -84,38 +84,38 @@ export default {
       if (this.usernameState) {
         try {
           const { data } = await this.$axios({
-            method: "get",
-            url: ProxyUrl.forgotPassword + this.username
+            method: 'get',
+            url: ProxyUrl.forgotPassword + this.username,
           });
-          this.$emit("close");
+          this.$emit('close');
 
           this.$notify({
-            group: "all",
-            type: "success",
+            group: 'all',
+            type: 'success',
             text:
-              "The email was just sent. Please check your email and follow the instructions."
+              'The email was just sent. Please check your email and follow the instructions.',
           });
         } catch (err) {
           this.$notify({
-            group: "all",
-            type: "error",
+            group: 'all',
+            type: 'error',
             text:
-              "The email could not be sent right now. Please try again later"
+              'The email could not be sent right now. Please try again later',
           });
         }
       }
     },
 
     register() {
-      this.$emit("register");
-    }
+      this.$emit('register');
+    },
   },
   computed: {
     usernameState() {
       if (this.username.length == 0) return null;
       return this.validEmail(this.username);
-    }
-  }
+    },
+  },
 };
 </script>
 

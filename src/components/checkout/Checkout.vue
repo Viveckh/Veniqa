@@ -38,46 +38,46 @@
 </template>
 
 <script>
-import ShippingDetail from "@/components/checkout/ShippingDetail.vue";
-import OrderDetail from "@/components/checkout/OrderDetail.vue";
-import PaymentDetail from "@/components/checkout/PaymentDetail";
-import ProxyUrls from "@/constants/ProxyUrls";
-import ShippingMethod from "@/components/checkout/ShippingMethod";
-import { mapGetters } from "vuex";
-import notification from "@/services/NotificationService";
+import ShippingDetail from '@/components/checkout/ShippingDetail.vue';
+import OrderDetail from '@/components/checkout/OrderDetail.vue';
+import PaymentDetail from '@/components/checkout/PaymentDetail';
+import ProxyUrls from '@/constants/ProxyUrls';
+import ShippingMethod from '@/components/checkout/ShippingMethod';
+import { mapGetters } from 'vuex';
+import notification from '@/services/NotificationService';
 
 export default {
-  name: "Checkout",
+  name: 'Checkout',
   components: {
     ShippingDetail,
     OrderDetail,
     PaymentDetail,
-    ShippingMethod
+    ShippingMethod,
   },
 
   data() {
     return {
       // selectedAddress: {},
-      payment: {}
+      payment: {},
     };
   },
 
   methods: {
     async addressSelected(selected) {
-      this.$store.commit("shippingStore/addressSelected", selected);
+      this.$store.commit('shippingStore/addressSelected', selected);
       if (!this.checkoutInitiated) return;
       try {
         const isSuccess = await this.$store.dispatch(
-          "cartStore/createCheckout",
+          'cartStore/createCheckout',
           {
             address: this.selectedAddress,
-            shippingMethod: this.shippingMethod
-          }
+            shippingMethod: this.shippingMethod,
+          },
         );
       } catch (error) {
         notification.error(
           this,
-          "Something went haywire while trying to recalculate the prices. Please try again by changing address."
+          'Something went haywire while trying to recalculate the prices. Please try again by changing address.',
         );
       }
     },
@@ -86,51 +86,51 @@ export default {
       if (!this.selectedAddress || !this.shippingMethod) {
         notification.warn(
           this,
-          "The shipping method and address should be selected first."
+          'The shipping method and address should be selected first.',
         );
         return;
       }
-      await this.$store.dispatch("cartStore/createCheckout", {
+      await this.$store.dispatch('cartStore/createCheckout', {
         address: this.selectedAddress,
-        shippingMethod: this.shippingMethod
+        shippingMethod: this.shippingMethod,
       });
     },
 
     async resendEmailConfirmation() {
       try {
         const res = await this.$axios({
-          method: "get",
+          method: 'get',
           url:
-            ProxyUrls.resendEmailConfirmation +
-            this.$store.getters["authStore/getEmail"]
+            ProxyUrls.resendEmailConfirmation
+            + this.$store.getters['authStore/getEmail'],
         });
 
         this.$notify({
-          group: "all",
-          type: "success",
+          group: 'all',
+          type: 'success',
           text:
-            "Confirmation email has been sent to your email address. Please check your email."
+            'Confirmation email has been sent to your email address. Please check your email.',
         });
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "There was an error sending out the email. Please try again later"
+            'There was an error sending out the email. Please try again later',
         });
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      selectedAddress: "shippingStore/getSelectedAddress",
-      shippingMethod: "shippingStore/shippingMethod",
-      isSessionActive: "authStore/isSessionActive",
-      checkoutInitiated: "cartStore/checkoutInitiated",
-      emailConfirmed: "authStore/emailConfirmed"
-    })
-  }
+      selectedAddress: 'shippingStore/getSelectedAddress',
+      shippingMethod: 'shippingStore/shippingMethod',
+      isSessionActive: 'authStore/isSessionActive',
+      checkoutInitiated: 'cartStore/checkoutInitiated',
+      emailConfirmed: 'authStore/emailConfirmed',
+    }),
+  },
 };
 </script>
 

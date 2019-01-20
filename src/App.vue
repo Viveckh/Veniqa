@@ -21,24 +21,24 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { FingerprintSpinner } from "epic-spinners";
-import axios from "axios";
-import { eventHub } from "@/utils/EventHub";
+import { mapGetters } from 'vuex';
+import { FingerprintSpinner } from 'epic-spinners';
+import axios from 'axios';
+import { eventHub } from '@/utils/EventHub';
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    FingerprintSpinner
+    FingerprintSpinner,
   },
 
   async created() {
-    eventHub.$on("before-request", this.setLoading);
-    eventHub.$on("request-error", this.unsetLoading);
-    eventHub.$on("after-response", this.unsetLoading);
-    eventHub.$on("response-error", this.unsetLoading);
+    eventHub.$on('before-request', this.setLoading);
+    eventHub.$on('request-error', this.unsetLoading);
+    eventHub.$on('after-response', this.unsetLoading);
+    eventHub.$on('response-error', this.unsetLoading);
 
-    await this.$store.dispatch("authStore/initiateAppSession");
+    await this.$store.dispatch('authStore/initiateAppSession');
 
     if (this.isSessionActive) {
       this.initiateApp();
@@ -48,33 +48,33 @@ export default {
   data() {
     return {
       refCount: 0,
-      isLoading: false
+      isLoading: false,
     };
   },
 
   beforeDestroy() {
-    eventHub.$off("before-request", this.setLoading);
-    eventHub.$off("request-error", this.unsetLoading);
-    eventHub.$off("after-response", this.unsetLoading);
-    eventHub.$off("response-error", this.unsetLoading);
+    eventHub.$off('before-request', this.setLoading);
+    eventHub.$off('request-error', this.unsetLoading);
+    eventHub.$off('after-response', this.unsetLoading);
+    eventHub.$off('response-error', this.unsetLoading);
   },
 
   methods: {
     async initiateApp() {
       try {
-        await this.$store.dispatch("cartStore/getCart");
-        await this.$store.dispatch("shippingStore/addressAction", {
+        await this.$store.dispatch('cartStore/getCart');
+        await this.$store.dispatch('shippingStore/addressAction', {
           address: null,
-          action: "get"
+          action: 'get',
         });
 
         if (this.checkoutInitiated) {
-          let reqObj = {
+          const reqObj = {
             address: this.selectedAddress,
-            shippingMethod: this.shippingMethod
+            shippingMethod: this.shippingMethod,
           };
 
-          await this.$store.dispatch("cartStore/createCheckout", reqObj);
+          await this.$store.dispatch('cartStore/createCheckout', reqObj);
         }
       } catch (error) {}
     },
@@ -88,17 +88,17 @@ export default {
         this.refCount--;
         this.isLoading = this.refCount > 0;
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      isSessionActive: "authStore/isSessionActive",
-      shippingMethod: "shippingStore/shippingMethod",
-      selectedAddress: "shippingStore/getSelectedAddress",
-      checkoutInitiated: "cartStore/checkoutInitiated"
-    })
-  }
+      isSessionActive: 'authStore/isSessionActive',
+      shippingMethod: 'shippingStore/shippingMethod',
+      selectedAddress: 'shippingStore/getSelectedAddress',
+      checkoutInitiated: 'cartStore/checkoutInitiated',
+    }),
+  },
 };
 </script>
 

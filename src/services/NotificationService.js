@@ -1,7 +1,7 @@
 export default {
   success(context, t, group) {
     context.$notify({
-      group: group ? group : 'toast',
+      group: group || 'toast',
       type: 'success',
       text: t,
     });
@@ -9,7 +9,7 @@ export default {
 
   warn(context, t, group) {
     context.$notify({
-      group: group ? group : 'toast',
+      group: group || 'toast',
       type: 'warn',
       text: t,
     });
@@ -17,7 +17,7 @@ export default {
 
   error(context, t, group) {
     context.$notify({
-      group: group ? group : 'toast',
+      group: group || 'toast',
       type: 'error',
       text: t,
     });
