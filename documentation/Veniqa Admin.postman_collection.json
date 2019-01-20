@@ -1193,7 +1193,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"section_identifier\",\n\t\"content\": [\n\t\t{\n\t\t\t\"anything\": \"you want\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"name\": \"section_identifier\",\n\t\"content\": [\n\t\t{\n\t\t\t\"product\": \"5c3f4336964e82002b2cfcaf\",\n\t\t\t\"config\": {\n\t\t\t\t\"anything\": \"you want\"\n\t\t\t}\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{server}}/ui/featured",
