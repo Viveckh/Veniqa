@@ -2,6 +2,7 @@ import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
 import axios from 'axios';
 import * as _ from 'lodash';
+import Pagination from '@/dto/Pagination';
 
 export default {
   namespaced: true,
@@ -12,6 +13,7 @@ export default {
     subcategories: [],
     refDataPayload: [],
     tariffCategories: [],
+    pagination: _.cloneDeep(Pagination),
   },
 
   actions: {
@@ -90,24 +92,24 @@ export default {
         throw new Error(err);
       }
     },
-    async getAllProducts({ commit }) {
+    async getAllProducts({ commit, state }, filters) {
       try {
+        const reqPayload = {
+          searchFilters: filters || {
+            store: '',
+            category: '',
+          },
+
+          pagingOptions: state.pagination,
+        };
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.searchProduct,
           withCredentials: true,
           method: 'post',
-          data: {
-            searchFilters: {
-              store: '',
-              category: '',
-            },
-            pagingOptions: {
-              page: 1,
-              limit: 25,
-            },
-          },
+          data: reqPayload,
         });
         commit('setProducts', res.data.docs);
+        commit('setPagination', res.data);
         return res.data.docs;
       } catch (err) {
         throw new Error(err);
@@ -115,6 +117,14 @@ export default {
     },
   },
   mutations: {
+    setPagination(state, payload) {
+      if (payload) {
+        state.pagination.page = payload.page;
+        state.pagination.total = payload.total;
+        state.pagination.limit = payload.limit;
+      }
+    },
+
     setProducts(state, payload) {
       // console.log(payload);
       state.products = [];
@@ -143,6 +153,10 @@ export default {
 
     tariffCategories(state) {
       return state.tariffCategories;
+    },
+
+    pagination(state) {
+      return state.pagination;
     },
   },
 };
