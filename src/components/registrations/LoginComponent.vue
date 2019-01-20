@@ -128,7 +128,7 @@ export default {
 .header {
   // margin: 50px 0px;
   color: #267871;
-  
+
   h2{
     margin-bottom: 1em;
   }

@@ -28,7 +28,7 @@
 import ShippingDetail from '@/components/checkout/ShippingDetail.vue';
 import OrderDetail from '@/components/checkout/OrderDetail.vue';
 import PaymentDetail from '@/components/checkout/PaymentDetail';
-import ProxyUrls from '@/constants/ProxyUrls'
+import ProxyUrls from '@/constants/ProxyUrls';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -59,9 +59,9 @@ export default {
       });
     },
 
-    async resendEmailConfirmation(){
+    async resendEmailConfirmation() {
       try {
-        let res = await this.$axios({
+        const res = await this.$axios({
           method: 'get',
           url: ProxyUrls.resendEmailConfirmation + this.$store.getters['authStore/getEmail'],
         });
@@ -69,16 +69,16 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'Confirmation email has been sent to your email address. Please check your email.'
-        })
-      }catch(err){
+          text: 'Confirmation email has been sent to your email address. Please check your email.',
+        });
+      } catch (err) {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error sending out the email. Please try again later'
-        })
+          text: 'There was an error sending out the email. Please try again later',
+        });
       }
-    }
+    },
   },
 
   computed: {

@@ -137,8 +137,8 @@ export default {
       return state.isSessionActive;
     },
 
-    emailConfirmed(state){
+    emailConfirmed(state) {
       return state.emailConfirmed;
-    }
+    },
   },
 };

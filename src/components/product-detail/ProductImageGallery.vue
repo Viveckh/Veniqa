@@ -41,7 +41,7 @@
       </b-col>
     </b-row>
 
-    <div :id="pane_id" class="pane-container"></div>
+    <div :id="pane_id" class="pane-container d-none d-md-block"></div>
   </div>
 </template>
 
@@ -80,7 +80,7 @@ export default {
       drift: null,
       options: {
         zoomFactor: 4,
-        pane: 'container',
+        pane: 'pane',
         hoverDelay: 300,
         namespace: 'container-zoomer',
         move_by_click: true,
@@ -110,58 +110,16 @@ export default {
     },
   },
   mounted() {
-    document
-      .querySelector(`.${this.zoomer_box} .thumb-list`)
-      .setAttribute(
-        'style',
-        `grid-template-columns: repeat(${
-          this.baseZoomerOptions.scroll_items
-        }, auto)`,
-      );
-    const t = setInterval(() => {
-      if (document.readyState === 'complete') {
-        if (this.options.pane === 'container-round') {
-          this.options.inlinePane = true;
-        } else {
-          this.options.inlinePane = false;
-          this.options.paneContainer = document.getElementById(this.pane_id);
-          const rect = document
-            .querySelector(`.${this.zoomer_box}`)
-            .getBoundingClientRect();
-          let customStyle = '';
-          if (this.options.pane === 'pane') {
-            customStyle = `width:${
-              rect.width * 1.2
-            }px;height:${
-              rect.height
-            }px;left:${
-              rect.right
-            }px;top:${
-              0
-            }px;`;
-          } else {
-            customStyle = `width:${
-              rect.width
-            }px;height:${
-              rect.height
-            }px;left:${
-              rect.x
-            }px;top:${
-              0
-            }px;`;
-          }
-          this.options.paneContainer.setAttribute('style', customStyle);
-        }
+    this.runImager();
+    window.addEventListener('resize', this.runImager);
+  },
 
-        this.options.injectBaseStyles = true;
-        const previewImg = `.${this.zoomer_box} .preview-box img`;
-        this.drift = new Drift(
-          document.querySelector(previewImg),
-          this.options,
-        );
-        clearInterval(t);
-      }
-    }, 500);
+  beforeDestroy() {
+    window.removeEventListener('resize', this.runImager);
+  },
+
+  ready() {
+    console.log('Running cause ready');
   },
   watch: {
     choosedThumb(thumb) {
@@ -214,6 +172,49 @@ export default {
     }
   },
   methods: {
+    runImager() {
+      document
+        .querySelector(`.${this.zoomer_box} .thumb-list`)
+        .setAttribute(
+          'style',
+          `grid-template-columns: repeat(${
+            this.baseZoomerOptions.scroll_items
+          }, auto)`,
+        );
+      const t = setInterval(() => {
+        if (document.readyState === 'complete') {
+          if (this.options.pane === 'container-round') {
+            this.options.inlinePane = true;
+          } else {
+            this.options.inlinePane = false;
+            this.options.paneContainer = document.getElementById(this.pane_id);
+            const rect = document
+              .querySelector(`.${this.zoomer_box}`)
+              .getBoundingClientRect();
+            let customStyle = '';
+            if (this.options.pane === 'pane') {
+              customStyle = `width:${rect.width * 1.2}px;height:${
+                rect.height
+              }px;left:${rect.right}px;top:${0}px;`;
+            } else {
+              customStyle = `width:${rect.width}px;height:${
+                rect.height
+              }px;left:${rect.x}px;top:${0}px;`;
+            }
+            this.options.paneContainer.setAttribute('style', customStyle);
+          }
+
+          this.options.injectBaseStyles = true;
+          const previewImg = `.${this.zoomer_box} .preview-box img`;
+
+          this.drift = this.drift ? this.drift : new Drift(
+            document.querySelector(previewImg),
+            this.options,
+          );
+          clearInterval(t);
+        }
+      }, 500);
+    },
     moveThumbs(direction) {
       const len = this.thumbs.length;
       if (direction === 'right') {
@@ -244,7 +245,7 @@ export default {
   margin-bottom: 1vh;
 }
 
-@media(max-width: 768px){
+@media (max-width: 768px) {
   .control {
     display: grid;
     align-items: center;
@@ -263,7 +264,6 @@ export default {
   }
 }
 
-
 .choosed-thumb {
   border-radius: 0px;
 }
@@ -278,7 +278,7 @@ export default {
   width: 100%;
 }
 
-.thumb-list>img{
+.thumb-list > img {
   margin-bottom: 10px;
 }
 </style>

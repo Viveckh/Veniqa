@@ -21,50 +21,50 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { FingerprintSpinner } from "epic-spinners";
-import axios from "axios";
-import { eventHub } from "@/utils/EventHub";
+import { mapGetters } from 'vuex';
+import { FingerprintSpinner } from 'epic-spinners';
+import axios from 'axios';
+import { eventHub } from '@/utils/EventHub';
 
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    FingerprintSpinner
+    FingerprintSpinner,
   },
 
   async created() {
-    eventHub.$on("before-request", this.setLoading);
-    eventHub.$on("request-error", this.unsetLoading);
-    eventHub.$on("after-response", this.unsetLoading);
-    eventHub.$on("response-error", this.unsetLoading);
+    eventHub.$on('before-request', this.setLoading);
+    eventHub.$on('request-error', this.unsetLoading);
+    eventHub.$on('after-response', this.unsetLoading);
+    eventHub.$on('response-error', this.unsetLoading);
 
-    await this.$store.dispatch("authStore/initiateAppSession");
+    await this.$store.dispatch('authStore/initiateAppSession');
 
     if (this.isSessionActive) {
-      this.$store.dispatch("cartStore/getCart");
+      this.$store.dispatch('cartStore/getCart');
     }
   },
 
   data() {
     return {
       refCount: 0,
-      isLoading: false
+      isLoading: false,
     };
   },
 
   beforeDestroy() {
-    eventHub.$off("before-request", this.setLoading);
-    eventHub.$off("request-error", this.unsetLoading);
-    eventHub.$off("after-response", this.unsetLoading);
-    eventHub.$off("response-error", this.unsetLoading);
+    eventHub.$off('before-request', this.setLoading);
+    eventHub.$off('request-error', this.unsetLoading);
+    eventHub.$off('after-response', this.unsetLoading);
+    eventHub.$off('response-error', this.unsetLoading);
   },
 
   methods: {
     setLoading(val) {
-      console.log(val,'is val')
-        this.refCount++;
-        this.isLoading = true;
+      console.log(val, 'is val');
+      this.refCount++;
+      this.isLoading = true;
     },
 
     unsetLoading() {
@@ -72,15 +72,15 @@ export default {
         this.refCount--;
         this.isLoading = this.refCount > 0;
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      isSessionActive: "authStore/isSessionActive"
+      isSessionActive: 'authStore/isSessionActive',
       // isLoading: "loaderStore/isLoading"
-    })
-  }
+    }),
+  },
 };
 </script>
 
