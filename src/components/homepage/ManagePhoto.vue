@@ -286,7 +286,7 @@ export default {
           data = preassignedUrls;
         }
 
-        const totalCallsToMake =          data.detailedImageUrls.length
+        const totalCallsToMake = data.detailedImageUrls.length
           + data.thumbnailUrls.length
           + data.featuredImageUrls.length;
 

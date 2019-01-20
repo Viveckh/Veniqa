@@ -80,8 +80,8 @@ const router = new Router({
           name: 'featured',
           component: Featured,
           meta: {
-            SUPERADMIN: true
-          }
+            SUPERADMIN: true,
+          },
         },
 
         {

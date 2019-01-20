@@ -23,6 +23,28 @@
           <h4 class="card-title mt-2">Catalog</h4>
         </header>
         <article class="card-body">
+          <b-row>
+            <b-col md="6">Per page &nbsp;&nbsp;&nbsp;
+              <b-form-select
+                v-model="pagination.limit"
+                :options="perPageOptions"
+                style="max-width: 100px"
+                size="sm"
+                @change="pageLimitChanged"
+              />
+            </b-col>
+            <b-col md="6">
+              <b-pagination
+                :total-rows="pagination.total"
+                v-model="pagination.page"
+                :per-page="pagination.limit"
+                @change="pageChanged"
+                aria-controls="content_loop"
+                align="right"
+              />
+            </b-col>
+          </b-row>
+
           <table class="table table-striped" id="content_loop">
             <thead>
               <tr>
@@ -59,6 +81,15 @@
               </tr>
             </tbody>
           </table>
+
+          <b-pagination
+            :total-rows="pagination.total"
+            v-model="pagination.page"
+            :per-page="pagination.limit"
+            @change="pageChanged"
+            aria-controls="content_loop"
+            align="right"
+          />
         </article>
         <!-- card-body end .// -->
       </div>
@@ -81,6 +112,7 @@ export default {
       isAddView: false,
       editProductData: null,
       query: '',
+      perPageOptions: [1, 10, 20, 30, 50],
     };
   },
   async created() {
@@ -102,9 +134,20 @@ export default {
 
     ...mapGetters({
       permissions: 'authStore/permissions',
+      pagination: 'adminStore/pagination',
     }),
   },
   methods: {
+    async pageChanged(pageNum) {
+      this.pagination.page = pageNum;
+      await this.$store.dispatch('adminStore/getAllProducts');
+    },
+
+    async pageLimitChanged(limit) {
+      this.pagination.limit = limit;
+      this.pageChanged(1);
+      // await this.$store.dispatch("adminStore/getAllProducts");
+    },
     deleteProduct(id) {
       return this.$store.dispatch('adminStore/deleteProduct', id);
     },
