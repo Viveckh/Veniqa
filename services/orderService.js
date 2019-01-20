@@ -94,15 +94,15 @@ export default {
             let orderCartFromSavedCheckout = checkout.cart;
             // Converting the mongoose object to a regular json object for comparision purposes
             orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject();
-            transformer.castValuesToString(orderCartFromSavedCheckout, "_id")
+            transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff"])
 
             /*
-            logger.debug("fresh order cart", {meta: freshCalculatedCart});
-            logger.debug("------------------------------------")
-            logger.debug("saved order cart", {meta: orderCartFromSavedCheckout});
-            logger.debug("------------------------------------")
-            logger.debug("checking if checkout cart ids got modified", {meta: checkout.cart});
-            */
+            console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
+            console.log("------------------------------------")
+            console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
+            console.log("------------------------------------")
+            console.log("checking if checkout cart ids got modified", checkout.cart);
+            */            
 
             // If what is in checkout record does not match what was freshly calculated, return a failure msg
             if (!_.isEqual(freshCalculatedCart, orderCartFromSavedCheckout)) {
@@ -224,10 +224,11 @@ export default {
 
             let tariffPriceInUSD = 0;
             // Calculating tariff
-            for (let item of shoppingCart.items) {
+            for (const [index, item] of shoppingCart.items.entries()) {
                 // TODO: Select proper country while calculating tariff
                 let tariffRate = item.product.tariff.rates['Nepal'] / 100; // This is freshly populated from the get cart above, so tariff will always be up to date value
                 tariffPriceInUSD += Math.round(tariffRate * item.aggregatedPrice.amount * 100) / 100;
+                shoppingCart.items[index].product.tariff = item.product.tariff._id;  // To reset the tariff back to only its id, because that's how it is saved in checkout and order table
             }
 
             // Calculating shipping price

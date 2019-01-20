@@ -1,6 +1,19 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+const Schema = mongoose.Schema;
 import MONGO_COLLECTIONS from '../../../properties/mongoCollections';
+
+let featuredContentSchema = new mongoose.Schema({
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: MONGO_COLLECTIONS.curated_products,
+        required: true
+    },
+    config: {
+        type: {},
+        required: true
+    }
+}, {_id: false})
 
 let featuredSectionsSchema = new mongoose.Schema({
     name: {
@@ -9,7 +22,7 @@ let featuredSectionsSchema = new mongoose.Schema({
         unique: true
     },
     content: {
-        type: {},
+        type: [featuredContentSchema],
         required: true
     }
 });
