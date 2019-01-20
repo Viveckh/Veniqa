@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import notification from '@/services/NotificationService'
+import notification from '@/services/NotificationService';
+
 export default {
   name: 'SearchResultView',
   props: {
@@ -52,18 +53,16 @@ export default {
     async addToCart(product) {
       try {
         const val = await this.$store.dispatch('cartStore/addToTheCart', [product]);
-      if (val) {
-        notification.success(this, `Added ${product.name} to the cart`);
-      }
+        if (val) {
+          notification.success(this, `Added ${product.name} to the cart`);
+        }
       } catch (err) {
-        console.log("Error", err)
+        console.log('Error', err);
         // handle notification for different status here.
         notification.error(this, `${
-            product.name
-          } couldn't be added for some reason. Please try again later`);
+          product.name
+        } couldn't be added for some reason. Please try again later`);
       }
-        
-      
     },
 
     openProductDetail(pid) {

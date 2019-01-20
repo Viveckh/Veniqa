@@ -89,17 +89,17 @@ export default {
       }));
 
       try {
-        const {data} = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
           data: toSend,
         });
 
-        if(data.httpStatus === 200){
+        if (data.httpStatus === 200) {
           commit('setCart', data.responseData);
           return true;
         }
-        else throw new Error(data.httpStatus)
+        throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
       }
@@ -117,10 +117,9 @@ export default {
           method: 'get',
           url: ProxyUrl.getCart,
         });
-        if(data.httpStatus === 200){
+        if (data.httpStatus === 200) {
           commit('setCart', data.responseData);
-        }
-        else throw new Error(data.httpStatus)
+        } else throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
       }
@@ -199,11 +198,10 @@ export default {
           },
         });
 
-        if(data.httpStatus === 200){
+        if (data.httpStatus === 200) {
           commit('setCart', data.responseData);
           return data;
-        }else throw new Error(data.httpStatus);
-       
+        } throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
       }

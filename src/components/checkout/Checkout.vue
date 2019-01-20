@@ -32,70 +32,70 @@
 </template>
 
 <script>
-import ShippingDetail from "@/components/checkout/ShippingDetail.vue";
-import OrderDetail from "@/components/checkout/OrderDetail.vue";
-import PaymentDetail from "@/components/checkout/PaymentDetail";
-import ProxyUrls from "@/constants/ProxyUrls";
-import { mapGetters } from "vuex";
+import ShippingDetail from '@/components/checkout/ShippingDetail.vue';
+import OrderDetail from '@/components/checkout/OrderDetail.vue';
+import PaymentDetail from '@/components/checkout/PaymentDetail';
+import ProxyUrls from '@/constants/ProxyUrls';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "Checkout",
+  name: 'Checkout',
   components: {
     ShippingDetail,
     OrderDetail,
-    PaymentDetail
+    PaymentDetail,
   },
 
   data() {
     return {
       // selectedAddress: {},
-      payment: {}
+      payment: {},
     };
   },
 
   methods: {
     addressSelected(selected) {
-      this.$store.commit("shippingStore/addressSelected", selected);
+      this.$store.commit('shippingStore/addressSelected', selected);
     },
 
     async handleCheckout() {
-      await this.$store.dispatch("cartStore/initiateCheckout", {
+      await this.$store.dispatch('cartStore/initiateCheckout', {
         address: this.selectedAddress,
-        payment: "BKASH"
+        payment: 'BKASH',
       });
     },
 
     async resendEmailConfirmation() {
       try {
         const res = await this.$axios({
-          method: "get",
+          method: 'get',
           url:
-            ProxyUrls.resendEmailConfirmation +
-            this.$store.getters["authStore/getEmail"]
+            ProxyUrls.resendEmailConfirmation
+            + this.$store.getters['authStore/getEmail'],
         });
 
         this.$notify({
-          group: "all",
-          type: "success",
+          group: 'all',
+          type: 'success',
           text:
-            "Confirmation email has been sent to your email address. Please check your email."
+            'Confirmation email has been sent to your email address. Please check your email.',
         });
       } catch (err) {
         this.$notify({
-          group: "all",
-          type: "error",
+          group: 'all',
+          type: 'error',
           text:
-            "There was an error sending out the email. Please try again later"
+            'There was an error sending out the email. Please try again later',
         });
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      selectedAddress: "shippingStore/getSelectedAddress"
-    })
-  }
+      selectedAddress: 'shippingStore/getSelectedAddress',
+    }),
+  },
 };
 </script>
 

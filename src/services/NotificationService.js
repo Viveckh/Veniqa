@@ -1,5 +1,5 @@
 export default {
-  success(context, t){
+  success(context, t) {
     context.$notify({
       group: 'toast',
       type: 'success',
@@ -7,7 +7,7 @@ export default {
     });
   },
 
-  warn(context, t){
+  warn(context, t) {
     context.$notify({
       group: 'toast',
       type: 'warn',
@@ -15,11 +15,11 @@ export default {
     });
   },
 
-  error(context, t){
+  error(context, t) {
     context.$notify({
       group: 'toast',
       type: 'error',
       text: t,
     });
   },
-}
+};

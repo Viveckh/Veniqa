@@ -112,15 +112,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import notification from "@/services/NotificationService";
+import { mapGetters } from 'vuex';
+import notification from '@/services/NotificationService';
+
 export default {
-  name: "OrderDetail",
+  name: 'OrderDetail',
   data() {
     return {
       editMode: true,
       selectedItems: [],
-      countOptions: []
+      countOptions: [],
     };
   },
 
@@ -131,16 +132,16 @@ export default {
   methods: {
     orderPicture(img) {
       return {
-        "background-image": `url(${img})`,
-        width: "100%",
-        height: "70px",
-        "background-size": "contain",
-        "background-repeat": "no-repeat"
+        'background-image': `url(${img})`,
+        width: '100%',
+        height: '70px',
+        'background-size': 'contain',
+        'background-repeat': 'no-repeat',
       };
     },
 
     gotoDealPage() {
-      this.$router.push("/");
+      this.$router.push('/');
     },
 
     async gotoProduct(pid) {
@@ -168,17 +169,17 @@ export default {
       if (item.counts > 0) {
         try {
           this.editMode = false;
-          const data = await this.$store.dispatch("cartStore/updateOrders", [
-            item
+          const data = await this.$store.dispatch('cartStore/updateOrders', [
+            item,
           ]);
-          notification.success(this, "The cart has been successfully updated.");
+          notification.success(this, 'The cart has been successfully updated.');
           this.editMode = true;
         } catch (err) {
           this.editMode = true;
-          console.log("Error", err);
+          console.log('Error', err);
           notification.error(
             this,
-            "Cart could not be updated at the moment. Please try again later."
+            'Cart could not be updated at the moment. Please try again later.',
           );
         }
       }
@@ -186,26 +187,26 @@ export default {
 
     async deleteSelected(item) {
       try {
-        await this.$store.dispatch("cartStore/deleteOrders", [item]);
+        await this.$store.dispatch('cartStore/deleteOrders', [item]);
       } catch (err) {}
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      orders: "cartStore/getCart",
-      cartTotal: "cartStore/getTotal",
-      subtotal: "cartStore/getSubTotal",
-      serviceCharge: "cartStore/getServiceCharge",
-      shippingPrice: "cartStore/getShippingPrice",
-      tariffPrice: "cartStore/getTariffPrice",
-      totalWeight: "cartStore/getTotalWeight"
+      orders: 'cartStore/getCart',
+      cartTotal: 'cartStore/getTotal',
+      subtotal: 'cartStore/getSubTotal',
+      serviceCharge: 'cartStore/getServiceCharge',
+      shippingPrice: 'cartStore/getShippingPrice',
+      tariffPrice: 'cartStore/getTariffPrice',
+      totalWeight: 'cartStore/getTotalWeight',
     }),
 
     quantityState() {
       return qty => qty >= 1;
-    }
-  }
+    },
+  },
 };
 </script>
 

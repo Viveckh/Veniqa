@@ -94,7 +94,7 @@ export default {
     },
   },
   mutations: {
-    setEmailConfirmed(state, val){
+    setEmailConfirmed(state, val) {
       state.emailConfirmed = val;
       localStorage.setItem('emailConfirmed', val);
     },
