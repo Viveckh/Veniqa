@@ -1175,6 +1175,139 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "UI",
+			"item": [
+				{
+					"name": "featured",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"section_identifier\",\n\t\"content\": [\n\t\t{\n\t\t\t\"anything\": \"you want\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/ui/featured",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"featured"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "featured",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/ui/featured?name=section_identifier",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"featured"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "section_identifier"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "featuredList",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/ui/featuredList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"featuredList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "featured",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"section_identifier\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/ui/featured",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"featured"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

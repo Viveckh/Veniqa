@@ -20,9 +20,9 @@ let customizationOptionsSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: (value) => {
-                return value.length > 0 && value.length < 8;
+                return value.length < 8;
             },
-            message: (props) => `Minimum of one and maximum of seven customizations allowed`
+            message: (props) => `Maximum of seven customizations allowed`
         }
     }
 }, {_id: false})
