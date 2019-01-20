@@ -46,12 +46,13 @@ export default {
         url: ProxyUrls.searchProduct,
         method: 'post',
         data: {
-          searchFilters: {
-            // store: this.vendorMap[this.vendorName],
-            // category: 'Women’s Clothes',
-            store: '',
-            category: '',
-          },
+          // searchFilters: {
+          //   // store: this.vendorMap[this.vendorName],
+          //   // category: 'Women’s Clothes',
+          //   store: '',
+          //   category: '',
+          // },
+          searchTerm: searchTerm,
           pagingOptions: {
             page: 1,
             limit: 10,
