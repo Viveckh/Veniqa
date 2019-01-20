@@ -34,6 +34,7 @@ import catalogRouter from './routes/catalog';
 import shoppingRouter from './routes/shopping';
 import userRouter from './routes/user';
 import orderRouter from './routes/orders';
+import uiRouter from './routes/ui';
 
 // Imports for authentication
 import passport from 'passport';
@@ -138,6 +139,7 @@ app.use('/catalog', catalogRouter);
 app.use('/shopping', shoppingRouter);
 app.use('/user', userRouter);
 app.use('/orders', orderRouter);
+app.use('/ui', uiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
