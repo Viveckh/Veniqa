@@ -101,7 +101,8 @@ var limiter = new RateLimit({
     client: redisClient,
     expiry: 60 * 15 // How long each rate limiting window exists for in seconds
   }),
-  max: 50, // limit each IP to 50 requests per windowMs
+  windowMs: 60 * 1000, // 1 minute window in milliseconds
+  max: 200, // limit each IP to 200 requests per windowMs
   delayMs: 0,  // disable delaying - full speed until the max limit is reached
   statusCode: 429
 })
