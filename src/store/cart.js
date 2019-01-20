@@ -14,23 +14,15 @@ export default {
     tariffPrice: {},
   },
   actions: {
-    async initiateCheckout({ state, commit }, { address, payment }) {
+    async createCheckout({ state, commit }, { address, shippingMethod }) {
       const reqData = {
-        cart: {
-          items: state.cart,
-          totalWeight: state.totalWeight,
-          subTotalPrice: state.subTotalPrice,
-          serviceCharge: state.serviceCharge,
-          shippingPrice: state.shippingPrice,
-          tariffPrice: state.tariffPrice,
-          totalPrice: state.totalPrice,
-        },
+        shippingMethod: shippingMethod._id,
         addressId: address._id,
-	      paymentSource: payment,
+	      // paymentSource: payment,
       };
       try {
         const res = await Vue.prototype.$axios({
-          url: ProxyUrl.initiateCheckout,
+          url: ProxyUrl.createCheckout,
           method: 'post',
           data: reqData,
         });
