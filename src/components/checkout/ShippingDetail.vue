@@ -31,9 +31,14 @@
     </div>
 
     <!-- Show list of existing addresses here with choice to choose -->
-    <a @click="showAddAddress()">
+    <a @click="showAddAddress()" v-if="isSessionActive">
       <font-awesome-icon icon="plus"/>&nbsp;&nbsp; Add a new address
     </a>
+    <div v-else>
+      <div class="empty-info">
+        <p>Nothing to display</p>
+      </div>
+    </div>
 
     <!-- Input form to add new address for the user -->
     <transition
@@ -240,8 +245,9 @@ export default {
       description: '',
       isUpdate: false,
       countryOptions: [
-        'Bangladesh'
-      ]
+        'Bangladesh',
+        'Nepal',
+      ],
     };
   },
 
@@ -323,6 +329,7 @@ export default {
     ...mapGetters({
       allAddresses: 'shippingStore/allAddresses',
       selectedAddress: 'shippingStore/getSelectedAddress',
+      isSessionActive: 'authStore/isSessionActive',
     }),
 
     cityState() {

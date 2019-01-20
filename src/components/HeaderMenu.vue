@@ -1,6 +1,11 @@
 <template>
-  <div >
-    <b-navbar toggleable="md" :type="navType()" fixed="top" :class="{'header-color': this.scrollPos > 50}">
+  <div>
+    <b-navbar
+      toggleable="md"
+      :type="navType()"
+      fixed="top"
+      :class="{'header-color': this.scrollPos > 50}"
+    >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand class="abs">
@@ -64,6 +69,7 @@ export default {
         });
 
         this.$store.commit('cartStore/resetOrders');
+        this.$store.commit('shippingStore/resetAddresses');
       } catch (err) {
         this.$notify({
           group: 'all',
@@ -103,7 +109,7 @@ export default {
 <style lang="scss">
 @import "../assets/css/global.scss";
 
-.header-color{
+.header-color {
   background-color: $pitch-black;
   color: white !important;
 }

@@ -39,43 +39,61 @@
     <div class="total-line" v-if="orders && orders.length > 0">
       <b-row>
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
+          <strong>Total Weight</strong>
+        </b-col>
+        <b-col
+          class="align-right"
+        >{{parseFloat(totalWeight.quantity).toFixed(2)}} {{totalWeight.unit}}</b-col>
+      </b-row>
+
+      <b-row>
+        <!-- <hr> -->
+        <b-col cols="8" class="align-right">
           <strong>Sub Total</strong>
         </b-col>
         <b-col class="align-right">{{subtotal.currency}} {{parseFloat(subtotal.amount).toFixed(2)}}</b-col>
       </b-row>
 
-      <b-row>
+      <b-row v-if="serviceCharge">
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
           <strong>Service Charge</strong>
         </b-col>
-        <b-col class="align-right">{{serviceCharge.currency}} {{parseFloat(serviceCharge.amount).toFixed(2)}}</b-col>
+        <b-col
+          class="align-right"
+        >{{serviceCharge.currency}} {{parseFloat(serviceCharge.amount).toFixed(2)}}</b-col>
       </b-row>
 
-      <b-row>
+      <b-row v-if="shippingPrice">
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
           <strong>Shipping Charge</strong>
         </b-col>
-        <b-col class="align-right">{{shippingPrice.currency}} {{parseFloat(shippingPrice.amount).toFixed(2)}}</b-col>
+        <b-col
+          class="align-right"
+        >{{shippingPrice.currency}} {{parseFloat(shippingPrice.amount).toFixed(2)}}</b-col>
       </b-row>
 
-      <b-row>
+      <b-row v-if="tariffPrice">
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
           <strong>Tariff Charge</strong>
         </b-col>
-        <b-col class="align-right">{{tariffPrice.currency}} {{parseFloat(tariffPrice.amount).toFixed(2)}}</b-col>
+        <b-col
+          class="align-right"
+        >{{tariffPrice.currency}} {{parseFloat(tariffPrice.amount).toFixed(2)}}</b-col>
       </b-row>
 
       <br>
-      <b-row>
+      <b-row v-if="cartTotal">
         <!-- <hr> -->
-        <b-col cols="8">
+        <b-col cols="8" class="align-right">
           <strong>Total</strong>
         </b-col>
-        <b-col class="align-right"><strong>{{cartTotal.currency}} {{parseFloat(cartTotal.amount).toFixed(2)}}</strong></b-col>
+        <b-col class="align-right">
+          <strong>{{cartTotal.currency}} {{parseFloat(cartTotal.amount).toFixed(2)}}</strong>
+        </b-col>
       </b-row>
     </div>
 
@@ -93,6 +111,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import notification from '@/services/NotificationService';
 
 export default {
   name: 'OrderDetail',
@@ -151,15 +170,15 @@ export default {
           const data = await this.$store.dispatch('cartStore/updateOrders', [
             item,
           ]);
+          notification.success(this, 'The cart has been successfully updated.');
           this.editMode = true;
         } catch (err) {
           this.editMode = true;
-          this.$notify({
-            group: 'all',
-            type: 'error',
-            text:
-              'Cart could not be updated at the moment. Please try again later.',
-          });
+          console.log('Error', err);
+          notification.error(
+            this,
+            'Cart could not be updated at the moment. Please try again later.',
+          );
         }
       }
     },
@@ -179,6 +198,7 @@ export default {
       serviceCharge: 'cartStore/getServiceCharge',
       shippingPrice: 'cartStore/getShippingPrice',
       tariffPrice: 'cartStore/getTariffPrice',
+      totalWeight: 'cartStore/getTotalWeight',
     }),
 
     quantityState() {

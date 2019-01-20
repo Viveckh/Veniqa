@@ -7,6 +7,7 @@ export default {
   state: {
     addresses: [],
     selectedAddress: null,
+    shippingMethod: null,
   },
 
   mutations: {
@@ -18,10 +19,29 @@ export default {
     addressSelected(state, address) {
       state.selectedAddress = address;
     },
+
+    setShippingMethod(state, payload) {
+      state.shippingMethod = payload;
+    },
+
+    resetAddresses(state) {
+      state.shippingMethod = null;
+      state.addresses = [];
+      state.selectedAddress = null;
+    },
   },
 
   actions: {
-    async addressAction({ state, commit }, { address, action }) {
+    async addressAction({
+      state,
+      commit,
+      getters,
+      rootGetters,
+      dispatch,
+    }, {
+      address,
+      action,
+    }) {
       try {
         let reqData = null;
         if (action == 'post' || action == 'put') {
@@ -31,12 +51,27 @@ export default {
             addressId: address._id,
           };
         }
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           method: action,
           url: ProxyUrls.address, // ProxyUrls.addressUrl,
           data: reqData,
         });
-        commit('setAddresses', data.responseData);
+        if (rootGetters['cartStore/checkoutInitiated'] && action != 'get') {
+          const reqObj = {
+            address: state.selectedAddress,
+            shippingMethod: state.shippingMethod,
+          };
+          await dispatch('cartStore/createCheckout', reqObj, {
+            root: true,
+          });
+        } else {
+          commit('setAddresses', data.responseData);
+          if (action == 'get' && state.selectedAddress == null && state.addresses.length > 0) {
+            commit('addressSelected', state.addresses[0]);
+          }
+        }
         return true;
       } catch (err) {
         return false;
@@ -51,6 +86,16 @@ export default {
       return state.addresses;
     },
 
-    getSelectedAddress(state) { return state.selectedAddress; },
+    getSelectedAddress(state) {
+      return state.selectedAddress;
+    },
+
+    shippingMethod(state) {
+      return state.shippingMethod;
+    },
+
+    shippingMethods(state) {
+      return state.shippingMethods;
+    },
   },
 };

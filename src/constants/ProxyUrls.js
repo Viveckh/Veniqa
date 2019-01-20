@@ -24,5 +24,5 @@ export default {
   // Addresses
   address: '/user/address',
 
-  initiateCheckout: 'orders/initiateCheckout',
+  createCheckout: 'orders/createCheckout',
 };

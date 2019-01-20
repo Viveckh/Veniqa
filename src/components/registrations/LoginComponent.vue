@@ -26,7 +26,7 @@
 
     <b-form-group>
       <b-form-input
-      v-if="!forgotEnabled"
+        v-if="!forgotEnabled"
         type="password"
         name="password"
         v-model="password"
@@ -44,8 +44,6 @@
 
     <p class="register-class" @click="register()">New User? Register here.</p>
     <div class="modal-bottom"></div>
-
-
   </div>
 </template>
 
@@ -94,13 +92,15 @@ export default {
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'The email was just sent. Please check your email and follow the instructions.',
+            text:
+              'The email was just sent. Please check your email and follow the instructions.',
           });
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'The email could not be sent right now. Please try again later',
+            text:
+              'The email could not be sent right now. Please try again later',
           });
         }
       }
@@ -128,8 +128,8 @@ export default {
 .header {
   // margin: 50px 0px;
   color: #267871;
-  
-  h2{
+
+  h2 {
     margin-bottom: 1em;
   }
 }

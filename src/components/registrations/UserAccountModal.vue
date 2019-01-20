@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row class="account-all">
-      <b-col md="5"  class="account-cols">
+      <b-col md="5" class="account-cols">
         <div class="account-table">
           <div class="account-body">
             <div class="account-content image">
@@ -72,7 +72,6 @@ export default {
       try {
         this.$store.commit('loaderStore/setLoader');
         const data = await this.$store.dispatch('authStore/login', userInfo);
-
         if (data.cart && data.cart.items.length > 0) {
           const incomingProductIds = _.map(data.cart, 'product_id');
           // Update the cart values.
@@ -88,9 +87,10 @@ export default {
               });
             }
           });
-
           if (toAdd.length > 0) {
             this.$store.dispatch('cartStore/addToTheCart', toAdd);
+          } else {
+            this.$store.dispatch('cartStore/getCart');
           }
         }
         this.$emit('loginSuccess');
@@ -170,7 +170,7 @@ export default {
 .account-all {
   height: 100vh;
 
-  .account-cols{
+  .account-cols {
     padding-left: 0;
     padding-right: 0;
   }
