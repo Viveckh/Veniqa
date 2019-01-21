@@ -6,6 +6,7 @@ import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
 import AdminPage from '@/components/adminpage/adminPage.vue';
 import TariffPage from '@/components/tariffpage/tariffpage.vue';
+import CategoryPage from '@/components/categorypage/categorypage.vue';
 import Featured from '@/views/Featured';
 import OrdersMainPage from '@/components/orders/OrdersMainPage';
 import OrdersComponent from '@/views/OrderView';
@@ -18,137 +19,143 @@ Vue.use(Router);
 const router = new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
+    path: '/',
+    component: Home,
+    meta: {
+      requiresAuth: true,
+    },
+    children: [{
       path: '/',
-      component: Home,
+      component: MainPage,
+    },
+    {
+      path: 'catalog',
+      name: 'catalog',
+      component: MainPage,
+    },
+
+    {
+      path: 'adminsetting',
+      name: 'adminsetting',
+      component: AdminPage,
       meta: {
-        requiresAuth: true,
+        SUPERADMIN: true,
       },
-      children: [
-        {
-          path: '/',
-          component: MainPage,
-        },
-        {
-          path: 'catalog',
-          name: 'catalog',
-          component: MainPage,
-        },
+    },
 
-        {
-          path: 'adminsetting',
-          name: 'adminsetting',
-          component: AdminPage,
-          meta: {
-            SUPERADMIN: true,
-          },
-        },
+    {
+      path: 'tariffsetting',
+      name: 'tariffsetting',
+      component: TariffPage,
+      meta: {
+        SUPERADMIN: true,
+      },
+    },
 
-        {
-          path: 'tariffsetting',
-          name: 'tariffetting',
-          component: TariffPage,
-          meta: {
-            SUPERADMIN: true,
-          },
-        },
+    {
+      path: 'categorysetting',
+      name: 'categorysetting',
+      component: CategoryPage,
+      meta: {
+        SUPERADMIN: true,
+      },
+    },
 
-        {
-          path: '/orders',
-          component: OrdersComponent,
-          meta: {
-            // Doing a basic route level permission.
-            ORDER_VIEW: true,
-            ORDER_MANAGE: true,
-          },
-          children: [
-            {
-              path: '/',
-              component: OrdersMainPage,
-            },
-            {
-              path: 'orderdetail',
-              name: 'orderdetail',
-              component: OrderDetail,
-            },
-          ],
-        },
-
-        {
-          path: 'featured',
-          name: 'featured',
-          component: Featured,
-          meta: {
-            SUPERADMIN: true,
-          },
-        },
-
-        {
-          path: 'about',
-          name: 'about',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
-        },
-        {
-          path: 'faqs',
-          name: 'faqs',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '@/views/FAQs.vue'),
-          meta: {
-            requiresAuth: true,
-          },
-        },
-        {
-          path: 'contact',
-          name: 'contact',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
-          meta: {
-            requiresAuth: true,
-          },
-        },
-        {
-          path: 'vendor/:vendorName',
-          props: true,
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
-        },
-        {
-          path: 'checkout',
-          component: Checkout,
-        },
-
+    {
+      path: '/orders',
+      component: OrdersComponent,
+      meta: {
+        // Doing a basic route level permission.
+        ORDER_VIEW: true,
+        ORDER_MANAGE: true,
+      },
+      children: [{
+        path: '/',
+        component: OrdersMainPage,
+      },
+      {
+        path: 'orderdetail',
+        name: 'orderdetail',
+        component: OrderDetail,
+      },
       ],
     },
 
     {
-      path: '/email-confirmation/:token',
+      path: 'featured',
+      name: 'featured',
+      component: Featured,
+      meta: {
+        SUPERADMIN: true,
+      },
+    },
+
+    {
+      path: 'about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+    },
+    {
+      path: 'faqs',
+      name: 'faqs',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '@/views/FAQs.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: 'contact',
+      name: 'contact',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: 'vendor/:vendorName',
       props: true,
-      component: () => import('@/views/EmailConfirmation.vue'),
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
     },
     {
-      path: '/password-reset/:token',
-      props: true,
-      component: () => import('@/views/PasswordConfirmation.vue'),
+      path: 'checkout',
+      component: Checkout,
     },
-    {
-      path: '/login',
-      component: Login,
-    },
-    {
-      path: '*',
-      name: 'PageNotFound',
-      component: PageNotFound,
-    },
+
+    ],
+  },
+
+  {
+    path: '/email-confirmation/:token',
+    props: true,
+    component: () => import('@/views/EmailConfirmation.vue'),
+  },
+  {
+    path: '/password-reset/:token',
+    props: true,
+    component: () => import('@/views/PasswordConfirmation.vue'),
+  },
+  {
+    path: '/login',
+    component: Login,
+  },
+  {
+    path: '*',
+    name: 'PageNotFound',
+    component: PageNotFound,
+  },
   ],
 });
 

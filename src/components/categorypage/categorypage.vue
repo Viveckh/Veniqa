@@ -6,7 +6,7 @@
           <header class="card-header">
             <div class="row">
               <div class="col-3">
-                <h4 class="card-title mt-2">Tariffs</h4>
+                <h4 class="card-title mt-2">Categories</h4>
               </div>
 
               <div class="col-9 align-right">
@@ -15,34 +15,33 @@
                   type="button"
                   class="au-btn au-btn-icon au-btn--green"
                   @click="handleAddButtonClick()"
-                >+ Add Tariff</button>
+                >+ Add Category</button>
               </div>
             </div>
           </header>
           <article class="card-body">
-            <input class="form-control" v-model="query" type="text" placeholder="Search Tariffs">
+            <input class="form-control" v-model="query" type="text" placeholder="Search Categories">
             <table class="table table-striped" id="content_loop">
               <thead>
                 <tr>
-                  <th>Tariff Type</th>
-                  <th>Nepal Rate</th>
-                  <th>Bangladesh Rate</th>
+                  <th>Category</th>
+                  <th>Subcategory</th>
+
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  v-for="(tariff, index) in tariffs"
-                  v-if="tariffs.length > 0 && tariff.name.toUpperCase().includes(query.toUpperCase())"
+                  v-for="(category, index) in categorys"
+                  v-if="categorys.length > 0 && (category.category.toUpperCase().includes(query.toUpperCase()) || category.subcategory.toUpperCase().includes(query.toUpperCase()))"
                   v-bind:key="index"
                 >
-                  <td>{{tariff.name}}</td>
-                  <td>{{tariff.rates.Nepal}}%</td>
-                  <td>{{tariff.rates.Bangladesh}}%</td>
+                  <td>{{category.category}}</td>
+                  <td>{{category.subcategory}}</td>
 
                   <td>
                     &nbsp;
-                    <a @click="editTariff(tariff)">
+                    <a @click="editCategory(category)">
                       <i class="fa fa-edit" style="color:green"></i>
                     </a>
                   </td>
@@ -57,46 +56,30 @@
       <div div v-if="this.viewOperation" class="col-md-6">
         <div class="card">
           <header class="card-header">
-            <h4 v-if="!this.isAddView" class="card-title mt-2">Edit Tariff</h4>
-            <h4 v-else class="card-title mt-2">Add Tariff</h4>
+            <h4 v-if="!this.isAddView" class="card-title mt-2">Edit Category</h4>
+            <h4 v-else class="card-title mt-2">Add Category</h4>
           </header>
           <article class="card-body">
             <div>
               <div class="form-row">
                 <div class="col form-group">
-                  <label>Tariff Type</label>
-                  <input
-                    v-if="!this.isAddView"
-                    type="text"
-                    class="form-control"
-                    v-model="tariff.name"
-                  >
-                  <input v-else type="text" class="form-control" v-model="tariff.name">
+                  <label>Category Type</label>
+                  <autocomplete-vue
+                    :list="autocompleteCategorys"
+                    inputClass="form-control"
+                    v-model="category.category"
+                    required="true"
+                  ></autocomplete-vue>
                 </div>
                 <div class="col form-group">
-                  <label>Nepal Rate</label>
+                  <label>Subcategory</label>
                   <input
                     v-if="!this.isAddView"
-                    type="number"
                     class="form-control"
-                    v-model="tariff.rates.Nepal"
+                    v-model="category.subcategory"
+                    required
                   >
-                  <input v-else type="number" class="form-control" v-model="tariff.rates.Nepal">
-                </div>
-                <div class="col form-group">
-                  <label>Bangladesh Rate</label>
-                  <input
-                    v-if="!this.isAddView"
-                    type="number"
-                    class="form-control"
-                    v-model="tariff.rates.Bangladesh"
-                  >
-                  <input
-                    v-else
-                    type="number"
-                    class="form-control"
-                    v-model="tariff.rates.Bangladesh"
-                  >
+                  <input v-else class="form-control" v-model="category.subcategory" required>
                 </div>
               </div>
 
@@ -105,15 +88,15 @@
                 <button
                   v-if="!this.isAddView"
                   type="button"
-                  @click="handleEditTariff()"
+                  @click="handleEditCategory()"
                   class="au-btn au-btn-icon au-btn--green"
-                >Edit Tariff</button>
+                >Edit Category</button>
                 <button
                   v-else
                   type="button"
-                  @click="handleAddTariff()"
+                  @click="handleAddCategory()"
                   class="au-btn au-btn-icon au-btn--green"
-                >Add Tariff</button>
+                >Add Category</button>
                 &nbsp;
                 <button
                   type="button"
@@ -137,14 +120,12 @@
 <script>
 export default {
   components: {},
+
   data() {
     return {
-      tariff: {
-        name: '',
-        rates: {
-          Nepal: 0,
-          Bangladesh: 0,
-        },
+      category: {
+        category: '',
+        subcategory: '',
       },
       isAddView: true,
       viewOperation: false,
@@ -152,19 +133,27 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch('tariffStore/getTariffs');
+    await this.$store.dispatch('categoryStore/getCategorys');
   },
   computed: {
-    tariffs() {
-      return this.$store.getters['tariffStore/gettariffs'];
+    categorys() {
+      return this.$store.getters['categoryStore/getcategorys'];
+    },
+    autocompleteCategorys() {
+      const yourarray = this.$store.getters['categoryStore/getcategorys'];
+
+      // Extract categories, get unique ones, and map it to {name:'123'} format
+      return _.uniqBy(_.map(yourarray, 'category')).map(item => ({
+        name: item,
+      }));
     },
   },
   methods: {
-    editTariff(tariffData) {
+    editCategory(categoryData) {
       this.viewOperation = true;
-      this.tariff = _.cloneDeep(tariffData);
+      this.category = _.cloneDeep(categoryData);
       this.isAddView = false;
-      console.log(this.tariff);
+      console.log(this.category);
     },
     handleAddButtonClick() {
       this.viewOperation = true;
@@ -172,17 +161,11 @@ export default {
     handleCancel() {
       this.isAddView = true;
       this.viewOperation = false;
-      this.tariff = {
-        name: '',
-        rates: {
-          Nepal: 0,
-          Bangladesh: 0,
-        },
-      };
+      this.category = { category: '', subcategory: '' };
     },
-    async handleAddTariff() {
+    async handleAddCategory() {
       try {
-        await this.$store.dispatch('tariffStore/addTariff', this.tariff);
+        await this.$store.dispatch('categoryStore/addCategory', this.category);
         this.$notify({
           group: 'all',
           type: 'success',
@@ -190,24 +173,18 @@ export default {
         });
         this.isAddView = true;
         this.viewOperation = false;
-        this.tariff = {
-          name: '',
-          rates: {
-            Nepal: 0,
-            Bangladesh: 0,
-          },
-        };
+        this.category = { category: '', subcategory: '' };
       } catch (err) {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error adding/editing Tariff',
+          text: 'There was an error adding/editing Category',
         });
       }
     },
-    async handleEditTariff() {
+    async handleEditCategory() {
       try {
-        await this.$store.dispatch('tariffStore/editTariff', this.tariff);
+        await this.$store.dispatch('categoryStore/editCategory', this.category);
         this.$notify({
           group: 'all',
           type: 'success',
@@ -215,13 +192,7 @@ export default {
         });
         this.isAddView = true;
         this.viewOperation = false;
-        this.tariff = {
-          name: '',
-          rates: {
-            Nepal: 0,
-            Bangladesh: 0,
-          },
-        };
+        this.category = { category: '', subcategory: '' };
       } catch (err) {
         this.$notify({
           group: 'all',

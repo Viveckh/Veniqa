@@ -57,4 +57,11 @@ export default {
   deleteComment: '/orders/deleteComment',
   putComment: '/orders/editComment',
 
+
+  // Categories
+  allCategories: '/referenceData/productCategoryList',
+  editCategory: '/referenceData/productCategory',
+  addCategory: '/referenceData/productCategory',
+
+
 };

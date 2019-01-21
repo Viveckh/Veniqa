@@ -213,7 +213,14 @@
             </tbody>
           </table>
 
-          <b-modal v-model="showAttributes" centered id="modal1" title="Add Attributes" hide-footer>
+          <b-modal
+            v-model="showAttributes"
+            centered
+            id="modal1"
+            title="Add Attributes"
+            hide-footer
+            size="sm"
+          >
             <custom-attributes
               :propValue="product.customizationOptions.customizations"
               @cancel="cancelAttribModal"
@@ -606,7 +613,8 @@ export default {
         && this.priceState
         && this.itemurlState
         && this.weightState
-        && this.unitState && this.tariffState
+        && this.unitState
+        && this.tariffState
       );
     },
 

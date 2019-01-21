@@ -1,5 +1,3 @@
-
-
 /*------------------------------------------------------------------
 [Master Stylesheet]
 
@@ -65,7 +63,8 @@ textarea:focus {
     outline: none;
 }
 
-input, textarea {
+input,
+textarea {
     border: none;
 }
 
@@ -356,7 +355,7 @@ section {
     margin-right: 8px;
 }
 
-.login-checkbox > label > a {
+.login-checkbox>label>a {
     color: #ff2e44;
 }
 
@@ -396,7 +395,7 @@ section {
     font-size: 14px;
 }
 
-.register-link > p > a {
+.register-link>p>a {
     color: #ff2e44;
 }
 
@@ -841,7 +840,7 @@ section {
     background: #3868cd;
 }
 
-.au-btn--submit > i {
+.au-btn--submit>i {
     font-size: 20px;
     color: #fff;
     position: absolute;
@@ -951,7 +950,7 @@ section {
 .rs-select2--light .select2-container--open .select2-dropdown,
 .rs-select2--trans .select2-container--open .select2-dropdown {
     font-size: 14px;
-    box-shadow: 0px 2px 15px 3px rgba(0,0,0,0.1);
+    box-shadow: 0px 2px 15px 3px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -960,7 +959,7 @@ section {
     overflow: hidden;
 }
 
-.rs-select2--dark .select2-container--open .select2-dropdown .select2-results__option ,
+.rs-select2--dark .select2-container--open .select2-dropdown .select2-results__option,
 .rs-select2--trans .select2-container--open .select2-dropdown .select2-results__option,
 .rs-select2--light .select2-container--open .select2-dropdown .select2-results__option {
     padding: 8px 16px;
@@ -974,7 +973,7 @@ section {
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
- }
+}
 
 .rs-select2--border .select2-container--default .select2-selection--single,
 
@@ -1107,11 +1106,11 @@ section {
     border-radius: 2px;
 }
 
-.au-checkbox:hover input ~ .au-checkmark {
+.au-checkbox:hover input~.au-checkmark {
     background-color: transparent;
 }
 
-.au-checkbox input:checked ~ .au-checkmark {
+.au-checkbox input:checked~.au-checkmark {
     background-color: transparent;
 }
 
@@ -1121,7 +1120,7 @@ section {
     display: none;
 }
 
-.au-checkbox input:checked ~ .au-checkmark:after {
+.au-checkbox input:checked~.au-checkmark:after {
     display: block;
 }
 
@@ -1157,7 +1156,8 @@ section {
     border-left: 0;
 }
 
-.input-group-addon, .input-group-btn {
+.input-group-addon,
+.input-group-btn {
     white-space: nowrap;
     vertical-align: middle;
 }
@@ -1250,7 +1250,7 @@ section {
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-    .header-wrap .account-item > .content {
+    .header-wrap .account-item>.content {
         display: none;
     }
 }
@@ -1412,23 +1412,23 @@ section {
     border-radius: 3px;
 }
 
-.account-item .image > img {
+.account-item .image>img {
     width: 100%;
 }
 
-.account-item > .content {
+.account-item>.content {
     margin-left: 45px;
     padding: 9px 0;
     padding-left: 12px;
 }
 
-.account-item > .content > a {
+.account-item>.content>a {
     color: #333;
     text-transform: capitalize;
     font-weight: 500;
 }
 
-.account-item > .content > a:after {
+.account-item>.content>a:after {
     font-family: "Material-Design-Iconic-Font";
     font-weight: 500;
     content: '\f2f9';
@@ -1437,7 +1437,7 @@ section {
     margin-left: 5px;
 }
 
-.account-item > .content > a:hover {
+.account-item>.content>a:hover {
     color: #666;
 }
 
@@ -1641,7 +1641,7 @@ section {
     color: #3B4A55;
 }
 
-.navbar-sidebar .navbar__list li.active > a {
+.navbar-sidebar .navbar__list li.active>a {
     color: #3B4A55;
 }
 
@@ -1739,7 +1739,7 @@ section {
     background: #f8f8f8;
 }
 
-.header-mobile .navbar-mobile .navbar-mobile__list > li > a {
+.header-mobile .navbar-mobile .navbar-mobile__list>li>a {
     padding-left: 15px !important;
 }
 
@@ -1758,11 +1758,11 @@ section {
     color: #3B4A55;
 }
 
-.header-mobile .navbar-mobile .navbar-mobile__list li a > i {
+.header-mobile .navbar-mobile .navbar-mobile__list li a>i {
     margin-right: 19px;
 }
 
-.header-mobile .navbar-mobile .navbar-mobile__list li.has-dropdown > a:after {
+.header-mobile .navbar-mobile .navbar-mobile__list li.has-dropdown>a:after {
     content: '\f105';
     font-family: FontAwesome, cursive;
     float: right;
@@ -1774,7 +1774,7 @@ section {
     transition: all 0.3s ease;
 }
 
-.header-mobile .navbar-mobile .navbar-mobile__list li.has-dropdown > a.active::after {
+.header-mobile .navbar-mobile .navbar-mobile__list li.has-dropdown>a.active::after {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
@@ -1857,7 +1857,10 @@ section {
     transform: translate3d(0, -12px, 0) rotate(-90deg);
 }
 
-.mess-dropdown, .email-dropdown, .notifi-dropdown, .setting-dropdown {
+.mess-dropdown,
+.email-dropdown,
+.notifi-dropdown,
+.setting-dropdown {
     position: absolute;
     z-index: 9999;
     min-width: 340px;
@@ -1884,7 +1887,10 @@ section {
     left: 0;
 }
 
-.mess-dropdown:before, .email-dropdown:before, .notifi-dropdown:before, .setting-dropdown:before {
+.mess-dropdown:before,
+.email-dropdown:before,
+.notifi-dropdown:before,
+.setting-dropdown:before {
     content: '';
     display: block;
     width: 19px;
@@ -1899,13 +1905,17 @@ section {
     z-index: 3;
 }
 
-.mess__title, .email__title, .notifi__title {
+.mess__title,
+.email__title,
+.notifi__title {
     padding: 22px;
     border-bottom: 1px solid #f2f2f2;
     cursor: default;
 }
 
-.mess__title p, .email__title p, .notifi__title p {
+.mess__title p,
+.email__title p,
+.notifi__title p {
     line-height: -webkit-calc(29/14);
     line-height: -moz-calc(29/14);
     line-height: calc(29/14);
@@ -1913,7 +1923,9 @@ section {
     color: #808080;
 }
 
-.mess__footer a, .email__footer a, .notifi__footer a {
+.mess__footer a,
+.email__footer a,
+.notifi__footer a {
     display: block;
     text-transform: capitalize;
     text-align: center;
@@ -1922,7 +1934,9 @@ section {
     padding: 24px 0;
 }
 
-.mess__footer a:hover, .email__footer a:hover, .notifi__footer a:hover {
+.mess__footer a:hover,
+.email__footer a:hover,
+.notifi__footer a:hover {
     color: #3868cd;
 }
 
@@ -2123,7 +2137,6 @@ section {
     -o-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    z-index: 1000;
 }
 
 .menu-sidebar2 .logo {
@@ -2181,7 +2194,7 @@ section {
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    border-bottom: 1px  solid #f2f2f2;
+
 }
 
 .account2 .name {
@@ -2192,12 +2205,12 @@ section {
     margin-bottom: 5px;
 }
 
-.account2 > a {
+.account2>a {
     font-size: 14px;
     color: #999;
 }
 
-.account2 > a:hover {
+.account2>a:hover {
     color: #666;
 }
 
@@ -2205,8 +2218,9 @@ section {
     height: -webkit-calc(100vh - 75px);
     height: -moz-calc(100vh - 75px);
     height: calc(100vh - 75px);
-    border-right: 1px solid #e5e5e5;
     position: relative;
+    background-color: #212F3C;
+    color: #fff;
 }
 
 .navbar-sidebar2 .navbar__list li {
@@ -2242,23 +2256,23 @@ section {
     color: #999;
 }
 
-.navbar-sidebar2 .navbar__list li:hover > a {
-    color: #3B4A55;
+.navbar-sidebar2 .navbar__list li:hover>a {
+    color: #3498DB;
 }
 
 .navbar-sidebar2 .navbar__list li a {
     font-size: 16px;
-    color: #555;
+    color: #fff;
     display: block;
     padding: 18px 35px;
-    border-bottom: 1px solid #f2f2f2;
+    border-bottom: 1px solid #34495E;
 }
 
-.navbar-sidebar2 .navbar__list li a > i {
+.navbar-sidebar2 .navbar__list li a>i {
     margin-right: 20px;
 }
 
-.navbar-sidebar2 .navbar__list li.active > a {
+.navbar-sidebar2 .navbar__list li.active>a {
     color: #3B4A55;
 }
 
@@ -2297,7 +2311,7 @@ section {
 
 .header-desktop2 {
     height: 75px;
-    background: #212F3C;
+    background-color: #ffffff;
     position: fixed;
     z-index: 1001;
     top: 0;
@@ -2425,7 +2439,7 @@ section {
 
 .header-button-item {
     font-size: 30px;
-    color: #fff;
+    color: #212529;
     margin-right: 34px;
     position: relative;
     display: -webkit-box;
@@ -2447,11 +2461,11 @@ section {
     }
 }
 
-.has-noti > i {
+.has-noti>i {
     position: relative;
 }
 
-.has-noti > i:after {
+.has-noti>i:after {
     content: '';
     height: 8px;
     width: 8px;
@@ -2730,11 +2744,11 @@ section {
     }
 }
 
-.header__navbar ul li.active > a {
+.header__navbar ul li.active>a {
     color: #3B4A55;
 }
 
-.header__navbar ul li.active > a .bot-line {
+.header__navbar ul li.active>a .bot-line {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -2751,7 +2765,7 @@ section {
     display: block;
 }
 
-.header__navbar li.has-sub:hover > .header3-sub-list {
+.header__navbar li.has-sub:hover>.header3-sub-list {
     opacity: 1;
     -webkit-transform: scaleY(1);
     -moz-transform: scaleY(1);
@@ -2842,7 +2856,7 @@ section {
 }
 
 @media (max-width: 1315px) and (min-width: 992px) {
-    .header__tool .account-item > .content {
+    .header__tool .account-item>.content {
         display: none;
     }
 }
@@ -3016,13 +3030,13 @@ section {
 }
 
 @media (max-width: 1315px) and (min-width: 992px) {
-    .header4-wrap .header__tool .account-item > .content {
+    .header4-wrap .header__tool .account-item>.content {
         display: block;
     }
 }
 
 @media (max-width: 991px) {
-    .header4-wrap .header__tool .account-item > .content {
+    .header4-wrap .header__tool .account-item>.content {
         display: none;
     }
 }
@@ -3039,12 +3053,12 @@ section {
     padding-right: 20px;
 }
 
-.navbar-sidebar3 .navbar__list li.active > a {
+.navbar-sidebar3 .navbar__list li.active>a {
     background: #3B4A55;
     color: #fff;
 }
 
-.navbar-sidebar3 .navbar__list li.active > a > .arrow > i {
+.navbar-sidebar3 .navbar__list li.active>a>.arrow>i {
     color: #fff;
 }
 
@@ -3070,7 +3084,7 @@ section {
     padding: 11.5px 27px;
 }
 
-.navbar-sidebar3 .has-sub.open > a {
+.navbar-sidebar3 .has-sub.open>a {
     background: #fff;
     border: 1px solid #e5e5e5;
 }
@@ -3858,7 +3872,7 @@ section {
 }
 
 .task-progress {
-    border: 1px solid  #e5e5e5;
+    border: 1px solid #e5e5e5;
     background: #fff;
     padding: 40px;
     padding-top: 42px;
@@ -3973,7 +3987,8 @@ section {
     padding-right: 60px;
 }
 
-.recent-report3, .chart-percent-3 {
+.recent-report3,
+.chart-percent-3 {
     background: #fff;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 2px;
@@ -4158,7 +4173,9 @@ section {
     padding-top: 22px;
 }
 
-.statistic-chart-1, .top-campaign, .chart-percent-2 {
+.statistic-chart-1,
+.top-campaign,
+.chart-percent-2 {
     background: #fff;
     padding: 0 40px;
     padding-top: 45px;
@@ -4575,11 +4592,11 @@ section {
     margin-bottom: 28px;
 }
 
-.table-data__tool .table-data__tool-left > div {
+.table-data__tool .table-data__tool-left>div {
     margin-right: 12px;
 }
 
-.table-data__tool .table-data__tool-right > button {
+.table-data__tool .table-data__tool-right>button {
     margin-right: 12px;
 }
 
@@ -4598,7 +4615,7 @@ section {
         margin-top: 10px;
     }
 
-    .table-data__tool .table-data__tool-right > button {
+    .table-data__tool .table-data__tool-right>button {
         margin-right: 0;
         margin-bottom: 10px;
     }
@@ -4819,7 +4836,7 @@ section {
         order: 2;
     }
 
-    .au-breadcrumb-content > button {
+    .au-breadcrumb-content>button {
         margin-bottom: 15px;
     }
 }
@@ -4958,7 +4975,7 @@ section {
 
 /* ----- Statistic ----- */
 .statistic {
-    padding-top: 57px;
+    padding-top: 0px;
 }
 
 .statistic__item {
@@ -4966,9 +4983,8 @@ section {
     background: #fff;
     padding: 20px 30px;
     position: relative;
-    min-height: 180px;
+    min-height: 100vh;
     overflow: hidden;
-    margin-bottom: 40px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -5003,8 +5019,7 @@ section {
 }
 
 .statistic__item .icon {
-    display: inline-block;
-    position: absolute;
+
     bottom: -50px;
     right: -7px;
 }
@@ -5126,7 +5141,7 @@ section {
     bottom: 0;
 }
 
-.au-alert > i {
+.au-alert>i {
     font-size: 30px;
     color: #00ad5f;
     vertical-align: middle;
@@ -5191,11 +5206,11 @@ section {
     transition: opacity background .15s ease-out;
 }
 
-.switch.switch-default .switch-input:checked ~ .switch-label::before {
+.switch.switch-default .switch-input:checked~.switch-label::before {
     opacity: 0;
 }
 
-.switch.switch-default .switch-input:checked ~ .switch-label::after {
+.switch.switch-default .switch-input:checked~.switch-label::after {
     opacity: 1;
 }
 
@@ -5216,7 +5231,7 @@ section {
     transition: left .15s ease-out;
 }
 
-.switch.switch-default .switch-input:checked ~ .switch-handle {
+.switch.switch-default .switch-input:checked~.switch-handle {
     left: 18px;
 }
 
@@ -5234,7 +5249,7 @@ section {
     height: 24px;
 }
 
-.switch.switch-default.switch-lg .switch-input:checked ~ .switch-handle {
+.switch.switch-default.switch-lg .switch-input:checked~.switch-handle {
     left: 22px;
 }
 
@@ -5252,7 +5267,7 @@ section {
     height: 16px;
 }
 
-.switch.switch-default.switch-sm .switch-input:checked ~ .switch-handle {
+.switch.switch-default.switch-sm .switch-input:checked~.switch-handle {
     left: 14px;
 }
 
@@ -5270,7 +5285,7 @@ section {
     height: 12px;
 }
 
-.switch.switch-default.switch-xs .switch-input:checked ~ .switch-handle {
+.switch.switch-default.switch-xs .switch-input:checked~.switch-handle {
     left: 10px;
 }
 
@@ -5310,7 +5325,7 @@ section {
 }
 
 .switch.switch-text .switch-label::before,
-  .switch.switch-text .switch-label::after {
+.switch.switch-text .switch-label::after {
     position: absolute;
     top: 50%;
     width: 50%;
@@ -5336,11 +5351,11 @@ section {
     opacity: 0;
 }
 
-.switch.switch-text .switch-input:checked ~ .switch-label::before {
+.switch.switch-text .switch-input:checked~.switch-label::before {
     opacity: 0;
 }
 
-.switch.switch-text .switch-input:checked ~ .switch-label::after {
+.switch.switch-text .switch-input:checked~.switch-label::after {
     opacity: 1;
 }
 
@@ -5361,7 +5376,7 @@ section {
     transition: left .15s ease-out;
 }
 
-.switch.switch-text .switch-input:checked ~ .switch-handle {
+.switch.switch-text .switch-input:checked~.switch-handle {
     left: 26px;
 }
 
@@ -5379,7 +5394,7 @@ section {
     height: 24px;
 }
 
-.switch.switch-text.switch-lg .switch-input:checked ~ .switch-handle {
+.switch.switch-text.switch-lg .switch-input:checked~.switch-handle {
     left: 30px;
 }
 
@@ -5397,7 +5412,7 @@ section {
     height: 16px;
 }
 
-.switch.switch-text.switch-sm .switch-input:checked ~ .switch-handle {
+.switch.switch-text.switch-sm .switch-input:checked~.switch-handle {
     left: 22px;
 }
 
@@ -5415,7 +5430,7 @@ section {
     height: 12px;
 }
 
-.switch.switch-text.switch-xs .switch-input:checked ~ .switch-handle {
+.switch.switch-text.switch-xs .switch-input:checked~.switch-handle {
     left: 18px;
 }
 
@@ -5456,7 +5471,7 @@ section {
 }
 
 .switch.switch-icon .switch-label::before,
-  .switch.switch-icon .switch-label::after {
+.switch.switch-icon .switch-label::after {
     position: absolute;
     top: 50%;
     width: 50%;
@@ -5482,11 +5497,11 @@ section {
     opacity: 0;
 }
 
-.switch.switch-icon .switch-input:checked ~ .switch-label::before {
+.switch.switch-icon .switch-input:checked~.switch-label::before {
     opacity: 0;
 }
 
-.switch.switch-icon .switch-input:checked ~ .switch-label::after {
+.switch.switch-icon .switch-input:checked~.switch-label::after {
     opacity: 1;
 }
 
@@ -5507,7 +5522,7 @@ section {
     transition: left .15s ease-out;
 }
 
-.switch.switch-icon .switch-input:checked ~ .switch-handle {
+.switch.switch-icon .switch-input:checked~.switch-handle {
     left: 26px;
 }
 
@@ -5525,7 +5540,7 @@ section {
     height: 24px;
 }
 
-.switch.switch-icon.switch-lg .switch-input:checked ~ .switch-handle {
+.switch.switch-icon.switch-lg .switch-input:checked~.switch-handle {
     left: 30px;
 }
 
@@ -5543,7 +5558,7 @@ section {
     height: 16px;
 }
 
-.switch.switch-icon.switch-sm .switch-input:checked ~ .switch-handle {
+.switch.switch-icon.switch-sm .switch-input:checked~.switch-handle {
     left: 22px;
 }
 
@@ -5561,7 +5576,7 @@ section {
     height: 12px;
 }
 
-.switch.switch-icon.switch-xs .switch-input:checked ~ .switch-handle {
+.switch.switch-icon.switch-xs .switch-input:checked~.switch-handle {
     left: 18px;
 }
 
@@ -5600,11 +5615,11 @@ section {
     transition: opacity background .15s ease-out;
 }
 
-.switch.switch-3d .switch-input:checked ~ .switch-label::before {
+.switch.switch-3d .switch-input:checked~.switch-label::before {
     opacity: 0;
 }
 
-.switch.switch-3d .switch-input:checked ~ .switch-label::after {
+.switch.switch-3d .switch-input:checked~.switch-label::after {
     opacity: 1;
 }
 
@@ -5629,7 +5644,7 @@ section {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.switch.switch-3d .switch-input:checked ~ .switch-handle {
+.switch.switch-3d .switch-input:checked~.switch-handle {
     left: 16px;
 }
 
@@ -5647,7 +5662,7 @@ section {
     height: 28px;
 }
 
-.switch.switch-3d.switch-lg .switch-input:checked ~ .switch-handle {
+.switch.switch-3d.switch-lg .switch-input:checked~.switch-handle {
     left: 20px;
 }
 
@@ -5665,7 +5680,7 @@ section {
     height: 20px;
 }
 
-.switch.switch-3d.switch-sm .switch-input:checked ~ .switch-handle {
+.switch.switch-3d.switch-sm .switch-input:checked~.switch-handle {
     left: 12px;
 }
 
@@ -5683,11 +5698,12 @@ section {
     height: 16px;
 }
 
-.switch.switch-3d.switch-xs .switch-input:checked ~ .switch-handle {
+.switch.switch-3d.switch-xs .switch-input:checked~.switch-handle {
     left: 8px;
 }
 
-.switch-pill .switch-label, .switch.switch-3d .switch-label,
+.switch-pill .switch-label,
+.switch.switch-3d .switch-label,
 .switch-pill .switch-handle,
 .switch.switch-3d .switch-handle {
     -webkit-border-radius: 50em !important;
@@ -5695,298 +5711,300 @@ section {
     border-radius: 50em !important;
 }
 
-.switch-pill .switch-label::before, .switch.switch-3d .switch-label::before {
+.switch-pill .switch-label::before,
+.switch.switch-3d .switch-label::before {
     right: 2px !important;
 }
 
-.switch-pill .switch-label::after, .switch.switch-3d .switch-label::after {
+.switch-pill .switch-label::after,
+.switch.switch-3d .switch-label::after {
     left: 2px !important;
 }
 
-.switch-primary > .switch-input:checked ~ .switch-label {
+.switch-primary>.switch-input:checked~.switch-label {
     background: #3B4A55 !important;
     border-color: #2858be;
 }
 
-.switch-primary > .switch-input:checked ~ .switch-handle {
+.switch-primary>.switch-input:checked~.switch-handle {
     border-color: #2858be;
 }
 
-.switch-primary-outline > .switch-input:checked ~ .switch-label {
+.switch-primary-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #3B4A55;
 }
 
-.switch-primary-outline > .switch-input:checked ~ .switch-label::after {
+.switch-primary-outline>.switch-input:checked~.switch-label::after {
     color: #3B4A55;
 }
 
-.switch-primary-outline > .switch-input:checked ~ .switch-handle {
+.switch-primary-outline>.switch-input:checked~.switch-handle {
     border-color: #3B4A55;
 }
 
-.switch-primary-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-primary-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #3B4A55;
 }
 
-.switch-primary-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-primary-outline-alt>.switch-input:checked~.switch-label::after {
     color: #3B4A55;
 }
 
-.switch-primary-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-primary-outline-alt>.switch-input:checked~.switch-handle {
     background: #3B4A55 !important;
     border-color: #3B4A55;
 }
 
-.switch-secondary > .switch-input:checked ~ .switch-label {
+.switch-secondary>.switch-input:checked~.switch-label {
     background: #868e96 !important;
     border-color: #6c757d;
 }
 
-.switch-secondary > .switch-input:checked ~ .switch-handle {
+.switch-secondary>.switch-input:checked~.switch-handle {
     border-color: #6c757d;
 }
 
-.switch-secondary-outline > .switch-input:checked ~ .switch-label {
+.switch-secondary-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #868e96;
 }
 
-.switch-secondary-outline > .switch-input:checked ~ .switch-label::after {
+.switch-secondary-outline>.switch-input:checked~.switch-label::after {
     color: #868e96;
 }
 
-.switch-secondary-outline > .switch-input:checked ~ .switch-handle {
+.switch-secondary-outline>.switch-input:checked~.switch-handle {
     border-color: #868e96;
 }
 
-.switch-secondary-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-secondary-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #868e96;
 }
 
-.switch-secondary-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-secondary-outline-alt>.switch-input:checked~.switch-label::after {
     color: #868e96;
 }
 
-.switch-secondary-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-secondary-outline-alt>.switch-input:checked~.switch-handle {
     background: #868e96 !important;
     border-color: #868e96;
 }
 
-.switch-success > .switch-input:checked ~ .switch-label {
+.switch-success>.switch-input:checked~.switch-label {
     background: #28a745 !important;
     border-color: #1e7e34;
 }
 
-.switch-success > .switch-input:checked ~ .switch-handle {
+.switch-success>.switch-input:checked~.switch-handle {
     border-color: #1e7e34;
 }
 
-.switch-success-outline > .switch-input:checked ~ .switch-label {
+.switch-success-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #28a745;
 }
 
-.switch-success-outline > .switch-input:checked ~ .switch-label::after {
+.switch-success-outline>.switch-input:checked~.switch-label::after {
     color: #28a745;
 }
 
-.switch-success-outline > .switch-input:checked ~ .switch-handle {
+.switch-success-outline>.switch-input:checked~.switch-handle {
     border-color: #28a745;
 }
 
-.switch-success-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-success-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #28a745;
 }
 
-.switch-success-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-success-outline-alt>.switch-input:checked~.switch-label::after {
     color: #28a745;
 }
 
-.switch-success-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-success-outline-alt>.switch-input:checked~.switch-handle {
     background: #28a745 !important;
     border-color: #28a745;
 }
 
-.switch-info > .switch-input:checked ~ .switch-label {
+.switch-info>.switch-input:checked~.switch-label {
     background: #17a2b8 !important;
     border-color: #117a8b;
 }
 
-.switch-info > .switch-input:checked ~ .switch-handle {
+.switch-info>.switch-input:checked~.switch-handle {
     border-color: #117a8b;
 }
 
-.switch-info-outline > .switch-input:checked ~ .switch-label {
+.switch-info-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #17a2b8;
 }
 
-.switch-info-outline > .switch-input:checked ~ .switch-label::after {
+.switch-info-outline>.switch-input:checked~.switch-label::after {
     color: #17a2b8;
 }
 
-.switch-info-outline > .switch-input:checked ~ .switch-handle {
+.switch-info-outline>.switch-input:checked~.switch-handle {
     border-color: #17a2b8;
 }
 
-.switch-info-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-info-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #17a2b8;
 }
 
-.switch-info-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-info-outline-alt>.switch-input:checked~.switch-label::after {
     color: #17a2b8;
 }
 
-.switch-info-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-info-outline-alt>.switch-input:checked~.switch-handle {
     background: #17a2b8 !important;
     border-color: #17a2b8;
 }
 
-.switch-warning > .switch-input:checked ~ .switch-label {
+.switch-warning>.switch-input:checked~.switch-label {
     background: #ffc107 !important;
     border-color: #d39e00;
 }
 
-.switch-warning > .switch-input:checked ~ .switch-handle {
+.switch-warning>.switch-input:checked~.switch-handle {
     border-color: #d39e00;
 }
 
-.switch-warning-outline > .switch-input:checked ~ .switch-label {
+.switch-warning-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #ffc107;
 }
 
-.switch-warning-outline > .switch-input:checked ~ .switch-label::after {
+.switch-warning-outline>.switch-input:checked~.switch-label::after {
     color: #ffc107;
 }
 
-.switch-warning-outline > .switch-input:checked ~ .switch-handle {
+.switch-warning-outline>.switch-input:checked~.switch-handle {
     border-color: #ffc107;
 }
 
-.switch-warning-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-warning-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #ffc107;
 }
 
-.switch-warning-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-warning-outline-alt>.switch-input:checked~.switch-label::after {
     color: #ffc107;
 }
 
-.switch-warning-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-warning-outline-alt>.switch-input:checked~.switch-handle {
     background: #ffc107 !important;
     border-color: #ffc107;
 }
 
-.switch-danger > .switch-input:checked ~ .switch-label {
+.switch-danger>.switch-input:checked~.switch-label {
     background: #ff4b5a !important;
     border-color: #ff182b;
 }
 
-.switch-danger > .switch-input:checked ~ .switch-handle {
+.switch-danger>.switch-input:checked~.switch-handle {
     border-color: #ff182b;
 }
 
-.switch-danger-outline > .switch-input:checked ~ .switch-label {
+.switch-danger-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #ff4b5a;
 }
 
-.switch-danger-outline > .switch-input:checked ~ .switch-label::after {
+.switch-danger-outline>.switch-input:checked~.switch-label::after {
     color: #ff4b5a;
 }
 
-.switch-danger-outline > .switch-input:checked ~ .switch-handle {
+.switch-danger-outline>.switch-input:checked~.switch-handle {
     border-color: #ff4b5a;
 }
 
-.switch-danger-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-danger-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #ff4b5a;
 }
 
-.switch-danger-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-danger-outline-alt>.switch-input:checked~.switch-label::after {
     color: #ff4b5a;
 }
 
-.switch-danger-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-danger-outline-alt>.switch-input:checked~.switch-handle {
     background: #ff4b5a !important;
     border-color: #ff4b5a;
 }
 
-.switch-light > .switch-input:checked ~ .switch-label {
+.switch-light>.switch-input:checked~.switch-label {
     background: #f8f9fa !important;
     border-color: #dae0e5;
 }
 
-.switch-light > .switch-input:checked ~ .switch-handle {
+.switch-light>.switch-input:checked~.switch-handle {
     border-color: #dae0e5;
 }
 
-.switch-light-outline > .switch-input:checked ~ .switch-label {
+.switch-light-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #f8f9fa;
 }
 
-.switch-light-outline > .switch-input:checked ~ .switch-label::after {
+.switch-light-outline>.switch-input:checked~.switch-label::after {
     color: #f8f9fa;
 }
 
-.switch-light-outline > .switch-input:checked ~ .switch-handle {
+.switch-light-outline>.switch-input:checked~.switch-handle {
     border-color: #f8f9fa;
 }
 
-.switch-light-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-light-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #f8f9fa;
 }
 
-.switch-light-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-light-outline-alt>.switch-input:checked~.switch-label::after {
     color: #f8f9fa;
 }
 
-.switch-light-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-light-outline-alt>.switch-input:checked~.switch-handle {
     background: #f8f9fa !important;
     border-color: #f8f9fa;
 }
 
-.switch-dark > .switch-input:checked ~ .switch-label {
+.switch-dark>.switch-input:checked~.switch-label {
     background: #343a40 !important;
     border-color: #1d2124;
 }
 
-.switch-dark > .switch-input:checked ~ .switch-handle {
+.switch-dark>.switch-input:checked~.switch-handle {
     border-color: #1d2124;
 }
 
-.switch-dark-outline > .switch-input:checked ~ .switch-label {
+.switch-dark-outline>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #343a40;
 }
 
-.switch-dark-outline > .switch-input:checked ~ .switch-label::after {
+.switch-dark-outline>.switch-input:checked~.switch-label::after {
     color: #343a40;
 }
 
-.switch-dark-outline > .switch-input:checked ~ .switch-handle {
+.switch-dark-outline>.switch-input:checked~.switch-handle {
     border-color: #343a40;
 }
 
-.switch-dark-outline-alt > .switch-input:checked ~ .switch-label {
+.switch-dark-outline-alt>.switch-input:checked~.switch-label {
     background: #fff !important;
     border-color: #343a40;
 }
 
-.switch-dark-outline-alt > .switch-input:checked ~ .switch-label::after {
+.switch-dark-outline-alt>.switch-input:checked~.switch-label::after {
     color: #343a40;
 }
 
-.switch-dark-outline-alt > .switch-input:checked ~ .switch-handle {
+.switch-dark-outline-alt>.switch-input:checked~.switch-handle {
     background: #343a40 !important;
     border-color: #343a40;
 }
@@ -14643,6 +14661,7 @@ section {
     height: 400px;
 }
 
-.vue-lists ul, .vue-lists ol {
+.vue-lists ul,
+.vue-lists ol {
     padding-left: 30px;
 }
