@@ -448,8 +448,10 @@ export default {
     CustomAttributes,
   },
   created() {
+
     if (this.data != null) {
       this.product = _.cloneDeep(this.data);
+      this.product.tariff = this.product.tariff._id;
     }
   },
   data() {
@@ -640,6 +642,14 @@ export default {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
+        if (this.product.detailedImageUrls.length <= 0) {
+          this.$notify({
+            group: 'all',
+            type: 'warn',
+            text: 'You need to upload at least 1 image.'
+          })
+          return;
+        }
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
@@ -658,6 +668,14 @@ export default {
         if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
+        }
+        if (this.product.detailedImageUrls.length <= 0) {
+          this.$notify({
+            group: 'all',
+            type: 'warn',
+            text: 'You need to upload at least 1 image.'
+          })
+          return;
         }
         await this.$store.dispatch('adminStore/editProduct', this.product);
         this.$emit('cancelTrigger');
