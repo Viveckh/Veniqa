@@ -1,27 +1,26 @@
 <template>
   <div class="col-md-12">
-    <div class="d-flex">
-      <div>
-        <button
-          v-if="!this.viewOperation"
-          type="button"
-          class="au-btn au-btn-icon au-btn--green"
-          @click="handleAddButtonClick()"
-        >+ Add Admin</button>
-      </div>
-      <div class="ml-auto">
-        <input class="form-control" v-model="query" type="text" placeholder="Search Admins">
-      </div>
-    </div>
-
-    <hr>
     <div class="row justify-content-left">
       <div v-if="!this.viewOperation" class="col-md-12">
         <div class="card">
           <header class="card-header">
-            <h4 class="card-title mt-2">Admins</h4>
+            <div class="row">
+              <div class="col-3">
+                <h4 class="card-title mt-2">Admins</h4>
+              </div>
+
+              <div class="col-9 align-right">
+                <button
+                  v-if="!this.viewOperation"
+                  type="button"
+                  class="au-btn au-btn-icon au-btn--green"
+                  @click="handleAddButtonClick()"
+                >+ Admins</button>
+              </div>
+            </div>
           </header>
           <article class="card-body">
+            <input class="form-control" v-model="query" type="text" placeholder="Search Admins">
             <table id="content_loop" class="table table-striped">
               <thead>
                 <tr>

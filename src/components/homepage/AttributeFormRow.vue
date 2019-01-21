@@ -1,10 +1,10 @@
 <template>
-  <div class="attrib-row" v-bind:class="{'shaded': index % 2 == 1}">
+  <div v-bind:class="{'shaded': index % 2 == 1}">
     <b-row>
-      <b-col sm="1" class="min-padding">
-        <font-awesome-icon @click="deleteClicked()" style="cursor: pointer" icon="trash-alt"/>
+      <b-col sm="1" style="text-align: right">
+        <font-awesome-icon @click="deleteClicked()" style="cursor: pointer;" icon="trash-alt"/>
       </b-col>
-      <b-col sm="2" class="min-padding">
+      <b-col sm="2">
         <b-form-input
           id="name"
           type="text"
@@ -58,9 +58,11 @@
         <div v-if="row.type === 'Colors'" style="margin-top: 2.2em;">
           <b-row v-for="(val, vind) in row.values" v-bind:key="vind" style="margin: 10px 0px;">
             <b-col sm="1">
-              <a><font-awesome-icon v-if="vind > 0" icon="trash-alt" @click="deleteLine(vind)"/></a>
+              <a>
+                <font-awesome-icon v-if="vind > 0" icon="trash-alt" @click="deleteLine(vind)"/>
+              </a>
             </b-col>
-            <b-col class="min-padding"  sm="5">
+            <b-col class="min-padding" sm="5">
               <b-form-input
                 id="colorName"
                 type="text"
@@ -76,7 +78,7 @@
                 This field cannot be empty
               </b-form-invalid-feedback>
             </b-col>
-            <b-col class="min-padding"  sm="5">
+            <b-col class="min-padding" sm="5">
               <b-form-input
                 id="hex"
                 type="text"
@@ -92,8 +94,10 @@
                 This field cannot be empty
               </b-form-invalid-feedback>
             </b-col>
-            <b-col class="min-padding"  sm="1">
-              <a><font-awesome-icon icon="plus-square" @click="addLine()"/></a>
+            <b-col class="min-padding" sm="1">
+              <a>
+                <font-awesome-icon icon="plus-square" @click="addLine()"/>
+              </a>
             </b-col>
           </b-row>
         </div>
@@ -147,10 +151,12 @@ export default {
 
     typeChanged() {
       if (this.row.type === 'Colors') {
-        this.row.values = [{
-          name: null,
-          hexValue: null,
-        }];
+        this.row.values = [
+          {
+            name: null,
+            hexValue: null,
+          },
+        ];
       }
     },
   },
@@ -189,7 +195,7 @@ export default {
 </script>
 
 <style lang="scss" >
-@import "./../../assets/css/material.scss";
+@import './../../assets/css/material.scss';
 
 .attrib-row {
   padding: 5px 10px;

@@ -1,9 +1,15 @@
 /* eslint-disable */
 import Vue from "vue";
 import "@/assets/css/colors.scss";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {
+  library
+} from "@fortawesome/fontawesome-svg-core";
+import {
+  fas
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  FontAwesomeIcon
+} from "@fortawesome/vue-fontawesome";
 import Croppa from 'vue-croppa'
 
 
@@ -31,6 +37,10 @@ import Datetime from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 
 Vue.use(Datetime)
+
+import AutocompleteVue from 'autocomplete-vue';
+
+Vue.component('autocomplete-vue', AutocompleteVue);
 
 import "animate.css";
 

@@ -2,25 +2,22 @@
 <template>
   <div class="col-md-12">
     <div v-if="!isAddView">
-      <div class="d-flex">
-        <div>
-          <button
-            type="button"
-            class="au-btn au-btn-icon au-btn--green"
-            @click="addProductFunc()"
-            v-if="permissionGranted"
-          >+ Add Catalog</button>
-        </div>
-        <div class="ml-auto">
-          <input class="form-control" v-model="query" type="text" placeholder="Search Catalogs">
-        </div>
-      </div>
-
-      <hr>
-
       <div class="card">
         <header class="card-header">
-          <h4 class="card-title mt-2">Catalog</h4>
+          <div class="row">
+            <div class="col-3">
+              <h4 class="card-title mt-2">Catalog</h4>
+            </div>
+
+            <div class="col-9 align-right">
+              <button
+                type="button"
+                class="au-btn au-btn-icon au-btn--green"
+                @click="addProductFunc()"
+                v-if="permissionGranted"
+              >+ Add Catalog</button>
+            </div>
+          </div>
         </header>
         <article class="card-body">
           <b-row>
@@ -44,7 +41,7 @@
               />
             </b-col>
           </b-row>
-
+          <input class="form-control" v-model="query" type="text" placeholder="Search Catalogs">
           <table class="table table-striped" id="content_loop">
             <thead>
               <tr>
