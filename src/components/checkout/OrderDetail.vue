@@ -145,7 +145,7 @@ export default {
     async gotoProduct(pid) {
       if (!pid) return;
       // await this.done();
-      this.$router.push(`/products/${pid}`);
+      this.$router.push(`/products/${pid._id}`);
     },
 
     editOrder() {
