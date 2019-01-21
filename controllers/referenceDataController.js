@@ -32,21 +32,6 @@ export default {
         }
     },
 
-    async getProductCategories(req, res, next) {
-        let response;
-        try {
-            response = await referenceDataService.getProductCategories();
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
-        }
-        catch(err) {
-            console.log("[ERROR]: Getting product categories failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
-        }
-    },
-
     async getRoles(req, res, next) {
         let response;
         try {
@@ -74,6 +59,54 @@ export default {
         catch(err) {
             console.log("[ERROR]: Getting weight units failed => ", err);
             return res.status(500).send({ errorCode: "server error", errorMsg: err});
+        }
+    },
+
+    async getProductCategoryList(req, res, next) {
+        let response;
+        try {
+            response = await referenceDataService.getProductCategoryList();
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            console.log("Error in getProductCategoryList Controller", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+    async addProductCategory(req, res, next) {
+        let response;
+        try {
+            response = await referenceDataService.addProductCategory(req.body);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            console.log("Error in addProductCategory Controller", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+    async getProductCategory(req, res, next) {
+        let response;
+        try {
+            response = await referenceDataService.getProductCategory(req.query.categoryId);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            console.log("Error in getProductCategory Controller", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+    async updateProductCategory(req, res, next) {
+        let response;
+        try {
+            response = await referenceDataService.updateProductCategory(req.body);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            console.log("Error in updateProductCategory Controller", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 

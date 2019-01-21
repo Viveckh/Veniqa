@@ -620,28 +620,6 @@
 					"response": []
 				},
 				{
-					"name": "getProductCategories",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{server}}/referenceData/getProductCategories",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"referenceData",
-								"getProductCategories"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "getRoles",
 					"request": {
 						"method": "GET",
@@ -680,6 +658,128 @@
 							"path": [
 								"referenceData",
 								"getWeightUnits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productCategoryList",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/productCategoryList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"productCategoryList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productCategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\": \"Women's Clothing\",\n\t\"subcategory\": \"Jackets & Coats\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/productCategory",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"productCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productCategory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/productCategory?categoryId=5c45e46bb720330af113ed50",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"productCategory"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "5c45e46bb720330af113ed50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productCategory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\": \"5c45e46bb720330af113ed50\",\n\t\"category\": \"Women's Clothing\",\n\t\"subcategory\": \"Jackets and Coats\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/referenceData/productCategory",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"referenceData",
+								"productCategory"
 							]
 						}
 					},

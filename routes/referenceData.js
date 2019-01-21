@@ -14,11 +14,17 @@ router.get('/getCatalogBundle', passportAuth.isAuthenticated, referenceDataContr
 
 router.get('/getStores', passportAuth.isAuthenticated, referenceDataController.getStores);
 
-router.get('/getProductCategories', passportAuth.isAuthenticated, referenceDataController.getProductCategories);
-
 router.get('/getRoles', passportAuth.isAuthenticated, referenceDataController.getRoles);
 
 router.get('/getWeightUnits', passportAuth.isAuthenticated, referenceDataController.getWeightUnits);
+
+router.get('/productCategoryList', passportAuth.isAuthenticated, passportAuth.canViewCatalog, referenceDataController.getProductCategoryList);
+
+router.post('/productCategory', passportAuth.isAuthenticated, passportAuth.canManageCatalog, referenceDataController.addProductCategory);
+
+router.get('/productCategory', passportAuth.isAuthenticated, passportAuth.canViewCatalog, referenceDataController.getProductCategory);
+
+router.put('/productCategory', passportAuth.isAuthenticated, passportAuth.canManageCatalog, referenceDataController.updateProductCategory);
 
 router.get('/tariffList', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.getTariffList);
 

@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import httpStatus from 'http-status-codes';
+import ProductCategory from '../database/models/productCategory';
 import Tariff from '../database/models/tariffRate';
 
 import STORES_ARRAY from '../database/reference-data-files/stores.json';
@@ -61,6 +62,74 @@ export default {
         catch(err) {
             console.log(err);
             return false;
+        }
+    },
+
+    async getProductCategoryList() {
+        let result = {};
+        try {
+            let productCategoryList = await ProductCategory.find({}, '-__v').exec();
+    
+            result = productCategoryList ? {httpStatus: httpStatus.OK, status: "successful", responseData: productCategoryList} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
+            return result;
+        }
+        catch(err) {
+            console.log("Error in getProductCategoryList Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async addProductCategory(categoryObj) {
+        let result = {};
+        try {
+            let productCategory = new ProductCategory(categoryObj);
+            productCategory = await productCategory.save();
+            result = productCategory ? {httpStatus: httpStatus.OK, status: "successful", responseData: productCategory} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+            return result;
+        }
+        catch(err) {
+            console.log("Error in addProductCategory Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async getProductCategory(categoryId){
+        let result = {};
+        try {
+            let productCategory = await ProductCategory.findOne({_id: categoryId}).exec();
+            
+            result = productCategory ? {httpStatus: httpStatus.OK, status: "successful", responseData: productCategory} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
+            return result;
+        }
+        catch(err) {
+            console.log("Error in getProductCategory Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async updateProductCategory(categoryObj) {
+        let result = {};
+        try {
+            // Store the id and delete it from the received object, to prevent any accidental replacement of id field
+            let id = categoryObj._id;
+            if (!id) {
+                throw "Missing category id";
+            }
+            delete categoryObj._id;
+
+            // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update
+            let productCategory = await ProductCategory.findOneAndUpdate({_id: id}, categoryObj, {runValidators: true, new: true}).exec();
+
+            result = productCategory ? {httpStatus: httpStatus.OK, status: "successful", responseData: productCategory} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+            return result;
+        }
+        catch(err) {
+            console.log("Error in updateProductCategory Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
