@@ -644,13 +644,8 @@ export default {
     },
     async handleAddProduct() {
       if (!this.validateForm()) return;
-      try {
-        const saveImageRes = await this.$refs.managephoto.saveAll();
-        if (saveImageRes) {
-          this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
-        }
-        if (this.product.detailedImageUrls.length <= 0) {
+      let totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
+      if (totalImages <= 0) {
           this.$notify({
             group: 'all',
             type: 'warn',
@@ -658,6 +653,13 @@ export default {
           })
           return;
         }
+      try {
+        const saveImageRes = await this.$refs.managephoto.saveAll();
+        if (saveImageRes) {
+          this.imageUploadComplete(saveImageRes);
+          this.preassignedUrls = null;
+        }
+        
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
@@ -671,19 +673,20 @@ export default {
     },
     async handleEditProduct() {
       if (!this.validateForm()) return;
-      try {
-        const saveImageRes = await this.$refs.managephoto.saveAll();
-        if (saveImageRes) {
-          this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
-        }
-        if (this.product.detailedImageUrls.length <= 0) {
+      let totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
+      if (totalImages <= 0) {
           this.$notify({
             group: 'all',
             type: 'warn',
             text: 'You need to upload at least 1 image.'
           })
           return;
+        }
+      try {
+        const saveImageRes = await this.$refs.managephoto.saveAll();
+        if (saveImageRes) {
+          this.imageUploadComplete(saveImageRes);
+          this.preassignedUrls = null;
         }
         await this.$store.dispatch('adminStore/editProduct', this.product);
         this.$emit('cancelTrigger');
