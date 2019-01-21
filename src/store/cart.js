@@ -21,7 +21,7 @@ export default {
      *
      * @param {*} { state }
      */
-    async pay({ state }) {
+    async pay({ state, commit }) {
       const { data } = await Vue.prototype.$axios({
         url: ProxyUrl.createPaymentToken,
         method: 'post',
@@ -34,7 +34,7 @@ export default {
       if (data.httpStatus === 200) {
         const paymentId = data.responseData.payment_info[0].payment_id;
 
-        const { newData } = await Vue.prototype.$axios({
+        const newData = await Vue.prototype.$axios({
           url: ProxyUrl.completeCheckout,
           method: 'post',
           data: {
@@ -43,7 +43,7 @@ export default {
           },
         });
 
-        if (newData.httpStatus === 200) {
+        if (newData.data.httpStatus === 200) {
           commit('resetOrders');
         }
       }

@@ -34,6 +34,7 @@
           <!-- {{nameOfUser}} -->
           <b-nav-item-dropdown class="veniqa-nav" :text="nameOfUser" right v-else>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item v-if="isSessionActive" to="/orders">Orders</b-dropdown-item>
             <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
           <!-- </b-nav-item> -->
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'HeaderMenu',
   mounted() {
@@ -102,6 +105,10 @@ export default {
     totalOrders() {
       return this.$store.getters['cartStore/getTotalItems'];
     },
+
+    ...mapGetters({
+      isSessionActive: 'authStore/isSessionActive',
+    }),
   },
 };
 </script>

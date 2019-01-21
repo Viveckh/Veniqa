@@ -7,7 +7,7 @@ import Login from '@/views/Login.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -56,6 +56,13 @@ export default new Router({
           component: Checkout,
         },
         {
+          path: 'orders',
+          component: () => import('@/views/OrderView.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: 'products/:productId',
           component: () => import('@/views/ProductDetail.vue'),
           props: true,
@@ -81,3 +88,18 @@ export default new Router({
 
   ],
 });
+
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('email') == null || localStorage.getItem('email') === 'null') {
+      next({
+        path: '/login',
+      });
+    } else {
+      next();
+    }
+  } else next();
+});
+
+export default router;

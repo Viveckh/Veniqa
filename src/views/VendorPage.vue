@@ -52,7 +52,7 @@ export default {
           //   store: '',
           //   category: '',
           // },
-          searchTerm: searchTerm,
+          searchTerm,
           pagingOptions: {
             page: 1,
             limit: 10,

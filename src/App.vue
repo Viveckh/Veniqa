@@ -16,6 +16,7 @@
       <fingerprint-spinner class="spinner" :animation-duration="1500" :size="150" color="#136a8a"/>
     </div>
 
+
     <router-view/>
   </div>
 </template>
@@ -42,6 +43,8 @@ export default {
 
     if (this.isSessionActive) {
       this.initiateApp();
+    } else {
+      this.$store.commit('shippingStore/resetAddresses');
     }
   },
 

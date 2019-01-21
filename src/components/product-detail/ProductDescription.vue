@@ -61,23 +61,23 @@
 
 <script>
 export default {
-  name: "ProductDescription",
+  name: 'ProductDescription',
   props: {
     data: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       product: null,
-      selectedCustomizations: []
+      selectedCustomizations: [],
     };
   },
 
   created() {
     this.product = this.data;
-    this.product.customizationOptions.customizations.forEach(attrib => {
+    this.product.customizationOptions.customizations.forEach((attrib) => {
       this.selectedCustomizations.push(attrib.key);
       this.selectedCustomizations[attrib.key] = attrib.values.length > 0 ? attrib.values[0] : '';
     });
@@ -85,29 +85,29 @@ export default {
 
   methods: {
     async addToCart() {
-      const val = await this.$store.dispatch("cartStore/addToTheCart", [
-        this.product
+      const val = await this.$store.dispatch('cartStore/addToTheCart', [
+        this.product,
       ]);
       if (val) {
         this.$notify({
-          group: "toast",
-          type: "success",
+          group: 'toast',
+          type: 'success',
           text: `Added ${this.product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
         });
       } else {
         this.$notify({
-          group: "toast",
-          type: "warn",
+          group: 'toast',
+          type: 'warn',
           text: `${
             this.product.name
-          } couldn't be added for some reason. Please try again later`
+          } couldn't be added for some reason. Please try again later`,
         });
       }
     },
 
     increaseCount() {
-      console.log("Increasing");
+      console.log('Increasing');
       this.product.counts += 1;
     },
 
@@ -116,14 +116,14 @@ export default {
       if (this.product.counts < 0) {
         this.product.counts = 0;
       }
-    }
+    },
   },
 
   computed: {
     customizations() {
       return this.product.customizationOptions.customizations;
-    }
-  }
+    },
+  },
 };
 </script>
 
