@@ -2,7 +2,12 @@
   <div id="custom-attribute">
     <b-btn @click="addRow()" size="sm">Add a row</b-btn>
     <div class="attrib-space"></div>
-    <div v-for="(attrib, aInd) in attributes" v-bind:key="aInd" class="form-row" v-bind:class="{'list-row': aInd % 2 == 0}">
+    <div
+      v-for="(attrib, aInd) in attributes"
+      v-bind:key="aInd"
+      class="form-row"
+      v-bind:class="{'list-row': aInd % 2 == 0}"
+    >
       <attribute-row :index="aInd" :row="attrib" @delete="deleteRow(aInd)"/>
     </div>
     <div class="space" v-if="attributes.length ==0"></div>
@@ -15,99 +20,113 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import ProductAttribDTO from '@/dto/ProductAttribute';
-import AttributeRow from '@/components/homepage/AttributeFormRow';
+import _ from 'lodash'
+import ProductAttribDTO from '@/dto/ProductAttribute'
+import AttributeRow from '@/components/homepage/AttributeFormRow'
 
 export default {
   name: 'CustomAttribute',
   props: {
     propValue: {
-      required: true,
+      required: true
       // type: Object
-    },
+    }
   },
   components: {
-    AttributeRow,
+    AttributeRow
   },
   data() {
     return {
-      attributes: [],
-    };
+      attributes: []
+    }
   },
 
   created() {
     if (this.propValue && this.propValue.length > 0) {
-      this.attributes = _.cloneDeep(this.propValue);
+      this.attributes = _.cloneDeep(this.propValue)
     } else {
-      this.attributes = [];
+      this.attributes = []
     }
   },
 
   methods: {
     deleteRow(ind) {
-      this.attributes.splice(ind, 1);
+      this.attributes.splice(ind, 1)
     },
     addRow() {
-      this.attributes.push(_.cloneDeep(ProductAttribDTO));
+      this.attributes.push(_.cloneDeep(ProductAttribDTO))
     },
 
     cancel() {
-      this.attributes = [];
-      this.$emit('cancel');
+      this.attributes = []
+      this.$emit('cancel')
     },
 
     save() {
       if (this.validateForms()) {
-        this.$emit('save', this.attributes);
+        let isTrue = true
+        for (let i = 0; i < this.attributes.length; i++) {
+          let obj = this.attributes[i]
+          if (obj.values.length <= 1) {
+            isTrue = false
+            break
+          }
+        }
+        if (!isTrue) {
+          this.$notify({
+            group: 'all',
+            type: 'error',
+            text: 'You have to have at least 2 options for each attribute'
+          })
+          return
+        }
+        this.$emit('save', this.attributes)
       } else {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'None of the fields above can be empty.',
-        });
+          text: 'None of the fields above can be empty.'
+        })
       }
     },
 
     validateForms() {
       for (let i = 0; i < this.attributes.length; i++) {
-        const attr = this.attributes[i];
+        const attr = this.attributes[i]
 
-        if (attr.name == null || attr.name.length == 0
-          || attr.type == null || attr.type.length == 0
-          || attr.key == null || attr.key.length == 0
-          || attr.values == null || attr.values.length == 0
+        if (
+          attr.name == null ||
+          attr.name.length == 0 ||
+          attr.type == null ||
+          attr.type.length == 0 ||
+          attr.key == null ||
+          attr.key.length == 0 ||
+          attr.values == null ||
+          attr.values.length == 0
         ) {
-          return false;
+          return false
         }
       }
-      return true;
-    },
-  },
-
-};
+      return true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-
-#custom-attribute{
-
-
-  .form-row{
+#custom-attribute {
+  .form-row {
     margin: 5px 0px;
-
   }
 
-  .attrib-space{
+  .attrib-space {
     margin-top: 10px;
   }
 
-  .buttons{
-    button{
+  .buttons {
+    button {
       margin-right: 10px;
     }
   }
 }
-
-
 </style>

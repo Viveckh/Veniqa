@@ -210,7 +210,7 @@
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
-                <td v-if="attrib.type ==='Color'">{{extractColorValues(attrib)}}</td>
+                <td v-if="attrib.type ==='Colors'">{{extractColorValues(attrib)}}</td>
                 <td v-else>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
               </tr>
             </tbody>
@@ -225,6 +225,7 @@
             size="sm"
           >
             <custom-attributes
+              v-if="showAttributes"
               :propValue="product.customizationOptions.customizations"
               @cancel="cancelAttribModal"
               @save="saveAttributes"
