@@ -6,7 +6,10 @@ export default {
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
         try {
             let products = await Product.paginate(searchObj, {
-                select: '_id name brand store price thumbnailUrls category subcategory',
+                select: '_id name brand store price thumbnailUrls',
+                populate: [
+                    { path: 'category', select: '-_id category subcategory' }
+                ],
                 page: pagingOptions.page,
                 limit: pagingOptions.limit
             }).then(result => {
@@ -25,7 +28,7 @@ export default {
     async getProductDetails(productId) {
         let result = {};
         try {
-            let product = await Product.findOne({_id: productId}).populate('tariff').exec()
+            let product = await Product.findOne({_id: productId}).populate('category tariff').exec()
             if (product) {
                 result = {status: "successful", responseData: product};
             } 

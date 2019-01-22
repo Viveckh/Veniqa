@@ -100,7 +100,7 @@ export default {
             let user;
             // find the user first and populate while searching
             if (returnAllProductProps) {
-                user = await User.findOne({email: userObj.email}).populate({path: 'cart.items.product', populate: {path: 'tariff'}}).exec();
+                user = await User.findOne({email: userObj.email}).populate({path: 'cart.items.product', select: '-__v', populate: [{path: 'category', select: '_id category subcategory'}, {path: 'tariff', select: '_id name rates'}]}).exec();
             }
             else {
                 user = await User.findOne({email: userObj.email}).populate('cart.items.product', '_id name brand store weight price thumbnailUrls').exec();
