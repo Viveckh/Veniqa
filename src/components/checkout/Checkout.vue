@@ -17,7 +17,7 @@
     <div class="checkout-button">
       <div v-if="isSessionActive">
         <b-button
-          v-if="emailConfirmed && !checkoutInitiated"
+          v-if="emailConfirmed && !checkoutInitiated && carts.length > 0"
           size="lg"
           class="full-width primary-button"
           @click="handleCheckout()"
@@ -28,6 +28,11 @@
             class="primary-button"
             @click="resendEmailConfirmation()"
           >Resend Email Confirmation</b-button>
+        </div>
+
+        <div v-if="checkoutInitiated">
+          <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn> &nbsp;&nbsp;
+          <b-btn disabled class="primary-button">Pay with Khalti</b-btn>
         </div>
       </div>
       <div v-else>
@@ -63,6 +68,17 @@ export default {
   },
 
   methods: {
+    async handlePayment() {
+      try {
+        const success = await this.$store.dispatch('cartStore/pay');
+        notification.success(this, 'Payment done');
+        this.shippingMethod = null;
+      } catch (error) {
+        console.log(error);
+        const msg = error.httpStatus ? '' : error.response.data.errorDetails;
+        notification.error(this, `Error: ${msg}`, 'all');
+      }
+    },
     async addressSelected(selected) {
       this.$store.commit('shippingStore/addressSelected', selected);
       if (!this.checkoutInitiated) return;
@@ -125,11 +141,20 @@ export default {
   computed: {
     ...mapGetters({
       selectedAddress: 'shippingStore/getSelectedAddress',
-      shippingMethod: 'shippingStore/shippingMethod',
+      carts: 'cartStore/getCart',
       isSessionActive: 'authStore/isSessionActive',
       checkoutInitiated: 'cartStore/checkoutInitiated',
       emailConfirmed: 'authStore/emailConfirmed',
     }),
+
+    shippingMethod: {
+      get() {
+        return this.$store.getters['shippingStore/shippingMethod'];
+      },
+      set(val) {
+        this.$store.commit('shippingStore/setShippingMethod', val);
+      },
+    },
   },
 };
 </script>

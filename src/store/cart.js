@@ -13,8 +13,41 @@ export default {
     shippingPrice: {},
     tariffPrice: {},
     checkoutInitiated: false,
+    checkoutID: null,
   },
   actions: {
+    /**
+     *This is temporary
+     *
+     * @param {*} { state }
+     */
+    async pay({ state, commit }) {
+      const { data } = await Vue.prototype.$axios({
+        url: ProxyUrl.createPaymentToken,
+        method: 'post',
+        data: {
+          checkoutId: state.checkoutID,
+          paymentSource: 'BKASH',
+        },
+      });
+
+      if (data.httpStatus === 200) {
+        const paymentId = data.responseData.payment_info[0].payment_id;
+
+        const newData = await Vue.prototype.$axios({
+          url: ProxyUrl.completeCheckout,
+          method: 'post',
+          data: {
+            paymentSource: 'BKASH',
+            paymentId,
+          },
+        });
+
+        if (newData.data.httpStatus === 200) {
+          commit('resetOrders');
+        }
+      }
+    },
     async createCheckout({
       state,
       commit,
@@ -38,9 +71,11 @@ export default {
         if (data.httpStatus === 200) {
           commit('setCart', data.responseData.cart);
           commit('setCheckoutInitiated', true);
+          commit('setCheckoutId', data.responseData._id);
           return true;
         }
         commit('setCheckoutInitiated', false);
+        commit('setCheckoutId', null);
         throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
@@ -252,6 +287,9 @@ export default {
     },
   },
   mutations: {
+    setCheckoutId(state, payload) {
+      state.checkoutID = payload;
+    },
     setCheckoutInitiated(state, val) {
       state.checkoutInitiated = val;
     },
@@ -265,6 +303,7 @@ export default {
       state.shippingPrice = {};
       state.tariffPrice = {};
       state.checkoutInitiated = false;
+      state.checkoutID = null;
     },
     appendToCart(state, newProducts) {
       newProducts.forEach((pr) => {

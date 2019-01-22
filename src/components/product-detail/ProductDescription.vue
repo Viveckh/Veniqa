@@ -13,42 +13,49 @@
       <font-awesome-icon icon="weight"/>
       &nbsp; {{product.weight.quantity}} {{product.weight.unit}}
     </p>
-    <p v-if="Object.keys(product.custom_attributes).length > 0">
-      <strong>Custom attributes and selections are gonna be here.</strong>
-    </p>
+
+    <div class="custom-attributes">
+      <div v-for="(attrib, aid) in customizations" v-bind:key="aid">
+        <div v-if="attrib.type === 'Array'">
+          <b-form-group
+            :label-cols="3"
+            :label="attrib.name"
+            :label-for="attrib.name+aid"
+            horizontal
+          >
+            <b-form-select
+              v-model="selectedCustomizations[attrib.key]"
+              :options="attrib.values"
+              size="sm"
+              :name="attrib.name+aid"
+              :id="attrib.name+aid"
+              style="max-width: 150px"
+            />
+            <b-form-invalid-feedback id="countryFeedback">
+              <!-- This will only be shown if the preceeding input has an invalid state -->
+              The {{attrib.name}} cannot be empty.
+            </b-form-invalid-feedback>
+          </b-form-group>
+          <!-- <b-form-select v-model="selectedCustomizations[attrib.key]" :options="attrib.values" class="mb-3" size="sm" /> -->
+        </div>
+      </div>
+    </div>
 
     <!-- <p class="section-title">
       <span>Quantity</span>
       <span class="icon"><font-awesome-icon icon='chevron-circle-down' @click="decreaseCount()"/></span>
       <span>{{product.counts}}</span>
       <span class="icon"><font-awesome-icon icon='chevron-circle-up' @click="increaseCount()"/></span>
-    </p> -->
-
+    </p>-->
     <p style="margin-top: 20px">
       <b-button size="sm" class="primary-button hvr-grow" @click="addToCart()">
-        <font-awesome-icon  icon="shopping-bag"/>&nbsp;
+        <font-awesome-icon icon="shopping-bag"/>&nbsp;
         Add to Cart
       </b-button>
     </p>
     <hr>
-    <p class="section-title">Product Detail
-    </p>
-    <p>
-      Ribbed-knit storm cuffs add warmth to this wind and water-resistant puffer jacket from Tommy Hilfiger, designed with an attached hood lined with cozy micro-fleece for a soft touch.
-      <br><br>
-      Approx. model height is 6'1" and he is wearing a size medium<br>
-      Heavyweight<br>
-      Front zip closure<br>
-      Stand collar with attached drawstring hood<br>
-      Hand pockets at sides; interior pocket<br>
-      Tommy Hilfiger logo flag embroidery at chest<br>
-      Created for Macy's<br>
-      Shell: nylon; lining and filler: polyester<br>
-      Machine washable<br>
-      Imported<br>
-      Savings Based On Offering Prices, Not Actual Sales<br>
-      Web ID: 6550128<br>
-    </p>
+    <p class="section-title">Product Detail</p>
+    <div v-html="product.details_html"></div>
   </div>
 </template>
 
@@ -64,16 +71,23 @@ export default {
   data() {
     return {
       product: null,
+      selectedCustomizations: [],
     };
   },
 
   created() {
     this.product = this.data;
+    this.product.customizationOptions.customizations.forEach((attrib) => {
+      this.selectedCustomizations.push(attrib.key);
+      this.selectedCustomizations[attrib.key] = attrib.values.length > 0 ? attrib.values[0] : '';
+    });
   },
 
   methods: {
     async addToCart() {
-      const val = await this.$store.dispatch('cartStore/addToTheCart', [this.product]);
+      const val = await this.$store.dispatch('cartStore/addToTheCart', [
+        this.product,
+      ]);
       if (val) {
         this.$notify({
           group: 'toast',
@@ -105,6 +119,11 @@ export default {
     },
   },
 
+  computed: {
+    customizations() {
+      return this.product.customizationOptions.customizations;
+    },
+  },
 };
 </script>
 
@@ -114,23 +133,24 @@ export default {
     padding: 5px 0px;
     margin: 0px;
 
-    span{
+    span {
       margin-right: 10px;
     }
 
-    .icon{
+    .icon {
       font-size: 1.5em;
 
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
   }
 
-  .section-title{
+  .custom-attributes {
+    margin-top: 1rem;
+  }
+  .section-title {
     font-size: 1.2em;
   }
-
-
 }
 </style>
