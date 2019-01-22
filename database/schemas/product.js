@@ -10,7 +10,6 @@ import customizationOptions from './customizationOptions';
 import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 
 import STORES_ARRAY from '../reference-data-files/stores.json';
-import PRODUCT_CATEGORIES from '../reference-data-files/product-categories.json'
 
 let productSchema = new mongoose.Schema({
     store: {
@@ -38,26 +37,9 @@ let productSchema = new mongoose.Schema({
         }
     },
     category: {
-        type: String,
-        required: true,
-        trim: true,
-        validate: (value) => {
-            // Get all category names and check if the passed value is one of them
-            let categoriesArray = _.map(PRODUCT_CATEGORIES, 'name');
-            return categoriesArray.includes(value);
-        }
-    },
-    subcategory: {
-        type: String,
-        required: true,
-        trim: true
-        /*
-        validate: function(value) {
-            // Find the selected category object and see if the subcategory exists in subcategories array
-            let categoryObj = _.find(PRODUCT_CATEGORIES, {name: this.category})
-            return categoryObj && categoryObj.subcategories && categoryObj.subcategories.includes(value);
-        }
-        */
+        type: Schema.Types.ObjectId,
+        ref: MONGO_COLLECTIONS.product_categories,
+        required: true
     },
     thumbnailUrls: {
         type: Array,
@@ -130,6 +112,6 @@ let productSchema = new mongoose.Schema({
     }
 });
 
-productSchema.index({store: 'text', brand: 'text', name: 'text', category: 'text', subcategory: 'text', details_html: 'text'});
+productSchema.index({store: 'text', brand: 'text', name: 'text', details_html: 'text'});
 
 module.exports = productSchema;

@@ -6,14 +6,13 @@ import Tariff from '../database/models/tariffRate';
 import STORES_ARRAY from '../database/reference-data-files/stores.json';
 import WEIGHT_UNITS_ARRAY from '../database/reference-data-files/weightUnits.json'; 
 import ROLES_ARRAY from '../database/reference-data-files/roles';
-import PRODUCT_CATEGORIES from '../database/reference-data-files/product-categories.json'
 
 export default {
     async getCatalogBundle() {
         try {
             let result = {
                 stores: STORES_ARRAY,
-                product_categories: PRODUCT_CATEGORIES,
+                product_categories: await ProductCategory.find({}, '_id category subcategory').exec(),
                 weight_units: WEIGHT_UNITS_ARRAY,
                 tariff_categories: await Tariff.find({}, '_id name').exec()
             }
@@ -28,16 +27,6 @@ export default {
     async getStores() {
         try {
             return STORES_ARRAY;
-        }
-        catch(err) {
-            console.log(err);
-            return false;
-        }
-    },
-
-    async getProductCategories() {
-        try {
-            return PRODUCT_CATEGORIES;
         }
         catch(err) {
             console.log(err);

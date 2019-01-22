@@ -35,7 +35,7 @@ export default {
     async getOrderDetails(orderId){
         let result = {};
         try {
-            let order = await Order.findOne({_id: orderId}).exec();
+            let order = await Order.findOne({_id: orderId}).populate('cart.items.product.category cart.items.product.tariff').exec();
             if (order) {
                 result = {httpStatus: httpStatus.OK, status: "successful", responseData: order};
             } 
