@@ -25,6 +25,7 @@ getDBConnection();
 
 // Initializing the models and registering them to their models
 require("./models/tariffRate");
+require("./models/productCategory");
 require("./models/product")
 require("./models/user");
 

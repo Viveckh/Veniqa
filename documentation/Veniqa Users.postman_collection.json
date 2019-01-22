@@ -267,7 +267,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"addressId\": \"5c3cb47ad818c59ff5e73de9\",\n\t\"shippingMethod\": \"No Rush Shipping\"\n}"
+							"raw": "{\n\t\"addressId\": \"5c466b471bf2861852c416cb\",\n\t\"shippingMethod\": \"No Rush Shipping\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/createCheckout",
@@ -296,7 +296,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"checkoutId\": \"5c3cdcfa0db149a1a320c790\",\n\t\"paymentSource\": \"BKASH\"\n}"
+							"raw": "{\n\t\"checkoutId\": \"5c466fa242dccc1973be09e5\",\n\t\"paymentSource\": \"BKASH\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/createPaymentToken",
@@ -384,7 +384,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/catalog/getProductDetails?productId=5c3fa7a557e8ccb8b6a0d188",
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c465b51484bd2148fcfca64",
 							"host": [
 								"{{server}}"
 							],
@@ -395,7 +395,7 @@
 							"query": [
 								{
 									"key": "productId",
-									"value": "5c3fa7a557e8ccb8b6a0d188"
+									"value": "5c465b51484bd2148fcfca64"
 								}
 							]
 						}
@@ -421,7 +421,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[{\n\t\"product\": \"5c3fa7a557e8ccb8b6a0d188\",\n\t\"counts\": 2,\n\t\"customizations\": {\n\t\t\"size\": \"S\"\n\t}\n}]"
+							"raw": "[{\n\t\"product\": \"5c465b51484bd2148fcfca64\",\n\t\"counts\": 2,\n\t\"customizations\": {\n\t\t\"size\": \"S\"\n\t}\n}]"
 						},
 						"url": {
 							"raw": "{{server}}/shopping/addToCart",

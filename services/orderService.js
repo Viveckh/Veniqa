@@ -94,7 +94,7 @@ export default {
             let orderCartFromSavedCheckout = checkout.cart;
             // Converting the mongoose object to a regular json object for comparision purposes
             orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject();
-            transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff"])
+            transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff", "category"])
 
             /*
             console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
@@ -102,7 +102,7 @@ export default {
             console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
             console.log("------------------------------------")
             console.log("checking if checkout cart ids got modified", checkout.cart);
-            */            
+            */
 
             // If what is in checkout record does not match what was freshly calculated, return a failure msg
             if (!_.isEqual(freshCalculatedCart, orderCartFromSavedCheckout)) {
@@ -228,7 +228,9 @@ export default {
                 // TODO: Select proper country while calculating tariff
                 let tariffRate = item.product.tariff.rates['Nepal'] / 100; // This is freshly populated from the get cart above, so tariff will always be up to date value
                 tariffPriceInUSD += Math.round(tariffRate * item.aggregatedPrice.amount * 100) / 100;
-                shoppingCart.items[index].product.tariff = item.product.tariff._id;  // To reset the tariff back to only its id, because that's how it is saved in checkout and order table
+                // To reset the tariff and category back to only its id, because that's how it is saved in checkout and order table
+                shoppingCart.items[index].product.tariff = item.product.tariff._id;  
+                shoppingCart.items[index].product.category = item.product.category._id;
             }
 
             // Calculating shipping price
