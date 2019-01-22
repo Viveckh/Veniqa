@@ -2,7 +2,12 @@
   <div id="custom-attribute">
     <b-btn @click="addRow()" size="sm">Add a row</b-btn>
     <div class="attrib-space"></div>
-    <div v-for="(attrib, aInd) in attributes" v-bind:key="aInd" class="form-row" v-bind:class="{'list-row': aInd % 2 == 0}">
+    <div
+      v-for="(attrib, aInd) in attributes"
+      v-bind:key="aInd"
+      class="form-row"
+      v-bind:class="{'list-row': aInd % 2 == 0}"
+    >
       <attribute-row :index="aInd" :row="attrib" @delete="deleteRow(aInd)"/>
     </div>
     <div class="space" v-if="attributes.length ==0"></div>
@@ -59,6 +64,22 @@ export default {
 
     save() {
       if (this.validateForms()) {
+        let isTrue = true;
+        for (let i = 0; i < this.attributes.length; i++) {
+          const obj = this.attributes[i];
+          if (obj.values.length <= 1) {
+            isTrue = false;
+            break;
+          }
+        }
+        if (!isTrue) {
+          this.$notify({
+            group: 'all',
+            type: 'error',
+            text: 'You have to have at least 2 options for each attribute',
+          });
+          return;
+        }
         this.$emit('save', this.attributes);
       } else {
         this.$notify({
@@ -73,10 +94,15 @@ export default {
       for (let i = 0; i < this.attributes.length; i++) {
         const attr = this.attributes[i];
 
-        if (attr.name == null || attr.name.length == 0
-          || attr.type == null || attr.type.length == 0
-          || attr.key == null || attr.key.length == 0
-          || attr.values == null || attr.values.length == 0
+        if (
+          attr.name == null
+          || attr.name.length == 0
+          || attr.type == null
+          || attr.type.length == 0
+          || attr.key == null
+          || attr.key.length == 0
+          || attr.values == null
+          || attr.values.length == 0
         ) {
           return false;
         }
@@ -84,30 +110,23 @@ export default {
       return true;
     },
   },
-
 };
 </script>
 
 <style lang="scss" scoped>
-
-#custom-attribute{
-
-
-  .form-row{
+#custom-attribute {
+  .form-row {
     margin: 5px 0px;
-
   }
 
-  .attrib-space{
+  .attrib-space {
     margin-top: 10px;
   }
 
-  .buttons{
-    button{
+  .buttons {
+    button {
       margin-right: 10px;
     }
   }
 }
-
-
 </style>

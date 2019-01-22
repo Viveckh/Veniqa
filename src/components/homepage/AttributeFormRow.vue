@@ -81,7 +81,7 @@
             <b-col class="min-padding" sm="5">
               <b-form-input
                 id="hex"
-                type="text"
+                type="color"
                 name="hex"
                 :state="hexState(val.hexValue)"
                 v-model="val.hexValue"

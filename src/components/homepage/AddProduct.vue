@@ -88,16 +88,17 @@
         <!-- Category -->
         <b-form-group horizontal :label-cols="2" label="Category" label-for="category">
           <b-form-select
-            v-model="product.category"
-            :options="refdata.categories"
+            v-model="product.category.category"
             class="mb-3"
             size="sm"
             id="category"
             name="category"
+            @input="product.category._id = ''"
             :state="categoryState"
             aria-describedby="categoryFeedback"
-          />
-
+          >
+            <option :value="cat" v-for="(cat,cind) in uniqueCategories" v-bind:key="cind">{{cat}}</option>
+          </b-form-select>
           <b-form-invalid-feedback id="categoryFeedback">
             <!-- This will only be shown if the preceeding input has an invalid state -->
             This field cannot be empty
@@ -107,20 +108,22 @@
         <!-- Subcategory -->
         <b-form-group horizontal :label-cols="2" label="Sub Category" label-for="subcategory">
           <b-form-select
-            v-model="product.subcategory"
-            :options="getSubCategory()"
+            v-model="product.category._id"
             class="mb-3"
             size="sm"
             id="subcategory"
             name="subcategory"
             :state="subcategoryState"
             aria-describedby="subcategoryFeedback"
-          />
+          >
+            <option
+              :value="sub._id"
+              v-for="(sub, sid) in filteredSubcategories"
+              v-bind:key="sid"
+            >{{sub.subcategory}}</option>
+          </b-form-select>
 
-          <b-form-invalid-feedback id="subcategoryFeedback">
-            <!-- This will only be shown if the preceeding input has an invalid state -->
-            This field cannot be empty
-          </b-form-invalid-feedback>
+          <b-form-invalid-feedback id="subcategoryFeedback">This field cannot be empty</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Price -->
@@ -207,7 +210,7 @@
                 <td>{{attrib.name}}</td>
                 <td>{{attrib.key}}</td>
                 <td>{{attrib.type}}</td>
-                <td v-if="attrib.type ==='Color'">{{extractColorValues(attrib)}}</td>
+                <td v-if="attrib.type ==='Colors'">{{extractColorValues(attrib)}}</td>
                 <td v-else>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
               </tr>
             </tbody>
@@ -222,6 +225,7 @@
             size="sm"
           >
             <custom-attributes
+              v-if="showAttributes"
               :propValue="product.customizationOptions.customizations"
               @cancel="cancelAttribModal"
               @save="saveAttributes"
@@ -455,7 +459,6 @@ export default {
     CustomAttributes,
   },
   created() {
-
     if (this.data != null) {
       this.product = _.cloneDeep(this.data);
       this.product.tariff = this.product.tariff._id;
@@ -472,8 +475,12 @@ export default {
         name: 'Amrezy Highlighter',
         item_url:
           'https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product',
-        category: 'Make-Up Kits',
-        subcategory: 'Palettes',
+        category: {
+          _id: null,
+          category: null,
+          subcategory: null,
+        },
+
         thumbnailUrls: [
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
@@ -571,11 +578,19 @@ export default {
     },
 
     categoryState() {
-      return this.product.category.length > 0;
+      if (
+        this.product.category.category == undefined
+        || this.product.category.category == null
+      ) return null;
+      return this.product.category.category.length > 0;
     },
 
     subcategoryState() {
-      return this.product.subcategory.length > 0;
+      if (
+        this.product.category._id == undefined
+        || this.product.category._id == null
+      ) return null;
+      return this.product.category._id.length > 0;
     },
 
     priceState() {
@@ -595,6 +610,20 @@ export default {
     unitState() {
       return this.product.weight.unit.length > 0;
     },
+
+    uniqueCategories() {
+      return [...new Set(this.refdata.categories.map(item => item.category))];
+    },
+
+    filteredSubcategories() {
+      console.log('Category', this.product.category.category);
+      if (this.product.category.category == null) return _.map(this.refdata.categories, 'subcategory');
+      const val = this.refdata.categories.filter((item) => {
+        if (item.category === this.product.category.category) return true;
+        return false;
+      });
+      return val;
+    },
   },
   methods: {
     extractColorValues(attribute) {
@@ -604,6 +633,11 @@ export default {
       if (this.tariffState == null) {
         this.product.tariff = '';
       }
+      if (!this.categoryState) {
+        this.product.category.category = '';
+      }
+      console.log('ID', this.product.category._id);
+      if (!this.subcategoryState) this.product.category._id = '';
       return (
         this.productNameState
         && this.storeState
@@ -644,22 +678,23 @@ export default {
     },
     async handleAddProduct() {
       if (!this.validateForm()) return;
-      let totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
+      const totalImages = this.$refs.managephoto.configureParams()
+        .numberOfThumbnailAndDetailedImages;
       if (totalImages <= 0) {
-          this.$notify({
-            group: 'all',
-            type: 'warn',
-            text: 'You need to upload at least 1 image.'
-          })
-          return;
-        }
+        this.$notify({
+          group: 'all',
+          type: 'warn',
+          text: 'You need to upload at least 1 image.',
+        });
+        return;
+      }
       try {
         const saveImageRes = await this.$refs.managephoto.saveAll();
         if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
           this.preassignedUrls = null;
         }
-        
+
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
@@ -673,15 +708,16 @@ export default {
     },
     async handleEditProduct() {
       if (!this.validateForm()) return;
-      let totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
+      const totalImages = this.$refs.managephoto.configureParams()
+        .numberOfThumbnailAndDetailedImages;
       if (totalImages <= 0) {
-          this.$notify({
-            group: 'all',
-            type: 'warn',
-            text: 'You need to upload at least 1 image.'
-          })
-          return;
-        }
+        this.$notify({
+          group: 'all',
+          type: 'warn',
+          text: 'You need to upload at least 1 image.',
+        });
+        return;
+      }
       try {
         const saveImageRes = await this.$refs.managephoto.saveAll();
         if (saveImageRes) {

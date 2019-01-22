@@ -6,31 +6,44 @@
           <font-awesome-icon icon="chevron-left" @click="goToOrdersPage()"/>
         </a> Order Details
       </h3>
+      <b-card>
+        <p class="status">
+          <b-row>
+            <b-col md="6">
+              Order Status:
+              <span class="item-status">{{openOrder.overall_status}}</span>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right">
+                <b-btn
+                  variant="success"
+                  size="sm"
+                  v-if="openOrder.overall_status === 'RECEIVED' && permissionGranted"
+                  @click="showConfirmation = true"
+                >Confirm Order</b-btn>
+                <b-btn
+                  variant="danger"
+                  v-if="openOrder.overall_status == 'RECEIVED' && permissionGranted"
+                  size="sm"
+                  @click="cancelConfirmation = true"
+                >Cancel Order</b-btn>
+              </div>
+            </b-col>
+          </b-row>
+        </p>
 
-      <p class="status">
-        <b-row>
-          <b-col md="6">
-            Order Status:
-            <span class="item-status">{{openOrder.overall_status}}</span>
-          </b-col>
-          <b-col md="6">
-            <div class="align-right">
-              <b-btn
-                variant="success"
-                size="sm"
-                v-if="openOrder.overall_status === 'RECEIVED' && permissionGranted"
-                @click="showConfirmation = true"
-              >Confirm Order</b-btn>
-              <b-btn
-                variant="danger"
-                v-if="openOrder.overall_status == 'RECEIVED' && permissionGranted"
-                size="sm"
-                @click="cancelConfirmation = true"
-              >Cancel Order</b-btn>
-            </div>
-          </b-col>
-        </b-row>
-      </p>
+        <ul class="order-desc">
+          <li><strong> Created By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.name}}</li>
+          <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.email}}</li>
+          <li><strong>Created On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdOn}}</li>
+        </ul>
+
+        <ul class="order-desc">
+          <li><strong>Updated By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.name}}</li>
+          <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.email}}</li>
+          <li><strong>Updated On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedOn}}</li>
+        </ul>
+      </b-card>
 
       <h5>All Ordered Items</h5>
       <hr>
@@ -158,7 +171,10 @@ export default {
 
     permissionGranted() {
       if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
-      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
+      return (
+        this.permissions
+        && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0
+      );
     },
   },
 };
@@ -167,6 +183,14 @@ export default {
 <style lang="scss" scoped>
 #order-detail {
   font-size: 0.875rem;
+
+  .order-desc{
+    li {
+      display: inline-block;
+      width: 300px;
+      padding-right: 10px;
+    }
+  }
 
   .status {
     button {
