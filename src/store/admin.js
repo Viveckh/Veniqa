@@ -134,7 +134,7 @@ export default {
       state.stores = payload.stores || [];
       state.categories = [];
       state.weight_units = payload.weight_units || [];
-      state.categories = _.map(payload.product_categories, 'name');
+      state.categories = payload.product_categories;
       state.refDataPayload = payload || {};
       state.subcategories = [];
       state.tariffCategories = payload.tariff_categories || [];

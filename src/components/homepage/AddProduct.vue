@@ -88,16 +88,17 @@
         <!-- Category -->
         <b-form-group horizontal :label-cols="2" label="Category" label-for="category">
           <b-form-select
-            v-model="product.category"
-            :options="refdata.categories"
+            v-model="product.category.category"
             class="mb-3"
             size="sm"
             id="category"
             name="category"
+            @input="product.category._id = ''"
             :state="categoryState"
             aria-describedby="categoryFeedback"
-          />
-
+          >
+            <option :value="cat" v-for="(cat,cind) in uniqueCategories" v-bind:key="cind">{{cat}}</option>
+          </b-form-select>
           <b-form-invalid-feedback id="categoryFeedback">
             <!-- This will only be shown if the preceeding input has an invalid state -->
             This field cannot be empty
@@ -107,20 +108,22 @@
         <!-- Subcategory -->
         <b-form-group horizontal :label-cols="2" label="Sub Category" label-for="subcategory">
           <b-form-select
-            v-model="product.subcategory"
-            :options="getSubCategory()"
+            v-model="product.category._id"
             class="mb-3"
             size="sm"
             id="subcategory"
             name="subcategory"
             :state="subcategoryState"
             aria-describedby="subcategoryFeedback"
-          />
+          >
+            <option
+              :value="sub._id"
+              v-for="(sub, sid) in filteredSubcategories"
+              v-bind:key="sid"
+            >{{sub.subcategory}}</option>
+          </b-form-select>
 
-          <b-form-invalid-feedback id="subcategoryFeedback">
-            <!-- This will only be shown if the preceeding input has an invalid state -->
-            This field cannot be empty
-          </b-form-invalid-feedback>
+          <b-form-invalid-feedback id="subcategoryFeedback">This field cannot be empty</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Price -->
@@ -288,7 +291,7 @@
               >
                 <font-awesome-icon icon="bold"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.italic() }"
@@ -296,7 +299,7 @@
               >
                 <font-awesome-icon icon="italic"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.strike() }"
@@ -304,7 +307,7 @@
               >
                 <font-awesome-icon icon="strikethrough"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.underline() }"
@@ -312,7 +315,7 @@
               >
                 <font-awesome-icon icon="underline"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code() }"
@@ -320,7 +323,7 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.paragraph() }"
@@ -328,25 +331,25 @@
               >
                 <font-awesome-icon icon="paragraph"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                 @click="commands.heading({ level: 1 })"
               >H1</button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                 @click="commands.heading({ level: 2 })"
               >H2</button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                 @click="commands.heading({ level: 3 })"
               >H3</button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.bullet_list() }"
@@ -354,7 +357,7 @@
               >
                 <font-awesome-icon icon="list-ul"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.ordered_list() }"
@@ -362,7 +365,7 @@
               >
                 <font-awesome-icon icon="list-ol"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.blockquote() }"
@@ -370,7 +373,7 @@
               >
                 <font-awesome-icon icon="quote-left"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code_block() }"
@@ -378,11 +381,11 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-
+              
               <button class="menubar__button" @click="commands.undo">
                 <font-awesome-icon icon="undo"/>
               </button>
-
+              
               <button class="menubar__button" @click="commands.redo">
                 <font-awesome-icon icon="redo"/>
               </button>
@@ -419,12 +422,12 @@
 </template>
 
 <script>
-import * as _ from 'lodash';
-import ManagePhoto from '@/components/homepage/ManagePhoto';
-import CustomAttributes from '@/components/homepage/CustomAttributes';
+import * as _ from 'lodash'
+import ManagePhoto from '@/components/homepage/ManagePhoto'
+import CustomAttributes from '@/components/homepage/CustomAttributes'
 // Import the editor
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
-import { mapGetters } from 'vuex';
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import { mapGetters } from 'vuex'
 import {
   Blockquote,
   CodeBlock,
@@ -441,24 +444,23 @@ import {
   Link,
   Strike,
   Underline,
-  History,
-} from 'tiptap-extensions';
+  History
+} from 'tiptap-extensions'
 
 export default {
   props: {
-    data: { required: false, type: Object, default: null },
+    data: { required: false, type: Object, default: null }
   },
   components: {
     ManagePhoto,
     EditorContent,
     EditorMenuBar,
-    CustomAttributes,
+    CustomAttributes
   },
   created() {
-
     if (this.data != null) {
-      this.product = _.cloneDeep(this.data);
-      this.product.tariff = this.product.tariff._id;
+      this.product = _.cloneDeep(this.data)
+      this.product.tariff = this.product.tariff._id
     }
   },
   data() {
@@ -472,8 +474,12 @@ export default {
         name: 'Amrezy Highlighter',
         item_url:
           'https://www.sephora.com/product/ignited-eyeshadow-palette-P439026?icid2=just%20arrived:p439026:product',
-        category: 'Make-Up Kits',
-        subcategory: 'Palettes',
+        category: {
+          _id: null,
+          category: null,
+          subcategory: null
+        },
+
         thumbnailUrls: [
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
@@ -486,29 +492,29 @@ export default {
         ],
         price: {
           amount: 27.99,
-          currency: 'USD',
+          currency: 'USD'
         },
         tariff: null,
         weight: {
           quantity: 3.2,
-          unit: 'LB',
+          unit: 'LB'
         },
         custom_attributes: {},
         customizationOptions: {
-          customizations: [],
+          customizations: []
         },
         details_html:
           'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
           { name: 'Black', hexValue: '#000000' },
-          { name: 'Brown', hexValue: '#435ADF' },
+          { name: 'Brown', hexValue: '#435ADF' }
         ],
-        sizes: ['XS', 'S', 'M', 'L'],
+        sizes: ['XS', 'S', 'M', 'L']
       },
 
       showManagePhoto: false,
-      images: null,
-    };
+      images: null
+    }
   },
 
   mounted() {
@@ -530,102 +536,132 @@ export default {
         new Link(),
         new Strike(),
         new Underline(),
-        new History(),
+        new History()
       ],
 
       onUpdate: ({ getJSON, getHTML }) => {
         // this.json = getJSON()
-        this.product.details_html = getHTML();
-      },
-    });
+        this.product.details_html = getHTML()
+      }
+    })
 
     // console.log("Content", this.editor)
   },
   beforeDestroy() {
-    this.editor.destroy();
+    this.editor.destroy()
   },
   computed: {
     refdata() {
-      return this.$store.getters['adminStore/allStateData'];
+      return this.$store.getters['adminStore/allStateData']
     },
 
     ...mapGetters({
-      tariffCategories: 'adminStore/tariffCategories',
+      tariffCategories: 'adminStore/tariffCategories'
     }),
 
     tariffState() {
-      if (this.product.tariff == null) return null;
-      return this.product.tariff.length > 0;
+      if (this.product.tariff == null) return null
+      return this.product.tariff.length > 0
     },
 
     productNameState() {
-      return this.product.name.length > 0;
+      return this.product.name.length > 0
     },
 
     storeState() {
-      return this.product.store.length > 0;
+      return this.product.store.length > 0
     },
 
     brandState() {
-      return this.product.brand.length > 0;
+      return this.product.brand.length > 0
     },
 
     categoryState() {
-      return this.product.category.length > 0;
+      if (
+        this.product.category.category == undefined ||
+        this.product.category.category == null
+      )
+        return null
+      return this.product.category.category.length > 0
     },
 
     subcategoryState() {
-      return this.product.subcategory.length > 0;
+      if (
+        this.product.category._id == undefined ||
+        this.product.category._id == null
+      )
+        return null
+      return this.product.category._id.length > 0
     },
 
     priceState() {
-      return this.product.price.amount > 0 && this.product.price.amount != null;
+      return this.product.price.amount > 0 && this.product.price.amount != null
     },
 
     itemurlState() {
-      return this.product.item_url.length > 0;
+      return this.product.item_url.length > 0
     },
 
     weightState() {
       return (
         this.product.weight.quantity > 0 && this.product.weight.quantity != null
-      );
+      )
     },
 
     unitState() {
-      return this.product.weight.unit.length > 0;
+      return this.product.weight.unit.length > 0
     },
+
+    uniqueCategories() {
+      return [...new Set(this.refdata.categories.map(item => item.category))]
+    },
+
+    filteredSubcategories() {
+      console.log('Category', this.product.category.category)
+      if (this.product.category.category == null)
+        return _.map(this.refdata.categories, 'subcategory')
+      let val = this.refdata.categories.filter(item => {
+        if (item.category === this.product.category.category) return true
+        else return false
+      })
+      return val
+    }
   },
   methods: {
     extractColorValues(attribute) {
-      return _.map(attribute.values, 'name').join(' , ');
+      return _.map(attribute.values, 'name').join(' , ')
     },
     validateForm() {
       if (this.tariffState == null) {
-        this.product.tariff = '';
+        this.product.tariff = ''
       }
+      if (!this.categoryState) {
+        this.product.category.category = ''
+      }
+      console.log('ID', this.product.category._id)
+      if (!this.subcategoryState) this.product.category._id = ''
       return (
-        this.productNameState
-        && this.storeState
-        && this.brandState
-        && this.categoryState
-        && this.subcategoryState
-        && this.priceState
-        && this.itemurlState
-        && this.weightState
-        && this.unitState
-        && this.tariffState
-      );
+        this.productNameState &&
+        this.storeState &&
+        this.brandState &&
+        this.categoryState &&
+        this.subcategoryState &&
+        this.priceState &&
+        this.itemurlState &&
+        this.weightState &&
+        this.unitState &&
+        this.tariffState
+      )
     },
 
     cancelAttribModal() {
-      this.showAttributes = false;
+      this.showAttributes = false
     },
 
     saveAttributes(attribs) {
-      this.product.customizationOptions.customizations = [];
-      this.product.customizationOptions.customizations.push(...attribs);
-      this.showAttributes = false;
+      this.product.customizationOptions.customizations = []
+      this.product.customizationOptions.customizations.push(...attribs)
+      this.showAttributes = false
     },
     /**
      * @param {Object} payload
@@ -636,78 +672,80 @@ export default {
      * }
      */
     imageUploadComplete(payload) {
-      this.showManagePhoto = false;
-      _.assign(this.product, payload);
+      this.showManagePhoto = false
+      _.assign(this.product, payload)
     },
     goBack() {
-      this.$emit('cancelTrigger');
+      this.$emit('cancelTrigger')
     },
     async handleAddProduct() {
-      if (!this.validateForm()) return;
-      let totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
+      if (!this.validateForm()) return
+      let totalImages = this.$refs.managephoto.configureParams()
+        .numberOfThumbnailAndDetailedImages
       if (totalImages <= 0) {
-          this.$notify({
-            group: 'all',
-            type: 'warn',
-            text: 'You need to upload at least 1 image.'
-          })
-          return;
-        }
+        this.$notify({
+          group: 'all',
+          type: 'warn',
+          text: 'You need to upload at least 1 image.'
+        })
+        return
+      }
       try {
-        const saveImageRes = await this.$refs.managephoto.saveAll();
+        const saveImageRes = await this.$refs.managephoto.saveAll()
         if (saveImageRes) {
-          this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
+          this.imageUploadComplete(saveImageRes)
+          this.preassignedUrls = null
         }
-        
-        await this.$store.dispatch('adminStore/addProduct', this.product);
-        this.$emit('cancelTrigger');
+
+        await this.$store.dispatch('adminStore/addProduct', this.product)
+        this.$emit('cancelTrigger')
       } catch (err) {
-        if (err) this.preassignedUrls = err;
+        if (err) this.preassignedUrls = err
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error',
-        });
+          text: 'There was an error'
+        })
       }
     },
     async handleEditProduct() {
-      if (!this.validateForm()) return;
-      let totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
+      if (!this.validateForm()) return
+      let totalImages = this.$refs.managephoto.configureParams()
+        .numberOfThumbnailAndDetailedImages
       if (totalImages <= 0) {
-          this.$notify({
-            group: 'all',
-            type: 'warn',
-            text: 'You need to upload at least 1 image.'
-          })
-          return;
-        }
+        this.$notify({
+          group: 'all',
+          type: 'warn',
+          text: 'You need to upload at least 1 image.'
+        })
+        return
+      }
       try {
-        const saveImageRes = await this.$refs.managephoto.saveAll();
+        const saveImageRes = await this.$refs.managephoto.saveAll()
         if (saveImageRes) {
-          this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
+          this.imageUploadComplete(saveImageRes)
+          this.preassignedUrls = null
         }
-        await this.$store.dispatch('adminStore/editProduct', this.product);
-        this.$emit('cancelTrigger');
+        await this.$store.dispatch('adminStore/editProduct', this.product)
+        this.$emit('cancelTrigger')
       } catch (err) {
-        if (err) this.preassignedUrls = err;
+        if (err) this.preassignedUrls = err
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error',
-        });
+          text: 'There was an error'
+        })
       }
     },
     getSubCategory() {
-      const refState = this.$store.getters['adminStore/allStateData'];
+      const refState = this.$store.getters['adminStore/allStateData']
       const x = _.find(refState.refDataPayload.product_categories, {
-        name: this.product.category,
-      }).subcategories;
-      return x;
-    },
-  },
-};
+        name: this.product.category
+      }).subcategories
+      return x
+    }
+  }
+}
 </script>
 
 <style lang="scss" >
