@@ -6,31 +6,44 @@
           <font-awesome-icon icon="chevron-left" @click="goToOrdersPage()"/>
         </a> Order Details
       </h3>
+      <b-card>
+        <p class="status">
+          <b-row>
+            <b-col md="6">
+              Order Status:
+              <span class="item-status">{{openOrder.overall_status}}</span>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right">
+                <b-btn
+                  variant="success"
+                  size="sm"
+                  v-if="openOrder.overall_status === 'RECEIVED' && permissionGranted"
+                  @click="showConfirmation = true"
+                >Confirm Order</b-btn>
+                <b-btn
+                  variant="danger"
+                  v-if="openOrder.overall_status == 'RECEIVED' && permissionGranted"
+                  size="sm"
+                  @click="cancelConfirmation = true"
+                >Cancel Order</b-btn>
+              </div>
+            </b-col>
+          </b-row>
+        </p>
 
-      <p class="status">
-        <b-row>
-          <b-col md="6">
-            Order Status:
-            <span class="item-status">{{openOrder.overall_status}}</span>
-          </b-col>
-          <b-col md="6">
-            <div class="align-right">
-              <b-btn
-                variant="success"
-                size="sm"
-                v-if="openOrder.overall_status === 'RECEIVED' && permissionGranted"
-                @click="showConfirmation = true"
-              >Confirm Order</b-btn>
-              <b-btn
-                variant="danger"
-                v-if="openOrder.overall_status == 'RECEIVED' && permissionGranted"
-                size="sm"
-                @click="cancelConfirmation = true"
-              >Cancel Order</b-btn>
-            </div>
-          </b-col>
-        </b-row>
-      </p>
+        <ul class="order-desc">
+          <li><strong> Created By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.name}}</li>
+          <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.email}}</li>
+          <li><strong>Created On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdOn}}</li>
+        </ul>
+
+        <ul class="order-desc">
+          <li><strong>Updated By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.name}}</li>
+          <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.email}}</li>
+          <li><strong>Updated On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedOn}}</li>
+        </ul>
+      </b-card>
 
       <h5>All Ordered Items</h5>
       <hr>
@@ -64,29 +77,29 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SingleListItem from '@/components/orders/SingleListItem';
-import ConfirmationPage from '@/components/common/ConfirmationPage';
-import CommentsSection from '@/components/orders/CommentsSection';
-import Permission from '@/constants/permissions';
+import { mapGetters } from 'vuex'
+import SingleListItem from '@/components/orders/SingleListItem'
+import ConfirmationPage from '@/components/common/ConfirmationPage'
+import CommentsSection from '@/components/orders/CommentsSection'
+import Permission from '@/constants/permissions'
 
 export default {
   name: 'OrderDetail',
   components: {
     SingleListItem,
     ConfirmationPage,
-    CommentsSection,
+    CommentsSection
   },
   data() {
     return {
       showConfirmation: false,
-      cancelConfirmation: false,
-    };
+      cancelConfirmation: false
+    }
   },
 
   created() {
     if (this.openOrder == null) {
-      this.$router.push({ path: '/orders' });
+      this.$router.push({ path: '/orders' })
     }
   },
 
@@ -95,78 +108,89 @@ export default {
       try {
         const isSuccess = await this.$store.dispatch(
           'orderStore/cancelOrder',
-          this.openOrder._id,
-        );
+          this.openOrder._id
+        )
         if (isSuccess) {
-          this.$router.push({ path: '/orders' });
+          this.$router.push({ path: '/orders' })
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'Successfully cancelled the order.',
-          });
+            text: 'Successfully cancelled the order.'
+          })
         } else {
-          throw new Error('It wasn not a successful request');
+          throw new Error('It wasn not a successful request')
         }
       } catch (error) {
-        console.log('Error', error);
+        console.log('Error', error)
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Error occured while cancelling. Please try again later.',
-        });
+          text: 'Error occured while cancelling. Please try again later.'
+        })
       }
     },
 
     async yesClicked() {
-      await this.confirmOrder();
-      this.showConfirmation = false;
+      await this.confirmOrder()
+      this.showConfirmation = false
     },
 
     goToOrdersPage() {
-      this.$store.commit('orderStore/setOpenOrder', null);
-      this.$router.push({ path: '/orders' });
+      this.$store.commit('orderStore/setOpenOrder', null)
+      this.$router.push({ path: '/orders' })
     },
 
     async confirmOrder() {
       try {
-        const isSuccess = await this.$store.dispatch('orderStore/confirmOrder');
+        const isSuccess = await this.$store.dispatch('orderStore/confirmOrder')
 
         if (isSuccess) {
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'Order was confirmed.',
-          });
+            text: 'Order was confirmed.'
+          })
         }
       } catch (error) {
-        console.log('Error', error);
+        console.log('Error', error)
         this.$notify({
           group: 'all',
           type: 'error',
           text:
-            'Order could not be confirmed at the moment. Please try again later.',
-        });
+            'Order could not be confirmed at the moment. Please try again later.'
+        })
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
       openOrder: 'orderStore/openOrder',
-      permissions: 'authStore/permissions',
+      permissions: 'authStore/permissions'
     }),
 
     permissionGranted() {
-      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
-      return this.permissions && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0;
-    },
-  },
-};
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true
+      return (
+        this.permissions &&
+        this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0
+      )
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 #order-detail {
   font-size: 0.875rem;
+
+  .order-desc{
+    li {
+      display: inline-block;
+      width: 300px;
+      padding-right: 10px;
+    }
+  }
 
   .status {
     button {
