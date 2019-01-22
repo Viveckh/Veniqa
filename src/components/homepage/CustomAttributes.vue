@@ -20,97 +20,97 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import ProductAttribDTO from '@/dto/ProductAttribute'
-import AttributeRow from '@/components/homepage/AttributeFormRow'
+import _ from 'lodash';
+import ProductAttribDTO from '@/dto/ProductAttribute';
+import AttributeRow from '@/components/homepage/AttributeFormRow';
 
 export default {
   name: 'CustomAttribute',
   props: {
     propValue: {
-      required: true
+      required: true,
       // type: Object
-    }
+    },
   },
   components: {
-    AttributeRow
+    AttributeRow,
   },
   data() {
     return {
-      attributes: []
-    }
+      attributes: [],
+    };
   },
 
   created() {
     if (this.propValue && this.propValue.length > 0) {
-      this.attributes = _.cloneDeep(this.propValue)
+      this.attributes = _.cloneDeep(this.propValue);
     } else {
-      this.attributes = []
+      this.attributes = [];
     }
   },
 
   methods: {
     deleteRow(ind) {
-      this.attributes.splice(ind, 1)
+      this.attributes.splice(ind, 1);
     },
     addRow() {
-      this.attributes.push(_.cloneDeep(ProductAttribDTO))
+      this.attributes.push(_.cloneDeep(ProductAttribDTO));
     },
 
     cancel() {
-      this.attributes = []
-      this.$emit('cancel')
+      this.attributes = [];
+      this.$emit('cancel');
     },
 
     save() {
       if (this.validateForms()) {
-        let isTrue = true
+        let isTrue = true;
         for (let i = 0; i < this.attributes.length; i++) {
-          let obj = this.attributes[i]
+          const obj = this.attributes[i];
           if (obj.values.length <= 1) {
-            isTrue = false
-            break
+            isTrue = false;
+            break;
           }
         }
         if (!isTrue) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'You have to have at least 2 options for each attribute'
-          })
-          return
+            text: 'You have to have at least 2 options for each attribute',
+          });
+          return;
         }
-        this.$emit('save', this.attributes)
+        this.$emit('save', this.attributes);
       } else {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'None of the fields above can be empty.'
-        })
+          text: 'None of the fields above can be empty.',
+        });
       }
     },
 
     validateForms() {
       for (let i = 0; i < this.attributes.length; i++) {
-        const attr = this.attributes[i]
+        const attr = this.attributes[i];
 
         if (
-          attr.name == null ||
-          attr.name.length == 0 ||
-          attr.type == null ||
-          attr.type.length == 0 ||
-          attr.key == null ||
-          attr.key.length == 0 ||
-          attr.values == null ||
-          attr.values.length == 0
+          attr.name == null
+          || attr.name.length == 0
+          || attr.type == null
+          || attr.type.length == 0
+          || attr.key == null
+          || attr.key.length == 0
+          || attr.values == null
+          || attr.values.length == 0
         ) {
-          return false
+          return false;
         }
       }
-      return true
-    }
-  }
-}
+      return true;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

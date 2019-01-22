@@ -110,43 +110,43 @@
 </template>
 
 <script>
-import TagSelector from 'vue-tag-selector'
+import TagSelector from 'vue-tag-selector';
 
 export default {
   name: 'AttributeFormRow',
   props: {
     row: {
       required: true,
-      type: Object
+      type: Object,
     },
     index: {
       required: true,
-      type: Number
-    }
+      type: Number,
+    },
   },
   components: {
-    TagSelector
+    TagSelector,
   },
   data() {
     return {
-      allDataTypes: ['Toggle', 'Array', 'Colors']
-    }
+      allDataTypes: ['Toggle', 'Array', 'Colors'],
+    };
   },
 
   methods: {
     deleteClicked() {
-      this.$emit('delete')
+      this.$emit('delete');
     },
 
     deleteLine(ind) {
-      this.row.values.splice(ind, 1)
+      this.row.values.splice(ind, 1);
     },
 
     addLine() {
       this.row.values.push({
         name: null,
-        hexValue: null
-      })
+        hexValue: null,
+      });
     },
 
     typeChanged() {
@@ -154,44 +154,44 @@ export default {
         this.row.values = [
           {
             name: null,
-            hexValue: null
-          }
-        ]
+            hexValue: null,
+          },
+        ];
       }
-    }
+    },
   },
 
   computed: {
     nameState() {
-      if (this.row.name == null) return null
-      return this.row.name.length > 0
+      if (this.row.name == null) return null;
+      return this.row.name.length > 0;
     },
 
     keyState() {
-      if (this.row.key == null) return null
-      return this.row.key.length > 0
+      if (this.row.key == null) return null;
+      return this.row.key.length > 0;
     },
 
     typeState() {
-      if (this.row.type == null) return null
-      return this.row.type.length > 0
+      if (this.row.type == null) return null;
+      return this.row.type.length > 0;
     },
 
     hexState() {
-      return val => {
-        if (val == null) return null
-        return val.length > 0
-      }
+      return (val) => {
+        if (val == null) return null;
+        return val.length > 0;
+      };
     },
 
     colorNameState() {
-      return val => {
-        if (val == null) return null
-        return val.length > 0
-      }
-    }
-  }
-}
+      return (val) => {
+        if (val == null) return null;
+        return val.length > 0;
+      };
+    },
+  },
+};
 </script>
 
 <style lang="scss" >

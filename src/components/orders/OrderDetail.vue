@@ -77,29 +77,29 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SingleListItem from '@/components/orders/SingleListItem'
-import ConfirmationPage from '@/components/common/ConfirmationPage'
-import CommentsSection from '@/components/orders/CommentsSection'
-import Permission from '@/constants/permissions'
+import { mapGetters } from 'vuex';
+import SingleListItem from '@/components/orders/SingleListItem';
+import ConfirmationPage from '@/components/common/ConfirmationPage';
+import CommentsSection from '@/components/orders/CommentsSection';
+import Permission from '@/constants/permissions';
 
 export default {
   name: 'OrderDetail',
   components: {
     SingleListItem,
     ConfirmationPage,
-    CommentsSection
+    CommentsSection,
   },
   data() {
     return {
       showConfirmation: false,
-      cancelConfirmation: false
-    }
+      cancelConfirmation: false,
+    };
   },
 
   created() {
     if (this.openOrder == null) {
-      this.$router.push({ path: '/orders' })
+      this.$router.push({ path: '/orders' });
     }
   },
 
@@ -108,76 +108,76 @@ export default {
       try {
         const isSuccess = await this.$store.dispatch(
           'orderStore/cancelOrder',
-          this.openOrder._id
-        )
+          this.openOrder._id,
+        );
         if (isSuccess) {
-          this.$router.push({ path: '/orders' })
+          this.$router.push({ path: '/orders' });
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'Successfully cancelled the order.'
-          })
+            text: 'Successfully cancelled the order.',
+          });
         } else {
-          throw new Error('It wasn not a successful request')
+          throw new Error('It wasn not a successful request');
         }
       } catch (error) {
-        console.log('Error', error)
+        console.log('Error', error);
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Error occured while cancelling. Please try again later.'
-        })
+          text: 'Error occured while cancelling. Please try again later.',
+        });
       }
     },
 
     async yesClicked() {
-      await this.confirmOrder()
-      this.showConfirmation = false
+      await this.confirmOrder();
+      this.showConfirmation = false;
     },
 
     goToOrdersPage() {
-      this.$store.commit('orderStore/setOpenOrder', null)
-      this.$router.push({ path: '/orders' })
+      this.$store.commit('orderStore/setOpenOrder', null);
+      this.$router.push({ path: '/orders' });
     },
 
     async confirmOrder() {
       try {
-        const isSuccess = await this.$store.dispatch('orderStore/confirmOrder')
+        const isSuccess = await this.$store.dispatch('orderStore/confirmOrder');
 
         if (isSuccess) {
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'Order was confirmed.'
-          })
+            text: 'Order was confirmed.',
+          });
         }
       } catch (error) {
-        console.log('Error', error)
+        console.log('Error', error);
         this.$notify({
           group: 'all',
           type: 'error',
           text:
-            'Order could not be confirmed at the moment. Please try again later.'
-        })
+            'Order could not be confirmed at the moment. Please try again later.',
+        });
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
       openOrder: 'orderStore/openOrder',
-      permissions: 'authStore/permissions'
+      permissions: 'authStore/permissions',
     }),
 
     permissionGranted() {
-      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true
+      if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
       return (
-        this.permissions &&
-        this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0
-      )
-    }
-  }
-}
+        this.permissions
+        && this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0
+      );
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
