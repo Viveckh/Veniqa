@@ -316,7 +316,7 @@ export default {
         if (res) {
           this.isUpdate = false;
           // this.allAddresses.push(cloned);
-          this.$emit('selected', cloned);
+          // this.$emit('selected', cloned);
 
           this.resetFields();
           this.isShowAddAddress = false;
