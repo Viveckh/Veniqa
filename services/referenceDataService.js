@@ -9,48 +9,70 @@ import ROLES_ARRAY from '../database/reference-data-files/roles';
 
 export default {
     async getCatalogBundle() {
+        let result = {};
         try {
-            let result = {
+            let catalogBundle = {
                 stores: STORES_ARRAY,
                 product_categories: await ProductCategory.find({}, '_id category subcategory').exec(),
                 weight_units: WEIGHT_UNITS_ARRAY,
                 tariff_categories: await Tariff.find({}, '_id name').exec()
             }
-            return result;
+            if (catalogBundle.stores && catalogBundle.product_categories && catalogBundle.weight_units && catalogBundle.tariff_categories) {
+                result = {httpStatus: httpStatus.OK, status: "successful", responseData: catalogBundle};
+                return result;
+            }
+            else if (catalogBundle.stores || catalogBundle.product_categories || catalogBundle.weight_units || catalogBundle.tariff_categories) {
+                result = {httpStatus: httpStatus.PARTIAL_CONTENT, status: "partially_successful", responseData: catalogBundle};
+                return result;
+            }
+            else {
+                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)};
+                return result;
+            }
         }
         catch(err) {
-            console.log(err);
-            return false;
+            console.log("Error in getCatalogBundle Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
     async getStores() {
+        let result = {};
         try {
-            return STORES_ARRAY;
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: STORES_ARRAY};
+            return result;
         }
         catch(err) {
-            console.log(err);
-            return false;
+            console.log("Error in getStores Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
     async getRoles() {
+        let result = {};
         try {
-            return ROLES_ARRAY;
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: ROLES_ARRAY};
+            return result;
         }
         catch(err) {
-            console.log(err);
-            return false;
+            console.log("Error in getRoles Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
     async getWeightUnits() {
+        let result = {};
         try {
-            return WEIGHT_UNITS_ARRAY;
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: WEIGHT_UNITS_ARRAY};
+            return result;
         }
         catch(err) {
-            console.log(err);
-            return false;
+            console.log("Error in getWeightUnits Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 

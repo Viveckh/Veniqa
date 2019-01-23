@@ -2,9 +2,11 @@ import Product from '../database/models/product';
 import cryptoGen from '../authentication/cryptoGen';
 import awsConnections from '../cloudservices/awsConnections';
 import awsConfig from '../properties/aws-config';
+import httpStatus from 'http-status-codes';
 
 export default {
     async searchCatalog(searchTerm, pagingOptions) {
+        let result = {};
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
         try {
             let products = await Product.paginate(searchObj, {
@@ -19,11 +21,13 @@ export default {
             }).catch(err => {
                 return err;
             })
-            return products;
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: products};
+            return result;
         }   
         catch(err) {
-            console.log("[ERROR]: Catalog search failed => ", err)
-            return err;
+            console.log("Error in searchCatalog Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
@@ -39,16 +43,12 @@ export default {
             }
             product = await product.save();
 
-            if (product){
-                result = {status: "successful", responseData: product};
-            }
-            else {
-                result = {status: "failed", errorDetails: "could not add product"};
-            }
+            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
             return result;
         }
         catch(err) {
-            result = {status: "failed", errorDetails: err};
+            console.log("Error in addProductToCatalog Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
     },
@@ -56,27 +56,25 @@ export default {
     async getProductDetails(productId) {
         let result = {};
         try {
-            let product = await Product.findOne({_id: productId}).populate('category tariff').exec()
-            if (product) {
-                result = {status: "successful", responseData: product};
-            }
-            else { 
-                result = {status: "failed", errorDetails: "product not found"};
-            }
-            return result;  
+            let product = await Product.findOne({_id: productId}).populate('category tariff').exec();
+            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
+            return result; 
         }
         catch(err) {
-            result = {status: "failed", errorDetails: err};
+            console.log("Error in getProductDetails Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
     },
 
     async updateProductInCatalog(productObj, userObj) {
+        let result = {};
         try {
             // Store the id and delete it from the received object, to prevent any accidental replacement of id field
             let id = productObj._id;
             if (!id) {
-                return "Missing product id";
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "Missing Product ID"};
+                return result;
             }
             delete productObj._id;
 
@@ -88,15 +86,13 @@ export default {
             
             // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update
             let product = await Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).populate('category tariff').exec();
-            if (product) {
-                return product;
-            }
-            return false;
-
+            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+            return result;
         }
         catch(err) {
-            console.log("[ERROR]: Product update failed => ", err)
-            return err;
+            console.log("Error in updateProductInCatalog Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
@@ -108,25 +104,23 @@ export default {
             
             // We are not deleting the images associated with the product from S3, because those links will be referenced in order tables if the product was previously ordered
 
-            if (product){
-                result = {status: "successful", responseData: product};
-            }
-            else {
-                result = {status: "failed", errorDetails: "could not remove product"};
-            }
+            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)};
             return result;
         }
         catch(err) {
-            result = {status: "failed", errorDetails: err};
+            console.log("Error in deleteProductFromCatalog Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
     },
 
     async getPresignedUrlsForCatalogImageUploads(productId, numberOfThumbnailAndDetailedImages, numberOfFeaturedImages) {
+        let result = {};
         try {
             // Limit the max number of images the urls can be requested for at once.
             if (numberOfThumbnailAndDetailedImages > 7 || numberOfFeaturedImages > 7) {
-                return "max number of allowed images for each type is 7"
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "Maximum number of allowed images for each type is 7"};
+                return result;
             }
 
             let folderName, product;
@@ -248,11 +242,13 @@ export default {
             }
 
             // Returm all the generated urls
-            return response;
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: response};
+            return result;
         }
         catch(err) {
-            console.log(err);
-            return err;
+            console.log("Error in getPresignedUrlsForCatalogImageUploads Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     }
 }

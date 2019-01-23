@@ -6,14 +6,11 @@ export default {
         let response;
         try {
             response = await referenceDataService.getCatalogBundle();
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Getting catalog bundle failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in getCatalogBundle Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -21,14 +18,11 @@ export default {
         let response;
         try {
             response = await referenceDataService.getStores();
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Getting stores failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in getStores Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -36,14 +30,11 @@ export default {
         let response;
         try {
             response = await referenceDataService.getRoles();
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Getting roles failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in getRoles Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -51,14 +42,11 @@ export default {
         let response;
         try {
             response = await referenceDataService.getWeightUnits();
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Getting weight units failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in getWeightUnits Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 

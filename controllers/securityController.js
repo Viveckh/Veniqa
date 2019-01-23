@@ -1,18 +1,16 @@
 import securityService from '../services/securityService';
+import httpStatus from 'http-status-codes';
 
 export default {
     async forgotPassword(req, res, next) {
         let response;
         try {
             response = await securityService.forgotPassword(req.query.email);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Forgot password action failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in forgotPassword Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -20,14 +18,11 @@ export default {
         let response;
         try {
             response = await securityService.isPasswordResetTokenValid(req.params.token);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Password reset token validation failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in validatePasswordResetToken Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -35,14 +30,11 @@ export default {
         let response;
         try {
             response = await securityService.resetPassword(req.body.token, req.body.newPassword);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("[ERROR]: Password reset failed => ", err);
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            console.log("Error in resetPassword Controller ->", err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }
 }
