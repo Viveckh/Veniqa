@@ -83,6 +83,7 @@
                 id="hex"
                 type="color"
                 name="hex"
+                style="width: 50px"
                 :state="hexState(val.hexValue)"
                 v-model="val.hexValue"
                 placeholder="Hex Value"
