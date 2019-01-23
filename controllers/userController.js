@@ -1,19 +1,17 @@
 import userService from '../services/userService';
-import logger from '../logging/logger'
+import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async addNewAddress(req, res, next) {
         let response;
         try {
             response = await userService.addNewAddress(req.user, req.body);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in addNewAddress Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -21,14 +19,11 @@ export default {
         let response;
         try {
             response = await userService.getAddresses(req.user);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in getAddresses Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -36,14 +31,11 @@ export default {
         let response;
         try {
             response = await userService.updateAddress(req.user, req.body);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in updateAddress Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -51,14 +43,11 @@ export default {
         let response;
         try {
             response = await userService.deleteAddress(req.user, req.body.addressId);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in deleteAddress Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }
 }

@@ -1,4 +1,5 @@
 import securityService from '../services/securityService';
+import httpStatus from 'http-status-codes';
 import logger from '../logging/logger';
 
 export default {
@@ -6,14 +7,11 @@ export default {
         let response;
         try {
             response = await securityService.signup(req.body);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in signup Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -22,14 +20,11 @@ export default {
         let response;
         try {
             response = await securityService.resendEmailAddressConfirmationLink(req.query.email);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in resendEmailAddressConfirmationLink Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -37,14 +32,11 @@ export default {
         let response;
         try {
             response = await securityService.confirmEmailAddress(req.params.token);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in confirmEmailAddress Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -52,14 +44,11 @@ export default {
         let response;
         try {
             response = await securityService.forgotPassword(req.query.email);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in forgotPassword Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -67,14 +56,11 @@ export default {
         let response;
         try {
             response = await securityService.isPasswordResetTokenValid(req.params.token);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in validatePasswordResetToken Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -82,14 +68,11 @@ export default {
         let response;
         try {
             response = await securityService.resetPassword(req.body.token, req.body.newPassword);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in resetPassword Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }
 }

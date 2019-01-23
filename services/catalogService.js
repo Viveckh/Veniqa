@@ -1,8 +1,10 @@
 import Product from '../database/models/product';
-import logger from '../logging/logger'
+import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async searchCatalog(searchTerm, pagingOptions) {
+        let result = {};
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
         try {
             let products = await Product.paginate(searchObj, {
@@ -17,29 +19,27 @@ export default {
             }).catch(err => {
                 return err;
             })
-            return products;
+
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: products};
+            return result;
         }   
         catch(err) {
             logger.error("Error in searchCatalog Service", {meta: err})
-            return err;
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
         }
     },
 
     async getProductDetails(productId) {
         let result = {};
         try {
-            let product = await Product.findOne({_id: productId}).populate('category tariff').exec()
-            if (product) {
-                result = {status: "successful", responseData: product};
-            } 
-            else { 
-                result = {status: "failed", errorDetails: "product not found"};
-            }
-            return result;  
+            let product = await Product.findOne({_id: productId}).populate('category tariff').exec();
+            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
+            return result;
         }
         catch(err) {
             logger.error("Error in getProductDetails Service", {meta: err})
-            result = {status: "failed", errorDetails: err};
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
     }

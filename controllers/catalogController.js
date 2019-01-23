@@ -1,4 +1,5 @@
 import catalogService from "../services/catalogService";
+import httpStatus from 'http-status-codes';
 import logger from '../logging/logger'
 
 export default {
@@ -6,14 +7,11 @@ export default {
         let response;
         try {
             response = await catalogService.searchCatalog(req.body.searchTerm, req.body.pagingOptions);
-            if (response.code) {
-                return res.status(400).send({mongoErrorCode: response.code, mongoErrorMsg: response.errmsg});
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in searchCatalog Controller", {meta: err});
-            return res.status(500).send({ errorCode: "server error", errorMsg: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
 
@@ -21,14 +19,11 @@ export default {
         let response;
         try {
             response = await catalogService.getProductDetails(req.query.productId);
-            if (response.errorDetails) {
-                return res.status(400).send(response);
-            }
-            return res.status(200).send(response);
+            return res.status(response.httpStatus).send(response);
         }
         catch(err) {
             logger.error("Error in getProductDetails Controller", {meta: err});
-            return res.status(500).send({ status: "failed", errorDetails: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }
 
