@@ -277,7 +277,7 @@ export default {
               url: ProxyUrls.predefinedUrls,
               params,
             });
-            data = res.data;
+            data = res.data.responseData;
           } catch (error) {
             console.log('Preassign error');
             reject(false);
