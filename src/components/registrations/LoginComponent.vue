@@ -88,14 +88,16 @@ export default {
             method: 'get',
             url: ProxyUrl.forgotPassword + this.username,
           });
-          this.$emit('close');
+          if (data && data.httpStatus == 200) {
+            this.$emit('close');
 
-          this.$notify({
-            group: 'all',
-            type: 'success',
-            text:
-              'The email was just sent. Please check your email and follow the instructions.',
-          });
+            this.$notify({
+              group: 'all',
+              type: 'success',
+              text:
+                'The email was just sent. Please check your email and follow the instructions.',
+            });
+          }
         } catch (err) {
           this.$notify({
             group: 'all',
