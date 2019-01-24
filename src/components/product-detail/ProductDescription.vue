@@ -36,17 +36,32 @@
               The {{attrib.name}} cannot be empty.
             </b-form-invalid-feedback>
           </b-form-group>
-          <!-- <b-form-select v-model="selectedCustomizations[attrib.key]" :options="attrib.values" class="mb-3" size="sm" /> -->
+        </div>
+
+        <!-- Show Color selection for colors -->
+        <div v-if="attrib.type==='Colors'">
+          <b-row>
+            <b-col md="3">{{attrib.name}}</b-col>
+            <b-col md="9">
+              <ul class="color-select">
+                <li v-for="(color, cid) in attrib.values"
+                  v-bind:key="cid">
+                  <div
+                    v-bind:style="{'background-color': color.hexValue}"
+                    v-b-tooltip.hover
+                    :title="color.name"
+                    @click="colorClicked(attrib.key, color)"
+                    v-bind:class="{'selected': color.hexValue === selectedCustomizations[attrib.key].hexValue && color.name === selectedCustomizations[attrib.key].name}"
+                  >
+                  </div>
+                </li>
+              </ul>
+            </b-col>
+          </b-row>
         </div>
       </div>
     </div>
 
-    <!-- <p class="section-title">
-      <span>Quantity</span>
-      <span class="icon"><font-awesome-icon icon='chevron-circle-down' @click="decreaseCount()"/></span>
-      <span>{{product.counts}}</span>
-      <span class="icon"><font-awesome-icon icon='chevron-circle-up' @click="increaseCount()"/></span>
-    </p>-->
     <p style="margin-top: 20px">
       <b-button size="sm" class="primary-button hvr-grow" @click="addToCart()">
         <font-awesome-icon icon="shopping-bag"/>&nbsp;
@@ -71,20 +86,27 @@ export default {
   data() {
     return {
       product: null,
-      selectedCustomizations: [],
+      selectedCustomizations: {},
     };
   },
 
   created() {
     this.product = this.data;
-    this.product.customizationOptions.customizations.forEach((attrib) => {
-      this.selectedCustomizations.push(attrib.key);
-      this.selectedCustomizations[attrib.key] = attrib.values.length > 0 ? attrib.values[0] : '';
-    });
+
+    // Selected Customization is just used for the simplicity. The values are also changed in this.product.
+    this.selectedCustomizations = _.cloneDeep(this.product.customValues);
   },
 
   methods: {
     async addToCart() {
+      this.product.customValues = {};
+      Object.keys(this.selectedCustomizations).forEach((key) => {
+        if (typeof (this.selectedCustomizations[key]) === 'string') {
+          this.product.customValues[key] = this.selectedCustomizations[key];
+        } else {
+          this.product.customValues[key] = `${this.selectedCustomizations[key].name}|${this.selectedCustomizations[key].hexValue}`;
+        }
+      });
       const val = await this.$store.dispatch('cartStore/addToTheCart', [
         this.product,
       ]);
@@ -106,8 +128,11 @@ export default {
       }
     },
 
+    colorClicked(key, colorObj) {
+      this.selectedCustomizations[key] = colorObj;
+    },
+
     increaseCount() {
-      console.log('Increasing');
       this.product.counts += 1;
     },
 
@@ -142,6 +167,25 @@ export default {
 
       &:hover {
         cursor: pointer;
+      }
+    }
+  }
+
+  .color-select {
+    padding-left: 0px;
+    li,
+    div {
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      margin-right: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      .selected {
+        border: 2px solid black;
       }
     }
   }

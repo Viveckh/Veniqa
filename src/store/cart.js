@@ -127,9 +127,13 @@ export default {
         return true;
       }
 
+      const customization = {};
+
+
       const toSend = _.map(products, p => ({
         product: p._id,
         counts: p.counts == 0 ? 1 : p.counts,
+        customizations: p.customValues ? p.customValues : null,
       }));
 
       try {

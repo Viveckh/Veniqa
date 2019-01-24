@@ -3,17 +3,19 @@
     <div class="space"></div>
     <div v-if="product != null">
       <b-row>
-      <b-col md="7">
-        <div>
-          <product-image-gallery :base-images="productImages" :base-zoomer-options="zoomerOptions"/>
-        </div>
-      </b-col>
-      <b-col md="5">
-        <product-description :data="product"/>
-      </b-col>
-    </b-row>
+        <b-col md="7">
+          <div>
+            <product-image-gallery
+              :base-images="productImages"
+              :base-zoomer-options="zoomerOptions"
+            />
+          </div>
+        </b-col>
+        <b-col md="5">
+          <product-description :data="product"/>
+        </b-col>
+      </b-row>
     </div>
-
   </div>
 </template>
 
@@ -71,6 +73,22 @@ export default {
               url: picture,
             });
           });
+
+          this.product.customValues = {};
+
+          for (
+            let i = 0;
+            i < this.product.customizationOptions.customizations.length;
+            i++
+          ) {
+            const attrib = this.product.customizationOptions.customizations[i];
+            // if (attrib.type === "Colors") {
+            //   this.product.customValues[attrib.key] =
+            //     attrib.values.length > 0 ? attrib.values[0].hexValue : "";
+            // } else {
+            this.product.customValues[attrib.key] = attrib.values.length > 0 ? attrib.values[0] : '';
+            // }
+          }
         }
       } catch (err) {
         console.log(err);

@@ -46,7 +46,7 @@ export default {
       this.$store.commit('shippingStore/resetAddresses');
     }
     // UNTESTED but it makes a call to check if the session is active every 30 min
-    // If it is not active, then it redirects the user to the login screen. 
+    // If it is not active, then it redirects the user to the login screen.
     setInterval(async () => {
       await this.$store.dispatch('authStore/initiateAppSesstion');
       if (!this.isSessionActive) {

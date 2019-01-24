@@ -20,7 +20,7 @@
             <p>{{product.price.currency}} {{product.price.amount}}</p>
           </div>
 
-          <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button>
+          <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
         </div>
       </div>
     </div>
@@ -44,12 +44,15 @@ export default {
       return {
         'background-image': `url(${img})`,
         'background-size': 'cover',
-        width: '100%',
-        height: '250px',
+        width: 'auto',
+        height: '350px',
         'margin-bottom': '10px',
       };
     },
 
+    /**
+     * @deprecated because add to cart doesn't happen from this page anymore.
+    */
     async addToCart(product) {
       try {
         const val = await this.$store.dispatch('cartStore/addToTheCart', [product]);
@@ -77,17 +80,22 @@ export default {
   text-align: left;
   width: 80%;
   margin: auto;
-  padding: 20px 0px;
+  padding: 30px 0px;
+  padding-bottom: 3rem;
 }
 
 #search-result {
   background-color: #f4f3ef;
 }
 
+.result-view{
+  margin-top: 1em;
+}
+
 .product-card {
   display: inline-block;
-  box-shadow: 3px 4px 5px 0px #ccc;
-  background-color: white;
+  // box-shadow: 3px 4px 5px 0px #ccc;
+  // background-color: white;
   border-radius: 0.25rem;
   margin: 20px 20px 20px 0px;
   width: 300px;
