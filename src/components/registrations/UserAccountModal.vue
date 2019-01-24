@@ -46,7 +46,7 @@ import LoginComponent from '@/components/registrations/LoginComponent';
 import RegisterComponent from '@/components/registrations/RegisterComponent';
 import ProxyUrls from '@/constants/ProxyUrls.js';
 import ForgotPassword from '@/components/registrations/ForgotPasswordComponent';
-
+import moment from 'moment';
 import axios from 'axios';
 
 export default {
@@ -94,6 +94,7 @@ export default {
           }
         }
         this.$emit('loginSuccess');
+        localStorage.setItem('sessionDT', moment().format());
 
         this.$notify({
           group: 'all',

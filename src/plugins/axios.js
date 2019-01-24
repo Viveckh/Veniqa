@@ -5,10 +5,12 @@ import {
 } from '@/utils/EventHub';
 import {
   SilentUrls,
+  SilentResponseUrls,
 } from '../constants/Constants';
 
+const baseURL = 'https://veniqa.azurewebsites.net/';
 const instance = axios.create({
-  baseURL: 'https://veniqa.azurewebsites.net/',
+  baseURL,
   withCredentials: true,
 });
 
@@ -28,6 +30,9 @@ instance.interceptors.request.use(
 );
 instance.interceptors.response.use(
   (response) => {
+    // console.log(response.request.responseURL)
+    const len = response.request.responseURL.length;
+    const url = response.request.responseURL.substring(baseURL.length - 1, len);
     eventHub.$emit('after-response');
     return response;
   },

@@ -120,6 +120,7 @@ export default {
         localStorage.removeItem('email');
         localStorage.removeItem('name');
         localStorage.removeItem('emailConfirmed');
+        localStorage.removeItem('sessionDT');
       }
     },
 
@@ -142,6 +143,7 @@ export default {
     },
 
     getFirstName(state) {
+      if (!state.name) return '';
       return state.name.split(' ')[0];
     },
 

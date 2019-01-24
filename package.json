@@ -17,6 +17,7 @@
     "epic-spinners": "^1.0.4",
     "i": "^0.3.6",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "npm": "^6.4.1",
     "prerender-spa-plugin": "^3.4.0",
     "vue": "^2.5.17",

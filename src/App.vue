@@ -25,6 +25,7 @@ import { mapGetters } from 'vuex';
 import { FingerprintSpinner } from 'epic-spinners';
 import axios from 'axios';
 import { eventHub } from '@/utils/EventHub';
+import moment from 'moment';
 
 export default {
   name: 'app',
@@ -45,16 +46,6 @@ export default {
     } else {
       this.$store.commit('shippingStore/resetAddresses');
     }
-    // UNTESTED but it makes a call to check if the session is active every 30 min
-    // If it is not active, then it redirects the user to the login screen.
-    setInterval(async () => {
-      await this.$store.dispatch('authStore/initiateAppSesstion');
-      if (!this.isSessionActive) {
-        this.$store.commit('shippingStore/resetAddresses');
-        this.$store.commit('authStore/logoutUser');
-        this.$router.push('/login');
-      }
-    }, 1800000);
   },
 
   data() {
@@ -95,7 +86,28 @@ export default {
       this.isLoading = true;
     },
 
+    checkSessionTimeout() {
+      const dt = localStorage.getItem('sessionDT');
+      if (!dt) {
+        return false;
+      }
+      const diff = moment.duration(moment().diff(moment(dt)));
+      if (diff.asMinutes() >= 30) return false;
+
+      localStorage.setItem('sessionDT', moment().format());
+      return true;
+    },
+
     unsetLoading() {
+      if (this.isSessionActive) {
+        const isActive = this.checkSessionTimeout();
+
+        if (!isActive) {
+          this.$store.commit('shippingStore/resetAddresses');
+          this.$store.commit('authStore/logoutUser');
+        }
+      }
+
       if (this.refCount > 0) {
         this.refCount--;
         this.isLoading = this.refCount > 0;
