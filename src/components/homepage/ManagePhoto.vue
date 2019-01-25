@@ -200,7 +200,7 @@ export default {
           featured: false,
         };
         this.finalImages[index] = _.cloneDeep(newObj);
-        
+
         this.$axios({
           withCredentials: false,
           method: 'get',

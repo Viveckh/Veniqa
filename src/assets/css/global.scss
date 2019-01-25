@@ -178,3 +178,18 @@ a{
 .icon:hover{
   cursor: pointer;
 }
+
+.empty-info {
+  display: flex;
+  width: 50%;
+  height: 100px;
+  margin: auto;
+  font-size: xx-large;
+  color: grey;
+
+  p {
+    margin: auto;
+    /* Important */
+    text-align: center;
+  }
+}

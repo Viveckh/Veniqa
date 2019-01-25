@@ -100,14 +100,20 @@ export default {
     },
     async getAllProducts({ commit, state }, filters) {
       try {
-        const reqPayload = {
-          searchFilters: filters || {
-            store: '',
-            category: '',
-          },
+        let reqPayload = {};
+        if (filters) {
+          reqPayload = filters;
+        } else {
+          reqPayload = {
+            searchFilters: filters || {
+              store: '',
+              category: '',
+            },
 
-          pagingOptions: state.pagination,
-        };
+            pagingOptions: state.pagination,
+          };
+        }
+
         const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.searchProduct,
           withCredentials: true,
@@ -119,7 +125,7 @@ export default {
           commit('setPagination', data.responseData);
         } else throw new Error('No content');
 
-        return data.responseData.docs;
+        return data.responseData;
       } catch (err) {
         throw new Error(err);
       }
