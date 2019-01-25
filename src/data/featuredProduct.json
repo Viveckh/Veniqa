@@ -6,8 +6,6 @@
   "store": "AMAZON",
   "brand": "BEVERLY HILLS KAY",
   "name": "Amrezy Highlighter",
-  "category": "Make-Up Kits",
-  "subcategory": "Palettes",
   "price": {
       "amount": 27.99,
       "currency": "USD"

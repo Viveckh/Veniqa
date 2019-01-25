@@ -1,6 +1,6 @@
 <template>
   <div class="featured-product">
-    <div v-if="type == 1" class="type-separator">
+    <div v-if="product.design == '1 - Single Image Right'" class="type-separator">
       <b-row style="height: 100%">
         <b-col md="4">
           <div class="product-content">
@@ -10,7 +10,7 @@
                 <span class="name">{{product.name}}</span>
                 <span class="amount">$ {{product.price.amount}}</span>
 
-                <b-button class="primary-button">Shop</b-button>
+                <b-button class="primary-button" @click="gotoProduct()">Shop</b-button>
               </div>
             </div>
           </div>
@@ -21,7 +21,7 @@
       </b-row>
     </div>
 
-    <div v-if="type == 2"  class="type-separator">
+    <div v-if="product.design == '2 - Single Image Left'"  class="type-separator">
       <b-row style="height: 100%">
         <b-col md="8">
           <div :style="productImageStyle" class="product-clip-right"></div>
@@ -34,7 +34,7 @@
                 <span class="name">{{product.name}}</span>
                 <span class="amount">$ {{product.price.amount}}</span>
 
-                <b-button class="primary-button">Shop</b-button>
+                <b-button class="primary-button" @click="gotoProduct()">Shop</b-button>
               </div>
             </div>
           </div>
@@ -53,11 +53,6 @@ export default {
       required: true,
       type: Object,
     },
-    type: {
-      required: false,
-      type: Number,
-      default: 1,
-    },
   },
   data() {
     return {
@@ -66,14 +61,27 @@ export default {
     };
   },
 
+  watch: {
+    product() {
+      this.displayImage = this.product.detailedImageUrls[0];
+    },
+  },
+
   created() {
     if (
       this.product
-      && this.product.thumbnailUrls
-      && this.product.thumbnailUrls.length > 0
+      && this.product.detailedImageUrls
+      && this.product.detailedImageUrls.length > 0
     ) {
-      this.displayImage = this.product.thumbnailUrls[0];
+      this.displayImage = this.product.detailedImageUrls[0];
     }
+  },
+
+  methods: {
+    gotoProduct() {
+      console.log('PR', this.product);
+      this.$router.push(`/products/${this.product._id}`);
+    },
   },
 
   computed: {

@@ -27,4 +27,6 @@ export default {
   createCheckout: 'orders/createCheckout',
   createPaymentToken: 'orders/createPaymentToken',
   completeCheckout: 'orders/completeCheckout',
+
+  featuredUrl: '/ui/featured?name=',
 };
