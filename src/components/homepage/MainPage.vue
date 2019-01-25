@@ -12,16 +12,17 @@
 
     <!-- Other contents go here. They are featured contents -->
     <h1 class='featured-title'>Featured</h1>
-    <featured-product-view
-      :product="product"
-      :type="2"
-    />
+
+    <div v-for="(prd, pid) in featuredProducts" v-bind:key="pid">
+      <featured-product-view :product="prd"/>
+    </div>
   </div>
 </template>
 
 <script>
 import Product from '@/data/featuredProduct.json';
 import FeaturedProductView from '@/components/homepage/FeaturedProductView';
+import FeatureService from '@/services/FeaturedService';
 
 export default {
   name: 'MainPage',
@@ -31,11 +32,19 @@ export default {
   data() {
     return {
       product: null,
+      featuredProducts: [],
+      currentSection: 'homepage',
     };
   },
 
   created() {
     this.product = Product;
+
+    FeatureService.getFeatureListFor(this.currentSection).then((data) => {
+      this.featuredProducts = data;
+    }).catch((err) => {
+
+    });
   },
 };
 </script>
