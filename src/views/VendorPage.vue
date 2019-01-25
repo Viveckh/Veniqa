@@ -42,16 +42,10 @@ export default {
 
   methods: {
     async searchForProduct(searchTerm) {
-      const res = await this.$axios({
+      const { data } = await this.$axios({
         url: ProxyUrls.searchProduct,
         method: 'post',
         data: {
-          // searchFilters: {
-          //   // store: this.vendorMap[this.vendorName],
-          //   // category: 'Women’s Clothes',
-          //   store: '',
-          //   category: '',
-          // },
           searchTerm,
           pagingOptions: {
             page: 1,
@@ -60,11 +54,10 @@ export default {
         },
       });
 
-      if (res) {
+      if (data && data.httpStatus == 200) {
         this.searchResult.splice(0, this.searchResult.length);
         const transformed = [];
-
-        res.data.docs.forEach((p) => {
+        data.responseData.docs.forEach((p) => {
           transformed.push(_.assign(_.cloneDeep(ProductDTO), p));
         });
 

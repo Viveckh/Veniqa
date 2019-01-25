@@ -66,7 +66,7 @@ export default {
           url: `${ProxyUrls.confirmEmail}/${this.token}`,
         });
 
-        if (data) {
+        if (data && data.httpStatus == 200) {
           this.value = true;
           this.$router.push('/');
         } else {
@@ -97,11 +97,13 @@ export default {
             url: ProxyUrls.resendEmail + this.email,
           });
 
-          this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'Email successfully sent. Please check your inbox.',
-          });
+          if (data && data.httpStatus) {
+            this.$notify({
+              group: 'all',
+              type: 'success',
+              text: 'Email successfully sent. Please check your inbox.',
+            });
+          }
         } catch (err) {
           this.$notify({
             group: 'all',
@@ -125,5 +127,4 @@ export default {
 
 <style lang="scss">
 @import "../assets/css/global.scss";
-
 </style>

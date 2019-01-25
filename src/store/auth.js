@@ -17,15 +17,15 @@ export default {
       if (!payload) return null;
 
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.registerUrl,
           data: payload,
         });
 
-        if (res && res.data) {
-          commit('setEmail', res.data.email);
-          commit('setName', res.data.name);
+        if (data && data.httpStatus == 200) {
+          commit('setEmail', data.responseData.email);
+          commit('setName', data.responseData.name);
           commit('setSessionActive', true);
         }
 
@@ -120,6 +120,7 @@ export default {
         localStorage.removeItem('email');
         localStorage.removeItem('name');
         localStorage.removeItem('emailConfirmed');
+        localStorage.removeItem('sessionDT');
       }
     },
 
@@ -142,6 +143,7 @@ export default {
     },
 
     getFirstName(state) {
+      if (!state.name) return '';
       return state.name.split(' ')[0];
     },
 

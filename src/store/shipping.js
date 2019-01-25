@@ -66,10 +66,12 @@ export default {
           await dispatch('cartStore/createCheckout', reqObj, {
             root: true,
           });
-        } else {
+        } else if (data && data.httpStatus == 200) {
           commit('setAddresses', data.responseData);
-          if (action == 'get' && state.selectedAddress == null && state.addresses.length > 0) {
+          console.log('Index is ', _.findIndex(state.addresses, val => val._id === state.selectedAddress._id));
+          if ((state.selectedAddress == null || _.findIndex(state.addresses, val => val._id === state.selectedAddress._id) < 0) && state.addresses.length > 0) {
             commit('addressSelected', state.addresses[0]);
+            console.log('Address selected', state.selectedAddress);
           }
         }
         return true;

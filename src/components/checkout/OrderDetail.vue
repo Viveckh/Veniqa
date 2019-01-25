@@ -35,6 +35,7 @@
         </b-row>
       </li>
     </ul>
+    <hr>
 
     <div class="total-line" v-if="orders && orders.length > 0">
       <b-row>

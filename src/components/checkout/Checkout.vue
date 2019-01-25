@@ -31,7 +31,7 @@
         </div>
 
         <div v-if="checkoutInitiated">
-          <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn> &nbsp;&nbsp;
+          <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn>&nbsp;&nbsp;
           <b-btn disabled class="primary-button">Pay with Khalti</b-btn>
         </div>
       </div>
@@ -114,19 +114,21 @@ export default {
 
     async resendEmailConfirmation() {
       try {
-        const res = await this.$axios({
+        const { data } = await this.$axios({
           method: 'get',
           url:
             ProxyUrls.resendEmailConfirmation
             + this.$store.getters['authStore/getEmail'],
         });
 
-        this.$notify({
-          group: 'all',
-          type: 'success',
-          text:
-            'Confirmation email has been sent to your email address. Please check your email.',
-        });
+        if (data && data.httpStatus == 200) {
+          this.$notify({
+            group: 'all',
+            type: 'success',
+            text:
+              'Confirmation email has been sent to your email address. Please check your email.',
+          });
+        }
       } catch (err) {
         this.$notify({
           group: 'all',
