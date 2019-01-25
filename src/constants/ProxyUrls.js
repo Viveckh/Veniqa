@@ -63,5 +63,7 @@ export default {
   editCategory: '/referenceData/productCategory',
   addCategory: '/referenceData/productCategory',
 
-
+  // Featured
+  getAllFeatures: '/ui/featuredList',
+  featuredUrl: '/ui/featured',
 };

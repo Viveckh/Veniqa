@@ -76,6 +76,12 @@ export default {
     }
   },
 
+  watch: {
+    product() {
+      this.displayImage = this.product.detailedImageUrls[0];
+    },
+  },
+
   computed: {
     productImageStyle() {
       return {

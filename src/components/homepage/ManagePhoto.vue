@@ -204,7 +204,7 @@ export default {
         this.$axios({
           withCredentials: false,
           method: 'get',
-          url: this.detailedUrls[index],
+          url: this.detailedUrls[index].replace('https', 'http'),
           responseType: 'arraybuffer',
         })
           .then((res) => {
@@ -229,7 +229,7 @@ export default {
         this.$axios({
           withCredentials: false,
           method: 'get',
-          url: this.thumbnailPropUrls[index],
+          url: this.thumbnailPropUrls[index].replace('https', 'http'),
           responseType: 'arraybuffer',
         })
           .then((res) => {
@@ -277,7 +277,7 @@ export default {
               url: ProxyUrls.predefinedUrls,
               params,
             });
-            data = res.data;
+            data = res.data.responseData;
           } catch (error) {
             console.log('Preassign error');
             reject(false);

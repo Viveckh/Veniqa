@@ -13,41 +13,50 @@ export default {
   actions: {
     async getRoles({ commit }) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.roles,
           withCredentials: true,
           method: 'get',
           data: {},
         });
-        // console.log(res);
-        commit('setRoles', res.data);
+
+        if (data && data.httpStatus == 200) {
+          commit('setRoles', data.responseData);
+        } else throw new Error('No Content');
       } catch (err) {
         console.log(err);
       }
     },
     async getAdmins({ commit }) {
       try {
-        const res = await axios({
+        const { data } = await axios({
           url: ProxyUrl.baseUrl + ProxyUrl.allAdmins,
           withCredentials: true,
           method: 'get',
           data: {},
         });
-        commit('setAdmins', res.data);
+
+        if (data && data.httpStatus == 200) {
+          commit('setAdmins', data.responseData);
+        } else throw new Error('No Content');
       } catch (err) {
         throw new Error(err);
       }
     },
     async addAdmin({ dispatch }, admin) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.addAdmin,
           withCredentials: true,
           method: 'post',
           data: admin,
         });
 
-        dispatch('getAdmins');
+        if (data && data.httpStatus == 200) {
+          dispatch('getAdmins');
+          return true;
+        }
+        return false;
       } catch (err) {
         console.log(err);
         throw new Error(err);
@@ -55,14 +64,18 @@ export default {
     },
     async editAdmin({ dispatch }, admin) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.editAdmin,
           withCredentials: true,
           method: 'put',
           data: admin,
         });
 
-        dispatch('getAdmins');
+        if (data && data.httpStatus == 200) {
+          dispatch('getAdmins');
+          return true;
+        }
+        return false;
       } catch (err) {
         console.log(err);
         throw new Error(err);

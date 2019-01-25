@@ -19,21 +19,22 @@ export default {
   actions: {
     async getReferenceData({ commit }) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.refData,
           withCredentials: true,
           method: 'get',
           data: {},
         });
-        // console.log(res);
-        commit('setRefData', res.data);
+        if (data && data.httpStatus == 200) {
+          commit('setRefData', data.responseData);
+        } else throw new Error('No Content');
       } catch (err) {
         console.log(err);
       }
     },
     async deleteProduct({ dispatch }, id) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.deleteProduct,
           withCredentials: true,
           method: 'delete',
@@ -41,22 +42,25 @@ export default {
             productId: id,
           },
         });
-
-        dispatch('getAllProducts');
+        if (data && data.httpStatus == 200) {
+          dispatch('getAllProducts');
+        } else throw new Error('No Content');
       } catch (err) {
         console.log(err);
       }
     },
     async addProduct({ dispatch }, product) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.addProduct,
           withCredentials: true,
           method: 'post',
           data: product,
         });
 
-        dispatch('getAllProducts');
+        if (data && data.httpStatus == 200) {
+          dispatch('getAllProducts');
+        } else throw new Error('No Content');
       } catch (err) {
         console.log(err);
         throw new Error(err);
@@ -64,14 +68,16 @@ export default {
     },
     async editProduct({ dispatch }, product) {
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.editProduct,
           withCredentials: true,
           method: 'put',
           data: product,
         });
 
-        dispatch('getAllProducts');
+        if (data && data.httpStatus == 200) {
+          dispatch('getAllProducts');
+        } else throw new Error('No Content');
       } catch (err) {
         console.log(err);
         throw new Error(err);
@@ -80,13 +86,13 @@ export default {
     async getProduct({ dispatch }, id) {
       const productGetUrl = `${ProxyUrl.getProduct}?productId=${id}`;
       try {
-        const res = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: productGetUrl,
           withCredentials: true,
           method: 'get',
         });
-        // console.log(res.data.responseData);
-        return res.data.responseData;
+
+        return data.responseData;
       } catch (err) {
         console.log(err);
         throw new Error(err);
@@ -94,23 +100,32 @@ export default {
     },
     async getAllProducts({ commit, state }, filters) {
       try {
-        const reqPayload = {
-          searchFilters: filters || {
-            store: '',
-            category: '',
-          },
+        let reqPayload = {};
+        if (filters) {
+          reqPayload = filters;
+        } else {
+          reqPayload = {
+            searchFilters: filters || {
+              store: '',
+              category: '',
+            },
 
-          pagingOptions: state.pagination,
-        };
-        const res = await Vue.prototype.$axios({
+            pagingOptions: state.pagination,
+          };
+        }
+
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.searchProduct,
           withCredentials: true,
           method: 'post',
           data: reqPayload,
         });
-        commit('setProducts', res.data.docs);
-        commit('setPagination', res.data);
-        return res.data.docs;
+        if (data && data.httpStatus == 200) {
+          commit('setProducts', data.responseData.docs);
+          commit('setPagination', data.responseData);
+        } else throw new Error('No content');
+
+        return data.responseData;
       } catch (err) {
         throw new Error(err);
       }

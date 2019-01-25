@@ -52,7 +52,6 @@
             </b-form-invalid-feedback>
           </b-form-group>
           <b-button @click="resetButtonClick()" class="primary-button">Resend Email</b-button>
-
         </div>
       </div>
     </div>
@@ -88,7 +87,7 @@ export default {
         url: ProxyUrl.validateResetToken + this.token,
       });
 
-      if (data) {
+      if (data && data.httpStatus == 200) {
         this.isReset = true;
         this.$notify({
           group: 'all',
@@ -127,16 +126,20 @@ export default {
             url: ProxyUrl.forgotPassword + this.username,
           });
 
-          this.$notify({
-            group: 'all',
-            type: 'success',
-            text: 'The email was just sent. Please check your email and follow the instructions.',
-          });
+          if (data && data.httpStatus == 200) {
+            this.$notify({
+              group: 'all',
+              type: 'success',
+              text:
+                'The email was just sent. Please check your email and follow the instructions.',
+            });
+          }
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'The email could not be sent right now. Please try again later',
+            text:
+              'The email could not be sent right now. Please try again later',
           });
         }
       }
@@ -152,7 +155,7 @@ export default {
               newPassword: this.password,
             },
           });
-          if (data) {
+          if (data && data.httpStatus == 200) {
             this.$notify({
               group: 'all',
               type: 'success',
@@ -204,12 +207,13 @@ export default {
 
 <style lang="scss" scoped>
 #passwordFeedback,
-#confirmPasswordFeedback, #usernameFeedback {
+#confirmPasswordFeedback,
+#usernameFeedback {
   font-size: 12px;
   text-align: left;
 }
 
-h2{
+h2 {
   margin-bottom: 50px;
 }
 </style>
