@@ -20,6 +20,9 @@ import redisConfig from './properties/redis';
 // Database connection imports, importing initializes it, do this before route imports to initialize db models
 import dbConnection from './database/dbConnection';
 
+// CONSTANT IMPORTS
+import ALLOWED_ORIGINS from './properties/allowedOrigins.json';
+
 // Router imports
 import indexRouter from './routes/index';
 import securityRouter from './routes/security';
@@ -96,9 +99,8 @@ app.use(passport.session());
 
 // To Allow cross origin requests originating from selected origins
 app.use(function(req, res, next) {
-  var allowedOrigins = ['https://www.veniqa.com', 'https://veniqa.com', 'https://operations.veniqa.com', 'http://operations.veniqa.com', 'https://engineering.veniqa.com', 'http://engineering.veniqa.com', 'http://localhost:4200'];
   var origin = req.headers.origin;
-  if(allowedOrigins.indexOf(origin) > -1){
+  if(ALLOWED_ORIGINS.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');

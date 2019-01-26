@@ -24,7 +24,7 @@
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "mongodb": "^3.1.10",
-    "mongoose": "^5.3.14",
+    "mongoose": "^5.3.15",
     "mongoose-paginate": "^5.0.3",
     "morgan": "~1.9.0",
     "nodemailer": "^4.7.0",
