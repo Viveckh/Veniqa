@@ -10,7 +10,10 @@ export default {
     permissions: [],
   },
   actions: {
-    async registerUser({ state, commit }, payload) {
+    async registerUser({
+      state,
+      commit,
+    }, payload) {
       if (!payload) return null;
 
       try {
@@ -32,7 +35,10 @@ export default {
       }
     },
 
-    async login({ state, commit }, payload) {
+    async login({
+      state,
+      commit,
+    }, payload) {
       if (!payload) return null;
 
       try {
@@ -55,9 +61,14 @@ export default {
       }
     },
 
-    async logout({ state, commit }, payload) {
+    async logout({
+      state,
+      commit,
+    }, payload) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           method: 'get',
           url: ProxyUrls.logoutUrl,
         });
@@ -72,7 +83,10 @@ export default {
       }
     },
 
-    async initiateAppSession({ state, commit }) {
+    async initiateAppSession({
+      state,
+      commit,
+    }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
         url: ProxyUrls.isSessionActive,
@@ -125,6 +139,7 @@ export default {
   },
   getters: {
     getName(state) {
+      console.log('HERE');
       return state.name;
     },
 

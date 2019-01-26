@@ -6,8 +6,12 @@
       <template slot="tabs">
         <b-nav-item :active="orderStatus == 'RECEIVED'" @click="tabClicked('RECEIVED')">Received</b-nav-item>
         <b-nav-item :active="orderStatus == 'CONFIRMED'" @click="tabClicked('CONFIRMED')">Confirmed</b-nav-item>
-        <b-nav-item :active="orderStatus == 'IN-PROGRESS'" @click="tabClicked('IN-PROGRESS')">In Progress</b-nav-item>
+        <b-nav-item
+          :active="orderStatus == 'IN-PROGRESS'"
+          @click="tabClicked('IN-PROGRESS')"
+        >In Progress</b-nav-item>
         <b-nav-item :active="orderStatus == 'COMPLETED'" @click="tabClicked('COMPLETED')">Completed</b-nav-item>
+        <b-nav-item :active="orderStatus == 'CANCELLED'" @click="tabClicked('CANCELLED')">Cancelled</b-nav-item>
       </template>
     </b-tabs>
 
@@ -31,7 +35,7 @@ export default {
   },
 
   async created() {
-    const status = this.orderStatus.trim().length == 0 ? 'RECEIVED' : this.orderStatus;
+    const status =      this.orderStatus.trim().length == 0 ? 'RECEIVED' : this.orderStatus;
 
     this.$store.commit('orderStore/setOrderStatus', status);
     try {
@@ -63,8 +67,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#order-view{
-  .order-list{
+#order-view {
+  .order-list {
     padding: 20px 0px;
   }
 }
