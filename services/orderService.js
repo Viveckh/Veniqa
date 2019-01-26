@@ -5,6 +5,7 @@ import Order from '../database/models/order';
 import cryptoGen from '../authentication/cryptoGen';
 import shoppingService from '../services/shoppingService';
 import * as _ from 'lodash';
+import emailService from './emailServiceSendgrid';
 import transformer from '../utilities/transform-props';
 import httpStatus from 'http-status-codes';
 import logger from '../logging/logger'
@@ -89,11 +90,24 @@ export default {
                 return result;
             }
 
+            // If a payment token seems to have already been generated, then return the existing one
+            if (checkout.payment_info.length > 0) {
+                result = {
+                    httpStatus: httpStatus.OK, 
+                    status: "successful", 
+                    responseData: {
+                        checkout_id: checkout._id,
+                        payment_info: checkout.payment_info
+                    }
+                };
+                return result;
+            }
+
             // Ensure what is in the checkout record is up to date by doing a fresh calculation
             let freshCalculatedCart = await this.calculateFinalPrice(userObj, false);
             let orderCartFromSavedCheckout = checkout.cart;
             // Converting the mongoose object to a regular json object for comparision purposes
-            orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject();
+            orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject({flattenMaps: true});
             transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff", "category"])
 
             /*
@@ -173,7 +187,7 @@ export default {
             }
 
             // Converting the mongoose object to a regular json object
-            let checkoutObj = checkout.toObject();
+            let checkoutObj = checkout.toObject({flattenMaps: true});
             transformer.castValuesToString(checkoutObj, "_id")
 
             // Move the checkout object succesfully to the order collection with a RECEIVED status
@@ -192,6 +206,12 @@ export default {
 
             // Remove the checkout from the checkout collection
             await Checkout.remove({'payment_info.payment_id': paymentId}).exec()
+
+            // Converting mongoose order object to regular json object to send to email service
+            order = order.toObject({flattenMaps: true});
+            transformer.castValuesToString(order, "_id");
+            emailService.emailOrderReceived(order)
+
             result = {
                 httpStatus: httpStatus.OK,
                 status: "successful", 
@@ -219,7 +239,7 @@ export default {
             // Take the shopping cart and add other information for it to be an order cart.
             let shoppingCart = response.responseData;
             // Converting the mongoose object to normal json
-            shoppingCart = shoppingCart.toObject();
+            shoppingCart = shoppingCart.toObject({flattenMaps: true});
             transformer.castValuesToString(shoppingCart, "_id")
 
             let tariffPriceInUSD = 0;

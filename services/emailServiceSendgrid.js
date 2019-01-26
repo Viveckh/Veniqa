@@ -1,7 +1,8 @@
 import sendgridMail from '@sendgrid/mail';
 import sendgridCreds from '../properties/sendgrid';
 import frontEndUrls from '../properties/frontEndUrls';
-import logger from '../logging/logger'
+import logger from '../logging/logger';
+import * as _ from 'lodash';
 sendgridMail.setApiKey(sendgridCreds.apiKey);
 
 export default {
@@ -56,6 +57,22 @@ export default {
         this.triggerEmail(mailOptions);
     },
 
+    emailOrderReceived(orderObj) {
+        let condensedOrderObj = this.parseOrderDetailsForEmail(orderObj);
+
+        // setup email data with unicode symbols
+        let mailOptions = {
+            from: '"Veniqa Support" <support@veniqa.com>', // sender address
+            to: condensedOrderObj.user_email, // list of receivers
+            subject: 'Veniqa - Order Received', // Subject line
+            html: '<b>Hi </b>' + '<br>We have received your order.<br><br>',
+            templateId: sendgridCreds.templates.order_received,
+            dynamic_template_data: condensedOrderObj
+        };
+
+        this.triggerEmail(mailOptions);
+    },
+
     triggerEmail(mailOptions) {
         sendgridMail.send(mailOptions, (error, result) => {
             if (error) {
@@ -63,5 +80,16 @@ export default {
             }
             logger.verbose('Email sent', {meta: result});
         });
+    },
+
+    parseOrderDetailsForEmail(orderObj) {
+        // Extract only the applicable root nodes first
+        orderObj = (({_id, overall_status, cart, user_email, mailing_address, payment_info}) => ({_id, overall_status, cart, user_email, mailing_address, payment_info}))(orderObj)
+        
+        // This goes through the items array and only selects the given object keys no matter how deep in tree. also brings them on the same level in the process
+        orderObj.cart.items = _.map(orderObj.cart.items, _.partialRight(_.pick, ['product.name', 'product.brand', 'product.store', 'product.price', 'counts', 'aggregatedPrice', 'customizations']));
+        orderObj.payment_info = _.map(orderObj.payment_info, _.partialRight(_.pick, ['source', 'type', 'amount_in_payment_currency']))
+        
+        return orderObj;
     }
 }
