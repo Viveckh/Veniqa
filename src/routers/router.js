@@ -5,7 +5,7 @@ import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
 import SearchResultViewComponent from '@/views/SearchResultViewComponent';
-import PageNotFound from '@/views/notfound.vue';
+import PageNotFound from '@/views/Notfound.vue';
 
 Vue.use(Router);
 
