@@ -1,17 +1,18 @@
 <template>
   <div id="main-page">
     <div class="main-bg">
-      <div class="absolute-buttons">
-        <b-button class="veniqa-button">Hottest Deals</b-button>
-        <b-button class="veniqa-button">Christmas Deals</b-button>
-        <b-button class="veniqa-button">How Veniqa Works
-          <font-awesome-icon icon="play"/>
-        </b-button>
+      <div class="content">
+        <div class="main-content">
+          <h3>Shop with us this Valentine's season</h3>
+          <hr>
+          <a href="">Shop Men</a> &nbsp;&nbsp;&nbsp;
+          <a href="">Shop Women</a>
+        </div>
       </div>
     </div>
 
     <!-- Other contents go here. They are featured contents -->
-    <h1 class='featured-title'>Featured</h1>
+    <h1 class="featured-title">Featured</h1>
 
     <div v-for="(prd, pid) in featuredProducts" v-bind:key="pid">
       <featured-product-view :product="prd"/>
@@ -40,11 +41,11 @@ export default {
   created() {
     this.product = Product;
 
-    FeatureService.getFeatureListFor(this.currentSection).then((data) => {
-      this.featuredProducts = data;
-    }).catch((err) => {
-
-    });
+    FeatureService.getFeatureListFor(this.currentSection)
+      .then((data) => {
+        this.featuredProducts = data;
+      })
+      .catch((err) => {});
   },
 };
 </script>
@@ -64,13 +65,25 @@ export default {
 }
 
 .main-bg {
-  background-image: url(./../../assets/images/background.png);
+  background-image: url(./../../assets/images/lv.jpg);
   height: 100vh;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: center;
+
+  .content {
+    margin-top: 100px;
+    display: flex;
+    height: 100%;
+    margin: auto;
+
+    div {
+      margin: auto;
+    }
+  }
 }
 
-.featured-title{
+.featured-title {
   margin: 20px 0px;
-
 }
 </style>

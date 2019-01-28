@@ -1,48 +1,64 @@
 <template>
-  <div>
-    <b-navbar
+  <div id="header-menu">
+    <!-- <b-navbar
       toggleable="md"
       :type="navType()"
       fixed="top"
       :class="{'header-color': this.scrollPos > 50}"
-    >
+    >-->
+    <b-navbar toggleable="md" fixed="top" class="header-color" type="light">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-      <b-navbar-brand class="abs">
+      <b-navbar-brand to="/">
         <img
           src="@/assets/logo_transparent_blue_black.png"
           alt="VENIQA"
           width="180px"
-          style="padding-top: 5px;"
+          style="padding: 0.5rem 0rem;"
         >
       </b-navbar-brand>
-      <b-collapse is-nav id="nav_collapse" class="collapsible-content">
-        <b-navbar-nav>
-          <b-nav-item class="veniqa-nav" to="/">Deals</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/vendor/amazon">Amazon</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/vendor/macys">Macy's</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/vendor/sephora">Sephora</b-nav-item>
-          <b-nav-item class="veniqa-nav" href="#">Michael Kors</b-nav-item>
-        </b-navbar-nav>
+      <!-- <b-nav-item class=" d-xs-block d-sm-block d-md-none" to="/login">Ciao</b-nav-item> -->
+      <b-nav-item class="d-xs-block d-sm-block d-md-none" to="/checkout">
+        <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
+        <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
+      </b-nav-item>
 
+      <b-collapse is-nav id="nav_collapse" class="collapsible-content">
         <b-navbar-nav class="ml-auto">
-          <b-nav-item class="veniqa-nav" to="/about">About</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
-          <!-- <b-nav-item class="veniqa-nav" v-else> -->
-          <!-- {{nameOfUser}} -->
-          <b-nav-item-dropdown class="veniqa-nav" :text="nameOfUser" right v-else>
+          <b-nav-item-dropdown class="veniqa-nav no-dropdown-display d-none d-md-block" text="Shop">
+            <b-dropdown-item to="/vendor/amazon">Temp</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item class="veniqa-nav d-none d-md-block" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+
+          <b-nav-item-dropdown class="veniqa-nav d-none d-md-block" :text="nameOfUser" right v-else>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item v-if="isSessionActive" to="/orders">Orders</b-dropdown-item>
             <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
           <!-- </b-nav-item> -->
-          <b-nav-item class="veniqa-nav" to="/checkout">
+          <b-nav-item class="veniqa-nav d-none d-md-block" to="/checkout">
             <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
             <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
           </b-nav-item>
         </b-navbar-nav>
+
+        <!-- Displays only when collapsible option is true -->
+        <b-navbar-nav class="ml-auto d-md-none">
+          <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's</b-nav-item>
+          <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Women's</b-nav-item>
+          <b-nav-item class="align-left collapse-nav">Profile</b-nav-item>
+          <b-nav-item class="align-left collapse-nav" v-if="isSessionActive" to="/orders">Orders</b-nav-item>
+          <b-nav-item class="d-none d-md-block collapse-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+          <b-nav-item class="align-left collapse-nav" @click="logoutClicked()" v-else>Logout</b-nav-item>
+          <b-nav-item-dropdown class="align-left" text="hello" right>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item v-if="isSessionActive" to="/orders">Orders</b-dropdown-item>
+            <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+        <!-- End of Collapsible view display -->
+
       </b-collapse>
     </b-navbar>
   </div>
@@ -53,9 +69,9 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'HeaderMenu',
-  mounted() {
-    window.addEventListener('scroll', this.updateScroll);
-  },
+  // mounted() {
+  //   window.addEventListener('scroll', this.updateScroll);
+  // },
   data() {
     return {
       scrollPos: null,
@@ -82,17 +98,17 @@ export default {
       }
     },
 
-    updateScroll() {
-      this.scrollPos = window.scrollY;
-    },
+    // updateScroll() {
+    //   this.scrollPos = window.scrollY;
+    // },
 
-    navType() {
-      return this.scrollPos > 50 ? 'dark' : 'light';
-    },
+    // navType() {
+    //   return this.scrollPos > 50 ? 'dark' : 'light';
+    // },
   },
-  destroy() {
-    window.removeEventListener('scroll', this.updateScroll);
-  },
+  // destroy() {
+  //   window.removeEventListener('scroll', this.updateScroll);
+  // },
   computed: {
     nameOfUser() {
       return this.$store.getters['authStore/getFirstName'];
@@ -117,11 +133,13 @@ export default {
 @import "../assets/css/global.scss";
 
 .header-color {
-  background-color: $pitch-black;
+  background-color: white;
   color: white !important;
 }
+
 .veniqa-nav {
   padding: 5px 10px;
+  margin-left: 2rem;
 }
 
 .registration-mode {
@@ -153,6 +171,11 @@ export default {
 .collapsible-content {
   z-index: 10;
 }
+
+.collapse-nav{
+  padding: 0.2rem 0rem;
+}
+
 
 // 768 is the changing point.
 @media (min-width: 768px) {
