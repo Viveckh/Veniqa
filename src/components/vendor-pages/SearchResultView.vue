@@ -9,10 +9,10 @@
               <div
               class="img-cls"
               :style="getPictureStyle(product.thumbnailUrls[0])"
-              
+
             ></div>
             </div>
-            
+
 
             <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
               <font-awesome-icon icon="shopping-bag" width="100%"/>
@@ -23,7 +23,7 @@
               </p>
               <p>{{product.price.currency}} {{product.price.amount}}</p>
             </div>
-            
+
           </div>
           <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
         </div>
@@ -139,7 +139,6 @@ export default {
     height: 100%;
     width: 100%;
   }
-
 
 
   .add-cart-button {

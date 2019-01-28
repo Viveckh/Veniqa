@@ -17,7 +17,7 @@
           style="padding: 0.5rem 0rem;"
         >
       </b-navbar-brand>
-      <!-- <b-nav-item class=" d-xs-block d-sm-block d-md-none" to="/login">Ciao</b-nav-item> -->
+
       <b-nav-item class="d-xs-block d-sm-block d-md-none" to="/checkout">
         <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
         <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
@@ -29,7 +29,11 @@
             <b-dropdown-item to="/vendor/amazon">Temp</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item class="veniqa-nav d-none d-md-block" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+          <b-nav-item
+            class="veniqa-nav d-none d-md-block"
+            to="/login"
+            v-if="!userSessionActive"
+          >Login</b-nav-item>
 
           <b-nav-item-dropdown class="veniqa-nav d-none d-md-block" :text="nameOfUser" right v-else>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
@@ -44,21 +48,22 @@
         </b-navbar-nav>
 
         <!-- Displays only when collapsible option is true -->
-        <b-navbar-nav class="ml-auto d-md-none">
+        <div class="sidenav ml-auto d-md-none">
+          <div class="align-right close-icon">
+            <font-awesome-icon v-b-toggle.nav_collapse icon="times"/>
+          </div>
           <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's</b-nav-item>
           <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Women's</b-nav-item>
           <b-nav-item class="align-left collapse-nav">Profile</b-nav-item>
           <b-nav-item class="align-left collapse-nav" v-if="isSessionActive" to="/orders">Orders</b-nav-item>
-          <b-nav-item class="d-none d-md-block collapse-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+          <b-nav-item
+            class="d-none d-md-block collapse-nav"
+            to="/login"
+            v-if="!userSessionActive"
+          >Login</b-nav-item>
           <b-nav-item class="align-left collapse-nav" @click="logoutClicked()" v-else>Logout</b-nav-item>
-          <b-nav-item-dropdown class="align-left" text="hello" right>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item v-if="isSessionActive" to="/orders">Orders</b-dropdown-item>
-            <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
+        </div>
         <!-- End of Collapsible view display -->
-
       </b-collapse>
     </b-navbar>
   </div>
@@ -132,6 +137,38 @@ export default {
 <style lang="scss">
 @import "../assets/css/global.scss";
 
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 90%; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: white; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+
+  .close-icon {
+    color: black;
+    font-size: xx-large;
+    padding: 0px;
+    padding-right: 2rem;
+    cursor: pointer;
+    font-weight: lighter;
+  }
+}
+
+/* The navigation menu links */
+.sidenav li {
+  list-style: none;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav li .active{
+  color: #f1f1f1 !important;
+  background-color: $pitch-black !important;
+}
+
 .header-color {
   background-color: white;
   color: white !important;
@@ -172,10 +209,9 @@ export default {
   z-index: 10;
 }
 
-.collapse-nav{
+.collapse-nav {
   padding: 0.2rem 0rem;
 }
-
 
 // 768 is the changing point.
 @media (min-width: 768px) {
