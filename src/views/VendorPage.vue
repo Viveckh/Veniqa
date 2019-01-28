@@ -16,6 +16,10 @@ import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
 import ProxyUrls from '@/constants/ProxyUrls';
 import ProductDTO from '@/dto/Products.json';
 
+
+/**
+ * @deprecated
+*/
 export default {
   name: 'VendorPage',
   props: {
