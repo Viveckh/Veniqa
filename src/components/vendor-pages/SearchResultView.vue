@@ -5,21 +5,26 @@
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
           <div class="link" @click="openProductDetail(product._id)">
-            <div
+            <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
+              <div
               class="img-cls"
               :style="getPictureStyle(product.thumbnailUrls[0])"
-              v-if="product.thumbnailUrls.length > 0"
+              
             ></div>
+            </div>
+            
 
             <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
               <font-awesome-icon icon="shopping-bag" width="100%"/>
             </p>
-            <p>
-              <strong>{{product.name}}</strong>
-            </p>
-            <p>{{product.price.currency}} {{product.price.amount}}</p>
+            <div class="product-card-desc">
+              <p class="title">
+                {{product.name}}
+              </p>
+              <p>{{product.price.currency}} {{product.price.amount}}</p>
+            </div>
+            
           </div>
-
           <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
         </div>
       </div>
@@ -44,8 +49,8 @@ export default {
       return {
         'background-image': `url(${img})`,
         'background-size': 'cover',
-        width: 'auto',
-        height: '350px',
+        // width: 'auto',
+        // height: '350px',
         'margin-bottom': '10px',
       };
     },
@@ -75,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .search-result-view {
   text-align: left;
   width: 80%;
@@ -100,18 +105,42 @@ export default {
   margin: 20px 20px 20px 0px;
   width: 300px;
 
+  &:hover .img-cls{
+    transform: scale(1.2);
+    transition: all 0.5s;
+  }
+
+  .img-parent{
+    height: 350px;
+    width: 300px;
+    overflow: hidden;
+  }
+
+  .product-card-desc {
+    margin-top: 0.75em;
+    .title{
+      height: 4em;
+      text-overflow: ellipsis;
+      overflow: auto;
+    }
+  }
+
   .link {
     cursor: pointer;
   }
   p {
-    padding: 5px 30px;
+    padding: 5px 5px;
     margin: 0px;
   }
 
   .img-cls {
     border-top-right-radius: 0.25rem;
     border-top-left-radius: 0.25rem;
+    height: 100%;
+    width: 100%;
   }
+
+
 
   .add-cart-button {
     width: 100%;
