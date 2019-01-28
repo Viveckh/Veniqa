@@ -7,6 +7,7 @@ import CartStore from '@/store/cart';
 import AuthStore from '@/store/auth';
 import ShippingStore from '@/store/shipping';
 import Loader from '@/store/loader';
+import Search from '@/store/search';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     authStore: AuthStore,
     shippingStore: ShippingStore,
     loaderStore: Loader,
+    searchStore: Search,
   },
 
   plugins: [vuexLocal.plugin],

@@ -1,7 +1,7 @@
 <template>
   <div id="search-result">
     <div class="search-result-view">
-      <h2>Search Results for Fossil Watches</h2>
+      <h2>Search Results</h2>
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
           <div class="link" @click="openProductDetail(product._id)">
@@ -21,7 +21,7 @@
               <p class="title">
                 {{product.name}}
               </p>
-              <p>{{product.price.currency}} {{product.price.amount}}</p>
+              <p class="price">{{product.price.currency}} {{product.price.amount}}</p>
             </div>
 
           </div>
@@ -119,9 +119,13 @@ export default {
   .product-card-desc {
     margin-top: 0.75em;
     .title{
-      height: 4em;
+      height: 3.5em;
       text-overflow: ellipsis;
       overflow: auto;
+    }
+
+    .price{
+      font-weight: bold;
     }
   }
 

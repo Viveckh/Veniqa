@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue';
 import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
+import SearchResultViewComponent from '@/views/SearchResultViewComponent';
 
 Vue.use(Router);
 
@@ -66,6 +67,13 @@ const router = new Router({
           path: 'products/:productId',
           component: () => import('@/views/ProductDetail.vue'),
           props: true,
+        },
+        {
+          path: 'search',
+          name: 'search',
+          component: SearchResultViewComponent,
+
+          // props: (route) => ({ query: route.query })
         },
       ],
     },
