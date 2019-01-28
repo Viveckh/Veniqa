@@ -49,5 +49,29 @@ export default {
             logger.error("Error in deleteAddress Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
+    },
+
+    async getOrderList(req, res, next) {
+        let response;
+        try {
+            response = await userService.getOrderList(req.user, req.body.pagingOptions);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            console.log("Error in getOrderList Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+    async getOrderDetails(req, res, next) {
+        let response;
+        try {
+            response = await userService.getOrderDetails(req.user, req.query.orderId);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            console.log("Error in getOrderDetails Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
     }
 }

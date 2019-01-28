@@ -636,6 +636,70 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "orderList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 10\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{server}}/user/orderList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"orderList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "orderDetails",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/user/orderDetails?orderId=5c4c7be034a2b90c1fa32611",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"orderDetails"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "5c4c7be034a2b90c1fa32611"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

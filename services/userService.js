@@ -1,4 +1,5 @@
 import User from '../database/models/user';
+import Order from '../database/models/order';
 import * as _ from 'lodash';
 import httpStatus from 'http-status-codes';
 import logger from '../logging/logger'
@@ -124,6 +125,59 @@ export default {
         }
         catch(err) {
             logger.error("Error in deleteAddress Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async getOrderList(userObj, pagingOptions) {
+        let result = {};
+        try {
+            // if the user is not found or passed, do not continue.
+            if (!userObj.email) {
+                result = {httpStatus: httpStatus.UNAUTHORIZED, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.UNAUTHORIZED)};
+                return result;
+            }
+
+            let orders = await Order.paginate({user_email: userObj.email}, {
+                select: '_id overall_status cart.items.product.name cart.items.product.brand cart.items.product.store cart.items.product.thumbnailUrls cart.items.counts cart.items.aggregatedPrice cart.items.customizations cart.items.order_line_level_processing_details.status cart.items.order_line_level_processing_details.delivery.delivery_date mailing_address.country auditLog.createdOn',
+                page: pagingOptions.page,
+                limit: pagingOptions.limit
+            }).then(result => {
+                return result;
+            }).catch(err => {
+                return err;
+            });
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: orders};
+            return result;
+        }
+        catch(err) {
+            console.log(err);
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async getOrderDetails(userObj, orderId) {
+        let result = {};
+        try {
+            // if the user is not found or passed, do not continue.
+            if (!userObj.email) {
+                result = {httpStatus: httpStatus.UNAUTHORIZED, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.UNAUTHORIZED)};
+                return result;
+            }
+
+            let order = await Order.findOne({_id: orderId, user_email: userObj.email}).select('_id overall_status cart.items.product._id cart.items.product.name cart.items.product.brand cart.items.product.store cart.items.product.thumbnailUrls cart.items.product.price cart.items.counts cart.items.aggregatedPrice cart.items.customizations cart.items.order_line_level_processing_details.status cart.items.order_line_level_processing_details.delivery.delivery_date cart.totalWeight cart.subTotalPrice cart.serviceCharge cart.shippingPrice cart.tariffPrice cart.totalPrice payment_info.source payment_info.type payment_info.amount_in_usd payment_info.amount_in_payment_currency mailing_address auditLog.createdOn').exec();
+            if (order) {
+                result = {httpStatus: httpStatus.OK, status: "successful", responseData: order};
+            } 
+            else { 
+                result = {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
+            }
+            return result;  
+        }
+        catch(err) {
+            console.log(err);
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

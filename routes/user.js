@@ -16,4 +16,8 @@ router.put('/address', passportAuth.isAuthenticated, userController.updateAddres
 
 router.delete('/address', passportAuth.isAuthenticated, userController.deleteAddress);
 
+router.post('/orderList', passportAuth.isAuthenticated, userController.getOrderList);
+
+router.get('/orderDetails', passportAuth.isAuthenticated, userController.getOrderDetails);
+
 module.exports = router;
