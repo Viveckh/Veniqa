@@ -1,34 +1,26 @@
 <template>
   <div id="main-page">
-    <div class="main-bg">
-      <div class="content">
-        <div class="main-content">
-          <h3>Shop with us this Valentine's season</h3>
-          <hr>
-          <a href="">Shop Men</a> &nbsp;&nbsp;&nbsp;
-          <a href="">Shop Women</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Other contents go here. They are featured contents -->
+    <div class="main-bg"></div>
     <h1 class="featured-title">Featured</h1>
-
-    <div v-for="(prd, pid) in featuredProducts" v-bind:key="pid">
-      <featured-product-view :product="prd"/>
-    </div>
+    <featured-products/>
+    <h1 class="featured-title">Hottest Trends</h1>
+    <featured-stripe/>
   </div>
 </template>
 
 <script>
 import Product from '@/data/featuredProduct.json';
-import FeaturedProductView from '@/components/homepage/FeaturedProductView';
+import FeaturedProducts from '@/components/homepage/FeaturedProducts.vue';
+import FeaturedCategories from '@/components/homepage/FeaturedCategories.vue';
 import FeatureService from '@/services/FeaturedService';
+import FeaturedStripe from '@/components/homepage/FeaturedStripe.vue';
 
 export default {
   name: 'MainPage',
   components: {
-    FeaturedProductView,
+    FeaturedCategories,
+    FeaturedProducts,
+    FeaturedStripe,
   },
   data() {
     return {
@@ -51,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/css/global.scss";
+@import '../../assets/css/global.scss';
 
 .veniqa-button:hover {
   background-color: $pitch-black;
@@ -65,7 +57,7 @@ export default {
 }
 
 .main-bg {
-  background-image: url(./../../assets/images/lv.jpg);
+  background-image: url('https://www.fearlesss.co.uk/media/wysiwyg/Copy_of_SPRING_TWENTY_NINETEEN-2.jpg');
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -83,7 +75,14 @@ export default {
   }
 }
 
+.jumbotron {
+  padding: 0px 0px 0px 0px !important;
+  margin: 0px 0px 0px 0px !important;
+}
 .featured-title {
-  margin: 20px 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 20px 10px;
+  color: #5d6d7e;
+  background-color: #eaecee;
 }
 </style>
