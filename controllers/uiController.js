@@ -13,5 +13,18 @@ export default {
             logger.error("Error in getFeaturedSection Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
+    },
+
+    async getProductCategoryList(req, res, next) {
+        let response;
+        try {
+            response = await uiService.getProductCategoryList();
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            logger.error("Error in getProductCategoryList Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
     }
+
 }

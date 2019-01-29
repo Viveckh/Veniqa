@@ -359,7 +359,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchTerm\": \"highlighter\",\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t}\n}"
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t},\n\t\"searchTerm\": \"amazon\",\n\t\"categoryId\": \"5c45e46bb720330af113ed50\",\n\t\"sortRule\": \"price -auditLog.createdOn\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/search",
@@ -651,7 +651,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 10\n\t}\n}"
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 10\n\t},\n\t\"sortRule\": \"-auditLog.createdOn\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/user/orderList",
@@ -739,6 +739,28 @@
 									"key": "name",
 									"value": "section_identifier"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productCategoryList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/ui/productCategoryList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"productCategoryList"
 							]
 						}
 					},

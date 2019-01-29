@@ -10,4 +10,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/featured', uiController.getFeaturedSection);
 
+router.get('/productCategoryList', uiController.getProductCategoryList);
+
 module.exports = router;

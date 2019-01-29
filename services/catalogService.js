@@ -3,15 +3,18 @@ import httpStatus from 'http-status-codes';
 import logger from '../logging/logger';
 
 export default {
-    async searchCatalog(searchTerm, pagingOptions) {
+    async searchCatalog(pagingOptions, searchTerm, categoryId, sortRule) {
         let result = {};
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
+        categoryId ? searchObj.category = categoryId : '';
+
         try {
             let products = await Product.paginate(searchObj, {
                 select: '_id name brand store price thumbnailUrls',
                 populate: [
                     { path: 'category', select: '-_id category subcategory' }
                 ],
+                sort: sortRule,
                 page: pagingOptions.page,
                 limit: pagingOptions.limit
             }).then(result => {
