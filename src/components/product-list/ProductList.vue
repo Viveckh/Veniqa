@@ -25,7 +25,7 @@
               href="#"
             >
               <div class="description d-flex flex-column justify-content-end align-items-center">
-                <p class="productInfo">{{product.name}}</p>
+                <h5 class="productInfo">{{product.name}}</h5>
                 <p class="productInfo">{{product.price}}</p>
               </div>
             </b-col>
@@ -162,7 +162,7 @@ export default {
 }
 .filterLabel {
   font-weight: bold;
-  margin-top: 30px;
+  margin-top: 50px;
 }
 .slider {
   width: inherit;
