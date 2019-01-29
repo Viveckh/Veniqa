@@ -61,33 +61,17 @@
               class="veniqa-nav no-dropdown-display d-none d-md-block"
               text="Shop"
             >
-<<<<<<< HEAD
-              <b-dropdown-item to="/vendor/amazon">Temp</b-dropdown-item>
-            </b-nav-item-dropdown>
-
-=======
               <b-dropdown-item to="/vendor/amazon">Jackets</b-dropdown-item>
               <b-dropdown-item to="/vendor/amazon">Tees</b-dropdown-item>
               <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
             </b-nav-item-dropdown>
-<b-nav-item
-              to="products"
-              class="veniqa-nav d-none d-md-block"
-              
-            >Test</b-nav-item>
->>>>>>> arjun
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Test</b-nav-item>
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
               v-if="!userSessionActive"
             >Login</b-nav-item>
 
-<<<<<<< HEAD
-=======
-            
-            
-
->>>>>>> arjun
             <b-nav-item-dropdown
               class="veniqa-nav d-none d-md-block"
               :text="nameOfUser"
@@ -129,7 +113,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
+;
 export default {
   name: 'HeaderMenu',
   // mounted() {
@@ -165,17 +150,9 @@ export default {
         });
       }
     },
-<<<<<<< HEAD
-
     // updateScroll() {
     //   this.scrollPos = window.scrollY;
     // },
-
-=======
-    // updateScroll() {
-    //   this.scrollPos = window.scrollY;
-    // },
->>>>>>> arjun
     // navType() {
     //   return this.scrollPos > 50 ? 'dark' : 'light';
     // },
@@ -201,28 +178,16 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/css/global.scss";
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
+@import '../assets/css/global.scss';
 .special-search-input {
   border: none;
   padding: 0px 5px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   min-width: 20rem;
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
   &:focus {
     outline: none;
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
 .sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 90%; /* Set the width of the sidebar */
@@ -233,10 +198,6 @@ export default {
   background-color: white; /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
   .close-icon {
     color: black;
     font-size: xx-large;
@@ -246,27 +207,15 @@ export default {
     font-weight: lighter;
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
 /* The navigation menu links */
 .sidenav li {
   list-style: none;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
 /* When you mouse over the navigation links, change their color */
 .sidenav li .active {
   color: #f1f1f1 !important;
   background-color: $pitch-black !important;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> arjun
 .header-color {
   background-color: white;
   // color: white !important;
@@ -300,17 +249,9 @@ export default {
 .collapsible-content {
   z-index: 10;
 }
-<<<<<<< HEAD
-
 .collapse-nav {
   padding: 0.2rem 0rem;
 }
-
-=======
-.collapse-nav {
-  padding: 0.2rem 0rem;
-}
->>>>>>> arjun
 // 768 is the changing point.
 @media (min-width: 768px) {
   .navbar-brand.abs {
@@ -337,3 +278,4 @@ export default {
   }
 }
 </style>
+

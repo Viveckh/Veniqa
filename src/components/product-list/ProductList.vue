@@ -67,7 +67,8 @@ export default {
         {
           name: 'Bugged Shoes',
           price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
+          url:
+            'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
         },
         {
           name: 'Terminal Pants',
@@ -97,7 +98,8 @@ export default {
         {
           name: 'Bugged Shoes',
           price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
+          url:
+            'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
         },
         {
           name: 'Terminal Pants',
@@ -127,7 +129,8 @@ export default {
         {
           name: 'Bugged Shoes',
           price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
+          url:
+            'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
         },
         {
           name: 'Terminal Pants',
@@ -169,7 +172,7 @@ export default {
 }
 .box {
   height: 40vh;
-  background-color: red;
+  background-color: grey;
   background-size: cover;
   background-position: center center;
   padding: 0px !important;

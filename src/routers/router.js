@@ -13,11 +13,12 @@ Vue.use(Router);
 const router = new Router({
   // mode: 'history',
   base: process.env.BASE_URL,
-  routes: [{
-<<<<<<< HEAD
+  routes: [
+    {
       path: '/',
       component: Home,
-      children: [{
+      children: [
+        {
           path: '',
           component: MainPage,
         },
@@ -27,7 +28,13 @@ const router = new Router({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import( /* webpackChunkName: "about" */ '@/views/About.vue'),
+          component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+        },
+        {
+          path: 'products',
+          name: 'products',
+
+          component: ProductList,
         },
         {
           path: 'faqs',
@@ -35,7 +42,7 @@ const router = new Router({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import( /* webpackChunkName: "about" */ '@/views/FAQs.vue'),
+          component: () => import(/* webpackChunkName: "about" */ '@/views/FAQs.vue'),
         },
         {
           path: 'contact',
@@ -43,7 +50,7 @@ const router = new Router({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import( /* webpackChunkName: "about" */ '@/views/Contact.vue'),
+          component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
         },
         {
           path: 'vendor/:vendorName',
@@ -51,7 +58,7 @@ const router = new Router({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import( /* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
+          component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
         },
         {
           path: 'checkout',
@@ -76,46 +83,7 @@ const router = new Router({
 
           // props: (route) => ({ query: route.query })
         },
-      ]
-=======
-    path: '/',
-    component: Home,
-    children: [{
-      path: '',
-      component: MainPage,
-    },
-    {
-      path: 'about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
-    },
-    {
-      path: 'products',
-      name: 'products',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: ProductList
-    },
-    {
-      path: 'faqs',
-      name: 'faqs',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/FAQs.vue'),
-    },
-    {
-      path: 'contact',
-      name: 'contact',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
->>>>>>> arjun
+      ],
     },
 
     {
@@ -138,11 +106,8 @@ const router = new Router({
       name: 'PageNotFound',
       component: PageNotFound,
     },
-
-
   ],
 });
-
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
