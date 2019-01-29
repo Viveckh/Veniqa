@@ -27,7 +27,7 @@
             <a>Terms and Condition</a>
           </b-col>
           <b-col md="4">
-            <strong>@2018 Veniqa
+            <strong>@2019 Veniqa
               <br>An Ngineerx Subsidiary
             </strong>
           </b-col>
