@@ -1,8 +1,5 @@
 <template>
   <div class="align-left shipping">
-    <h3>Shipping Details</h3>
-    <hr>
-
     <div v-if="allAddresses.length > 0" class="addresses">
       <ul class="shipping-list">
         <li
@@ -88,7 +85,7 @@
           <b-form-input
             id="address1"
             type="text"
-                size="sm"
+            size="sm"
             name="text"
             :state="address1State"
             v-model="shippingDeet.addressLine1"
@@ -107,7 +104,7 @@
             id="address2"
             type="text"
             name="address2"
-                size="sm"
+            size="sm"
             v-model="shippingDeet.addressLine2"
             placeholder="Enter your address 2"
           ></b-form-input>
@@ -244,10 +241,7 @@ export default {
       shippingDeet: null,
       description: '',
       isUpdate: false,
-      countryOptions: [
-        'Bangladesh',
-        'Nepal',
-      ],
+      countryOptions: ['Bangladesh', 'Nepal'],
     };
   },
 
@@ -371,7 +365,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/global.scss";
+@import '../../assets/css/global.scss';
 .shipping-form {
   padding: 10px 0px;
   background: white;

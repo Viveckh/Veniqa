@@ -1,16 +1,20 @@
 <template>
   <div class="checkout">
     <div class="space"></div>
-    <h2>Checkout</h2>
+    <h2 class="featured-title">Checkout</h2>
 
     <b-row>
       <b-col md="6">
-        <shipping-detail @selected="addressSelected"/>
-        <shipping-method/>
-        <payment-detail/>
+        <b-card bg-variant="light" title="Shipping Details" class="text-left">
+          <shipping-detail @selected="addressSelected"/>
+          <shipping-method/>
+          <payment-detail/>
+        </b-card>
       </b-col>
       <b-col md="6">
-        <order-detail/>
+        <b-card bg-variant="light" title="Your Order" class="text-left">
+          <order-detail/>
+        </b-card>
       </b-col>
     </b-row>
 
@@ -86,10 +90,9 @@ export default {
         const isSuccess = await this.$store.dispatch(
           'cartStore/createCheckout',
           {
-            address: this.selectedAddress,
-            shippingMethod: this.shippingMethod,
-          },
-        );
+          address: this.selectedAddress,
+          shippingMethod: this.shippingMethod,
+        });
       } catch (error) {
         notification.error(
           this,
@@ -168,6 +171,7 @@ export default {
   padding-bottom: 3rem;
   min-height: 90vh;
   position: relative;
+  background-color: #eaecee;
 
   .checkout-button {
     margin-top: 20px;
