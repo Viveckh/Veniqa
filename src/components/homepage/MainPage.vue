@@ -44,7 +44,6 @@ export default {
 
 <style lang="scss">
 @import "../../assets/css/global.scss";
-@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 
 .veniqa-button:hover {
   background-color: $pitch-black;
@@ -63,9 +62,6 @@ export default {
   background-size: cover;
 }
 
-#main-page {
-  font-family: "Roboto Slab", serif !important;
-}
 .jumbotron {
   padding: 0px 0px 0px 0px !important;
   margin: 0px 0px 0px 0px !important;

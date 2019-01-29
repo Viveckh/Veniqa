@@ -18,17 +18,16 @@
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse" class="collapsible-content">
         <b-navbar-nav>
-          <b-nav-item class="veniqa-nav" to="/">Deals</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/vendor/amazon">Amazon</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/vendor/macys">Macy's</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/vendor/sephora">Sephora</b-nav-item>
-          <b-nav-item class="veniqa-nav" href="#">Michael Kors</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/">Dresses</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/vendor/amazon">Shoes</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/vendor/macys">Pants</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/vendor/macys">Jackets</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
-          <b-nav-item class="veniqa-nav" to="/about">About</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/faqs">FAQs</b-nav-item>
-          <b-nav-item class="veniqa-nav" to="/contact">Contact</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/about">Tees</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/faqs">Intimates</b-nav-item>
+          <b-nav-item class="veniqa-nav" to="/contact">Accessories</b-nav-item>
           <b-nav-item class="veniqa-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
           <!-- <b-nav-item class="veniqa-nav" v-else> -->
           <!-- {{nameOfUser}} -->
@@ -122,6 +121,7 @@ export default {
 }
 .veniqa-nav {
   padding: 5px 10px;
+  font-size: 1.3em;
 }
 
 .registration-mode {
