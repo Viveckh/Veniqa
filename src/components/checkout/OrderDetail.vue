@@ -17,7 +17,11 @@
             <div class="order-desc" @click="gotoProduct(item.product._id)">
               {{item.product.name}}
               <br>
-              <span style="font-size: 12px">Standard Shipping</span>
+              <div style="font-size: 12px">
+                <span v-for="(custom, cid) of item.customizations" v-bind:key="cid">
+                  {{custom | customDisplay}} | 
+                  </span>
+              </div>
             </div>
             <span class="delete" @click="deleteSelected(item)">Delete</span>
           </b-col>
@@ -129,6 +133,7 @@ export default {
   },
 
   methods: {
+    
     orderPicture(img) {
       return {
         'background-image': `url(${img})`,
@@ -191,6 +196,12 @@ export default {
     },
   },
 
+  filters: {
+    customDisplay(val){
+      return val.indexOf('|') >=0 ? val.split('|')[0] : val;
+    },
+  },
+
   computed: {
     ...mapGetters({
       orders: 'cartStore/getCart',
@@ -201,7 +212,7 @@ export default {
       tariffPrice: 'cartStore/getTariffPrice',
       totalWeight: 'cartStore/getTotalWeight',
     }),
-
+    
     quantityState() {
       return qty => qty >= 1;
     },

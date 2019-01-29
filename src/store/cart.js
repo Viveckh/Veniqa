@@ -256,6 +256,7 @@ export default {
           product: item.product._id,
           _id: item._id,
           counts: item.counts,
+          customizations: item.customizations
         });
       });
 
