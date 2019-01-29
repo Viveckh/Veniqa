@@ -61,15 +61,33 @@
               class="veniqa-nav no-dropdown-display d-none d-md-block"
               text="Shop"
             >
+<<<<<<< HEAD
               <b-dropdown-item to="/vendor/amazon">Temp</b-dropdown-item>
             </b-nav-item-dropdown>
 
+=======
+              <b-dropdown-item to="/vendor/amazon">Jackets</b-dropdown-item>
+              <b-dropdown-item to="/vendor/amazon">Tees</b-dropdown-item>
+              <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
+            </b-nav-item-dropdown>
+<b-nav-item
+              to="products"
+              class="veniqa-nav d-none d-md-block"
+              
+            >Test</b-nav-item>
+>>>>>>> arjun
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
               v-if="!userSessionActive"
             >Login</b-nav-item>
 
+<<<<<<< HEAD
+=======
+            
+            
+
+>>>>>>> arjun
             <b-nav-item-dropdown
               class="veniqa-nav d-none d-md-block"
               :text="nameOfUser"
@@ -112,7 +130,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
 export default {
   name: 'HeaderMenu',
   // mounted() {
@@ -138,7 +155,6 @@ export default {
           type: 'success',
           text: 'You have been successfully logged out.',
         });
-
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
       } catch (err) {
@@ -149,11 +165,17 @@ export default {
         });
       }
     },
+<<<<<<< HEAD
 
     // updateScroll() {
     //   this.scrollPos = window.scrollY;
     // },
 
+=======
+    // updateScroll() {
+    //   this.scrollPos = window.scrollY;
+    // },
+>>>>>>> arjun
     // navType() {
     //   return this.scrollPos > 50 ? 'dark' : 'light';
     // },
@@ -165,15 +187,12 @@ export default {
     nameOfUser() {
       return this.$store.getters['authStore/getFirstName'];
     },
-
     userSessionActive() {
       return this.$store.getters['authStore/isSessionActive'];
     },
-
     totalOrders() {
       return this.$store.getters['cartStore/getTotalItems'];
     },
-
     ...mapGetters({
       isSessionActive: 'authStore/isSessionActive',
     }),
@@ -183,18 +202,27 @@ export default {
 
 <style lang="scss">
 @import "../assets/css/global.scss";
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
 .special-search-input {
   border: none;
   padding: 0px 5px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   min-width: 20rem;
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
   &:focus {
     outline: none;
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
 .sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 90%; /* Set the width of the sidebar */
@@ -205,7 +233,10 @@ export default {
   background-color: white; /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
   .close-icon {
     color: black;
     font-size: xx-large;
@@ -215,18 +246,27 @@ export default {
     font-weight: lighter;
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
 /* The navigation menu links */
 .sidenav li {
   list-style: none;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
 /* When you mouse over the navigation links, change their color */
 .sidenav li .active {
   color: #f1f1f1 !important;
   background-color: $pitch-black !important;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> arjun
 .header-color {
   background-color: white;
   // color: white !important;
@@ -236,7 +276,6 @@ export default {
   padding: 5px 10px;
   margin-left: 2rem;
 }
-
 .registration-mode {
   .modal-content {
     background-image: $home-button-bg;
@@ -244,33 +283,34 @@ export default {
     padding: 0 2em;
   }
 }
-
 .modal-backdrop {
   background-image: linear-gradient(#136a8a, #267871) !important;
 }
-
 .modal-backdrop.show {
   opacity: 0.7 !important;
 }
-
 .navbar-override {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-
   .navbar-brand {
     margin-right: 0px;
   }
 }
-
 .collapsible-content {
   z-index: 10;
 }
+<<<<<<< HEAD
 
 .collapse-nav {
   padding: 0.2rem 0rem;
 }
 
+=======
+.collapse-nav {
+  padding: 0.2rem 0rem;
+}
+>>>>>>> arjun
 // 768 is the changing point.
 @media (min-width: 768px) {
   .navbar-brand.abs {
@@ -283,13 +323,11 @@ export default {
     margin-right: 0;
   }
 }
-
 /* this is when the screen size is small */
 @media (max-width: 768px) {
   .navbar-override {
     background-color: $pitch-black;
     width: 100%;
-
     a {
       color: $white-shade !important;
     }
