@@ -1,7 +1,5 @@
 <template>
   <div class="order-detail align-left">
-    <h3>Your Order</h3>
-    <hr>
     <ul class="orders">
       <li v-for="(item, itemIndex) in orders" v-bind:key="itemIndex">
         <b-row>
@@ -210,7 +208,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/global.scss";
+@import '../../assets/css/global.scss';
 
 .edit-bag {
   font-size: 18px;

@@ -31,6 +31,14 @@ $primary-red: hsl(348, 100%, 61%);
   font-style: italic;
 }
 
+.icon{
+  cursor: pointer;
+}
+
+.nav-item{
+  list-style: none;
+}
+
 .empty-info {
   display: flex;
   width: 50%;

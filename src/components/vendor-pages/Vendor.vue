@@ -29,7 +29,9 @@
 </template>
 
 <script>
-
+/**
+ * @deprecated
+*/
 export default {
   name: 'Vendor',
   props: {
