@@ -78,7 +78,10 @@ export default {
   color: rgba(0, 0, 0, 0);
 }
 .description:hover {
-  background-color: rgba(128, 128, 128, 0.637);
   color: white;
+  background-color: #ad310b;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
 }
 </style>
