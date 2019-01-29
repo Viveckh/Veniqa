@@ -78,7 +78,7 @@ export default {
   color: rgba(0, 0, 0, 0);
 }
 .description:hover {
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.637);
   color: white;
 }
 </style>
