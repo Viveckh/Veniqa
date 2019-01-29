@@ -65,12 +65,19 @@
               <b-dropdown-item to="/vendor/amazon">Tees</b-dropdown-item>
               <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
             </b-nav-item-dropdown>
-
+<b-nav-item
+              to="products"
+              class="veniqa-nav d-none d-md-block"
+              
+            >Test</b-nav-item>
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
               v-if="!userSessionActive"
             >Login</b-nav-item>
+
+            
+            
 
             <b-nav-item-dropdown
               class="veniqa-nav d-none d-md-block"
