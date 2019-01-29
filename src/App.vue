@@ -151,7 +151,7 @@ body {
 }
 
 .container {
-  margin: 0px !important;
+  margin: 0px;
 }
 
 .toast-notification {

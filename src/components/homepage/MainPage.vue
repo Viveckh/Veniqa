@@ -1,33 +1,26 @@
 <template>
   <div id="main-page">
-    <div class="main-bg">
-      <div class="absolute-buttons">
-        <b-button class="veniqa-button">Hottest Deals</b-button>
-        <b-button class="veniqa-button">Christmas Deals</b-button>
-        <b-button class="veniqa-button">How Veniqa Works
-          <font-awesome-icon icon="play"/>
-        </b-button>
-      </div>
-    </div>
-
-    <!-- Other contents go here. They are featured contents -->
-    <h1 class='featured-title'>Featured</h1>
-
-    <div v-for="(prd, pid) in featuredProducts" v-bind:key="pid">
-      <featured-product-view :product="prd"/>
-    </div>
+    <div class="main-bg"></div>
+    <h1 class="featured-title">Featured</h1>
+    <featured-products/>
+    <h1 class="featured-title">Hottest Trends</h1>
+    <featured-stripe/>
   </div>
 </template>
 
 <script>
 import Product from '@/data/featuredProduct.json';
-import FeaturedProductView from '@/components/homepage/FeaturedProductView';
+import FeaturedProducts from '@/components/homepage/FeaturedProducts.vue';
+import FeaturedCategories from '@/components/homepage/FeaturedCategories.vue';
 import FeatureService from '@/services/FeaturedService';
+import FeaturedStripe from '@/components/homepage/FeaturedStripe.vue';
 
 export default {
   name: 'MainPage',
   components: {
-    FeaturedProductView,
+    FeaturedCategories,
+    FeaturedProducts,
+    FeaturedStripe,
   },
   data() {
     return {
@@ -40,17 +33,18 @@ export default {
   created() {
     this.product = Product;
 
-    FeatureService.getFeatureListFor(this.currentSection).then((data) => {
-      this.featuredProducts = data;
-    }).catch((err) => {
-
-    });
+    FeatureService.getFeatureListFor(this.currentSection)
+      .then((data) => {
+        this.featuredProducts = data;
+      })
+      .catch((err) => {});
   },
 };
 </script>
 
 <style lang="scss">
 @import "../../assets/css/global.scss";
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 
 .veniqa-button:hover {
   background-color: $pitch-black;
@@ -64,13 +58,22 @@ export default {
 }
 
 .main-bg {
-  background-image: url(./../../assets/images/background.png);
+  background-image: url("https://www.fearlesss.co.uk/media/wysiwyg/Copy_of_SPRING_TWENTY_NINETEEN-2.jpg");
   height: 100vh;
   background-size: cover;
 }
 
-.featured-title{
-  margin: 20px 0px;
-
+#main-page {
+  font-family: "Roboto Slab", serif !important;
+}
+.jumbotron {
+  padding: 0px 0px 0px 0px !important;
+  margin: 0px 0px 0px 0px !important;
+}
+.featured-title {
+  margin: 0px 0px 0px 0px;
+  padding: 20px 10px;
+  color: #5d6d7e;
+  background-color: #eaecee;
 }
 </style>
