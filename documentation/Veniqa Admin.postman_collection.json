@@ -187,7 +187,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchTerm\": \"amazon\",\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t}\n}"
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t},\n\t\"searchTerm\": \"amazon\",\n\t\"sortRule\": \"-auditLog.createdOn -price\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/search",
@@ -912,7 +912,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orderStatus\": \"RECEIVED\",\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 1\n\t}\n}"
+							"raw": "{\n\t\"orderStatus\": \"RECEIVED\",\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 5\n\t},\n\t\"sortRule\": \"-auditLog.createdOn\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/orderList",

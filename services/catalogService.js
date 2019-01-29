@@ -5,7 +5,7 @@ import awsConfig from '../properties/aws-config';
 import httpStatus from 'http-status-codes';
 
 export default {
-    async searchCatalog(searchTerm, pagingOptions) {
+    async searchCatalog(pagingOptions, searchTerm, sortRule) {
         let result = {};
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
         try {
@@ -14,6 +14,7 @@ export default {
                 populate: [
                     { path: 'category', select: '-_id category subcategory' }
                 ],
+                sort: sortRule,
                 page: pagingOptions.page,
                 limit: pagingOptions.limit
             }).then(result => {

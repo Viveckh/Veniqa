@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import mongoose from 'mongoose';
 
 export default {
-    async getOrderList(orderStatus, pagingOptions) {
+    async getOrderList(orderStatus, pagingOptions, sortRule) {
         let orderFilters = {};
         if (orderStatus && orderStatuses.order_level.indexOf(orderStatus) > -1) {
             orderFilters['overall_status'] = orderStatus;
@@ -15,6 +15,7 @@ export default {
         try {
             let orders = await Order.paginate(orderFilters, {
                 select: '_id overall_status user_email cart.totalWeight cart.items.product.name payment_info.amount_in_usd mailing_address.country mailing_address.state mailing_address.city',
+                sort: sortRule,
                 page: pagingOptions.page,
                 limit: pagingOptions.limit
             }).then(result => {

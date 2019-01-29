@@ -5,7 +5,7 @@ export default {
     async getOrderList(req, res, next) {
         let response;
         try {
-            response = await orderService.getOrderList(req.body.orderStatus, req.body.pagingOptions);
+            response = await orderService.getOrderList(req.body.orderStatus, req.body.pagingOptions, req.body.sortRule);
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
