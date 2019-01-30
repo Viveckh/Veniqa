@@ -2,6 +2,7 @@ import Order from '../database/models/order';
 import orderStatuses from '../database/reference-data-files/order-statuses.json';
 import httpStatus from 'http-status-codes';
 import * as _ from 'lodash';
+import logger from '../logging/logger';
 import mongoose from 'mongoose';
 
 export default {
@@ -27,7 +28,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getOrderList Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -46,7 +47,7 @@ export default {
             return result;  
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getOrderDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -91,7 +92,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in confirmOrder Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -129,7 +130,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in cancelOrder Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -196,7 +197,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in markItemAsFulfilling Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -262,7 +263,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in markItemAsShipped Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -329,7 +330,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in markItemAsDelivered Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -391,7 +392,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in updateOrderFulfillmentDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -454,7 +455,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in updateShipmentDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -514,7 +515,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in updateDeliveryDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -554,7 +555,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in addComment Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -600,7 +601,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in editComment Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -644,7 +645,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in deleteComment Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

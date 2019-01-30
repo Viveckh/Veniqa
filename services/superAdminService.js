@@ -2,6 +2,7 @@ import User from '../database/models/user';
 import cryptoGen from '../authentication/cryptoGen';
 import emailService from './emailServiceSendgrid';
 import httpStatus from  'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async createAdmin(userObj) {
@@ -24,14 +25,14 @@ export default {
             }
 
             // If we have gotten here, the request must be successful, so respond accordingly
-            console.log("A new user has been added => ", {meta: user});
+            logger.info("A new user has been added", {meta: user});
             emailService.emailAdminWelcomeInstructions(user.email, user.name, user.passwordResetToken);
             let responseObj = {email: user.email, name: user.name, permissions: user.permissions};
             result = {httpStatus: httpStatus.OK, status: "successful", responseData: responseObj}
             return result;
         }
         catch(err) {
-            console.log("Error in createAdmin Service", {meta: err});
+            logger.error("Error in createAdmin Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -45,7 +46,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getAllAdmins Service", {meta: err});
+            logger.error("Error in getAllAdmins Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -60,7 +61,7 @@ export default {
             return result;
         }
         catch(err){
-            console.log("Error in getAdminDetails Service", {meta: err});
+            logger.error("Error in getAdminDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -88,7 +89,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in updateAdminAccess Service", {meta: err});
+            logger.error("Error in updateAdminAccess Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -103,7 +104,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in deleteAdmin Service", {meta: err});
+            logger.error("Error in deleteAdmin Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

@@ -1,5 +1,6 @@
 import orderService from '../services/orderService';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async getOrderList(req, res, next) {
@@ -9,7 +10,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getOrderList Controller ->", err);
+            logger.error("Error in getOrderList Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -21,7 +22,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getOrderDetails Controller ->", err);
+            logger.error("Error in getOrderDetails Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -33,7 +34,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in confirmOrder Controller ->", err);
+            logger.error("Error in confirmOrder Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -45,7 +46,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in cancelOrder Controller ->", err);
+            logger.error("Error in cancelOrder Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -57,7 +58,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in markItemAsFulfilling Controller ->", err);
+            logger.error("Error in markItemAsFulfilling Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -69,7 +70,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in markItemAsShipped Controller ->", err);
+            logger.error("Error in markItemAsShipped Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -81,7 +82,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in markItemAsDelivered Controller ->", err);
+            logger.error("Error in markItemAsDelivered Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -93,7 +94,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateOrderFulfillmentDetails Controller ->", err);
+            logger.error("Error in updateOrderFulfillmentDetails Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -105,7 +106,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateShipmentDetails Controller ->", err);
+            logger.error("Error in updateShipmentDetails Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -117,7 +118,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateDeliveryDetails Controller ->", err);
+            logger.error("Error in updateDeliveryDetails Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -129,7 +130,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in addComment Controller ->", err);
+            logger.error("Error in addComment Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -141,7 +142,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in editComment Controller ->", err);
+            logger.error("Error in editComment Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -153,7 +154,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in deleteComment Controller ->", err);
+            logger.error("Error in deleteComment Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }

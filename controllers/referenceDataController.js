@@ -1,5 +1,6 @@
 import referenceDataService from '../services/referenceDataService';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async getCatalogBundle(req, res, next) {
@@ -9,7 +10,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getCatalogBundle Controller ->", err);
+            logger.error("Error in getCatalogBundle Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -21,7 +22,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getStores Controller ->", err);
+            logger.error("Error in getStores Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -33,7 +34,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getRoles Controller ->", err);
+            logger.error("Error in getRoles Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -45,7 +46,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getWeightUnits Controller ->", err);
+            logger.error("Error in getWeightUnits Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -57,7 +58,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getProductCategoryList Controller", err);
+            logger.error("Error in getProductCategoryList Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -69,7 +70,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in addProductCategory Controller", err);
+            logger.error("Error in addProductCategory Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -81,7 +82,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getProductCategory Controller", err);
+            logger.error("Error in getProductCategory Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -93,7 +94,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateProductCategory Controller", err);
+            logger.error("Error in updateProductCategory Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -105,7 +106,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getTariffList Controller ->", err);
+            logger.error("Error in getTariffList Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -117,7 +118,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in addTariffCategory Controller ->", err);
+            logger.error("Error in addTariffCategory Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -129,7 +130,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getTariffCategory Controller ->", err);
+            logger.error("Error in getTariffCategory Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -141,7 +142,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateTariffCategory Controller ->", err);
+            logger.error("Error in updateTariffCategory Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },

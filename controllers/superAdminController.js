@@ -1,5 +1,6 @@
 import superAdminService from '../services/superAdminService';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async createAdmin(req, res, next) {
@@ -9,7 +10,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in createAdmin Controller ->", err);
+            logger.error("Error in createAdmin Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -21,7 +22,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getAllAdmins Controller ->", err);
+            logger.error("Error in getAllAdmins Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -33,7 +34,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in getAdminDetails Controller ->", err);
+            logger.error("Error in getAdminDetails Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -45,7 +46,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in updateAdminAccess Controller ->", err);
+            logger.error("Error in updateAdminAccess Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     },
@@ -57,7 +58,7 @@ export default {
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
-            console.log("Error in deleteAdmin Controller ->", err);
+            logger.error("Error in deleteAdmin Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
     }

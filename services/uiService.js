@@ -1,5 +1,6 @@
 import FeaturedSectionModel from '../database/models/userInterface/featuredSections';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async updateOrUpsertFeaturedSection(featuredSectionObj) {
@@ -10,7 +11,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in updateOrUpsertFeaturedSection", {meta: err});
+            logger.error("Error in updateOrUpsertFeaturedSection", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -24,7 +25,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getAllFeaturedSections", {meta: err});
+            logger.error("Error in getAllFeaturedSections", {meta: err});
             result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err};
             return result;
         }
@@ -38,7 +39,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getFeaturedSection", {meta: err});
+            logger.error("Error in getFeaturedSection", {meta: err});
             result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err};
             return result;
         }
@@ -52,7 +53,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in deleteFeaturedSection", {meta: err});
+            logger.error("Error in deleteFeaturedSection", {meta: err});
             result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err};
             return result;
         }

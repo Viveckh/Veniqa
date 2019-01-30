@@ -3,6 +3,7 @@ import cryptoGen from '../authentication/cryptoGen';
 import tokenValidityConfig from '../properties/tokenValidity';
 import emailService from './emailServiceSendgrid';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 /**
  * This service performs security related tasks, like signup
@@ -38,7 +39,7 @@ export default {
             
         }
         catch(err) {
-            console.log("Error in forgotPassword Service", {meta: err});
+            logger.error("Error in forgotPassword Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -52,7 +53,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in isPasswordResetTokenValid Service", {meta: err});
+            logger.error("Error in isPasswordResetTokenValid Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -87,7 +88,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in resetPassword Service", {meta: err});
+            logger.error("Error in resetPassword Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

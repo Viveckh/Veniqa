@@ -3,6 +3,7 @@ import cryptoGen from '../authentication/cryptoGen';
 import awsConnections from '../cloudservices/awsConnections';
 import awsConfig from '../properties/aws-config';
 import httpStatus from 'http-status-codes';
+import logger from '../logging/logger';
 
 export default {
     async searchCatalog(pagingOptions, searchTerm, sortRule) {
@@ -26,7 +27,7 @@ export default {
             return result;
         }   
         catch(err) {
-            console.log("Error in searchCatalog Service", {meta: err});
+            logger.error("Error in searchCatalog Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -48,7 +49,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in addProductToCatalog Service", {meta: err});
+            logger.error("Error in addProductToCatalog Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -62,7 +63,7 @@ export default {
             return result; 
         }
         catch(err) {
-            console.log("Error in getProductDetails Service", {meta: err});
+            logger.error("Error in getProductDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -91,7 +92,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in updateProductInCatalog Service", {meta: err});
+            logger.error("Error in updateProductInCatalog Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -109,7 +110,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in deleteProductFromCatalog Service", {meta: err});
+            logger.error("Error in deleteProductFromCatalog Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -247,7 +248,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getPresignedUrlsForCatalogImageUploads Service", {meta: err});
+            logger.error("Error in getPresignedUrlsForCatalogImageUploads Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

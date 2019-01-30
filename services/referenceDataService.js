@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import httpStatus from 'http-status-codes';
 import ProductCategory from '../database/models/productCategory';
 import Tariff from '../database/models/tariffRate';
+import logger from '../logging/logger';
 
 import STORES_ARRAY from '../database/reference-data-files/stores.json';
 import WEIGHT_UNITS_ARRAY from '../database/reference-data-files/weightUnits.json'; 
@@ -31,7 +32,7 @@ export default {
             }
         }
         catch(err) {
-            console.log("Error in getCatalogBundle Service", {meta: err});
+            logger.error("Error in getCatalogBundle Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -44,7 +45,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getStores Service", {meta: err});
+            logger.error("Error in getStores Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -57,7 +58,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getRoles Service", {meta: err});
+            logger.error("Error in getRoles Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -70,7 +71,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getWeightUnits Service", {meta: err});
+            logger.error("Error in getWeightUnits Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -85,7 +86,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getProductCategoryList Service", {meta: err});
+            logger.error("Error in getProductCategoryList Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -100,7 +101,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in addProductCategory Service", {meta: err});
+            logger.error("Error in addProductCategory Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -115,7 +116,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in getProductCategory Service", {meta: err});
+            logger.error("Error in getProductCategory Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -138,7 +139,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log("Error in updateProductCategory Service", {meta: err});
+            logger.error("Error in updateProductCategory Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -153,7 +154,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getTariffList Service", {meta: err});;
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -168,7 +169,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in addTariffCategory Service", {meta: err});;
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -183,7 +184,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getTariffCategory Service", {meta: err});;
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -206,7 +207,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in updateTariffCategory Service", {meta: err});;
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

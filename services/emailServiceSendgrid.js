@@ -1,6 +1,7 @@
 import sendgridMail from '@sendgrid/mail';
 import sendgridCreds from '../properties/sendgrid';
 import frontEndUrls from '../properties/frontEndUrls';
+import logger from '../logging/logger';
 
 sendgridMail.setApiKey(sendgridCreds.apiKey);
 
@@ -58,9 +59,9 @@ export default {
     triggerEmail(mailOptions) {
         sendgridMail.send(mailOptions, (error, result) => {
             if (error) {
-                return console.log(error);
+                return logger.error("Error while sending email", {meta: error});
             }
-            console.log('Message sent: %s', JSON.stringify(result));
+            logger.verbose('Email sent', {meta: result});
         });
     }
 }
