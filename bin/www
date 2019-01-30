@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 
+var cluster = require('cluster'); // for clustering
+const numCPUs = require('os').cpus().length; // for clustering
+
 var app = require('../app');
 var debug = require('debug')('veniqa-server:server');
 var http = require('http');
@@ -16,18 +19,51 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
+ * IMPORTANT NOTE: Comment out the cluster code section below and uncomment server listen section if you dont' want to use clustering
+ */
+
+// OPTION 1: WITH CLUSTER
+
+if (cluster.isMaster) {
+  console.log(`[CLUSTER]: Master ${process.pid} is running`);
+  console.log("[CLUSTER]: Number of CPUs ", numCPUs);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`[CLUSTER]: worker ${worker.process.pid} died`);
+    cluster.fork();
+  });
+
+} else {
+  // Workers can share any TCP connection
+  // In this case it is an HTTP server
+  var server = http.createServer(app);
+  server.listen(port);
+
+  console.log(`[CLUSTER]: Worker ${process.pid} started`);
+}
+
+// OPTION 2: WITHOUT CLUSTER
+
+/**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+//var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
+/*
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+*/
 
 /**
  * Normalize a port into a number, string, or false.

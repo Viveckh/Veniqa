@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import config from '../properties/mongodb'
+import logger from '../logging/logger';
 
 let dbConnection;
 
@@ -8,14 +9,14 @@ let getDBConnection = async() => {
         // Establish a mongoose connection to mongodb
         dbConnection = await mongoose.connect(config.url, config.options, (error) => {
                         if (error) {
-                            console.log("Could not establish connection to database", error)
+                            logger.error("Could not establish connection to database", {meta: error});
                             return;
                         }
-                        console.log("MongoDB connection was successful")
+                        logger.info("MongoDB connection was successful");
                     });
     }
     catch(err) {
-        console.log("Error connecting to the database", err);
+        logger.error("Error connecting to the database", {meta: err});
     }
     return dbConnection;
 }

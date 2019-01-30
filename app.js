@@ -4,6 +4,8 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import helmet from 'helmet';
+import compression from 'compression';
 
 // Babel imports, even though they aren't directly referenced, they need to be here
 import babelCore from 'babel-core/register';
@@ -16,6 +18,10 @@ import redis from 'redis';
 var RedisStore = require('connect-redis')(session);
 import sessionConfig from './properties/session';
 import redisConfig from './properties/redis';
+
+// Imports for Rate Limiting (DDos attacks prevention)
+import RateLimit from 'express-rate-limit';
+import RateLimitRedis from 'rate-limit-redis';
 
 // Database connection imports, importing initializes it, do this before route imports to initialize db models
 import dbConnection from './database/dbConnection';
@@ -63,13 +69,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(helmet());
+app.use(compression());
 
 /************************************************************* */
 
 // Configure sessions
 app.use(session({
   genid: (req) => {
-    console.log("[SESSION]: Generating new session id: ", req.sessionID);
     return uuidv4() // Use UUIDs for session IDs
   },
   store: new RedisStore({
@@ -83,10 +90,27 @@ app.use(session({
   rolling: true,  // setting true updates expiration with maxAge after every user request
   saveUninitialized: true,  // setting true saves even unmodified sessions
   cookie: {
+    httpOnly: true,
     maxAge: sessionConfig.maxAge
     // secure: true, // Set this to true only after veniqa has a ssl enabled site
   }
 }))
+
+/************************************************************* */
+// Configure Request Rate Limiter
+
+var limiter = new RateLimit({
+  store: new RateLimitRedis({
+    client: redisClient,
+    expiry: 60 * 15 // How long each rate limiting window exists for in seconds
+  }),
+  windowMs: 60 * 1000, // 1 minute window in milliseconds
+  max: 200, // limit each IP to 200 requests per windowMs
+  delayMs: 0,  // disable delaying - full speed until the max limit is reached
+  statusCode: 429
+})
+
+app.use(limiter);
 
 /************************************************************* */
 // Configure authentication
