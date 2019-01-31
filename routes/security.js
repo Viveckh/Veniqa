@@ -21,7 +21,7 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
                 email: req.user.email,
                 name: req.user.name,
                 referral_token: req.user.referral_token,
-                emailConfirmed: req.user.emailConfirmationToken ? 'false': 'true',
+                emailConfirmed: req.user.emailConfirmationToken ? false: true,
                 cart: req.user.cart
             });
         })
