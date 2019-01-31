@@ -80,13 +80,13 @@ export default {
   props: {
     data: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       product: null,
-      selectedCustomizations: {},
+      selectedCustomizations: {}
     };
   },
 
@@ -100,30 +100,28 @@ export default {
   methods: {
     async addToCart() {
       this.product.customValues = {};
-      Object.keys(this.selectedCustomizations).forEach((key) => {
-        if (typeof (this.selectedCustomizations[key]) === 'string') {
+      Object.keys(this.selectedCustomizations).forEach(key => {
+        if (typeof this.selectedCustomizations[key] === 'string') {
           this.product.customValues[key] = this.selectedCustomizations[key];
         } else {
-          this.product.customValues[key] = `${this.selectedCustomizations[key].name}|${this.selectedCustomizations[key].hexValue}`;
+          this.product.customValues[key] = `${this.selectedCustomizations[key].name}|${
+            this.selectedCustomizations[key].hexValue
+          }`;
         }
       });
-      const val = await this.$store.dispatch('cartStore/addToTheCart', [
-        this.product,
-      ]);
+      const val = await this.$store.dispatch('cartStore/addToTheCart', [this.product]);
       if (val) {
         this.$notify({
           group: 'toast',
           type: 'success',
           text: `Added ${this.product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
         });
       } else {
         this.$notify({
           group: 'toast',
           type: 'warn',
-          text: `${
-            this.product.name
-          } couldn't be added for some reason. Please try again later`,
+          text: `${this.product.name} couldn't be added for some reason. Please try again later`
         });
       }
     },
@@ -141,14 +139,14 @@ export default {
       if (this.product.counts < 0) {
         this.product.counts = 0;
       }
-    },
+    }
   },
 
   computed: {
     customizations() {
       return this.product.customizationOptions.customizations;
-    },
-  },
+    }
+  }
 };
 </script>
 

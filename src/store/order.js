@@ -1,5 +1,4 @@
-import Pagination from "@/dto/Pagination";
-
+import Pagination from '@/dto/Pagination';
 
 export default {
   namespaced: true,
@@ -8,14 +7,13 @@ export default {
     ordersMaster: []
   },
 
-  mutations: {
-  },
+  mutations: {},
 
-  actions: {
-
-  },
+  actions: {},
 
   getters: {
-    orders(state){return state.ordersMaster;}
+    orders(state) {
+      return state.ordersMaster;
+    }
   }
-}
+};

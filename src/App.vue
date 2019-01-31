@@ -30,7 +30,7 @@ import moment from 'moment';
 export default {
   name: 'app',
   components: {
-    FingerprintSpinner,
+    FingerprintSpinner
   },
 
   async created() {
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       refCount: 0,
-      isLoading: false,
+      isLoading: false
     };
   },
 
@@ -68,13 +68,13 @@ export default {
         await this.$store.dispatch('cartStore/getCart');
         await this.$store.dispatch('shippingStore/addressAction', {
           address: null,
-          action: 'get',
+          action: 'get'
         });
 
         if (this.checkoutInitiated) {
           const reqObj = {
             address: this.selectedAddress,
-            shippingMethod: this.shippingMethod,
+            shippingMethod: this.shippingMethod
           };
 
           await this.$store.dispatch('cartStore/createCheckout', reqObj);
@@ -112,7 +112,7 @@ export default {
         this.refCount--;
         this.isLoading = this.refCount > 0;
       }
-    },
+    }
   },
 
   computed: {
@@ -120,17 +120,17 @@ export default {
       isSessionActive: 'authStore/isSessionActive',
       shippingMethod: 'shippingStore/shippingMethod',
       selectedAddress: 'shippingStore/getSelectedAddress',
-      checkoutInitiated: 'cartStore/checkoutInitiated',
-    }),
-  },
+      checkoutInitiated: 'cartStore/checkoutInitiated'
+    })
+  }
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 
 #app {
-  font-family: "Roboto Slab", serif !important;
+  font-family: 'Roboto Slab', serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

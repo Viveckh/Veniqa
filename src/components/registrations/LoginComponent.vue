@@ -56,7 +56,7 @@ export default {
     return {
       username: '',
       password: '',
-      forgotEnabled: false,
+      forgotEnabled: false
     };
   },
   methods: {
@@ -74,7 +74,7 @@ export default {
       if (this.usernameState) {
         this.$emit('login', {
           email: this.username,
-          password: this.password,
+          password: this.password
         });
       }
     },
@@ -84,7 +84,7 @@ export default {
         try {
           const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrl.forgotPassword + this.username,
+            url: ProxyUrl.forgotPassword + this.username
           });
 
           if (data && data.httpStatus == 200) {
@@ -93,16 +93,14 @@ export default {
             this.$notify({
               group: 'all',
               type: 'success',
-              text:
-                'The email was just sent. Please check your email and follow the instructions.',
+              text: 'The email was just sent. Please check your email and follow the instructions.'
             });
           }
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text:
-              'The email could not be sent right now. Please try again later',
+            text: 'The email could not be sent right now. Please try again later'
           });
         }
       }
@@ -110,14 +108,14 @@ export default {
 
     register() {
       this.$emit('register');
-    },
+    }
   },
   computed: {
     usernameState() {
       if (this.username.length == 0) return null;
       return this.validEmail(this.username);
-    },
-  },
+    }
+  }
 };
 </script>
 

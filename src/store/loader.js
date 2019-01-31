@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: {
-    loading: false,
+    loading: false
   },
   mutations: {
     setLoader(state) {
@@ -10,12 +10,12 @@ export default {
 
     unsetLoader(state) {
       state.loading = false;
-    },
+    }
   },
 
   getters: {
     isLoading(state) {
       return state.loading;
-    },
-  },
+    }
+  }
 };

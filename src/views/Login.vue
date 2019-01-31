@@ -16,13 +16,13 @@ import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
 export default {
   name: 'Login',
   components: {
-    UserAccountModal,
+    UserAccountModal
   },
 
   data() {
     return {
       registrationClass: ['registration-mode'],
-      userLoggedIn: false,
+      userLoggedIn: false
     };
   },
 
@@ -31,13 +31,13 @@ export default {
       // Do something when logged in.
       this.$router.push('/');
       this.$store.commit('loaderStore/unsetLoader');
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/global.scss";
+@import '../assets/css/global.scss';
 
 .login {
   height: 100vh;
@@ -56,6 +56,6 @@ export default {
   // width: 70%;
   // margin: auto;
   background-color: white;
-  box-shadow: 5px 6px 10px 0px #2E3532;
+  box-shadow: 5px 6px 10px 0px #2e3532;
 }
 </style>

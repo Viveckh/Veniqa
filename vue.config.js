@@ -5,7 +5,7 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin');
  * This is an extension for the webpack that resides in the cli-service Plugin.
  * This extension configures the prerender-spa-plugin
  * @author Sujil Maharjan
-*/
+ */
 /* eslint-disable */
 module.exports = {
   configureWebpack: (config) => {

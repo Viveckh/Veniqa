@@ -18,39 +18,38 @@
 
 <script>
 export default {
-  name: "OrderView",
+  name: 'OrderView',
   data() {
     return {
-      tabs: [{
-        name: 'Orders',
-        key: 'all'
-      },
-      {
-        name: 'Open Orders',
-        key: 'open'
-      },
-      {
-        name: 'Cancelled',
-        key: 'cancelled'
-      }
+      tabs: [
+        {
+          name: 'Orders',
+          key: 'all'
+        },
+        {
+          name: 'Open Orders',
+          key: 'open'
+        },
+        {
+          name: 'Cancelled',
+          key: 'cancelled'
+        }
       ],
 
-      activeTab: 'all',
+      activeTab: 'all'
     };
   },
 
   created() {
-    // Look for all the items from the order list. 
+    // Look for all the items from the order list.
     // await this.$store
   },
 
   methods: {
-    tabSelected(key){
+    tabSelected(key) {
       this.activeTab = key;
     }
   }
-
-
 };
 </script>
 

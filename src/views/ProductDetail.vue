@@ -29,13 +29,13 @@ export default {
   name: 'ProductDetail',
   components: {
     ProductImageGallery,
-    ProductDescription,
+    ProductDescription
   },
   props: {
     productId: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
 
   data() {
@@ -48,12 +48,12 @@ export default {
         namespace: 'zoomer',
         move_by_click: false,
         scroll_items: 4,
-        choosed_thumb_border_color: '#2c3e50',
+        choosed_thumb_border_color: '#2c3e50'
       },
 
       productImages: {
-        normal_size: [],
-      },
+        normal_size: []
+      }
     };
   },
 
@@ -62,7 +62,7 @@ export default {
       try {
         const { data } = await this.$axios({
           url: ProxyUrls.getProductDefinitionUrl + this.productId,
-          type: 'get',
+          type: 'get'
         });
         if (data) {
           data.responseData.counts = 0;
@@ -70,23 +70,20 @@ export default {
           this.product.detailedImageUrls.forEach((picture, pid) => {
             this.productImages.normal_size.push({
               id: pid,
-              url: picture,
+              url: picture
             });
           });
 
           this.product.customValues = {};
 
-          for (
-            let i = 0;
-            i < this.product.customizationOptions.customizations.length;
-            i++
-          ) {
+          for (let i = 0; i < this.product.customizationOptions.customizations.length; i++) {
             const attrib = this.product.customizationOptions.customizations[i];
             // if (attrib.type === "Colors") {
             //   this.product.customValues[attrib.key] =
             //     attrib.values.length > 0 ? attrib.values[0].hexValue : "";
             // } else {
-            this.product.customValues[attrib.key] = attrib.values.length > 0 ? attrib.values[0] : '';
+            this.product.customValues[attrib.key] =
+              attrib.values.length > 0 ? attrib.values[0] : '';
             // }
           }
         }
@@ -95,12 +92,11 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text:
-            'Product detail could not be retrieved at the moment. Please try again later.',
+          text: 'Product detail could not be retrieved at the moment. Please try again later.'
         });
       }
     }
-  },
+  }
 };
 </script>
 
