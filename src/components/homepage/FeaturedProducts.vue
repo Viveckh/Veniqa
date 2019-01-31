@@ -34,7 +34,7 @@ export default {};
 
 .picture1 {
   background-color: red;
-  background: url("https://www.forever21.com/images/default_330/00321225-02.jpg");
+  background: url('https://www.forever21.com/images/default_330/00321225-02.jpg');
   background-size: cover;
   background-position: center center;
 }
@@ -46,7 +46,7 @@ export default {};
 
 .picture2 {
   background-color: red;
-  background: url("https://cdnb.lystit.com/photos/a1b0-2014/06/13/forever-21-purple-lace-up-buckled-combat-boots-product-1-20804550-0-230022788-normal.jpeg");
+  background: url('https://cdnb.lystit.com/photos/a1b0-2014/06/13/forever-21-purple-lace-up-buckled-combat-boots-product-1-20804550-0-230022788-normal.jpeg');
   background-size: cover;
   background-position: center center;
 }
@@ -60,7 +60,10 @@ export default {};
 }
 
 .description:hover {
-  -webkit-transition: all 0.5s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  background-color: #ad310ba4;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
 }
 </style>
