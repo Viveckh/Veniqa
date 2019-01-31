@@ -21,98 +21,98 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { FingerprintSpinner } from 'epic-spinners';
-import axios from 'axios';
-import { eventHub } from '@/utils/EventHub';
-import moment from 'moment';
+import { mapGetters } from 'vuex'
+import { FingerprintSpinner } from 'epic-spinners'
+import axios from 'axios'
+import { eventHub } from '@/utils/EventHub'
+import moment from 'moment'
 
 export default {
   name: 'app',
   components: {
-    FingerprintSpinner
+    FingerprintSpinner,
   },
 
   async created() {
-    eventHub.$on('before-request', this.setLoading);
-    eventHub.$on('request-error', this.unsetLoading);
-    eventHub.$on('after-response', this.unsetLoading);
-    eventHub.$on('response-error', this.unsetLoading);
+    eventHub.$on('before-request', this.setLoading)
+    eventHub.$on('request-error', this.unsetLoading)
+    eventHub.$on('after-response', this.unsetLoading)
+    eventHub.$on('response-error', this.unsetLoading)
 
-    await this.$store.dispatch('authStore/initiateAppSession');
+    await this.$store.dispatch('authStore/initiateAppSession')
 
     if (this.isSessionActive) {
-      this.initiateApp();
+      this.initiateApp()
     } else {
-      this.$store.commit('shippingStore/resetAddresses');
+      this.$store.commit('shippingStore/resetAddresses')
     }
   },
 
   data() {
     return {
       refCount: 0,
-      isLoading: false
-    };
+      isLoading: false,
+    }
   },
 
   beforeDestroy() {
-    eventHub.$off('before-request', this.setLoading);
-    eventHub.$off('request-error', this.unsetLoading);
-    eventHub.$off('after-response', this.unsetLoading);
-    eventHub.$off('response-error', this.unsetLoading);
+    eventHub.$off('before-request', this.setLoading)
+    eventHub.$off('request-error', this.unsetLoading)
+    eventHub.$off('after-response', this.unsetLoading)
+    eventHub.$off('response-error', this.unsetLoading)
   },
 
   methods: {
     async initiateApp() {
       try {
-        await this.$store.dispatch('cartStore/getCart');
+        await this.$store.dispatch('cartStore/getCart')
         await this.$store.dispatch('shippingStore/addressAction', {
           address: null,
-          action: 'get'
-        });
+          action: 'get',
+        })
 
         if (this.checkoutInitiated) {
           const reqObj = {
             address: this.selectedAddress,
-            shippingMethod: this.shippingMethod
-          };
+            shippingMethod: this.shippingMethod,
+          }
 
-          await this.$store.dispatch('cartStore/createCheckout', reqObj);
+          await this.$store.dispatch('cartStore/createCheckout', reqObj)
         }
       } catch (error) {}
     },
     setLoading() {
-      this.refCount++;
-      this.isLoading = true;
+      this.refCount++
+      this.isLoading = true
     },
 
     checkSessionTimeout() {
-      const dt = localStorage.getItem('sessionDT');
+      const dt = localStorage.getItem('sessionDT')
       if (!dt) {
-        return false;
+        return false
       }
-      const diff = moment.duration(moment().diff(moment(dt)));
-      if (diff.asMinutes() >= 30) return false;
+      const diff = moment.duration(moment().diff(moment(dt)))
+      if (diff.asMinutes() >= 30) return false
 
-      localStorage.setItem('sessionDT', moment().format());
-      return true;
+      localStorage.setItem('sessionDT', moment().format())
+      return true
     },
 
     unsetLoading() {
       if (this.isSessionActive) {
-        const isActive = this.checkSessionTimeout();
+        const isActive = this.checkSessionTimeout()
 
         if (!isActive) {
-          this.$store.commit('shippingStore/resetAddresses');
-          this.$store.commit('authStore/logoutUser');
+          this.$store.commit('shippingStore/resetAddresses')
+          this.$store.commit('authStore/logoutUser')
         }
       }
 
       if (this.refCount > 0) {
-        this.refCount--;
-        this.isLoading = this.refCount > 0;
+        this.refCount--
+        this.isLoading = this.refCount > 0
       }
-    }
+    },
   },
 
   computed: {
@@ -120,17 +120,17 @@ export default {
       isSessionActive: 'authStore/isSessionActive',
       shippingMethod: 'shippingStore/shippingMethod',
       selectedAddress: 'shippingStore/getSelectedAddress',
-      checkoutInitiated: 'cartStore/checkoutInitiated'
-    })
-  }
-};
+      checkoutInitiated: 'cartStore/checkoutInitiated',
+    }),
+  },
+}
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/css?family=Krub');
 
 #app {
-  font-family: 'Roboto Slab', serif !important;
+  font-family: 'Krub', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -24,12 +24,17 @@
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="scss" scoped>
 .box {
   height: 75vh;
+}
+
+h4,
+h5 {
+  font-weight: bold;
 }
 
 .picture1 {
@@ -57,13 +62,5 @@ export default {};
 }
 .description {
   background-color: white;
-}
-
-.description:hover {
-  color: white;
-  background-color: #ad310ba4;
-  -webkit-transition: background-color 500ms linear;
-  -ms-transition: background-color 500ms linear;
-  transition: background-color 500ms linear;
 }
 </style>
