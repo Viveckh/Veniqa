@@ -59,15 +59,15 @@ export default {
       type: Object,
       default() {
         return {};
-      },
+      }
     },
     baseImages: {
       type: Object,
       required: true,
       default() {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -86,8 +86,8 @@ export default {
         move_by_click: true,
         scroll_items: 4,
         choosed_thumb_border_color: '#ff3d00',
-        move_button_style: 'chevron',
-      },
+        move_button_style: 'chevron'
+      }
     };
   },
   computed: {
@@ -100,14 +100,14 @@ export default {
     move_button() {
       return this.options.move_button_style === 'chevron'
         ? {
-          left: 'chevron-left',
-          right: 'chevron-right',
-        }
+            left: 'chevron-left',
+            right: 'chevron-right'
+          }
         : {
-          left: 'angle-double-left',
-          right: 'angle-double-right',
-        };
-    },
+            left: 'angle-double-left',
+            right: 'angle-double-right'
+          };
+    }
   },
   mounted() {
     this.runImager();
@@ -130,7 +130,7 @@ export default {
       if (this.drift !== null) {
         this.drift.setZoomImageURL(matchLargeImg.url);
       }
-    },
+    }
   },
   created() {
     if (Object.keys(this.baseImages).length > 0) {
@@ -162,10 +162,7 @@ export default {
       }
     }
 
-    if (
-      this.options.pane === 'container-round'
-      || this.options.pane === 'container'
-    ) {
+    if (this.options.pane === 'container-round' || this.options.pane === 'container') {
       this.options.hoverBoundingBox = false;
     } else {
       this.options.hoverBoundingBox = true;
@@ -177,9 +174,7 @@ export default {
         .querySelector(`.${this.zoomer_box} .thumb-list`)
         .setAttribute(
           'style',
-          `grid-template-columns: repeat(${
-            this.baseZoomerOptions.scroll_items
-          }, auto)`,
+          `grid-template-columns: repeat(${this.baseZoomerOptions.scroll_items}, auto)`
         );
       const t = setInterval(() => {
         if (document.readyState === 'complete') {
@@ -188,18 +183,16 @@ export default {
           } else {
             this.options.inlinePane = false;
             this.options.paneContainer = document.getElementById(this.pane_id);
-            const rect = document
-              .querySelector(`.${this.zoomer_box}`)
-              .getBoundingClientRect();
+            const rect = document.querySelector(`.${this.zoomer_box}`).getBoundingClientRect();
             let customStyle = '';
             if (this.options.pane === 'pane') {
-              customStyle = `width:${rect.width * 1.2}px;height:${
-                rect.height
-              }px;left:${rect.right}px;top:${0}px;`;
+              customStyle = `width:${rect.width * 1.2}px;height:${rect.height}px;left:${
+                rect.right
+              }px;top:${0}px;`;
             } else {
-              customStyle = `width:${rect.width}px;height:${
-                rect.height
-              }px;left:${rect.x}px;top:${0}px;`;
+              customStyle = `width:${rect.width}px;height:${rect.height}px;left:${
+                rect.x
+              }px;top:${0}px;`;
             }
             this.options.paneContainer.setAttribute('style', customStyle);
           }
@@ -207,10 +200,9 @@ export default {
           this.options.injectBaseStyles = true;
           const previewImg = `.${this.zoomer_box} .preview-box img`;
 
-          this.drift = this.drift ? this.drift : new Drift(
-            document.querySelector(previewImg),
-            this.options,
-          );
+          this.drift = this.drift
+            ? this.drift
+            : new Drift(document.querySelector(previewImg), this.options);
           clearInterval(t);
         }
       }, 500);
@@ -234,13 +226,13 @@ export default {
       } else {
         this.choosedThumb = thumb;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style>
-@import "../../assets/css/drift-basic.css";
+@import '../../assets/css/drift-basic.css';
 .preview-box {
   margin-bottom: 1vh;
 }

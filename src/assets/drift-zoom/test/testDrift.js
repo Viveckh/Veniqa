@@ -71,7 +71,10 @@ describe('Drift', () => {
 
       expect(() => {
         new Drift(anchor, conf);
-      }).toThrowError(TypeError, '`paneContainer` must be a DOM element when `inlinePane !== true`');
+      }).toThrowError(
+        TypeError,
+        '`paneContainer` must be a DOM element when `inlinePane !== true`'
+      );
     });
 
     it('requires `paneContainer` to be a DOM element when `inlinePane !== true`', () => {
@@ -82,7 +85,10 @@ describe('Drift', () => {
 
       expect(() => {
         new Drift(anchor, conf);
-      }).toThrowError(TypeError, '`paneContainer` must be a DOM element when `inlinePane !== true`');
+      }).toThrowError(
+        TypeError,
+        '`paneContainer` must be a DOM element when `inlinePane !== true`'
+      );
     });
 
     it('allows `paneContainer` to be null when `inlinePane === true`', () => {
@@ -100,7 +106,7 @@ describe('Drift', () => {
 
   describe('public methods', () => {
     describe('#setZoomImageURL', () => {
-      it('updates the `src` attribute of the ZoomPane\'s `imgEl`', () => {
+      it("updates the `src` attribute of the ZoomPane's `imgEl`", () => {
         const anchor = document.querySelector('.test-anchor');
         const drift = new Drift(anchor);
 

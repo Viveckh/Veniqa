@@ -1,16 +1,15 @@
 import throwIfMissing from './util/throwIfMissing';
 import { addClasses, removeClasses } from './util/dom';
 
-const __instance = (function () {
+const __instance = (function() {
   let instance;
-  return (newInstance) => {
+  return newInstance => {
     if (newInstance) {
       instance = newInstance;
     }
     return instance;
   };
-}());
-
+})();
 
 export default class BoundingBox {
   constructor(options) {
@@ -23,7 +22,7 @@ export default class BoundingBox {
     const {
       namespace = null,
       zoomFactor = throwIfMissing(),
-      containerEl = throwIfMissing(),
+      containerEl = throwIfMissing()
     } = options;
 
     this.settings = { namespace, zoomFactor, containerEl };
@@ -75,20 +74,26 @@ export default class BoundingBox {
     const pageXOffset = window.pageXOffset;
     const pageYOffset = window.pageYOffset;
 
-    let inlineLeft = triggerRect.left + (movementPercentageOffsetX * triggerRect.width)
-      - (this.el.clientWidth / 2) + pageXOffset;
-    let inlineTop = triggerRect.top + (movementPercentageOffsetY * triggerRect.height)
-      - (this.el.clientHeight / 2) + pageYOffset;
+    let inlineLeft = triggerRect.left + movementPercentageOffsetX * triggerRect.width;
+    this.el.clientWidth / 2 + pageXOffset;
+    let inlineTop = triggerRect.top;
+    movementPercentageOffsetY * triggerRect.height - this.el.clientHeight / 2 + pageYOffset;
 
     if (inlineLeft < triggerRect.left + pageXOffset) {
       inlineLeft = triggerRect.left + pageXOffset;
-    } else if (inlineLeft + this.el.clientWidth > triggerRect.left + triggerRect.width + pageXOffset) {
+    } else if (
+      inlineLeft + this.el.clientWidth >
+      triggerRect.left + triggerRect.width + pageXOffset
+    ) {
       inlineLeft = triggerRect.left + triggerRect.width - this.el.clientWidth + pageXOffset;
     }
 
     if (inlineTop < triggerRect.top + pageYOffset) {
       inlineTop = triggerRect.top + pageYOffset;
-    } else if (inlineTop + this.el.clientHeight > triggerRect.top + triggerRect.height + pageYOffset) {
+    } else if (
+      inlineTop + this.el.clientHeight >
+      triggerRect.top + triggerRect.height + pageYOffset
+    ) {
       inlineTop = triggerRect.top + triggerRect.height - this.el.clientHeight + pageYOffset;
     }
 

@@ -95,18 +95,24 @@ export default {
       password: '',
       confirmPassword: '',
       phone: '',
-      name: '',
+      name: ''
     };
   },
 
   methods: {
     registerClicked() {
-      if (this.usernameState && this.passwordState && this.confirmPasswordState && this.phoneState && this.nameState) {
+      if (
+        this.usernameState &&
+        this.passwordState &&
+        this.confirmPasswordState &&
+        this.phoneState &&
+        this.nameState
+      ) {
         this.$emit('register', {
           email: this.username,
           password: this.password,
           phone: this.phone,
-          name: this.name,
+          name: this.name
         });
       }
     },
@@ -118,7 +124,7 @@ export default {
     validEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
-    },
+    }
   },
   computed: {
     usernameState() {
@@ -144,8 +150,8 @@ export default {
     nameState() {
       if (this.name.length == 0) return null;
       return this.name.length > 0;
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -113,8 +113,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-;
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'HeaderMenu',
   // mounted() {
@@ -124,7 +124,7 @@ export default {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: '',
+      searchTerm: ''
     };
   },
   methods: {
@@ -138,7 +138,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.',
+          text: 'You have been successfully logged out.'
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
@@ -146,10 +146,10 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.',
+          text: 'Sorry but we could not log you out at the moment.'
         });
       }
-    },
+    }
     // updateScroll() {
     //   this.scrollPos = window.scrollY;
     // },
@@ -171,9 +171,9 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
-    }),
-  },
+      isSessionActive: 'authStore/isSessionActive'
+    })
+  }
 };
 </script>
 
@@ -278,4 +278,3 @@ export default {
   }
 }
 </style>
-

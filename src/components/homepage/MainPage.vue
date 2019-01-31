@@ -20,13 +20,13 @@ export default {
   components: {
     FeaturedCategories,
     FeaturedProducts,
-    FeaturedStripe,
+    FeaturedStripe
   },
   data() {
     return {
       product: null,
       featuredProducts: [],
-      currentSection: 'homepage',
+      currentSection: 'homepage'
     };
   },
 
@@ -34,11 +34,11 @@ export default {
     this.product = Product;
 
     FeatureService.getFeatureListFor(this.currentSection)
-      .then((data) => {
+      .then(data => {
         this.featuredProducts = data;
       })
-      .catch((err) => {});
-  },
+      .catch(err => {});
+  }
 };
 </script>
 

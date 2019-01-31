@@ -51,27 +51,27 @@ export default {
   props: {
     product: {
       required: true,
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
       displayImage: null,
-      productClass: null,
+      productClass: null
     };
   },
 
   watch: {
     product() {
       this.displayImage = this.product.detailedImageUrls[0];
-    },
+    }
   },
 
   created() {
     if (
-      this.product
-      && this.product.detailedImageUrls
-      && this.product.detailedImageUrls.length > 0
+      this.product &&
+      this.product.detailedImageUrls &&
+      this.product.detailedImageUrls.length > 0
     ) {
       this.displayImage = this.product.detailedImageUrls[0];
     }
@@ -81,7 +81,7 @@ export default {
     gotoProduct() {
       console.log('PR', this.product);
       this.$router.push(`/products/${this.product._id}`);
-    },
+    }
   },
 
   computed: {
@@ -89,10 +89,10 @@ export default {
       return {
         'background-image': `url(${this.displayImage})`,
         // 'background-size': 'fit',
-        height: '100%',
+        height: '100%'
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -110,18 +110,17 @@ export default {
     background-position: top;
   }
 
-  .product-clip-right{
+  .product-clip-right {
     -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
   }
 
-  .type-separator{
-    height:100%;
+  .type-separator {
+    height: 100%;
   }
 
   .product-content {

@@ -54,13 +54,13 @@ export default {
   components: {
     LoginComponent,
     RegisterComponent,
-    ForgotPassword,
+    ForgotPassword
   },
   data() {
     return {
       showLogin: true,
       activePanel: 'login',
-      showFailure: false,
+      showFailure: false
     };
   },
 
@@ -78,12 +78,12 @@ export default {
           const currentCartItems = this.$store.getters['cartStore/getCart'];
 
           const toAdd = [];
-          currentCartItems.forEach((item) => {
+          currentCartItems.forEach(item => {
             if (incomingProductIds.indexOf(item.product_id) < 0) {
               // Adding the product ID and the counts.
               toAdd.push({
                 _id: item.product_id,
-                counts: item.counts,
+                counts: item.counts
               });
             }
           });
@@ -99,13 +99,13 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'Successfully logged in',
+          text: 'Successfully logged in'
         });
       } catch (err) {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'User credentials are not correct. Please try again',
+          text: 'User credentials are not correct. Please try again'
         });
       }
       this.$store.commit('loaderStore/unsetLoader');
@@ -113,24 +113,23 @@ export default {
 
     async register(userInfo) {
       try {
-        const res = await this.$store.dispatch(
-          'authStore/registerUser',
-          userInfo,
-        );
+        const res = await this.$store.dispatch('authStore/registerUser', userInfo);
 
-        this.$emit('loginSuccess');
+        // this.$emit('loginSuccess');
+        this.$store.commit('loaderStore/unsetLoader');
+        this.navigateToLogin();
         this.$notify({
           group: 'all',
           type: 'success',
-          text:
-            'User successfully created. Please check your inbox to confirm email',
+          text: 'User successfully created. Please check your inbox to confirm email'
         });
       } catch (err) {
+        console.log('Error', err);
         this.$notify({
           group: 'all',
           type: 'error',
           text:
-            'User could not be created at the moment. Please check if you already have an account.',
+            'User could not be created at the moment. Please check if you already have an account.'
         });
       }
     },
@@ -141,8 +140,8 @@ export default {
 
     navigateToLogin() {
       this.activePanel = 'login';
-    },
-  },
+    }
+  }
 };
 </script>
 

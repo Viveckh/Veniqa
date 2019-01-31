@@ -40,8 +40,8 @@ export default {
   props: {
     data: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
 
   methods: {
@@ -51,13 +51,13 @@ export default {
         'background-size': 'cover',
         // width: 'auto',
         // height: '350px',
-        'margin-bottom': '10px',
+        'margin-bottom': '10px'
       };
     },
 
     /**
      * @deprecated because add to cart doesn't happen from this page anymore.
-    */
+     */
     async addToCart(product) {
       try {
         const val = await this.$store.dispatch('cartStore/addToTheCart', [product]);
@@ -67,16 +67,17 @@ export default {
       } catch (err) {
         console.log('Error', err);
         // handle notification for different status here.
-        notification.error(this, `${
-          product.name
-        } couldn't be added for some reason. Please try again later`);
+        notification.error(
+          this,
+          `${product.name} couldn't be added for some reason. Please try again later`
+        );
       }
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -93,7 +94,7 @@ export default {
   background-color: #f4f3ef;
 }
 
-.result-view{
+.result-view {
   margin-top: 1em;
 }
 
@@ -105,12 +106,12 @@ export default {
   margin: 20px 20px 20px 0px;
   width: 300px;
 
-  &:hover .img-cls{
+  &:hover .img-cls {
     transform: scale(1.2);
     transition: all 0.5s;
   }
 
-  .img-parent{
+  .img-parent {
     height: 350px;
     width: 300px;
     overflow: hidden;
@@ -118,13 +119,13 @@ export default {
 
   .product-card-desc {
     margin-top: 0.75em;
-    .title{
+    .title {
       height: 3.5em;
       text-overflow: ellipsis;
       overflow: auto;
     }
 
-    .price{
+    .price {
       font-weight: bold;
     }
   }
@@ -143,7 +144,6 @@ export default {
     height: 100%;
     width: 100%;
   }
-
 
   .add-cart-button {
     width: 100%;

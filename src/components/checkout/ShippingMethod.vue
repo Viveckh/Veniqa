@@ -37,37 +37,34 @@ export default {
       shippingMethods: [
         {
           _id: '20 day shipping',
-          name: '20 day shipping',
+          name: '20 day shipping'
         },
         {
           _id: 'Expedited Shipping',
-          name: 'Expedited shipping',
+          name: 'Expedited shipping'
         },
         {
           _id: 'No Rush Shipping',
-          name: 'No Rush Shipping',
-        },
-      ],
+          name: 'No Rush Shipping'
+        }
+      ]
     };
   },
   methods: {
     async selected() {
       if (!this.checkoutInitiated) return;
       try {
-        const isSuccess = await this.$store.dispatch(
-          'cartStore/createCheckout',
-          {
-            address: this.selectedAddress,
-            shippingMethod: this.shippingMethod,
-          },
-        );
+        const isSuccess = await this.$store.dispatch('cartStore/createCheckout', {
+          address: this.selectedAddress,
+          shippingMethod: this.shippingMethod
+        });
       } catch (error) {
         notification.error(
           this,
-          'Something went haywire while trying to recalculate the prices. Please try again by changing address.',
+          'Something went haywire while trying to recalculate the prices. Please try again by changing address.'
         );
       }
-    },
+    }
   },
   computed: {
     shippingMethod: {
@@ -77,15 +74,15 @@ export default {
 
       set(val) {
         this.$store.commit('shippingStore/setShippingMethod', val);
-      },
+      }
     },
 
     ...mapGetters({
       isSessionActive: 'authStore/isSessionActive',
       selectedAddress: 'shippingStore/getSelectedAddress',
-      checkoutInitiated: 'cartStore/checkoutInitiated',
-    }),
-  },
+      checkoutInitiated: 'cartStore/checkoutInitiated'
+    })
+  }
 };
 </script>
 

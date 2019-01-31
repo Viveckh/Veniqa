@@ -13,8 +13,8 @@ const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({
     cartStore: state.cartStore,
-    shippingStore: state.shippingStore,
-  }),
+    shippingStore: state.shippingStore
+  })
 });
 
 Vue.use(Vuex);
@@ -25,8 +25,8 @@ export default new Vuex.Store({
     authStore: AuthStore,
     shippingStore: ShippingStore,
     loaderStore: Loader,
-    searchStore: Search,
+    searchStore: Search
   },
 
-  plugins: [vuexLocal.plugin],
+  plugins: [vuexLocal.plugin]
 });

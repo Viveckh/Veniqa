@@ -5,19 +5,19 @@ import { addClasses, removeClasses } from './util/dom';
 // account for, just in case.
 const divStyle = document.createElement('div').style;
 
-const HAS_ANIMATION = typeof document === 'undefined'
-  ? false
-  : ('animation' in divStyle || 'webkitAnimation' in divStyle);
+const HAS_ANIMATION =  typeof document === 'undefined'
+    ? false
+    : 'animation' in divStyle || 'webkitAnimation' in divStyle;
 
-const __instance = (function () {
+const __instance = (function() {
   let instance;
-  return (newInstance) => {
+  return newInstance => {
     if (newInstance) {
       instance = newInstance;
     }
     return instance;
   };
-}());
+})();
 export default class ZoomPane {
   constructor(options = {}) {
     this.isShowing = false;
@@ -31,11 +31,19 @@ export default class ZoomPane {
       containInline = throwIfMissing(),
       inlineOffsetX = 0,
       inlineOffsetY = 0,
-      inlineContainer = document.body,
+      inlineContainer = document.body
     } = options;
 
     this.settings = {
-      container, zoomFactor, inline, namespace, showWhitespaceAtEdges, containInline, inlineOffsetX, inlineOffsetY, inlineContainer,
+      container,
+      zoomFactor,
+      inline,
+      namespace,
+      showWhitespaceAtEdges,
+      containInline,
+      inlineOffsetX,
+      inlineOffsetY,
+      inlineContainer
     };
 
     this.openClasses = this._buildClasses('open');
@@ -83,8 +91,8 @@ export default class ZoomPane {
   // `percentageOffsetX` and `percentageOffsetY` must be percentages
   // expressed as floats between `0' and `1`.
   setPosition(percentageOffsetX, percentageOffsetY, triggerRect) {
-    let left = -(this.imgEl.clientWidth * percentageOffsetX - (this.el.clientWidth / 2));
-    let top = -(this.imgEl.clientHeight * percentageOffsetY - (this.el.clientHeight / 2));
+    let left = -(this.imgEl.clientWidth * percentageOffsetX - this.el.clientWidth / 2);
+    let top = -(this.imgEl.clientHeight * percentageOffsetY - this.el.clientHeight / 2);
     const maxLeft = -(this.imgEl.clientWidth - this.el.clientWidth);
     const maxTop = -(this.imgEl.clientHeight - this.el.clientHeight);
 
@@ -96,24 +104,35 @@ export default class ZoomPane {
       const scrollX = window.pageXOffset;
       const scrollY = window.pageYOffset;
 
-      let inlineLeft = triggerRect.left + (percentageOffsetX * triggerRect.width)
-        - (this.el.clientWidth / 2) + this.settings.inlineOffsetX + scrollX;
-      let inlineTop = triggerRect.top + (percentageOffsetY * triggerRect.height)
-        - (this.el.clientHeight / 2) + this.settings.inlineOffsetY + scrollY;
+      let inlineLeft = triggerRect.left;
+      percentageOffsetX * triggerRect.width -
+        this.el.clientWidth / 2 +
+        this.settings.inlineOffsetX +
+        scrollX;
+      let inlineTop = triggerRect.top;
+      percentageOffsetY * triggerRect.height -
+        this.el.clientHeight / 2 +
+        this.settings.inlineOffsetY +
+        scrollY;
 
       if (this.settings.containInline) {
         const elRect = this.el.getBoundingClientRect();
 
-
         if (inlineLeft < triggerRect.left + scrollX) {
           inlineLeft = triggerRect.left + scrollX;
-        } else if (inlineLeft + this.el.clientWidth > triggerRect.left + triggerRect.width + scrollX) {
+        } else if (
+          inlineLeft + this.el.clientWidth >
+          triggerRect.left + triggerRect.width + scrollX
+        ) {
           inlineLeft = triggerRect.left + triggerRect.width - this.el.clientWidth + scrollX;
         }
 
         if (inlineTop < triggerRect.top + scrollY) {
           inlineTop = triggerRect.top + scrollY;
-        } else if (inlineTop + this.el.clientHeight > triggerRect.top + triggerRect.height + scrollY) {
+        } else if (
+          inlineTop + this.el.clientHeight >
+          triggerRect.top + triggerRect.height + scrollY
+        ) {
           inlineTop = triggerRect.top + triggerRect.height - this.el.clientHeight + scrollY;
         }
       }
@@ -154,7 +173,6 @@ export default class ZoomPane {
     removeClasses(this.el, this.openClasses);
     removeClasses(this.el, this.closingClasses);
   }
-
 
   show(imageURL, triggerWidth, triggerHeight) {
     this._removeListenersAndResetClasses();

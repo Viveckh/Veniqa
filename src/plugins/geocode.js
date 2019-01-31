@@ -4,14 +4,14 @@ import Vue from 'vue';
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCufFvSCAzqJNKIJ5HH16XWEZpIf0J8KbA',
-    libraries: 'places', // This is required if you use the Autocomplete plugin
+    libraries: 'places' // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
     // (as you require)
 
     // // If you want to set the version, you can do so:
     // v: '3.26',
-  },
+  }
 
   // // If you intend to programmatically custom event listener code
   // // (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)

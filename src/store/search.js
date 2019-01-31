@@ -9,7 +9,7 @@ export default {
   state: {
     searchTerm: '',
     paging: _.cloneDeep(PagingOption),
-    searchResult: [],
+    searchResult: []
   },
 
   mutations: {
@@ -20,7 +20,7 @@ export default {
     setSearchResult(state, payload) {
       state.searchResult.splice(0, state.searchResult.length);
       state.searchResult.push(...payload);
-    },
+    }
   },
 
   actions: {
@@ -31,13 +31,13 @@ export default {
           method: 'post',
           data: {
             searchTerm: state.searchTerm,
-            pagingOptions: state.paging,
-          },
+            pagingOptions: state.paging
+          }
         });
 
         if (data && data.httpStatus == 200) {
           const transformed = [];
-          data.responseData.docs.forEach((p) => {
+          data.responseData.docs.forEach(p => {
             transformed.push(_.assign(_.cloneDeep(ProductDTO), p));
           });
 
@@ -49,14 +49,20 @@ export default {
         console.log('Error', err);
         throw err;
       }
-    },
+    }
   },
 
   getters: {
-    searchTerm(state) { return state.searchTerm; },
+    searchTerm(state) {
+      return state.searchTerm;
+    },
 
-    paging(state) { return state.paging; },
+    paging(state) {
+      return state.paging;
+    },
 
-    searchResult(state) { return state.searchResult; },
-  },
+    searchResult(state) {
+      return state.searchResult;
+    }
+  }
 };

@@ -58,8 +58,8 @@ export default {};
   border-color: black;
   font-size: 2em;
   color: white;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
+    sans-serif;
   text-transform: uppercase;
 }
 
@@ -95,7 +95,7 @@ export default {};
 
 .section1 {
   height: 75vh;
-  background: url("https://img.shopperboard.com/984351/5908c7a87e6d8.png");
+  background: url('https://img.shopperboard.com/984351/5908c7a87e6d8.png');
   background-size: cover;
   background-position: center center;
 }
@@ -103,7 +103,7 @@ export default {};
 .section2 {
   background-color: blue;
   height: 45vh;
-  background: url("https://dtpmhvbsmffsz.cloudfront.net/posts/2016/10/18/5806aef1522b4524a4006e0f/m_5806b24641b4e0f91f007c7d.jpg");
+  background: url('https://dtpmhvbsmffsz.cloudfront.net/posts/2016/10/18/5806aef1522b4524a4006e0f/m_5806b24641b4e0f91f007c7d.jpg');
   background-size: cover;
   background-position: center center;
 }
@@ -111,7 +111,7 @@ export default {};
 .section3 {
   background-color: red;
   height: 30vh;
-  background: url("https://pmcfootwearnews.files.wordpress.com/2017/08/forever-21-sneakers1.jpg");
+  background: url('https://pmcfootwearnews.files.wordpress.com/2017/08/forever-21-sneakers1.jpg');
   background-size: cover;
   background-position: center center;
 }
@@ -119,7 +119,7 @@ export default {};
 .section4 {
   background-color: hotpink;
   height: 30vh;
-  background: url("https://www.rankandstyle.com/media/products/f/forever-21-structured-crossbody-saddle-bag-han_1.jpg");
+  background: url('https://www.rankandstyle.com/media/products/f/forever-21-structured-crossbody-saddle-bag-han_1.jpg');
   background-size: cover;
   background-position: center center;
 }
@@ -127,7 +127,7 @@ export default {};
 .section5 {
   background-color: slateblue;
   height: 45vh;
-  background: url("https://cdnb.lystit.com/photos/3542-2014/11/22/forever-21-green-woven-drawstring-pants-product-1-25708014-1-188548021-normal.jpeg");
+  background: url('https://cdnb.lystit.com/photos/3542-2014/11/22/forever-21-green-woven-drawstring-pants-product-1-25708014-1-188548021-normal.jpeg');
   background-size: cover;
   background-position: center center;
 }
@@ -135,7 +135,7 @@ export default {};
 .section6 {
   background-color: red;
   height: 55vh;
-  background: url("https://cdnd.lystit.com/photos/9dc1-2015/02/04/forever-21-green-classic-utility-jacket-product-1-27555133-0-532989503-normal.jpeg");
+  background: url('https://cdnd.lystit.com/photos/9dc1-2015/02/04/forever-21-green-classic-utility-jacket-product-1-27555133-0-532989503-normal.jpeg');
   background-size: cover;
   background-position: center center;
 }
@@ -143,7 +143,7 @@ export default {};
 .section7 {
   background-color: hotpink;
   height: 20vh;
-  background: url("https://cdnd.lystit.com/1200/630/tr/photos/forever21/4479da64/forever-21-GOLDBLACK-Etched-Round-Sunglasses.jpeg");
+  background: url('https://cdnd.lystit.com/1200/630/tr/photos/forever21/4479da64/forever-21-GOLDBLACK-Etched-Round-Sunglasses.jpeg');
   background-size: cover;
   background-position: center center;
 }

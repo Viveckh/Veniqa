@@ -13,7 +13,7 @@ export default {
     shippingPrice: {},
     tariffPrice: {},
     checkoutInitiated: false,
-    checkoutID: null,
+    checkoutID: null
   },
   actions: {
     /**
@@ -27,8 +27,8 @@ export default {
         method: 'post',
         data: {
           checkoutId: state.checkoutID,
-          paymentSource: 'BKASH',
-        },
+          paymentSource: 'BKASH'
+        }
       });
 
       if (data.httpStatus === 200) {
@@ -39,8 +39,8 @@ export default {
           method: 'post',
           data: {
             paymentSource: 'BKASH',
-            paymentId,
-          },
+            paymentId
+          }
         });
 
         if (newData.data.httpStatus === 200) {
@@ -48,24 +48,16 @@ export default {
         }
       }
     },
-    async createCheckout({
-      state,
-      commit,
-    }, {
-      address,
-      shippingMethod,
-    }) {
+    async createCheckout({ state, commit }, { address, shippingMethod }) {
       const reqData = {
         shippingMethod: shippingMethod._id,
-        addressId: address._id,
+        addressId: address._id
       };
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.createCheckout,
           method: 'post',
-          data: reqData,
+          data: reqData
         });
 
         if (data.httpStatus === 200) {
@@ -82,12 +74,7 @@ export default {
       }
     },
 
-    async addToTheCart({
-      state,
-      commit,
-      dispatch,
-      rootGetters,
-    }, products) {
+    async addToTheCart({ state, commit, dispatch, rootGetters }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive'] && products.length > 0) {
         const foundIndex = _.findIndex(state.cart, pr => _.isEqual(pr.product, products[0]));
@@ -95,7 +82,7 @@ export default {
         if (Object.keys(state.total).length <= 0) {
           state.total = {
             amount: 0,
-            currency: '',
+            currency: ''
           };
         }
         // Here the assumption currently is that only one product will be there everytime since everything is local.
@@ -104,7 +91,8 @@ export default {
           order.counts = parseInt(order.counts) + 1;
           order.aggregatedPrice = {
             currency: order.aggregatedPrice.currency,
-            amount: parseFloat(order.product.price.amount) + parseFloat(order.aggregatedPrice.amount),
+            amount:
+              parseFloat(order.product.price.amount) + parseFloat(order.aggregatedPrice.amount)
           };
           if (state.total.currency.length == 0) {
             state.total.currency = order.aggregatedPrice.currency;
@@ -117,7 +105,7 @@ export default {
           order._id = state.cart.length;
           order.aggregatedPrice = {
             currency: products[0].price.currency,
-            amount: products[0].price.amount,
+            amount: products[0].price.amount
           };
 
           state.cart.push(order);
@@ -129,27 +117,24 @@ export default {
 
       const customization = {};
 
-
       const toSend = _.map(products, p => ({
         product: p._id,
         counts: p.counts == 0 ? 1 : p.counts,
-        customizations: p.customValues ? p.customValues : null,
+        customizations: p.customValues ? p.customValues : null
       }));
 
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
-          data: toSend,
+          data: toSend
         });
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
             const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
-              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod']
             };
 
             await dispatch('createCheckout', reqObj);
@@ -163,18 +148,11 @@ export default {
       }
     },
 
-    async getCart({
-      state,
-      commit,
-      dispatch,
-      rootGetters,
-    }) {
+    async getCart({ state, commit, dispatch, rootGetters }) {
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'get',
-          url: ProxyUrl.getCart,
+          url: ProxyUrl.getCart
         });
         if (data.httpStatus === 200) {
           commit('setCart', data.responseData);
@@ -184,12 +162,7 @@ export default {
       }
     },
 
-    async deleteOrders({
-      state,
-      commit,
-      rootGetters,
-      dispatch,
-    }, cartItems) {
+    async deleteOrders({ state, commit, rootGetters, dispatch }, cartItems) {
       const deletedIds = _.map(cartItems, '_id');
 
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
@@ -201,21 +174,19 @@ export default {
       }
 
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'delete',
           url: ProxyUrl.deleteCart,
           data: {
-            cartItemIds: deletedIds,
-          },
+            cartItemIds: deletedIds
+          }
         });
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
             const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
-              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod']
             };
 
             await dispatch('createCheckout', reqObj);
@@ -228,20 +199,13 @@ export default {
       }
     },
 
-    async updateOrders({
-      state,
-      commit,
-      dispatch,
-      rootGetters,
-    }, payloadArray) {
+    async updateOrders({ state, commit, dispatch, rootGetters }, payloadArray) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
         // These commits don't do anything but are necessary because they help persist.
         const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
         if (updatedItem) {
-          updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(
-            updatedItem.product.price.amount,
-          );
+          updatedItem.aggregatedPrice.amount =            parseInt(updatedItem.counts) * parseFloat(updatedItem.product.price.amount);
           updatedItem.aggregatedPrice.amount = updatedItem.aggregatedPrice.amount.toFixed(2);
           commit('setLocalCart');
           return true;
@@ -251,30 +215,29 @@ export default {
       }
 
       const orders = [];
-      state.cart.forEach((item) => {
+      state.cart.forEach(item => {
         orders.push({
           product: item.product._id,
           _id: item._id,
           counts: item.counts,
+          customizations: item.customizations
         });
       });
 
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'put',
           url: ProxyUrl.updateCart,
           data: {
-            cartItems: orders,
-          },
+            cartItems: orders
+          }
         });
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
             const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
-              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod']
             };
 
             await dispatch('createCheckout', reqObj);
@@ -288,7 +251,7 @@ export default {
       } catch (err) {
         throw new Error(err);
       }
-    },
+    }
   },
   mutations: {
     setCheckoutId(state, payload) {
@@ -310,9 +273,9 @@ export default {
       state.checkoutID = null;
     },
     appendToCart(state, newProducts) {
-      newProducts.forEach((pr) => {
+      newProducts.forEach(pr => {
         const ind = _.findIndex(state.cart, {
-          _id: pr._id,
+          _id: pr._id
         });
 
         if (ind < 0) {
@@ -326,9 +289,8 @@ export default {
       state.cart = [...state.cart];
 
       let amount = 0;
-      let
-        currency = '';
-      state.cart.forEach((item) => {
+      let currency = '';
+      state.cart.forEach(item => {
         amount += parseFloat(item.aggregatedPrice.amount);
         if (currency.length == 0) {
           currency = item.aggregatedPrice.currency;
@@ -337,7 +299,7 @@ export default {
       amount = amount.toFixed(2);
       state.total = {
         amount,
-        currency,
+        currency
       };
     },
     setCart(state, allCarts) {
@@ -351,12 +313,12 @@ export default {
       state.shippingPrice = allCarts.shippingPrice ? allCarts.shippingPrice : null;
       state.tariffPrice = allCarts.tariffPrice ? allCarts.tariffPrice : null;
 
-      allCarts.items.forEach((item) => {
+      allCarts.items.forEach(item => {
         transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
       });
 
       state.cart.push(...transformed);
-    },
+    }
   },
   getters: {
     getCart(state) {
@@ -369,7 +331,7 @@ export default {
 
     getTotalItems(state) {
       let total = 0;
-      state.cart.forEach((item) => {
+      state.cart.forEach(item => {
         total += parseInt(item.counts);
       });
 
@@ -395,6 +357,6 @@ export default {
 
     checkoutInitiated(state) {
       return state.checkoutInitiated;
-    },
-  },
+    }
+  }
 };

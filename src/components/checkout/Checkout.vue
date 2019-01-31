@@ -18,6 +18,7 @@
       </b-col>
     </b-row>
 
+    <div class="bottom-space"></div>
     <div class="checkout-button">
       <div v-if="isSessionActive">
         <b-button
@@ -61,13 +62,13 @@ export default {
     ShippingDetail,
     OrderDetail,
     PaymentDetail,
-    ShippingMethod,
+    ShippingMethod
   },
 
   data() {
     return {
       // selectedAddress: {},
-      payment: {},
+      payment: {}
     };
   },
 
@@ -87,31 +88,26 @@ export default {
       this.$store.commit('shippingStore/addressSelected', selected);
       if (!this.checkoutInitiated) return;
       try {
-        const isSuccess = await this.$store.dispatch(
-          'cartStore/createCheckout',
-          {
+        const isSuccess = await this.$store.dispatch('cartStore/createCheckout', {
           address: this.selectedAddress,
-          shippingMethod: this.shippingMethod,
+          shippingMethod: this.shippingMethod
         });
       } catch (error) {
         notification.error(
           this,
-          'Something went haywire while trying to recalculate the prices. Please try again by changing address.',
+          'Something went haywire while trying to recalculate the prices. Please try again by changing address.'
         );
       }
     },
 
     async handleCheckout() {
       if (!this.selectedAddress || !this.shippingMethod) {
-        notification.warn(
-          this,
-          'The shipping method and address should be selected first.',
-        );
+        notification.warn(this, 'The shipping method and address should be selected first.');
         return;
       }
       await this.$store.dispatch('cartStore/createCheckout', {
         address: this.selectedAddress,
-        shippingMethod: this.shippingMethod,
+        shippingMethod: this.shippingMethod
       });
     },
 
@@ -119,28 +115,24 @@ export default {
       try {
         const { data } = await this.$axios({
           method: 'get',
-          url:
-            ProxyUrls.resendEmailConfirmation
-            + this.$store.getters['authStore/getEmail'],
+          url: ProxyUrls.resendEmailConfirmation + this.$store.getters['authStore/getEmail']
         });
 
         if (data && data.httpStatus == 200) {
           this.$notify({
             group: 'all',
             type: 'success',
-            text:
-              'Confirmation email has been sent to your email address. Please check your email.',
+            text: 'Confirmation email has been sent to your email address. Please check your email.'
           });
         }
       } catch (err) {
         this.$notify({
           group: 'all',
           type: 'error',
-          text:
-            'There was an error sending out the email. Please try again later',
+          text: 'There was an error sending out the email. Please try again later'
         });
       }
-    },
+    }
   },
 
   computed: {
@@ -149,7 +141,7 @@ export default {
       carts: 'cartStore/getCart',
       isSessionActive: 'authStore/isSessionActive',
       checkoutInitiated: 'cartStore/checkoutInitiated',
-      emailConfirmed: 'authStore/emailConfirmed',
+      emailConfirmed: 'authStore/emailConfirmed'
     }),
 
     shippingMethod: {
@@ -158,9 +150,9 @@ export default {
       },
       set(val) {
         this.$store.commit('shippingStore/setShippingMethod', val);
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>
 
@@ -172,6 +164,10 @@ export default {
   min-height: 90vh;
   position: relative;
   background-color: #eaecee;
+
+  .bottom-space {
+    height: 40px;
+  }
 
   .checkout-button {
     margin-top: 20px;

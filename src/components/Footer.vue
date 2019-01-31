@@ -47,14 +47,14 @@ export default {
   name: 'Footer',
   data() {
     return {
-      subscriptionEmail: '',
+      subscriptionEmail: ''
     };
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "../assets/css/global.scss";
+@import '../assets/css/global.scss';
 
 .block {
   height: 250px;
