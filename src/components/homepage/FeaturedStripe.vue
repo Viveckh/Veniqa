@@ -79,7 +79,7 @@ export default {
 }
 .description:hover {
   color: white;
-  background-color: #ad310b;
+  background-color: #ad310ba4;
   -webkit-transition: background-color 500ms linear;
   -ms-transition: background-color 500ms linear;
   transition: background-color 500ms linear;
