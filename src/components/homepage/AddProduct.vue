@@ -6,10 +6,9 @@
       ref="managephoto"
       :detailedUrls="product.detailedImageUrls"
       :thumbnailPropUrls="product.thumbnailUrls"
-      :featuredUrls="product.featuredUrls"
+      
       :productId="product._id"
-      :preassignedUrls="preassignedUrls"
-      @complete="imageUploadComplete"
+     
       @cancel="showManagePhoto = false"
     />
 
@@ -468,7 +467,7 @@ export default {
     return {
       showAttributes: false,
       editor: null,
-      preassignedUrls: null,
+      // preassignedUrls: null,
       product: {
         store: 'AMAZON',
         brand: 'BEVERLY HILLS KAY',
@@ -692,13 +691,13 @@ export default {
         const saveImageRes = await this.$refs.managephoto.saveAll();
         if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
+          // this.preassignedUrls = null;
         }
 
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
-        if (err) this.preassignedUrls = err;
+        // if (err) this.preassignedUrls = null;
         this.$notify({
           group: 'all',
           type: 'error',
@@ -708,6 +707,8 @@ export default {
     },
     async handleEditProduct() {
       if (!this.validateForm()) return;
+
+      // Check if there are any images.
       const totalImages = this.$refs.managephoto.configureParams()
         .numberOfThumbnailAndDetailedImages;
       if (totalImages <= 0) {
@@ -722,12 +723,12 @@ export default {
         const saveImageRes = await this.$refs.managephoto.saveAll();
         if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
+          // this.preassignedUrls = null;
         }
         await this.$store.dispatch('adminStore/editProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
-        if (err) this.preassignedUrls = err;
+        // if (err) this.preassignedUrls = err;
         this.$notify({
           group: 'all',
           type: 'error',
