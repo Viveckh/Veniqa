@@ -210,6 +210,7 @@ export default {
           method: 'get',
           url: this.detailedUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
+          headers: {"Access-Control-Allow-Origin": "*"}
         })
           .then((res) => {
             this.finalImages[index].largeBlob = new File(
@@ -225,6 +226,7 @@ export default {
             // done();
           })
           .catch((err) => {
+            console.log("Error message", err.message);
             console.log(err);
             this.handleError('image');
           });
@@ -235,6 +237,7 @@ export default {
           method: 'get',
           url: this.thumbnailPropUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
+          headers: {"Access-Control-Allow-Origin": "*"}
         })
           .then((res) => {
             this.finalImages[index].thumbnailBlob = new File(
@@ -244,7 +247,10 @@ export default {
             );
             // done();
           })
-          .catch(err => this.handleError('image'));
+          .catch(err => {
+            console.log("Error msg", err.message);
+            this.handleError('image')
+          });
       });
     }
   },
