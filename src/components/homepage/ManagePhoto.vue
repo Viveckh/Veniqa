@@ -134,11 +134,11 @@ export default {
       type: String,
     },
 
-    preassignedUrls: {
-      required: false,
-      default: null,
-      type: Object,
-    },
+    // preassignedUrls: {
+    //   required: false,
+    //   default: null,
+    //   type: Object,
+    // },
   },
   data() {
     return {
@@ -272,7 +272,6 @@ export default {
          */
         let data = null;
         // if (!this.preassignedUrls) {
-          console.log("There were no preassigned urls", this.preassignedUrls);
           try {
             const res = await this.$axios({
               method: 'get',
@@ -280,7 +279,6 @@ export default {
               params,
             });
 
-            console.log("Response from predefined call", res.data.responseData);
             data = res.data.responseData;
           } catch (error) {
             console.log('Preassign error');
@@ -292,7 +290,7 @@ export default {
 
         const totalCallsToMake = data.detailedImageUrls.length
           + data.thumbnailUrls.length
-          + data.featuredImageUrls.length;
+          // + data.featuredImageUrls.length;
 
         console.log("Total calls to make", totalCallsToMake);
 
@@ -421,7 +419,7 @@ export default {
         // numberOfThumbnails += 1;
         // numberOfDetailedImages += 1;
         numberOfThumbnailAndDetailedImages += 1;
-        numberOfFeaturedImages += imageObj.featured ? 1 : 0;
+        // numberOfFeaturedImages += imageObj.featured ? 1 : 0;
       });
 
       return {

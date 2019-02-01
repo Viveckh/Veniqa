@@ -8,7 +8,6 @@
       :thumbnailPropUrls="product.thumbnailUrls"
       
       :productId="product._id"
-      :preassignedUrls="preassignedUrls"
      
       @cancel="showManagePhoto = false"
     />
@@ -468,7 +467,7 @@ export default {
     return {
       showAttributes: false,
       editor: null,
-      preassignedUrls: null,
+      // preassignedUrls: null,
       product: {
         store: 'AMAZON',
         brand: 'BEVERLY HILLS KAY',
@@ -692,13 +691,13 @@ export default {
         const saveImageRes = await this.$refs.managephoto.saveAll();
         if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
+          // this.preassignedUrls = null;
         }
 
         await this.$store.dispatch('adminStore/addProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
-        if (err) this.preassignedUrls = err;
+        // if (err) this.preassignedUrls = null;
         this.$notify({
           group: 'all',
           type: 'error',
@@ -724,12 +723,12 @@ export default {
         const saveImageRes = await this.$refs.managephoto.saveAll();
         if (saveImageRes) {
           this.imageUploadComplete(saveImageRes);
-          this.preassignedUrls = null;
+          // this.preassignedUrls = null;
         }
         await this.$store.dispatch('adminStore/editProduct', this.product);
         this.$emit('cancelTrigger');
       } catch (err) {
-        if (err) this.preassignedUrls = err;
+        // if (err) this.preassignedUrls = err;
         this.$notify({
           group: 'all',
           type: 'error',
