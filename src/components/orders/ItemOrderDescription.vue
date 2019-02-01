@@ -16,6 +16,8 @@
             <br>
             <strong>Category</strong>
             <br>
+            <strong>Sub Category</strong>
+            <br>
             <strong>Price</strong>
             <br>
             <strong>Weight</strong>
@@ -28,7 +30,9 @@
             <br>
             {{item.product.store}}
             <br>
-            {{item.product.category}}
+            {{item.product.category.category}}
+            <br>
+            {{item.product.category.subcategory}}
             <br>
             $ {{item.product.price.amount}}
             <br>
