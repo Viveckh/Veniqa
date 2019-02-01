@@ -168,7 +168,7 @@ export default {
                 return result;
             }
 
-            let order = await Order.findOne({_id: orderId, user_email: userObj.email}).select('_id overall_status cart.items.product._id cart.items.product.name cart.items.product.brand cart.items.product.store cart.items.product.thumbnailUrls cart.items.product.price cart.items.counts cart.items.aggregatedPrice cart.items.customizations cart.items.order_line_level_processing_details.status cart.items.order_line_level_processing_details.delivery.delivery_date cart.totalWeight cart.subTotalPrice cart.serviceCharge cart.shippingPrice cart.tariffPrice cart.totalPrice payment_info.source payment_info.type payment_info.amount_in_usd payment_info.amount_in_payment_currency mailing_address auditLog.createdOn').exec();
+            let order = await Order.findOne({_id: orderId, user_email: userObj.email}).select('_id overall_status cart.items.product._id cart.items.product.name cart.items.product.brand cart.items.product.store cart.items.product.thumbnailUrls cart.items.product.price cart.items.product.customizationOptions cart.items.counts cart.items.aggregatedPrice cart.items.customizations cart.items.order_line_level_processing_details.status cart.items.order_line_level_processing_details.delivery.delivery_date cart.totalWeight cart.subTotalPrice cart.serviceCharge cart.shippingPrice cart.tariffPrice cart.totalPrice payment_info.source payment_info.type payment_info.amount_in_usd payment_info.amount_in_payment_currency mailing_address auditLog.createdOn').exec();
             if (order) {
                 result = {httpStatus: httpStatus.OK, status: "successful", responseData: order};
             } 
