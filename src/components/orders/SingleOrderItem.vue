@@ -29,7 +29,12 @@
               <p>
                 <span class="info">Quantity:</span> &nbsp;&nbsp;
                 <strong>{{item.counts}}</strong>
+                <br>
+                <span class="info">Aggregated Price:</span> &nbsp;&nbsp;
+                <strong>$ {{item.aggregatedPrice.amount}}</strong>
               </p>
+
+              
 
               <div v-if="Object.keys(item.customizations).length > 0">
                 <span class="info"><strong>Customizations</strong></span>
@@ -43,8 +48,8 @@
         </b-col>
         <b-col md="3">
           <div class="info">
-            Due to the unconventional methods of shipping mechanism, we cannot take return orders right now. 
-            If there are any severe damange to the package, then please contact the us. <br> <br>
+            Due to the unconventional shipping methods, we cannot process direct returns on international orders. 
+            If there is any severe damage to the product, then please contact us. <br> <br>
 
             <a href="mailto:support@veniqa.com">support@veniqa.com</a>
           </div>

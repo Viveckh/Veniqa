@@ -2,7 +2,10 @@
   <div id="single-order-detail" class="align-left">
     <div class="space"></div>
     <div v-if="order">
-      <h4>Your Order Detail</h4>
+      <h4>
+        <router-link to="/orders"><font-awesome-icon icon="chevron-left"/></router-link>
+        Your Order Detail
+      </h4>
 
       <b-card-group deck class="mb-3">
         <b-card bg-variant="light" header="Order Status">
@@ -43,18 +46,20 @@
               <br>
               {{addr.country}} {{addr.zipCode}}
               <br>
-
               {{addr.mobilePhone}}
             </p>
           </div>
         </b-card>
 
-        <b-card bg-variant="light" header="Payment Method" v-if="payment">
+        <b-card bg-variant="light" header="Payment Method" v-if="payments.length > 0">
           <div class="card-text">
-            <p>
-              <strong>{{payment.source}}</strong>
+            <p v-for="(payment, pind) in payments" v-bind:key="pind">
+              <strong>
+                {{payment.source}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="green info">{{payment.type}}</span>
+              </strong>
               <br>
-              {{payment.amount_in_payment_currency.amount}} {{payment.amount_in_payment_currency.currency}}
+              {{payment.amount_in_payment_currency.amount }} {{payment.amount_in_payment_currency.currency}}
             </p>
           </div>
         </b-card>
@@ -102,7 +107,9 @@ export default {
         return moment(date).format("MMMM Do, YYYY");
       }
       else return '';
-    }
+    },
+
+    
   },
 
   async created() {
@@ -131,8 +138,8 @@ export default {
       return this.order ? this.order.mailing_address : null;
     },
 
-    payment() {
-      return this.order && this.order.payment_info ? this.order.payment_info[0] : null;
+    payments() {
+      return this.order && this.order.payment_info ? this.order.payment_info : null;
     }
   }
 }
@@ -152,7 +159,7 @@ export default {
     font-size: small;
   }
 
-  .cart-items{
+  .cart-items {
     margin-top: 2rem;
   }
 }
