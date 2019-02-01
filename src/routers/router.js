@@ -72,6 +72,14 @@ const router = new Router({
           },
         },
         {
+          path: 'orders/:id',
+          component: () => import('@/components/orders/SingleOrderDetail.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+          props: true,
+        },
+        {
           path: 'products/:productId',
           component: () => import('@/views/ProductDetail.vue'),
           props: true,

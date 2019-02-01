@@ -3,7 +3,7 @@ export default {
     context.$notify({
       group: group || 'toast',
       type: 'success',
-      text: t
+      text: t,
     });
   },
 
@@ -11,7 +11,7 @@ export default {
     context.$notify({
       group: group || 'toast',
       type: 'warn',
-      text: t
+      text: t,
     });
   },
 
@@ -19,7 +19,7 @@ export default {
     context.$notify({
       group: group || 'toast',
       type: 'error',
-      text: t
+      text: t,
     });
-  }
+  },
 };

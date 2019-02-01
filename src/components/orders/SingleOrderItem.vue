@@ -24,16 +24,31 @@
             <br>
 
             <div class="info">
-              <span class="info">Sold by: </span>
+              <span class="info">Sold by: </span>&nbsp;&nbsp;
               <strong>{{item.product.store}}</strong>
               <p>
-                <span class="info">Quantity:</span>
+                <span class="info">Quantity:</span> &nbsp;&nbsp;
                 <strong>{{item.counts}}</strong>
               </p>
+
+              <div v-if="Object.keys(item.customizations).length > 0">
+                <span class="info"><strong>Customizations</strong></span>
+                <p v-for="(key, kind) in Object.keys(item.customizations)" v-bind:key="kind">
+                  <span class="info">{{key}}</span> &nbsp;&nbsp;
+                  <strong>{{item.customizations[key]}}</strong>
+                </p>
+              </div>
             </div>
           </div>
         </b-col>
-        <b-col md="3"></b-col>
+        <b-col md="3">
+          <div class="info">
+            Due to the unconventional methods of shipping mechanism, we cannot take return orders right now. 
+            If there are any severe damange to the package, then please contact the us. <br> <br>
+
+            <a href="mailto:support@veniqa.com">support@veniqa.com</a>
+          </div>
+        </b-col>
       </b-row>
     </div>
   </div>

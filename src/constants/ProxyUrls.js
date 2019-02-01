@@ -31,4 +31,5 @@ export default {
 
   // Order list
   orderList: '/user/orderList',
+  orderDetail: '/user/orderDetails?orderId=',
 };

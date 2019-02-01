@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="block news dark">
+    <!-- <div class="block news dark">
       <div class="newsletter dark">
         <b-row>
           <b-col class="align-right center-sm">
@@ -17,7 +17,7 @@
           </b-col>
         </b-row>
       </div>
-    </div>
+    </div> -->
     <div class="block light">
       <div class="main-block">
         <b-row>
