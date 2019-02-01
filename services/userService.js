@@ -140,7 +140,7 @@ export default {
             }
 
             let orders = await Order.paginate({user_email: userObj.email}, {
-                select: '_id overall_status cart.items.product.name cart.items.product.brand cart.items.product.store cart.items.product.thumbnailUrls cart.items.counts cart.items.aggregatedPrice cart.items.customizations cart.items.order_line_level_processing_details.status cart.items.order_line_level_processing_details.delivery.delivery_date mailing_address.country auditLog.createdOn',
+                select: '_id overall_status cart.items.product._id cart.items.product.name cart.items.product.brand cart.items.product.store cart.items.product.thumbnailUrls cart.items.counts cart.items.aggregatedPrice cart.items.customizations cart.items.order_line_level_processing_details.status cart.items.order_line_level_processing_details.delivery.delivery_date mailing_address.country auditLog.createdOn',
                 sort: sortRule,
                 page: pagingOptions.page,
                 limit: pagingOptions.limit
