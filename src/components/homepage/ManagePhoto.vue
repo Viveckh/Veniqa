@@ -210,6 +210,7 @@ export default {
           method: 'get',
           url: this.detailedUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
+          headers: {"Access-Control-Allow-Origin": "*"}
         })
           .then((res) => {
             this.finalImages[index].largeBlob = new File(
@@ -236,6 +237,7 @@ export default {
           method: 'get',
           url: this.thumbnailPropUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
+          headers: {"Access-Control-Allow-Origin": "*"}
         })
           .then((res) => {
             this.finalImages[index].thumbnailBlob = new File(
