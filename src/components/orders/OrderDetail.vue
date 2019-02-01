@@ -35,13 +35,13 @@
         <ul class="order-desc">
           <li><strong> Created By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.name}}</li>
           <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.email}}</li>
-          <li><strong>Created On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdOn}}</li>
+          <li><strong>Created On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdOn | filterDate}}</li>
         </ul>
 
         <ul class="order-desc">
           <li><strong>Updated By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.name}}</li>
           <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.email}}</li>
-          <li><strong>Updated On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedOn}}</li>
+          <li><strong>Updated On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedOn | filterDate}}</li>
         </ul>
       </b-card>
 
@@ -82,6 +82,7 @@ import SingleListItem from '@/components/orders/SingleListItem';
 import ConfirmationPage from '@/components/common/ConfirmationPage';
 import CommentsSection from '@/components/orders/CommentsSection';
 import Permission from '@/constants/permissions';
+import moment from 'moment';
 
 export default {
   name: 'OrderDetail',
@@ -100,6 +101,12 @@ export default {
   created() {
     if (this.openOrder == null) {
       this.$router.push({ path: '/orders' });
+    }
+  },
+
+  filters: {
+    filterDate(dd){
+      return moment(dd).format('dddd, MMMM Do YYYY, h:mm:ss a');
     }
   },
 

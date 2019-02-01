@@ -32,11 +32,11 @@ import Notifications from "vue-notification";
 import VueAxios from "./plugins/axios";
 import _ from "lodash";
 
-import Datetime from 'vue-datetime'
+import {Datetime} from 'vue-datetime'
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css'
 
-Vue.use(Datetime)
+Vue.component('datetime', Datetime);
 
 import AutocompleteVue from 'autocomplete-vue';
 

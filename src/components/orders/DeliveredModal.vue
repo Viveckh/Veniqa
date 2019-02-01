@@ -14,7 +14,7 @@
         <b-row>
           <b-col md="4">Delivery Date</b-col>
           <b-col md="8">
-            <datetime type="datetime" v-model="detail.deliveryDate" class="theme-orange"></datetime>
+            <datetime type="datetime" v-model="detail.deliveryDate" class="theme-orange datetime-input"></datetime>
           </b-col>
         </b-row>
 
@@ -97,5 +97,10 @@ export default {
 
 <style lang="scss">
 #delivered {
+
+  .datetime-input{
+    border: 1px solid #dbdbdb;
+    border-radius: 0.2rem;
+  }
 }
 </style>

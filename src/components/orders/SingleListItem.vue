@@ -8,7 +8,7 @@
           <strong>{{data.product.name}}</strong>
           <br>
           <a :href="data.product.item_url" target="_blank" style="color: blue">Product Url</a> |
-          <a :href="'https://www.google.com'" target="_blank" style="color: blue">Veniqa Url</a>
+          <a :href="'https://keen-turing-4cb6e4.netlify.com/#/products/'+ data.product._id" target="_blank" style="color: blue">Veniqa Url</a>
         </b-col>
         <b-col md="3">
           <span v-if="data.order_line_level_processing_details">
