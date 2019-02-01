@@ -13,6 +13,7 @@
       class="responsive-image image-config"
       @dblclick="doubleClicked(image)"
       :class="{'featured': image && image.featured == true}"
+      crossorigin="anonymous"
     >
 
     <font-awesome-icon icon="circle" @click="moveImage('left')"/>
