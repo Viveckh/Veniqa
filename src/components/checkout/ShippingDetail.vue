@@ -26,16 +26,17 @@
         </li>
       </ul>
     </div>
+    <div v-else-if="allAddresses.length <= 0 && !isShowAddAddress">
+      <div class="empty-info">
+        <p>Nothing to display</p>
+      </div>
+    </div>
 
     <!-- Show list of existing addresses here with choice to choose -->
     <a @click="showAddAddress()" v-if="isSessionActive">
       <font-awesome-icon icon="plus"/>&nbsp;&nbsp; Add a new address
     </a>
-    <div v-else>
-      <div class="empty-info">
-        <p>Nothing to display</p>
-      </div>
-    </div>
+    
 
     <!-- Input form to add new address for the user -->
     <transition
@@ -368,7 +369,7 @@ export default {
 @import '../../assets/css/global.scss';
 .shipping-form {
   padding: 10px 0px;
-  background: white;
+  // background: white;
 
   .cancel-btn {
     margin-right: 10px;

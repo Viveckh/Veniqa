@@ -24,16 +24,36 @@
             <br>
 
             <div class="info">
-              <span class="info">Sold by: </span>
+              <span class="info">Sold by: </span>&nbsp;&nbsp;
               <strong>{{item.product.store}}</strong>
               <p>
-                <span class="info">Quantity:</span>
+                <span class="info">Quantity:</span> &nbsp;&nbsp;
                 <strong>{{item.counts}}</strong>
+                <br>
+                <span class="info">Aggregated Price:</span> &nbsp;&nbsp;
+                <strong>$ {{item.aggregatedPrice.amount}}</strong>
               </p>
+
+              
+
+              <div v-if="Object.keys(item.customizations).length > 0">
+                <span class="info"><strong>Customizations</strong></span>
+                <p v-for="(key, kind) in Object.keys(item.customizations)" v-bind:key="kind">
+                  <span class="info">{{key}}</span> &nbsp;&nbsp;
+                  <strong>{{item.customizations[key]}}</strong>
+                </p>
+              </div>
             </div>
           </div>
         </b-col>
-        <b-col md="3"></b-col>
+        <b-col md="3">
+          <div class="info">
+            Due to the unconventional shipping methods, we cannot process direct returns on international orders. 
+            If there is any severe damage to the product, then please contact us. <br> <br>
+
+            <a href="mailto:support@veniqa.com">support@veniqa.com</a>
+          </div>
+        </b-col>
       </b-row>
     </div>
   </div>

@@ -19,7 +19,7 @@
                 <strong>{{order.overall_status}}</strong>
               </span>
               </div>
-              <router-link to="/">Order Details</router-link>
+              <router-link :to="`/orders/${order._id}`">Order Details</router-link>
             </div>
           </b-col>
         </b-row>
