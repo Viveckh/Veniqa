@@ -60,7 +60,7 @@
                 v-if="product.name.toUpperCase().includes(query.toUpperCase())"
               >
                 <td>
-                  <img :src="product.thumbnailUrls[0]" class="productTableImg">
+                  <img :src="product.thumbnailUrls[0]" class="productTableImg" crossorigin="anonymous">
                 </td>
                 <td>{{product.name}}</td>
                 <td>${{product.price.amount}}</td>
