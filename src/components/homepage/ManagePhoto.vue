@@ -283,7 +283,7 @@ export default {
             reject(false);
           }
         } else {
-          data = preassignedUrls;
+          data = this.preassignedUrls;
         }
 
         const totalCallsToMake = data.detailedImageUrls.length
