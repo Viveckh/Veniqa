@@ -6,10 +6,10 @@
       ref="managephoto"
       :detailedUrls="product.detailedImageUrls"
       :thumbnailPropUrls="product.thumbnailUrls"
-      :featuredUrls="product.featuredUrls"
+      
       :productId="product._id"
       :preassignedUrls="preassignedUrls"
-      @complete="imageUploadComplete"
+     
       @cancel="showManagePhoto = false"
     />
 
@@ -708,6 +708,8 @@ export default {
     },
     async handleEditProduct() {
       if (!this.validateForm()) return;
+
+      // Check if there are any images.
       const totalImages = this.$refs.managephoto.configureParams()
         .numberOfThumbnailAndDetailedImages;
       if (totalImages <= 0) {

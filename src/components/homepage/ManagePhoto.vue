@@ -11,10 +11,10 @@
       </b-col>
       <b-col>
         <div class="align-right">
-          <div class="btn btn-warning" @click="$emit('cancel')">Cancel</div>
+          <!-- <div class="btn btn-warning" @click="$emit('cancel')">Cancel</div> -->
           <!-- <div class="btn btn-primary" @click="saveAll()">Save All</div> -->
           &nbsp;
-          <div class="btn btn-primary" @click="$emit('cancel')">Save All</div>
+          <div class="btn btn-primary" @click="$emit('cancel')">Done</div>
         </div>
       </b-col>
     </b-row>
@@ -50,9 +50,10 @@
         <div class="align-left">
           <button
             class="au-btn au-btn-icon au-btn--green"
+            v-if="cropperNotEmpty"
             @click="resetImagesModification()"
           >Remove Image</button>
-          <button class="btn btn-primary" @click="cropImage()">Done Cropping</button>
+          <button class="btn btn-primary" v-if="cropperNotEmpty" @click="cropImage()">Done Cropping</button>
         </div>
       </b-col>
       <b-col>
@@ -115,11 +116,11 @@ export default {
       type: Array,
     },
 
-    featuredUrls: {
-      required: false,
-      default: null,
-      type: Array,
-    },
+    // featuredUrls: {
+    //   required: false,
+    //   default: null,
+    //   type: Array,
+    // },
 
     thumbnailPropUrls: {
       required: false,
@@ -270,25 +271,30 @@ export default {
          *
          */
         let data = null;
-        if (!this.preassignedUrls) {
+        // if (!this.preassignedUrls) {
+          console.log("There were no preassigned urls", this.preassignedUrls);
           try {
             const res = await this.$axios({
               method: 'get',
               url: ProxyUrls.predefinedUrls,
               params,
             });
+
+            console.log("Response from predefined call", res.data.responseData);
             data = res.data.responseData;
           } catch (error) {
             console.log('Preassign error');
             reject(false);
           }
-        } else {
-          data = this.preassignedUrls;
-        }
+        // } else {
+        //   data = this.preassignedUrls;
+        // }
 
         const totalCallsToMake = data.detailedImageUrls.length
           + data.thumbnailUrls.length
           + data.featuredImageUrls.length;
+
+        console.log("Total calls to make", totalCallsToMake);
 
         if (totalCallsToMake == 0) {
           const newObj = {
@@ -296,6 +302,8 @@ export default {
             featuredImageUrls: this.featuredImageUrls,
             thumbnailUrls: this.thumbnailUrls,
           };
+
+          console.log("Sending out this obj", newObj)
           resolve(newObj);
         }
         const done = _.after(totalCallsToMake, () => {
@@ -328,7 +336,10 @@ export default {
          *
          * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
          */
-        this.finalImages.forEach((imageObj, ind) => {
+        // this.finalImages.forEach((imageObj, ind) => {
+        for(let ind = 0; ind < this.finalImages.length; ind++){
+          let imageObj = this.finalImages[ind];
+
           // Call for detailed image urls.
           this.$axios({
             headers: {
@@ -368,26 +379,26 @@ export default {
             });
 
           // Call for Featured images.
-          if (imageObj.featured) {
-            this.$axios({
-              headers: {
-                'Content-Type': 'image/png',
-              },
-              method: 'put',
-              url: data.featuredImageUrls[ind].uploadUrl,
-              data: imageObj.largeBlob,
-              withCredentials: false,
-            })
-              .then((res) => {
-                this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
-                done();
-              })
-              .catch((err) => {
-                this.handleError(imageObj.name);
-                reject(data);
-              });
-          }
-        });
+          // if (imageObj.featured) {
+          //   this.$axios({
+          //     headers: {
+          //       'Content-Type': 'image/png',
+          //     },
+          //     method: 'put',
+          //     url: data.featuredImageUrls[ind].uploadUrl,
+          //     data: imageObj.largeBlob,
+          //     withCredentials: false,
+          //   })
+          //     .then((res) => {
+          //       this.featuredImageUrls = data.featuredImageUrls[ind].liveUrl;
+          //       done();
+          //     })
+          //     .catch((err) => {
+          //       this.handleError(imageObj.name);
+          //       reject(data);
+          //     });
+          // }
+        };
       });
     },
 
@@ -437,6 +448,7 @@ export default {
         this.finalImages[index].largeBlob = largeBlob;
         this.finalImages[index].thumbnailBlob = thumbnailBlob;
       }
+      this.setImages(null,null,null);
     },
 
     /**
@@ -539,12 +551,18 @@ export default {
           name,
         };
       }
+      else {
+        this.thumbnailInitImage = {}
+      }
 
       if (url) {
         this.largeInitImage = {
           url: URL.createObjectURL(url),
           name,
         };
+      }
+      else {
+        this.largeInitImage = {};
       }
 
       this.thumbnailCrop.refresh();
@@ -556,8 +574,12 @@ export default {
         this.finalImages,
         file => file.name === this.largeInitImage.name,
       );
-      this.finalImages.splice(index, 1);
-      this.cropSection.remove();
+
+      if(index >= 0){
+        this.finalImages.splice(index, 1);
+        this.cropSection.remove();
+      }
+      
     },
 
     moveImage(direction) {
@@ -580,6 +602,12 @@ export default {
       });
     },
   },
+
+  computed: {
+    cropperNotEmpty() {
+      return !_.isEmpty(this.largeInitImage);
+    }
+  }
 };
 </script>
 
@@ -590,6 +618,11 @@ export default {
   .croppa-container,
   .actions {
     margin: 10px;
+    
+  }
+
+  .croppa-container{
+    border: 1px solid #dbdbdb;
   }
 
   button {
