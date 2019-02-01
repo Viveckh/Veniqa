@@ -3,7 +3,7 @@
     <div class="space"></div>
     <div v-if="product != null">
       <b-row>
-        <b-col md="7">
+        <b-col md="7" class="beginner">
           <div>
             <product-image-gallery
               :base-images="productImages"
@@ -43,7 +43,7 @@ export default {
       product: null,
       zoomerOptions: {
         zoomFactor: 3,
-        pane: 'pane',
+        pane: 'container',
         hoverDelay: 300,
         namespace: 'zoomer',
         move_by_click: false,
