@@ -40,7 +40,7 @@
               <tbody>
                 <tr v-for="(prd, pind) in featuredProducts" v-bind:key="pind">
                   <td>
-                    <img :src="prd.detailedImageUrls[0]" alt="Broken" width="60px" height="auto">
+                    <img :src="prd.detailedImageUrls[0]" alt="Broken" width="60px" height="auto" crossorigin="anonymous">
                   </td>
                   <td>{{prd.name}}</td>
                   <td>{{prd.brand}}</td>
