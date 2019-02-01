@@ -8,13 +8,14 @@ import AuthStore from '@/store/auth';
 import ShippingStore from '@/store/shipping';
 import Loader from '@/store/loader';
 import Search from '@/store/search';
+import Order from '@/store/order';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({
     cartStore: state.cartStore,
-    shippingStore: state.shippingStore
-  })
+    shippingStore: state.shippingStore,
+  }),
 });
 
 Vue.use(Vuex);
@@ -25,8 +26,9 @@ export default new Vuex.Store({
     authStore: AuthStore,
     shippingStore: ShippingStore,
     loaderStore: Loader,
-    searchStore: Search
+    searchStore: Search,
+    orderStore: Order,
   },
 
-  plugins: [vuexLocal.plugin]
+  plugins: [vuexLocal.plugin],
 });
