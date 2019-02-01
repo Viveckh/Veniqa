@@ -201,11 +201,14 @@ export default {
           featured: false,
         };
         this.finalImages[index] = _.cloneDeep(newObj);
+        let url = window.location.href;
+
+        let protocol = url.split(':')[0];
 
         this.$axios({
           withCredentials: false,
           method: 'get',
-          url: this.detailedUrls[index].replace('https', 'http'),
+          url: this.detailedUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
         })
           .then((res) => {
@@ -230,7 +233,7 @@ export default {
         this.$axios({
           withCredentials: false,
           method: 'get',
-          url: this.thumbnailPropUrls[index].replace('https', 'http'),
+          url: this.thumbnailPropUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
         })
           .then((res) => {
