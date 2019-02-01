@@ -225,6 +225,7 @@ export default {
             // done();
           })
           .catch((err) => {
+            console.log("Error message", err.message);
             console.log(err);
             this.handleError('image');
           });
@@ -244,7 +245,10 @@ export default {
             );
             // done();
           })
-          .catch(err => this.handleError('image'));
+          .catch(err => {
+            console.log("Error msg", err.message);
+            this.handleError('image')
+          });
       });
     }
   },
