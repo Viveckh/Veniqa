@@ -12,7 +12,7 @@ let paymentSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['AUTHORIZATION', 'CAPTURE', 'SALE', 'REFUND'],
+        enum: ['PENDING', 'AUTHORIZATION', 'CAPTURE', 'SALE', 'REFUND'],
         required: true
     },
     payment_id: {

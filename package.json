@@ -34,6 +34,7 @@
     "passport-local": "^1.0.0",
     "rate-limit-redis": "^1.6.0",
     "redis": "^2.8.0",
+    "stripe": "^6.23.0",
     "tunnel-ssh": "^4.1.4",
     "uuid": "^3.3.2",
     "validator": "^10.9.0",

@@ -6,6 +6,7 @@ import cryptoGen from '../authentication/cryptoGen';
 import shoppingService from '../services/shoppingService';
 import * as _ from 'lodash';
 import emailService from './emailServiceSendgrid';
+import stripe from '../payments/stripe';
 import transformer from '../utilities/transform-props';
 import httpStatus from 'http-status-codes';
 import logger from '../logging/logger'
@@ -170,6 +171,127 @@ export default {
         }
         catch(err) {
             logger.error("Error in createPaymentToken Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async completeCheckoutUsingCard(checkoutId, paymentToken, userObj) {
+        let result = {};
+        try {
+            // Make sure at least the required params are passed
+            if (!(checkoutId && paymentToken)) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "Missing checkout id or payment token"};
+                return result;
+            }
+
+            // Find the checkout
+            let checkout = await Checkout.findOne({'_id': checkoutId, user_email: userObj.email}).exec();
+            if (!checkout) {
+                result = {httpStatus: httpStatus.NOT_ACCEPTABLE, status: "failed", errorDetails: "Either the requested checkout record does not exist or it does not belong to you"};
+                return result;
+            }
+
+            // Ensure what is in the checkout record is up to date by doing a fresh calculation
+            let freshCalculatedCart = await this.calculateFinalPrice(userObj, false);
+            let orderCartFromSavedCheckout = checkout.cart;
+            // Converting the mongoose object to a regular json object for comparision purposes
+            orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject({flattenMaps: true});
+            transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff", "category"])
+
+            /*
+            console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
+            console.log("------------------------------------")
+            console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
+            console.log("------------------------------------")
+            console.log("checking if checkout cart ids got modified", checkout.cart);
+            */
+
+            // If what is in checkout record does not match what was freshly calculated, return a failure msg
+            if (!_.isEqual(freshCalculatedCart, orderCartFromSavedCheckout)) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "something crucial about one of the items in the cart has changed. try again"};
+                return result;
+            }
+
+            // Add a placeholder payment info for the stripe transaction sent by the front end,
+            checkout.payment_info = [];
+            checkout.payment_info.push({
+                source: 'STRIPE',
+                type: 'PENDING',
+                payment_id: '0',
+                transaction_id: '0',
+                amount_in_usd: checkout.cart.totalPrice,
+                amount_in_payment_currency: checkout.cart.totalPrice
+            });
+
+            // Updating logs, only update date, cause the modifier will/must be the same as the user who created this checkout record
+            checkout.auditLog.updatedOn = new Date();
+
+            // If we got this far, go ahead and save the payment info in checkout and ensure the checkout object is valid
+            checkout = await checkout.save();
+            if (!checkout) {
+                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)};
+                return result;
+            }
+            // NOW THAT WE HAVE VERIFIED THAT SAVING IN CHECKOUT COLLECTION TAKES PLACE SUCCESSFULLY,
+            // LET'S GO AHEAD AND CHARGE THE CARD, MAKE MINOR ADJUSTMENTS TO CHECKOUT MODEL AND PUSH TO ORDER
+
+            // Go ahead and charge the card (just authorize for now)
+            // Will throw an error directly if the charge fails
+            const chargeObj = await stripe.charges.create({
+                capture: false,
+                amount: checkout.payment_info[0].amount_in_usd.amount,
+                currency: checkout.payment_info[0].amount_in_usd.currency,
+                source: paymentToken,
+                metadata: {
+                    user_email: userObj.email
+                },
+                description: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6), // Last six chars of id
+                statement_descriptor: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6)
+            })
+
+
+            // Converting the mongoose object to a regular json object
+            let checkoutObj = checkout.toObject({flattenMaps: true});
+            transformer.castValuesToString(checkoutObj, ["_id", "tariff", "category"])
+
+            // Move the checkout object succesfully to the order collection with a RECEIVED status
+            let order = new Order(checkoutObj);
+            order.overall_status = "RECEIVED";
+            order.payment_info[0].type = 'AUTHORIZATION';
+            order.payment_info[0].payment_id = chargeObj.id,
+            order.payment_info[0].transaction_id = chargeObj.balance_transaction;
+            order.auditLog.createdOn = new Date();
+            order.auditLog.updatedOn = new Date();
+
+            order = await order.save();
+
+            // If order could not be saved at this point, it must be an internal server error
+            if (!order) {
+                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: "order could not be saved"};
+                return result;
+            }
+
+            // Remove the checkout from the checkout collection
+            await Checkout.remove({'_id': checkoutId}).exec()
+
+            // Converting mongoose order object to regular json object to send to email service
+            order = order.toObject({flattenMaps: true});
+            transformer.castValuesToString(order, ["_id", "tariff", "category"]);
+            emailService.emailOrderReceived(order)
+
+            result = {
+                httpStatus: httpStatus.OK,
+                status: "successful", 
+                responseData: {
+                    order_id: order._id
+                }
+            };
+            return result;
+
+        }
+        catch(err) {
+            logger.error("Error in completeCheckoutUsingCard Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
