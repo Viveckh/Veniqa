@@ -84,11 +84,11 @@
               $ {{parseFloat(shippingDetail.paid_postage.amount).toFixed(2)}}
               <br>
               <br>
-              <a :href="`mailto:${shippingDetail.auditLog.createdBy.email}`"></a> {{shippingDetail.auditLog.createdBy.name}}
+              <a :href="`mailto:${shippingDetail.auditLog.createdBy.email}`">{{shippingDetail.auditLog.createdBy.name}}</a>
               <br>
               {{shippingDetail.auditLog.createdOn | formattedDate}}
               <br>
-              <a :href="`mailto:${shippingDetail.auditLog.updatedBy.email}`"></a> {{shippingDetail.auditLog.updatedBy.name}}
+              <a :href="`mailto:${shippingDetail.auditLog.updatedBy.email}`">{{shippingDetail.auditLog.updatedBy.name}}</a>
               <br>
               {{shippingDetail.auditLog.updatedOn | formattedDate}}
               <br>
@@ -137,11 +137,11 @@
               $ {{parseFloat(fulfillmentDetail.total_cost_price_of_item.amount).toFixed(2)}}
               <br>
               <br>
-              <a :href="`mailto:${fulfillmentDetail.auditLog.createdBy.email}`"></a> {{fulfillmentDetail.auditLog.createdBy.name}}
+              <a :href="`mailto:${fulfillmentDetail.auditLog.createdBy.email}`">{{fulfillmentDetail.auditLog.createdBy.name}}</a>
               <br>
               {{fulfillmentDetail.auditLog.createdOn | formattedDate}}
               <br>
-              <a :href="`mailto:${fulfillmentDetail.auditLog.updatedBy.email}`"></a> {{fulfillmentDetail.auditLog.updatedBy.name}}
+              <a :href="`mailto:${fulfillmentDetail.auditLog.updatedBy.email}`">{{fulfillmentDetail.auditLog.updatedBy.name}}</a>
               <br>
               {{fulfillmentDetail.auditLog.updatedOn | formattedDate}}
               <br>
