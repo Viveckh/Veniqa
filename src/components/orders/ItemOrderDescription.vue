@@ -40,46 +40,6 @@
             <br>
           </b-col>
         </b-row>
-      </b-col>
-      <b-col md="6">
-        <!-- Fulfillment Details -->
-        <div v-if="displayFulfillmentOrder">
-          <b-row>
-            <b-col md="6">
-              <h6>Fulfillment Details</h6>
-            </b-col>
-            <b-col md="6">
-              <div class="align-right icon">
-                <font-awesome-icon
-                  v-b-tooltip.hover
-                  title="Edit"
-                  icon="edit"
-                  v-if="permissionGranted"
-                  @click="editClicked('fulfillment')"
-                />
-              </div>
-            </b-col>
-          </b-row>
-          <hr>
-          <b-row>
-            <b-col md="4">
-              <strong>Store</strong>
-              <br>
-              <strong>Order Number</strong>
-              <br>
-              <strong>Total Cost</strong>
-              <br>
-            </b-col>
-            <b-col md="8">
-              {{fulfillmentDetail.store}}
-              <br>
-              {{fulfillmentDetail.order_number}}
-              <br>
-              $ {{parseFloat(fulfillmentDetail.total_cost_price_of_item.amount).toFixed(2)}}
-              <br>
-            </b-col>
-          </b-row>
-        </div>
 
         <div v-if="displayShipment">
           <b-row>
@@ -108,7 +68,11 @@
               <strong>Service</strong>
               <br>
               <strong>Postage Paid</strong>
-              <br>
+              <br><br>
+              <strong>Created By</strong><br>
+              <strong>Created On</strong><br>
+              <strong>Updated By</strong><br>
+              <strong>Updated On</strong><br>
             </b-col>
             <b-col md="8">
               {{shippingDetail.provider}}
@@ -119,9 +83,74 @@
               <br>
               $ {{parseFloat(shippingDetail.paid_postage.amount).toFixed(2)}}
               <br>
+              <br>
+              <a :href="`mailto:${shippingDetail.auditLog.createdBy.email}`"></a> {{shippingDetail.auditLog.createdBy.name}}
+              <br>
+              {{shippingDetail.auditLog.createdOn | formattedDate}}
+              <br>
+              <a :href="`mailto:${shippingDetail.auditLog.updatedBy.email}`"></a> {{shippingDetail.auditLog.updatedBy.name}}
+              <br>
+              {{shippingDetail.auditLog.updatedOn | formattedDate}}
+              <br>
             </b-col>
           </b-row>
         </div>
+      </b-col>
+      <b-col md="6">
+        <!-- Fulfillment Details -->
+        <div v-if="displayFulfillmentOrder">
+          <b-row>
+            <b-col md="6">
+              <h6>Fulfillment Details</h6>
+            </b-col>
+            <b-col md="6">
+              <div class="align-right icon">
+                <font-awesome-icon
+                  v-b-tooltip.hover
+                  title="Edit"
+                  icon="edit"
+                  v-if="permissionGranted"
+                  @click="editClicked('fulfillment')"
+                />
+              </div>
+            </b-col>
+          </b-row>
+          <hr>
+          <b-row>
+            <b-col md="4">
+              <strong>Store</strong>
+              <br>
+              <strong>Order Number</strong>
+              <br>
+              <strong>Total Cost</strong>
+              <br><br>
+              <strong>Created By</strong><br>
+              <strong>Created On</strong><br>
+              <strong>Updated By</strong><br>
+              <strong>Updated On</strong><br>
+            </b-col>
+            <b-col md="8">
+              {{fulfillmentDetail.store}}
+              <br>
+              {{fulfillmentDetail.order_number}}
+              <br>
+              $ {{parseFloat(fulfillmentDetail.total_cost_price_of_item.amount).toFixed(2)}}
+              <br>
+              <br>
+              <a :href="`mailto:${fulfillmentDetail.auditLog.createdBy.email}`"></a> {{fulfillmentDetail.auditLog.createdBy.name}}
+              <br>
+              {{fulfillmentDetail.auditLog.createdOn | formattedDate}}
+              <br>
+              <a :href="`mailto:${fulfillmentDetail.auditLog.updatedBy.email}`"></a> {{fulfillmentDetail.auditLog.updatedBy.name}}
+              <br>
+              {{fulfillmentDetail.auditLog.updatedOn | formattedDate}}
+              <br>
+              <br>
+            </b-col>
+          </b-row>
+        </div>
+
+        
 
         <div v-if="displayDelivery">
           <b-row>
@@ -145,7 +174,7 @@
             <b-col md="4">
               <strong>Delivered On</strong>
             </b-col>
-            <b-col md="8">{{formattedDate(deliveryDetail.delivery_date)}}</b-col>
+            <b-col md="8">{{deliveryDetail.delivery_date | formattedDate}}</b-col>
           </b-row>
         </div>
       </b-col>
@@ -178,11 +207,15 @@ export default {
     };
   },
 
-  methods: {
-    formattedDate(dateString) {
+  filters: {
+     formattedDate(dateString) {
       const obj = moment(dateString);
       return obj.format(this.DATE_FORMAT);
     },
+  },
+
+  methods: {
+   
 
     editClicked(status) {
       this.$emit('edit', status);
