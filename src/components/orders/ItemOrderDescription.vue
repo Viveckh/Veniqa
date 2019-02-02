@@ -210,7 +210,8 @@ export default {
   filters: {
      formattedDate(dateString) {
       const obj = moment(dateString);
-      return obj.format(this.DATE_FORMAT);
+      const DATE_FORMAT = 'dddd, MMMM Do YYYY, h:mm:ss a';
+      return obj.format(DATE_FORMAT);
     },
   },
 
