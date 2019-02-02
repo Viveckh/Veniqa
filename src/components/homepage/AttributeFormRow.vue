@@ -146,7 +146,7 @@ export default {
     addLine() {
       this.row.values.push({
         name: null,
-        hexValue: null,
+        hexValue: '#000000',
       });
     },
 
@@ -155,7 +155,7 @@ export default {
         this.row.values = [
           {
             name: null,
-            hexValue: null,
+            hexValue: '#000000',
           },
         ];
       }

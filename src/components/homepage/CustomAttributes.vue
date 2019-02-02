@@ -23,6 +23,7 @@
 import _ from 'lodash';
 import ProductAttribDTO from '@/dto/ProductAttribute';
 import AttributeRow from '@/components/homepage/AttributeFormRow';
+import { Attributes } from "@/constants/Constants";
 
 export default {
   name: 'CustomAttribute',
@@ -105,6 +106,14 @@ export default {
           || attr.values.length == 0
         ) {
           return false;
+        }
+
+        // Separate logic is needed for color.
+        if(attr.type === Attributes.COLOR) {
+          for(let j = 0; j < attr.values.length; j++){
+            let obj = attr.values[j];
+            if(obj.hexValue == null || obj.name == null || obj.name.trim().length === 0) return false;
+          }
         }
       }
       return true;
