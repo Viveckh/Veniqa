@@ -32,17 +32,59 @@
           </b-row>
         </p>
 
-        <ul class="order-desc">
-          <li><strong> Created By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.name}}</li>
-          <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.email}}</li>
-          <li><strong>Created On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdOn | filterDate}}</li>
-        </ul>
+        <b-row>
+          <b-col>
+            <div>
+              <h5>Mailing Address</h5>
+              <hr>
+              {{addr.firstName}} {{addr.lastName}} <br>
+              {{addr.addressLine1}} <br>
+              <span v-if="addr.addressLine2">{{addr.addressLine2}}<br></span>
+              {{addr.city}} {{addr.state}} <br>
+              {{addr.country}} {{addr.zipCode}}
+            </div>
+          </b-col>
+          <b-col>
+            <h5>Payment Details</h5>
+            <hr>
+            <p v-for="(pay, pid) in payments" v-bind:key="pid">
+              {{pay.source}} <span class="green" style="font-weight: bold"> {{pay.type}} </span><br>
+              Amount in USD: $ {{pay.amount_in_usd.amount}} <br>
+              Amount in Local: {{pay.amount_in_payment_currency.amount}} {{pay.amount_in_payment_currency.currency}}
+            </p>
+          </b-col>
+          <b-col>
+            <ul class="order-desc">
+              <li>
+                <strong>Created By:</strong>
+                &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.name}}
+              </li>
+              <li>
+                <strong>Email:</strong>
+                &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdBy.email}}
+              </li>
+              <li>
+                <strong>Created On:</strong>
+                &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.createdOn | filterDate}}
+              </li>
+            </ul>
 
-        <ul class="order-desc">
-          <li><strong>Updated By:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.name}}</li>
-          <li><strong>Email:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.email}}</li>
-          <li><strong>Updated On:</strong> &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedOn | filterDate}}</li>
-        </ul>
+            <ul class="order-desc">
+              <li>
+                <strong>Updated By:</strong>
+                &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.name}}
+              </li>
+              <li>
+                <strong>Email:</strong>
+                &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedBy.email}}
+              </li>
+              <li>
+                <strong>Updated On:</strong>
+                &nbsp;&nbsp;&nbsp;{{openOrder.auditLog.updatedOn | filterDate}}
+              </li>
+            </ul>
+          </b-col>
+        </b-row>
       </b-card>
 
       <h5>All Ordered Items</h5>
@@ -176,6 +218,14 @@ export default {
       permissions: 'authStore/permissions',
     }),
 
+    addr() {
+      return this.openOrder.mailing_address;
+    },
+
+    payments() {
+      return this.openOrder.payment_info;
+    },
+
     permissionGranted() {
       if (this.permissions.indexOf(Permission.SUPERADMIN) >= 0) return true;
       return (
@@ -191,12 +241,15 @@ export default {
 #order-detail {
   font-size: 0.875rem;
 
-  .order-desc{
+  .order-desc {
     li {
-      display: inline-block;
-      width: 300px;
-      padding-right: 10px;
+      list-style: none;
     }
+  }
+
+  hr {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
 
   .status {

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import axios from 'axios';
 import * as _ from 'lodash';
 import Pagination from '@/dto/Pagination';
 
@@ -25,7 +24,7 @@ export default {
           method: 'get',
           data: {},
         });
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           commit('setRefData', data.responseData);
         } else throw new Error('No Content');
       } catch (err) {
