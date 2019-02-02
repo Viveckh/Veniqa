@@ -57,6 +57,11 @@ export default {
   margin: 0px 0px 0px 0px !important;
 }
 
+h4,
+h5 {
+  font-weight: bold;
+}
+
 .picture1 {
   background-color: red;
 
