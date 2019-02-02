@@ -7,11 +7,10 @@
       </b-row>
       <b-row>
         <b-col sm="2" class="filter">
-          <b-form-input v-model="query" type="text" placeholder="Search by name"></b-form-input>
-          <p class="filterLabel">Categories</p>
-          <b-form-radio-group v-model="selectedCategories" :options="optionsCategories" stacked/>
           <p class="filterLabel">Sort By</p>
           <b-form-select v-model="selectedSort" :options="optionsSort" class="mb-3"/>
+          <p class="filterLabel">Categories</p>
+          <b-form-radio-group v-model="selectedCategories" :options="optionsCategories" stacked/>
         </b-col>
         <b-col sm="10" class="products">
           <h4>Results</h4>
@@ -37,9 +36,9 @@
 </template>
 
 <script>
-import RangeSlider from 'vue-range-slider';
+import RangeSlider from 'vue-range-slider'
 // you probably need to import built-in style
-import 'vue-range-slider/dist/vue-range-slider.css';
+import 'vue-range-slider/dist/vue-range-slider.css'
 
 export default {
   data() {
@@ -52,100 +51,100 @@ export default {
         {
           name: 'Telly Rwer',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg',
         },
         {
           name: 'Telly Rwer Jacket',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg',
         },
         {
           name: 'Defined Bold Dress',
           price: '$44.00',
-          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg'
+          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg',
         },
         {
           name: 'Bugged Shoes',
           price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg'
+          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
         },
         {
           name: 'Terminal Pants',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg',
         },
         {
           name: 'Shaped Tee',
           price: '$77.00',
-          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg'
+          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
         },
         {
           name: 'Telly Rwer',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg',
         },
         {
           name: 'Telly Rwer Jacket',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg',
         },
         {
           name: 'Defined Bold Dress',
           price: '$44.00',
-          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg'
+          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg',
         },
         {
           name: 'Bugged Shoes',
           price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg'
+          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
         },
         {
           name: 'Terminal Pants',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg',
         },
         {
           name: 'Shaped Tee',
           price: '$77.00',
-          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg'
+          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
         },
         {
           name: 'Telly Rwer',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg',
         },
         {
           name: 'Telly Rwer Jacket',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg',
         },
         {
           name: 'Defined Bold Dress',
           price: '$44.00',
-          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg'
+          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg',
         },
         {
           name: 'Bugged Shoes',
           price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg'
+          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
         },
         {
           name: 'Terminal Pants',
           price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg'
+          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg',
         },
         {
           name: 'Shaped Tee',
           price: '$77.00',
-          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg'
-        }
-      ]
-    };
+          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
+        },
+      ],
+    }
   },
   components: {
-    RangeSlider
-  }
-};
+    RangeSlider,
+  },
+}
 </script>
 
 <style lang="scss" scoped>
