@@ -4,9 +4,9 @@
       <b-col
         sm="2"
         v-for="(product, key) in products"
-        class="box d-flex flex-column justify-content-center align-items-center"
         v-bind:key="key"
         v-bind:style="{ backgroundImage: 'url(' + product.url + ')' }"
+        class="box d-flex flex-column justify-content-center align-items-center"
         href="#"
       >
         <div class="description d-flex flex-column justify-content-center align-items-center">
@@ -55,9 +55,9 @@ export default {
           url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
         },
       ],
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
