@@ -1,40 +1,70 @@
 <template>
   <b-jumbotron>
     <b-row class="d-flex flex-row justify-content-center align-items-center">
-      <b-col sm="3" class="box picture1"></b-col>
       <b-col
-        sm="3"
-        class="box description d-flex flex-column justify-content-center align-items-center"
+        sm="6"
+        class="box d-flex flex-row justify-content-center align-items-center"
+        v-for="(product, key) in products"
+        v-bind:key="key"
       >
-        <h4>Ray Denim Jacket</h4>
-        <h5>$49.99</h5>
-        <b-button>Shop Now</b-button>
-      </b-col>
-      <b-col sm="3" class="box picture2"></b-col>
-      <b-col
-        sm="3"
-        class="box description d-flex flex-column justify-content-center align-items-center"
-      >
-        <h4>Fwert Ankle Boots</h4>
-        <h5>$89.99</h5>
-        <b-button>Shop Now</b-button>
+        <b-col
+          sm="6"
+          class="box picture1"
+          v-bind:style="{ backgroundImage: 'url(' + product.detailedImageUrls[0] + ')' }"
+        ></b-col>
+        <b-col
+          sm="6"
+          class="box description d-flex flex-column justify-content-center align-items-center"
+        >
+          <h4>{{product.name}}</h4>
+          <p>{{product.brand}}</p>
+          <h5>{{product.price.amount + ' ' + product.price.currency}}</h5>
+
+          <router-link :to="`/products/${product._id}`">
+            <b-button class="addToCart">Shop Now</b-button>
+          </router-link>
+        </b-col>
       </b-col>
     </b-row>
   </b-jumbotron>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'FeaturedProducts',
+  props: {
+    products: {
+      required: true,
+      type: Array,
+    },
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    gotoProduct() {
+      console.log('PR', this.product);
+      this.$router.push(`/products/${this.product._id}`);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .box {
   height: 75vh;
+  padding: 0px 0px 0px 0px !important;
+  margin: 0px 0px 0px 0px !important;
+}
+
+h4,
+h5 {
+  font-weight: bold;
 }
 
 .picture1 {
   background-color: red;
-  background: url('https://www.forever21.com/images/default_330/00321225-02.jpg');
+
   background-size: cover;
   background-position: center center;
 }
@@ -59,11 +89,18 @@ export default {};
   background-color: white;
 }
 
-.description:hover {
+.jumbrotron {
+  background-color: white;
+}
+.addToCart {
+  margin-top: 2em;
+  background-color: white; /*this for transparent button*/
+  border: 1px solid black; /* this is for button border*/
+  border-radius: 0px;
+  color: black;
+}
+.addToCart:hover {
+  background-color: black; /*this for transparent button*/
   color: white;
-  background-color: #ad310ba4;
-  -webkit-transition: background-color 500ms linear;
-  -ms-transition: background-color 500ms linear;
-  transition: background-color 500ms linear;
 }
 </style>

@@ -2,10 +2,10 @@
   <div :class="zoomer_box">
     <b-row>
       <b-col md="2">
-        <div class="control-box">
+        <div class="control-box" v-bind:class="{'d-none d-md-block': thumbs.length <=1}">
           <div @click="moveThumbs('left')" class="control">
             <slot name="left">
-              <font-awesome-icon :icon="'circle'"></font-awesome-icon>
+              <font-awesome-icon :icon="'chevron-circle-up'"></font-awesome-icon>
             </slot>
           </div>
           <div class="thumb-list">
@@ -24,7 +24,7 @@
           </div>
           <div @click="moveThumbs('right')" class="control">
             <slot name="right">
-              <font-awesome-icon :icon="'circle'"></font-awesome-icon>
+              <font-awesome-icon :icon="'chevron-circle-down'"></font-awesome-icon>
             </slot>
           </div>
         </div>
@@ -197,9 +197,15 @@ export default {
                 rect.height
               }px;left:${rect.right}px;top:${0}px;`;
             } else {
-              customStyle = `width:${rect.width}px;height:${
-                rect.height
-              }px;left:${rect.x}px;top:${0}px;`;
+              const rect1 = document
+                .querySelector('.preview-box')
+                .getBoundingClientRect();
+              const beginner = document
+                .querySelector('.beginner')
+                .getBoundingClientRect();
+              customStyle = `width:${rect1.width}px;height:${
+                rect1.height
+              }px;left:${rect1.x - beginner.x}px;top:${0}px;`;
             }
             this.options.paneContainer.setAttribute('style', customStyle);
           }
@@ -207,10 +213,9 @@ export default {
           this.options.injectBaseStyles = true;
           const previewImg = `.${this.zoomer_box} .preview-box img`;
 
-          this.drift = this.drift ? this.drift : new Drift(
-            document.querySelector(previewImg),
-            this.options,
-          );
+          this.drift = this.drift
+            ? this.drift
+            : new Drift(document.querySelector(previewImg), this.options);
           clearInterval(t);
         }
       }, 500);
@@ -240,7 +245,7 @@ export default {
 </script>
 
 <style>
-@import "../../assets/css/drift-basic.css";
+@import '../../assets/css/drift-basic.css';
 .preview-box {
   margin-bottom: 1vh;
 }

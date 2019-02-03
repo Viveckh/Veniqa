@@ -66,6 +66,8 @@
               <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Test</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men's Clothing</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women's Clothing</b-nav-item>
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
@@ -94,9 +96,17 @@
             <div class="align-right close-icon">
               <font-awesome-icon v-b-toggle.nav_collapse icon="times"/>
             </div>
-            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's</b-nav-item>
-            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Women's</b-nav-item>
-            <b-nav-item class="align-left collapse-nav">Profile</b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's Clothing
+              <hr>
+            </b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Women's Clothing
+              <hr>
+            </b-nav-item>
+            <b-nav-item class="align-left collapse-nav">Profile
+              <hr>
+            </b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+            <hr>
             <b-nav-item class="align-left collapse-nav" v-if="isSessionActive" to="/orders">Orders</b-nav-item>
             <b-nav-item
               class="d-none d-md-block collapse-nav"
@@ -113,8 +123,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-;
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'HeaderMenu',
   // mounted() {
@@ -278,4 +288,3 @@ export default {
   }
 }
 </style>
-

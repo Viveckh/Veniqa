@@ -1,8 +1,8 @@
 <template>
   <div id="main-page">
     <div class="main-bg"></div>
-    <h1 class="featured-title">Featured</h1>
-    <featured-products/>
+    <h1 class="featured-title">Editor's Pick</h1>
+    <featured-products :products="featuredProducts"/>
     <h1 class="featured-title">Hottest Trends</h1>
     <featured-stripe/>
   </div>
@@ -32,10 +32,10 @@ export default {
 
   created() {
     this.product = Product;
-
     FeatureService.getFeatureListFor(this.currentSection)
       .then((data) => {
         this.featuredProducts = data;
+        console.log('Featured data', data);
       })
       .catch((err) => {});
   },

@@ -16,11 +16,11 @@ export default {
   name: 'SearchResultViewComponent',
   props: {
     query: {
-      type: [String, Object],
-    },
+      type: [String, Object]
+    }
   },
   components: {
-    SearchResultView,
+    SearchResultView
   },
 
   created() {
@@ -30,7 +30,7 @@ export default {
   watch: {
     searchTerm() {
       this.searchForProduct();
-    },
+    }
   },
 
   methods: {
@@ -40,21 +40,21 @@ export default {
       } catch (error) {
         notification.error(this, 'Coudnt get the search result because the server went haywire');
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
       searchTerm: 'searchStore/searchTerm',
       paging: 'searchStore/paging',
-      searchResult: 'searchStore/searchResult',
-    }),
-  },
+      searchResult: 'searchStore/searchResult'
+    })
+  }
 };
 </script>
 
 <style lang="scss">
-#search-result-view{
+#search-result-view {
   min-height: 50vh;
 }
 </style>

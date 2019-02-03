@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import ProxyUrls from '../constants/ProxyUrls';
 
-
 export default {
   namespaced: true,
   state: {
     addresses: [],
     selectedAddress: null,
-    shippingMethod: null,
+    shippingMethod: null
   },
 
   mutations: {
@@ -28,48 +27,44 @@ export default {
       state.shippingMethod = null;
       state.addresses = [];
       state.selectedAddress = null;
-    },
+    }
   },
 
   actions: {
-    async addressAction({
-      state,
-      commit,
-      getters,
-      rootGetters,
-      dispatch,
-    }, {
-      address,
-      action,
-    }) {
+    async addressAction({ state, commit, getters, rootGetters, dispatch }, { address, action }) {
       try {
         let reqData = null;
         if (action == 'post' || action == 'put') {
           reqData = address;
         } else if (action == 'delete') {
           reqData = {
-            addressId: address._id,
+            addressId: address._id
           };
         }
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: action,
           url: ProxyUrls.address, // ProxyUrls.addressUrl,
-          data: reqData,
+          data: reqData
         });
         if (rootGetters['cartStore/checkoutInitiated'] && action != 'get') {
           const reqObj = {
             address: state.selectedAddress,
-            shippingMethod: state.shippingMethod,
+            shippingMethod: state.shippingMethod
           };
           await dispatch('cartStore/createCheckout', reqObj, {
-            root: true,
+            root: true
           });
         } else if (data && data.httpStatus == 200) {
           commit('setAddresses', data.responseData);
-          console.log('Index is ', _.findIndex(state.addresses, val => val._id === state.selectedAddress._id));
-          if ((state.selectedAddress == null || _.findIndex(state.addresses, val => val._id === state.selectedAddress._id) < 0) && state.addresses.length > 0) {
+          console.log(
+            'Index is ',
+            _.findIndex(state.addresses, val => val._id === state.selectedAddress._id)
+          );
+          if (
+            (state.selectedAddress == null ||
+              _.findIndex(state.addresses, val => val._id === state.selectedAddress._id) < 0) &&
+            state.addresses.length > 0
+          ) {
             commit('addressSelected', state.addresses[0]);
             console.log('Address selected', state.selectedAddress);
           }
@@ -78,9 +73,7 @@ export default {
       } catch (err) {
         return false;
       }
-    },
-
-
+    }
   },
 
   getters: {
@@ -98,6 +91,6 @@ export default {
 
     shippingMethods(state) {
       return state.shippingMethods;
-    },
-  },
+    }
+  }
 };

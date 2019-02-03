@@ -22,13 +22,13 @@ export default {
     // HeaderMenu,
     // MainPage,
     HeaderMenu,
-    FooterView,
-  },
+    FooterView
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.home{
+.home {
   height: 100%;
 }
 </style>

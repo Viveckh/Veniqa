@@ -15,7 +15,11 @@
             <div class="order-desc" @click="gotoProduct(item.product._id)">
               {{item.product.name}}
               <br>
-              <span style="font-size: 12px">Standard Shipping</span>
+              <div style="font-size: 12px">
+                <span v-for="(custom, cid) of item.customizations" v-bind:key="cid">
+                  {{custom | customDisplay}} |
+                  </span>
+              </div>
             </div>
             <span class="delete" @click="deleteSelected(item)">Delete</span>
           </b-col>
@@ -118,7 +122,7 @@ export default {
     return {
       editMode: true,
       selectedItems: [],
-      countOptions: [],
+      countOptions: []
     };
   },
 
@@ -133,7 +137,7 @@ export default {
         width: '100%',
         height: '70px',
         'background-size': 'contain',
-        'background-repeat': 'no-repeat',
+        'background-repeat': 'no-repeat'
       };
     },
 
@@ -166,9 +170,7 @@ export default {
       if (item.counts > 0) {
         try {
           this.editMode = false;
-          const data = await this.$store.dispatch('cartStore/updateOrders', [
-            item,
-          ]);
+          const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
           notification.success(this, 'The cart has been successfully updated.');
           this.editMode = true;
         } catch (err) {
@@ -176,7 +178,7 @@ export default {
           console.log('Error', err);
           notification.error(
             this,
-            'Cart could not be updated at the moment. Please try again later.',
+            'Cart could not be updated at the moment. Please try again later.'
           );
         }
       }
@@ -186,7 +188,13 @@ export default {
       try {
         await this.$store.dispatch('cartStore/deleteOrders', [item]);
       } catch (err) {}
-    },
+    }
+  },
+
+  filters: {
+    customDisplay(val) {
+      return val.indexOf('|') >= 0 ? val.split('|')[0] : val;
+    }
   },
 
   computed: {
@@ -197,13 +205,13 @@ export default {
       serviceCharge: 'cartStore/getServiceCharge',
       shippingPrice: 'cartStore/getShippingPrice',
       tariffPrice: 'cartStore/getTariffPrice',
-      totalWeight: 'cartStore/getTotalWeight',
+      totalWeight: 'cartStore/getTotalWeight'
     }),
 
     quantityState() {
       return qty => qty >= 1;
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,14 +1,14 @@
-<template>
-  <div class="align-left description">
-    <h4>{{product.brand}}</h4>
-    <h5>{{product.name}}</h5>
+ /* eslint-disable */
 
-    <p>
-      <strong>
-        <font-awesome-icon icon="dollar-sign"/>
-        {{product.price.currency}} {{product.price.amount}}
-      </strong>
-    </p>
+<template>
+  <div class="align-left description" style="padding: 10px">
+    <h5>{{product.brand}}</h5>
+    <h2>{{product.name}}</h2>
+
+    <h5>
+      <font-awesome-icon icon="dollar-sign"/>
+      {{product.price.currency}} {{product.price.amount}}
+    </h5>
     <p>
       <font-awesome-icon icon="weight"/>
       &nbsp; {{product.weight.quantity}} {{product.weight.unit}}
@@ -44,16 +44,14 @@
             <b-col md="3">{{attrib.name}}</b-col>
             <b-col md="9">
               <ul class="color-select">
-                <li v-for="(color, cid) in attrib.values"
-                  v-bind:key="cid">
+                <li v-for="(color, cid) in attrib.values" v-bind:key="cid">
                   <div
                     v-bind:style="{'background-color': color.hexValue}"
                     v-b-tooltip.hover
                     :title="color.name"
                     @click="colorClicked(attrib.key, color)"
                     v-bind:class="{'selected': color.hexValue === selectedCustomizations[attrib.key].hexValue && color.name === selectedCustomizations[attrib.key].name}"
-                  >
-                  </div>
+                  ></div>
                 </li>
               </ul>
             </b-col>
@@ -63,13 +61,12 @@
     </div>
 
     <p style="margin-top: 20px">
-      <b-button size="sm" class="primary-button hvr-grow" @click="addToCart()">
+      <b-button class="addToCart" @click="addToCart()">
         <font-awesome-icon icon="shopping-bag"/>&nbsp;
         Add to Cart
       </b-button>
     </p>
     <hr>
-    <p class="section-title">Product Detail</p>
     <div v-html="product.details_html"></div>
   </div>
 </template>
@@ -101,10 +98,12 @@ export default {
     async addToCart() {
       this.product.customValues = {};
       Object.keys(this.selectedCustomizations).forEach((key) => {
-        if (typeof (this.selectedCustomizations[key]) === 'string') {
+        if (typeof this.selectedCustomizations[key] === 'string') {
           this.product.customValues[key] = this.selectedCustomizations[key];
         } else {
-          this.product.customValues[key] = `${this.selectedCustomizations[key].name}|${this.selectedCustomizations[key].hexValue}`;
+          this.product.customValues[key] = `${
+            this.selectedCustomizations[key].name
+          }|${this.selectedCustomizations[key].hexValue}`;
         }
       });
       const val = await this.$store.dispatch('cartStore/addToTheCart', [
@@ -195,6 +194,18 @@ export default {
   }
   .section-title {
     font-size: 1.2em;
+  }
+  .addToCart {
+    background-color: white; /*this for transparent button*/
+    border: 2px solid black; /* this is for button border*/
+    border-radius: 0px;
+    color: black;
+  }
+  .addToCart:hover {
+    background-color: black; /*this for transparent button*/
+    border: 2px solid black; /* this is for button border*/
+    border-radius: 0px;
+    color: white;
   }
 }
 </style>

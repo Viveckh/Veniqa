@@ -54,8 +54,8 @@ export default {
   props: {
     token: {
       required: true,
-      default: String,
-    },
+      default: String
+    }
   },
 
   async created() {
@@ -63,7 +63,7 @@ export default {
       try {
         const { data } = await this.$axios({
           method: 'get',
-          url: `${ProxyUrls.confirmEmail}/${this.token}`,
+          url: `${ProxyUrls.confirmEmail}/${this.token}`
         });
 
         if (data && data.httpStatus == 200) {
@@ -80,7 +80,7 @@ export default {
     return {
       value: null,
       resendHit: false,
-      email: '',
+      email: ''
     };
   },
 
@@ -94,37 +94,42 @@ export default {
         try {
           const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrls.resendEmail + this.email,
+            url: ProxyUrls.resendEmail + this.email
           });
 
-          if (data && data.httpStatus) {
+          if (data && data.httpStatus === 200) {
             this.$notify({
               group: 'all',
               type: 'success',
-              text: 'Email successfully sent. Please check your inbox.',
+              text: 'Email successfully sent. Please check your inbox.'
             });
+
+            const sessionActive = this.$store.getters['authStore/isSessionActive'];
+            // Checks if the session is active. If it is then, it will change the email confirm status of the user.
+            if (sessionActive) {
+              this.$store.commit('authStore/setEmailConfirmed', true);
+            }
           }
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text:
-              'Some error occured while trying to send the email. Please try later.',
+            text: 'Some error occured while trying to send the email. Please try later.'
           });
         }
       }
-    },
+    }
   },
 
   computed: {
     emailState() {
       if (this.email.length == 0) return null;
       return this.validEmail(this.email);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-@import "../assets/css/global.scss";
+@import '../assets/css/global.scss';
 </style>

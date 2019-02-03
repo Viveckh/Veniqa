@@ -16,21 +16,20 @@ import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
 import ProxyUrls from '@/constants/ProxyUrls';
 import ProductDTO from '@/dto/Products.json';
 
-
 /**
  * @deprecated
-*/
+ */
 export default {
   name: 'VendorPage',
   props: {
     vendorName: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     VendorSearch,
-    SearchResultView,
+    SearchResultView
   },
 
   data() {
@@ -38,9 +37,9 @@ export default {
       vendorMap: {
         macys: 'MACYS',
         amazon: 'AMAZON',
-        sephora: 'SEPHORA',
+        sephora: 'SEPHORA'
       },
-      searchResult: [],
+      searchResult: []
     };
   },
 
@@ -53,26 +52,26 @@ export default {
           searchTerm,
           pagingOptions: {
             page: 1,
-            limit: 10,
-          },
-        },
+            limit: 10
+          }
+        }
       });
 
       if (data && data.httpStatus == 200) {
         this.searchResult.splice(0, this.searchResult.length);
         const transformed = [];
-        data.responseData.docs.forEach((p) => {
+        data.responseData.docs.forEach(p => {
           transformed.push(_.assign(_.cloneDeep(ProductDTO), p));
         });
 
         this.searchResult.push(...transformed);
 
         this.$scrollTo('#searchResult', 1000, {
-          offset: -80,
+          offset: -80
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

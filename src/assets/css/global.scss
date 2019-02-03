@@ -28,7 +28,6 @@ $primary-red: hsl(348, 100%, 61%);
 .info {
   color: grey;
   font-size: small;
-  font-style: italic;
 }
 
 .icon{
@@ -56,6 +55,14 @@ $primary-red: hsl(348, 100%, 61%);
 
 .full-width {
   width: 100%;
+}
+
+.red{
+  color: $primary-red;
+}
+
+.green{
+  color: $primary-green;
 }
 
 .inline-list {

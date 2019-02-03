@@ -14,7 +14,6 @@ export default {
   confirmEmail: '/security/confirmEmailAddress',
   resendEmail: '/security/resendEmailAddressConfirmationLink?email=',
 
-
   // Shopping cart
   addToCart: '/shopping/addToCart',
   getCart: '/shopping/getCart',
@@ -29,4 +28,8 @@ export default {
   completeCheckout: 'orders/completeCheckout',
 
   featuredUrl: '/ui/featured?name=',
+
+  // Order list
+  orderList: '/user/orderList',
+  orderDetail: '/user/orderDetails?orderId=',
 };

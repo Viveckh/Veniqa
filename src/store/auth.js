@@ -7,54 +7,46 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
-    emailConfirmed: false,
+    emailConfirmed: false
   },
   actions: {
-    async registerUser({
-      state,
-      commit,
-    }, payload) {
+    async registerUser({ state, commit }, payload) {
       if (!payload) return null;
 
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.registerUrl,
-          data: payload,
+          data: payload
         });
 
         if (data && data.httpStatus == 200) {
-          commit('setEmail', data.responseData.email);
-          commit('setName', data.responseData.name);
-          commit('setSessionActive', true);
+          // commit('setEmail', data.responseData.email);
+          // commit('setName', data.responseData.name);
+          // commit('setSessionActive', true);
+          return true;
         }
-
-        return res;
+        return false;
       } catch (err) {
         throw new Error(err);
       }
     },
 
-    async login({
-      state,
-      commit,
-    }, payload) {
+    async login({ state, commit }, payload) {
       if (!payload) return null;
 
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.loginUrl,
-          data: payload,
+          data: payload
         });
 
         if (data) {
           commit('setEmail', data.email);
           commit('setName', data.name);
           commit('setSessionActive', true);
-          commit('setEmailConfirmed', data.emailConfirmed);
+          commit('setEmailConfirmed', data.emailConfirmed == 'true' || data.emailConfirmed == true);
         }
         return data;
       } catch (err) {
@@ -62,15 +54,11 @@ export default {
       }
     },
 
-    async logout({
-      commit,
-    }) {
+    async logout({ commit }) {
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'get',
-          url: ProxyUrls.logoutUrl,
+          url: ProxyUrls.logoutUrl
         });
 
         if (data) {
@@ -81,23 +69,24 @@ export default {
       }
     },
 
-    async initiateAppSession({
-      state,
-      commit,
-    }) {
+    async initiateAppSession({ state, commit }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
-        url: ProxyUrls.isSessionActive,
+        url: ProxyUrls.isSessionActive
       });
       if (res && res.data == true) {
         commit('setEmail', localStorage.getItem('email'));
         commit('setName', localStorage.getItem('name'));
         commit('setSessionActive', true);
-        commit('setEmailConfirmed', true);
+        commit(
+          'setEmailConfirmed',
+          localStorage.getItem('emailConfirmed') == 'true' ||
+            localStorage.getItem('emailConfirmed') == true
+        );
       } else {
         commit('setSessionActive', false);
       }
-    },
+    }
   },
   mutations: {
     setEmailConfirmed(state, val) {
@@ -131,7 +120,7 @@ export default {
       localStorage.removeItem('name');
       localStorage.removeItem('emailConfirmed');
       state.isSessionActive = false;
-    },
+    }
   },
   getters: {
     getName(state) {
@@ -153,6 +142,6 @@ export default {
 
     emailConfirmed(state) {
       return state.emailConfirmed;
-    },
-  },
+    }
+  }
 };

@@ -4,9 +4,9 @@
       <b-col
         sm="2"
         v-for="(product, key) in products"
-        class="box d-flex flex-column justify-content-center align-items-center"
         v-bind:key="key"
         v-bind:style="{ backgroundImage: 'url(' + product.url + ')' }"
+        class="box d-flex flex-column justify-content-center align-items-center"
         href="#"
       >
         <div class="description d-flex flex-column justify-content-center align-items-center">
@@ -79,7 +79,7 @@ export default {
 }
 .description:hover {
   color: white;
-  background-color: #ad310ba4;
+  background-color: #1b1a1aad;
   -webkit-transition: background-color 500ms linear;
   -ms-transition: background-color 500ms linear;
   transition: background-color 500ms linear;

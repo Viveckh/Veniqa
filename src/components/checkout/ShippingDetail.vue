@@ -26,16 +26,17 @@
         </li>
       </ul>
     </div>
+    <div v-else-if="allAddresses.length <= 0 && !isShowAddAddress">
+      <div class="empty-info">
+        <p>Nothing to display</p>
+      </div>
+    </div>
 
     <!-- Show list of existing addresses here with choice to choose -->
     <a @click="showAddAddress()" v-if="isSessionActive">
       <font-awesome-icon icon="plus"/>&nbsp;&nbsp; Add a new address
     </a>
-    <div v-else>
-      <div class="empty-info">
-        <p>Nothing to display</p>
-      </div>
-    </div>
+    
 
     <!-- Input form to add new address for the user -->
     <transition
@@ -228,7 +229,7 @@ export default {
     this.shippingDeet = ShippingDTO;
     await this.$store.dispatch('shippingStore/addressAction', {
       address: null,
-      action: 'get',
+      action: 'get'
     });
 
     if (this.allAddresses.length > 0 && !this.selectedAddress) {
@@ -241,7 +242,7 @@ export default {
       shippingDeet: null,
       description: '',
       isUpdate: false,
-      countryOptions: ['Bangladesh', 'Nepal'],
+      countryOptions: ['Bangladesh', 'Nepal']
     };
   },
 
@@ -283,7 +284,7 @@ export default {
       const cloned = _.cloneDeep(address);
       this.$store.dispatch('shippingStore/addressAction', {
         address: cloned,
-        action: 'delete',
+        action: 'delete'
       });
     },
 
@@ -294,17 +295,17 @@ export default {
         }
       }
       if (
-        this.firstNameState
-        && this.address1State
-        && this.stateState
-        && this.zipState
-        && this.countryState
-        && this.cityState
+        this.firstNameState &&
+        this.address1State &&
+        this.stateState &&
+        this.zipState &&
+        this.countryState &&
+        this.cityState
       ) {
         const cloned = _.cloneDeep(this.shippingDeet);
         const res = await this.$store.dispatch('shippingStore/addressAction', {
           address: cloned,
-          action: this.isUpdate ? 'put' : 'post',
+          action: this.isUpdate ? 'put' : 'post'
         });
 
         if (res) {
@@ -316,14 +317,14 @@ export default {
           this.isShowAddAddress = false;
         }
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
       allAddresses: 'shippingStore/allAddresses',
       selectedAddress: 'shippingStore/getSelectedAddress',
-      isSessionActive: 'authStore/isSessionActive',
+      isSessionActive: 'authStore/isSessionActive'
     }),
 
     cityState() {
@@ -359,8 +360,8 @@ export default {
     countryState() {
       if (this.shippingDeet.country == null) return null;
       return this.shippingDeet.country.length > 0;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -368,7 +369,7 @@ export default {
 @import '../../assets/css/global.scss';
 .shipping-form {
   padding: 10px 0px;
-  background: white;
+  // background: white;
 
   .cancel-btn {
     margin-right: 10px;

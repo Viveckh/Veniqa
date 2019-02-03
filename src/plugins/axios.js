@@ -1,21 +1,16 @@
 import Vue from 'vue';
 import axios from 'axios';
-import {
-  eventHub,
-} from '@/utils/EventHub';
-import {
-  SilentUrls,
-  SilentResponseUrls,
-} from '../constants/Constants';
+import { eventHub } from '@/utils/EventHub';
+import { SilentUrls, SilentResponseUrls } from '../constants/Constants';
 
 const baseURL = 'https://veniqa.azurewebsites.net/';
 const instance = axios.create({
   baseURL,
-  withCredentials: true,
+  withCredentials: true
 });
 
 instance.interceptors.request.use(
-  (conf) => {
+  conf => {
     const startIndex = conf.baseURL.length;
 
     if (!SilentUrls.includes(conf.url)) {
@@ -23,22 +18,22 @@ instance.interceptors.request.use(
     }
     return conf;
   },
-  (error) => {
+  error => {
     eventHub.$emit('request-error');
     return Promise.reject(error);
-  },
+  }
 );
 instance.interceptors.response.use(
-  (response) => {
+  response => {
     // console.log(response.request.responseURL)
     const len = response.request.responseURL.length;
     const url = response.request.responseURL.substring(baseURL.length - 1, len);
     eventHub.$emit('after-response');
     return response;
   },
-  (error) => {
+  error => {
     eventHub.$emit('response-error');
     return Promise.reject(error);
-  },
+  }
 );
 Vue.prototype.$axios = instance;

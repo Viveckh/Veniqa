@@ -66,8 +66,8 @@ export default {
   props: {
     token: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
 
   data() {
@@ -75,7 +75,7 @@ export default {
       isReset: false,
       password: '',
       confirmPassword: '',
-      username: '',
+      username: ''
     };
   },
 
@@ -84,7 +84,7 @@ export default {
     try {
       const { data } = await this.$axios({
         method: 'get',
-        url: ProxyUrl.validateResetToken + this.token,
+        url: ProxyUrl.validateResetToken + this.token
       });
 
       if (data && data.responseData) {
@@ -92,14 +92,13 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You can now change your password.',
+          text: 'You can now change your password.'
         });
       } else {
         this.$notify({
           group: 'all',
           type: 'warn',
-          text:
-            'Looks like you are a little too late. Please try resending the email.',
+          text: 'Looks like you are a little too late. Please try resending the email.'
         });
       }
     } catch (err) {
@@ -108,7 +107,7 @@ export default {
         group: 'all',
         type: 'error',
         text:
-          'There was an error fulfilling your request. Please try resending the reset information.',
+          'There was an error fulfilling your request. Please try resending the reset information.'
       });
     }
   },
@@ -123,22 +122,20 @@ export default {
         try {
           const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrl.forgotPassword + this.username,
+            url: ProxyUrl.forgotPassword + this.username
           });
           if (data && data.httpStatus) {
             this.$notify({
               group: 'all',
               type: 'success',
-              text:
-                'The email was just sent. Please check your email and follow the instructions.',
+              text: 'The email was just sent. Please check your email and follow the instructions.'
             });
           }
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text:
-              'The email could not be sent right now. Please try again later',
+            text: 'The email could not be sent right now. Please try again later'
           });
         }
       }
@@ -151,14 +148,14 @@ export default {
             url: ProxyUrl.resetPassword,
             data: {
               token: this.token,
-              newPassword: this.password,
-            },
+              newPassword: this.password
+            }
           });
           if (data && data.httpStatus == 200 && data.responseData) {
             this.$notify({
               group: 'all',
               type: 'success',
-              text: 'You can now go ahead and login.',
+              text: 'You can now go ahead and login.'
             });
             this.$router.push('/');
           } else {
@@ -169,8 +166,7 @@ export default {
             this.$notify({
               group: 'all',
               type: 'warn',
-              text:
-                'Looks like you are a little too late. Please try resending the email.',
+              text: 'Looks like you are a little too late. Please try resending the email.'
             });
           }
         } catch (err) {
@@ -178,11 +174,11 @@ export default {
             group: 'all',
             type: 'error',
             text:
-              'There was an error fulfilling your request. Please try resending the reset information.',
+              'There was an error fulfilling your request. Please try resending the reset information.'
           });
         }
       }
-    },
+    }
   },
 
   computed: {
@@ -199,8 +195,8 @@ export default {
     usernameState() {
       if (this.username.length == 0) return null;
       return this.validEmail(this.username);
-    },
-  },
+    }
+  }
 };
 </script>
 

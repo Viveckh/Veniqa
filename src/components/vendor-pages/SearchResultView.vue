@@ -1,29 +1,21 @@
 <template>
   <div id="search-result">
     <div class="search-result-view">
-      <h2>Search Results</h2>
+      <h1>Search Results</h1>
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
           <div class="link" @click="openProductDetail(product._id)">
             <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
-              <div
-              class="img-cls"
-              :style="getPictureStyle(product.thumbnailUrls[0])"
-
-            ></div>
+              <div class="img-cls" :style="getPictureStyle(product.thumbnailUrls[0])"></div>
             </div>
-
 
             <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
               <font-awesome-icon icon="shopping-bag" width="100%"/>
             </p>
-            <div class="product-card-desc">
-              <p class="title">
-                {{product.name}}
-              </p>
-              <p class="price">{{product.price.currency}} {{product.price.amount}}</p>
+            <div class="product-card-desc align-center">
+              <h5>{{product.name}}</h5>
+              <p>{{product.price.currency}} {{product.price.amount}}</p>
             </div>
-
           </div>
           <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
         </div>
@@ -57,19 +49,24 @@ export default {
 
     /**
      * @deprecated because add to cart doesn't happen from this page anymore.
-    */
+     */
     async addToCart(product) {
       try {
-        const val = await this.$store.dispatch('cartStore/addToTheCart', [product]);
+        const val = await this.$store.dispatch('cartStore/addToTheCart', [
+          product,
+        ]);
         if (val) {
           notification.success(this, `Added ${product.name} to the cart`);
         }
       } catch (err) {
         console.log('Error', err);
         // handle notification for different status here.
-        notification.error(this, `${
-          product.name
-        } couldn't be added for some reason. Please try again later`);
+        notification.error(
+          this,
+          `${
+            product.name
+          } couldn't be added for some reason. Please try again later`,
+        );
       }
     },
 
@@ -93,7 +90,7 @@ export default {
   background-color: #f4f3ef;
 }
 
-.result-view{
+.result-view {
   margin-top: 1em;
 }
 
@@ -105,12 +102,12 @@ export default {
   margin: 20px 20px 20px 0px;
   width: 300px;
 
-  &:hover .img-cls{
+  &:hover .img-cls {
     transform: scale(1.2);
     transition: all 0.5s;
   }
 
-  .img-parent{
+  .img-parent {
     height: 350px;
     width: 300px;
     overflow: hidden;
@@ -118,13 +115,13 @@ export default {
 
   .product-card-desc {
     margin-top: 0.75em;
-    .title{
+    .title {
       height: 3.5em;
       text-overflow: ellipsis;
       overflow: auto;
     }
 
-    .price{
+    .price {
       font-weight: bold;
     }
   }
@@ -143,7 +140,6 @@ export default {
     height: 100%;
     width: 100%;
   }
-
 
   .add-cart-button {
     width: 100%;

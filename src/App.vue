@@ -127,10 +127,10 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 
 #app {
-  font-family: "Roboto Slab", serif !important;
+  font-family: 'Raleway', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

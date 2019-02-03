@@ -31,18 +31,18 @@
 <script>
 /**
  * @deprecated
-*/
+ */
 export default {
   name: 'Vendor',
   props: {
     vendor: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      searchTerm: '',
+      searchTerm: ''
     };
   },
 
@@ -52,8 +52,8 @@ export default {
     },
     searchForProduct() {
       this.$emit('searchClicked', this.searchTerm);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -62,12 +62,12 @@ export default {
   height: inherit;
 }
 
-.matching-size{
+.matching-size {
   width: 100%;
   line-height: 2.2em;
 }
 
-.vendor-image{
+.vendor-image {
   margin-bottom: 15px;
 }
 
@@ -84,7 +84,7 @@ export default {
     width: 90%;
   }
 
-  .matching-size{
+  .matching-size {
     margin-top: 15px;
   }
 }

@@ -21,7 +21,7 @@
       </b-row>
     </div>
 
-    <div v-if="product.design == '2 - Single Image Left'"  class="type-separator">
+    <div v-if="product.design == '2 - Single Image Left'" class="type-separator">
       <b-row style="height: 100%">
         <b-col md="8">
           <div :style="productImageStyle" class="product-clip-right"></div>
@@ -39,7 +39,6 @@
             </div>
           </div>
         </b-col>
-
       </b-row>
     </div>
   </div>
@@ -110,18 +109,17 @@ export default {
     background-position: top;
   }
 
-  .product-clip-right{
+  .product-clip-right {
     -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
   }
 
-  .type-separator{
-    height:100%;
+  .type-separator {
+    height: 100%;
   }
 
   .product-content {

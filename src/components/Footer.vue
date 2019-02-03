@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="block news dark">
+    <!-- <div class="block news dark">
       <div class="newsletter dark">
         <b-row>
           <b-col class="align-right center-sm">
@@ -17,7 +17,7 @@
           </b-col>
         </b-row>
       </div>
-    </div>
+    </div>-->
     <div class="block light">
       <div class="main-block">
         <b-row>
@@ -26,11 +26,7 @@
             <br>
             <a>Terms and Condition</a>
           </b-col>
-          <b-col md="4">
-            <strong>@2019 Veniqa
-              <br>An Ngineerx Subsidiary
-            </strong>
-          </b-col>
+          <b-col md="4">@2019 Veniqa</b-col>
           <b-col class="align-right center-sm" md="4">
             <a>Facebook</a>
             <br>
@@ -54,7 +50,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/css/global.scss";
+@import '../assets/css/global.scss';
 
 .block {
   height: 250px;
