@@ -1,29 +1,21 @@
 <template>
   <div id="search-result">
     <div class="search-result-view">
-      <h2>Search Results</h2>
+      <h1>Search Results</h1>
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
           <div class="link" @click="openProductDetail(product._id)">
             <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
-              <div
-              class="img-cls"
-              :style="getPictureStyle(product.thumbnailUrls[0])"
-
-            ></div>
+              <div class="img-cls" :style="getPictureStyle(product.thumbnailUrls[0])"></div>
             </div>
-
 
             <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
               <font-awesome-icon icon="shopping-bag" width="100%"/>
             </p>
-            <div class="product-card-desc">
-              <p class="title">
-                {{product.name}}
-              </p>
-              <p class="price">{{product.price.currency}} {{product.price.amount}}</p>
+            <div class="product-card-desc align-center">
+              <h5>{{product.name}}</h5>
+              <p>{{product.price.currency}} {{product.price.amount}}</p>
             </div>
-
           </div>
           <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
         </div>
@@ -40,8 +32,8 @@ export default {
   props: {
     data: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
@@ -51,7 +43,7 @@ export default {
         'background-size': 'cover',
         // width: 'auto',
         // height: '350px',
-        'margin-bottom': '10px'
+        'margin-bottom': '10px',
       };
     },
 
@@ -60,7 +52,9 @@ export default {
      */
     async addToCart(product) {
       try {
-        const val = await this.$store.dispatch('cartStore/addToTheCart', [product]);
+        const val = await this.$store.dispatch('cartStore/addToTheCart', [
+          product,
+        ]);
         if (val) {
           notification.success(this, `Added ${product.name} to the cart`);
         }
@@ -69,15 +63,17 @@ export default {
         // handle notification for different status here.
         notification.error(
           this,
-          `${product.name} couldn't be added for some reason. Please try again later`
+          `${
+            product.name
+          } couldn't be added for some reason. Please try again later`,
         );
       }
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    }
-  }
+    },
+  },
 };
 </script>
 

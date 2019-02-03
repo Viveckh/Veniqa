@@ -21,7 +21,7 @@
       </b-row>
     </div>
 
-    <div v-if="product.design == '2 - Single Image Left'"  class="type-separator">
+    <div v-if="product.design == '2 - Single Image Left'" class="type-separator">
       <b-row style="height: 100%">
         <b-col md="8">
           <div :style="productImageStyle" class="product-clip-right"></div>
@@ -39,7 +39,6 @@
             </div>
           </div>
         </b-col>
-
       </b-row>
     </div>
   </div>
@@ -51,27 +50,27 @@ export default {
   props: {
     product: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
       displayImage: null,
-      productClass: null
+      productClass: null,
     };
   },
 
   watch: {
     product() {
       this.displayImage = this.product.detailedImageUrls[0];
-    }
+    },
   },
 
   created() {
     if (
-      this.product &&
-      this.product.detailedImageUrls &&
-      this.product.detailedImageUrls.length > 0
+      this.product
+      && this.product.detailedImageUrls
+      && this.product.detailedImageUrls.length > 0
     ) {
       this.displayImage = this.product.detailedImageUrls[0];
     }
@@ -81,7 +80,7 @@ export default {
     gotoProduct() {
       console.log('PR', this.product);
       this.$router.push(`/products/${this.product._id}`);
-    }
+    },
   },
 
   computed: {
@@ -89,10 +88,10 @@ export default {
       return {
         'background-image': `url(${this.displayImage})`,
         // 'background-size': 'fit',
-        height: '100%'
+        height: '100%',
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
