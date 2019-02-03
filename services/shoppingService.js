@@ -119,6 +119,12 @@ export default {
                 return result;
             };
 
+            // Remove any existing items from cart which were not found in catalog during population
+            _.remove(user.cart.items, (item) => {
+                // Returns truthy if product does not have a truthy value
+                return !item.product;
+            })
+
             // Call the recalculate cart function 
             user.cart = this.recalculatePopulatedCart(user.cart);
             
