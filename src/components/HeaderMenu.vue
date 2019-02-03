@@ -66,6 +66,8 @@
               <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Test</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men's Clothing</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women's Clothing</b-nav-item>
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
@@ -94,9 +96,17 @@
             <div class="align-right close-icon">
               <font-awesome-icon v-b-toggle.nav_collapse icon="times"/>
             </div>
-            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's</b-nav-item>
-            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Women's</b-nav-item>
-            <b-nav-item class="align-left collapse-nav">Profile</b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's Clothing
+              <hr>
+            </b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Women's Clothing
+              <hr>
+            </b-nav-item>
+            <b-nav-item class="align-left collapse-nav">Profile
+              <hr>
+            </b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+            <hr>
             <b-nav-item class="align-left collapse-nav" v-if="isSessionActive" to="/orders">Orders</b-nav-item>
             <b-nav-item
               class="d-none d-md-block collapse-nav"
@@ -124,7 +134,7 @@ export default {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: ''
+      searchTerm: '',
     };
   },
   methods: {
@@ -138,7 +148,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.'
+          text: 'You have been successfully logged out.',
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
@@ -146,10 +156,10 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.'
+          text: 'Sorry but we could not log you out at the moment.',
         });
       }
-    }
+    },
     // updateScroll() {
     //   this.scrollPos = window.scrollY;
     // },
@@ -171,9 +181,9 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive'
-    })
-  }
+      isSessionActive: 'authStore/isSessionActive',
+    }),
+  },
 };
 </script>
 
