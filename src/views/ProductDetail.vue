@@ -42,7 +42,7 @@ export default {
     return {
       product: null,
       zoomerOptions: {
-        zoomFactor: 3,
+        zoomFactor: 1.5,
         pane: 'container',
         hoverDelay: 300,
         namespace: 'zoomer',
@@ -102,7 +102,7 @@ export default {
 
 <style lang="scss" scoped>
 .product-detail {
-  width: 90%;
+  width: 80%;
   margin: auto;
   margin-bottom: 10px;
 }
