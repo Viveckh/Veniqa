@@ -81,14 +81,52 @@ export default {
             delete productObj._id;
 
             // Change audit related info
-            let auditLog = await Product.findOne({_id: id}, '-_id auditLog').exec();
-            auditLog.auditLog.updatedBy = {email: userObj.email, name: userObj.name};
-            auditLog.auditLog.updatedOn = new Date();
-            productObj.auditLog = auditLog.auditLog;
+            let tempProduct = await Product.findOne({_id: id}, '-_id auditLog').exec();
+            tempProduct.auditLog.updatedBy = {email: userObj.email, name: userObj.name};
+            tempProduct.auditLog.updatedOn = new Date();
+            productObj.auditLog = tempProduct.auditLog;
+
+            // Prepare a list of old images to delete in s3 (don't delete them until product update successful)
+            let s3ObjectsToDelete = [];
+            if (tempProduct && tempProduct.detailedImageUrls && tempProduct.detailedImageUrls.length > 0) {
+                folderName = tempProduct.detailedImageUrls[0].split('/')[4];    // That's the index in the url where the folder name for a catalog will be
+
+                for (let url of tempProduct.detailedImageUrls) {
+                    s3ObjectsToDelete.push({ Key: folderName + "/detailed-images/" + url.split('/')[6] })
+                }
+
+                for (let url of tempProduct.thumbnailUrls) {
+                    s3ObjectsToDelete.push({ Key: folderName + '/thumbnails/' + url.split('/')[6] });
+                }
+
+                for (let url of tempProduct.featuredImageUrls) {
+                    s3ObjectsToDelete.push({ Key: folderName + "/featured-images/" + url.split('/')[6] });
+                }
+            }
             
             // Make the update and return the updated document. Also run validators. Mongoose warns only limited validation takes place doing this in update
             let product = await Product.findOneAndUpdate({_id: id}, productObj, {runValidators: true, new: true}).populate('category tariff').exec();
-            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+            
+            if (!product) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+                return result;
+            }
+
+            // Go ahead and delete the old s3 objects if the update was successful
+            if (s3ObjectsToDelete.length > 0) { 
+                // Delete the old s3 objects for this product now
+                awsConnections.s3.deleteObjects({
+                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Delete: {
+                        Objects: objectsToDelete,
+                        Quiet: false
+                    }
+                }, (err, data) => {
+
+                })
+            }
+
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: product};
             return result;
         }
         catch(err) {
@@ -152,8 +190,9 @@ export default {
 
             // Generate the thumbnail and detailed image urls to push to the response object
             for (let index = 0; index < numberOfThumbnailAndDetailedImages; index++) {
-                // If there is a previous file that can be replaced, use its name
-                let filename = (product && product.detailedImageUrls[index]) ? product.detailedImageUrls[index].split('/')[6] : await cryptoGen.generateRandomToken();
+                // Generate a new file even if there are previous ones (because they will be deleted upon updateProduct api call)
+                // We couldn't replace existing files because if those images were cached in some user's system, the updated image wouldn't show up
+                let filename = await cryptoGen.generateRandomToken();
 
                 // GENERATE LINKS FOR THE THUMBNAIL FIRST
                 let thumbnailObjectKey = folderName + "/thumbnails/" + filename;
@@ -191,8 +230,9 @@ export default {
 
             // Generate the featured image urls and push it to the response object
             for (let index = 0; index < numberOfFeaturedImages; index++) {
-                // If there is a previous file that can be replaced, use its name
-                let filename = (product && product.featuredImageUrls[index]) ? product.featuredImageUrls[index].split('/')[6] : await cryptoGen.generateRandomToken();
+                // Generate a new file even if there are previous ones (because they will be deleted upon updateProduct api call)
+                // We couldn't replace existing files because if those images were cached in some user's system, the updated image wouldn't show up
+                let filename = await cryptoGen.generateRandomToken();
                 let objectKey = folderName + "/featured-images/" + filename;
                 let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
 
@@ -207,40 +247,6 @@ export default {
                     uploadUrl: presignedUploadUrl,
                     liveUrl: objectLiveUrl
                 })
-            }
-
-            // Get all the s3 keys associated with objects that need deletion
-            // We are deleting keys only when presignedurl is requested for image updates, and the new requested count of images is lower than what has previously been saved.
-            if (product) {
-                let objectsToDelete = [];
-                if (numberOfThumbnailAndDetailedImages < product.detailedImageUrls.length) {
-                    for (let index = numberOfThumbnailAndDetailedImages; index < product.detailedImageUrls.length; index++) {
-                        objectsToDelete.push(
-                            { Key: folderName + '/thumbnails/' + product.thumbnailUrls[index].split('/')[6] },
-                            { Key: folderName + "/detailed-images/" + product.detailedImageUrls[index].split('/')[6] }
-                        )
-                    }
-                }
-                if (numberOfFeaturedImages < product.featuredImageUrls.length) {
-                    for (let index = numberOfFeaturedImages; index < product.featuredImageUrls.length; index++) {
-                        objectsToDelete.push({
-                            Key: folderName + "/featured-images/" + product.featuredImageUrls[index].split('/')[6]
-                        })
-                    }
-                }
-
-                if (objectsToDelete.length > 0) { 
-                    // Delete the additional objects that exist other than the requested number
-                    awsConnections.s3.deleteObjects({
-                        Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
-                        Delete: {
-                            Objects: objectsToDelete,
-                            Quiet: false
-                        }
-                    }, (err, data) => {
-
-                    })
-                }
             }
 
             // Returm all the generated urls
