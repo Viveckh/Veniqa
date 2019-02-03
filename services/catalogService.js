@@ -81,7 +81,7 @@ export default {
             delete productObj._id;
 
             // Change audit related info
-            let tempProduct = await Product.findOne({_id: id}, '-_id auditLog').exec();
+            let tempProduct = await Product.findOne({_id: id}, '-_id detailedImageUrls thumbnailUrls featuredImageUrls auditLog').exec();
             tempProduct.auditLog.updatedBy = {email: userObj.email, name: userObj.name};
             tempProduct.auditLog.updatedOn = new Date();
             productObj.auditLog = tempProduct.auditLog;
