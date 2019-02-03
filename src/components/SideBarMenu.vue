@@ -16,8 +16,8 @@
                 alt="Admin"
               >
             </div>
-            <h4 class="name">Admin</h4>
-            <a @click="signout()">Sign out</a>
+            <h4 class="name">{{adminname}}</h4>
+            <a @click="signout()" class="signout">Sign out</a>
           </div>
           <nav class="navbar-sidebar2">
             <ul class="list-unstyled navbar__list">
@@ -125,6 +125,10 @@ export default {
     ...mapGetters({
       permissions: 'authStore/permissions',
     }),
+
+    adminname() {
+      return this.$store.getters['authStore/getName'];
+    },
 
     isSuperAdmin() {
       return (
