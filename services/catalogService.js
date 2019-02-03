@@ -89,7 +89,7 @@ export default {
             // Prepare a list of old images to delete in s3 (don't delete them until product update successful)
             let s3ObjectsToDelete = [];
             if (tempProduct && tempProduct.detailedImageUrls && tempProduct.detailedImageUrls.length > 0) {
-                folderName = tempProduct.detailedImageUrls[0].split('/')[4];    // That's the index in the url where the folder name for a catalog will be
+                let folderName = tempProduct.detailedImageUrls[0].split('/')[4];    // That's the index in the url where the folder name for a catalog will be
 
                 for (let url of tempProduct.detailedImageUrls) {
                     s3ObjectsToDelete.push({ Key: folderName + "/detailed-images/" + url.split('/')[6] })
