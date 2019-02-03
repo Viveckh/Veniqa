@@ -118,7 +118,7 @@ export default {
                 awsConnections.s3.deleteObjects({
                     Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
                     Delete: {
-                        Objects: objectsToDelete,
+                        Objects: s3ObjectsToDelete,
                         Quiet: false
                     }
                 }, (err, data) => {
