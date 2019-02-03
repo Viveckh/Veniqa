@@ -21,7 +21,7 @@
           <h5>{{product.price.amount + ' ' + product.price.currency}}</h5>
 
           <router-link :to="`/products/${product._id}`">
-            <b-button>Shop Now</b-button>
+            <b-button class="addToCart">Shop Now</b-button>
           </router-link>
         </b-col>
       </b-col>
@@ -91,5 +91,16 @@ h5 {
 
 .jumbrotron {
   background-color: white;
+}
+.addToCart {
+  margin-top: 2em;
+  background-color: white; /*this for transparent button*/
+  border: 1px solid black; /* this is for button border*/
+  border-radius: 0px;
+  color: black;
+}
+.addToCart:hover {
+  background-color: black; /*this for transparent button*/
+  color: white;
 }
 </style>

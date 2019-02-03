@@ -17,7 +17,7 @@
           </b-col>
         </b-row>
       </div>
-    </div> -->
+    </div>-->
     <div class="block light">
       <div class="main-block">
         <b-row>
@@ -26,11 +26,7 @@
             <br>
             <a>Terms and Condition</a>
           </b-col>
-          <b-col md="4">
-            <strong>@2019 Veniqa
-              <br>An Ngineerx Subsidiary
-            </strong>
-          </b-col>
+          <b-col md="4">@2019 Veniqa</b-col>
           <b-col class="align-right center-sm" md="4">
             <a>Facebook</a>
             <br>
@@ -47,9 +43,9 @@ export default {
   name: 'Footer',
   data() {
     return {
-      subscriptionEmail: ''
+      subscriptionEmail: '',
     };
-  }
+  },
 };
 </script>
 
