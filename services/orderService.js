@@ -7,6 +7,7 @@ import shoppingService from '../services/shoppingService';
 import * as _ from 'lodash';
 import emailService from './emailServiceSendgrid';
 import stripe from '../payments/stripe';
+import khalti from '../payments/khalti';
 import transformer from '../utilities/transform-props';
 import httpStatus from 'http-status-codes';
 import logger from '../logging/logger'
@@ -227,7 +228,7 @@ export default {
             // Will throw an error directly if the charge fails
             const chargeObj = await stripe.charges.create({
                 capture: false,
-                amount: checkout.cart.totalPrice.amount,
+                amount: Math.round(checkout.cart.totalPrice.amount * 100),
                 currency: 'usd',
                 source: paymentToken,
                 metadata: {
@@ -285,6 +286,87 @@ export default {
         }
         catch(err) {
             logger.error("Error in completeCheckoutUsingCard Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async completeCheckoutUsingKhalti(checkoutId, paymentToken, userObj) {
+        let result = {};
+        try {
+            // Make sure at least the required params are passed
+            if (!(checkoutId && paymentToken)) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "Missing checkout id or payment token"};
+                return result;
+            }
+
+            // Find the checkout
+            let checkout = await Checkout.findOne({'_id': checkoutId, user_email: userObj.email}).exec();
+            if (!checkout) {
+                result = {httpStatus: httpStatus.NOT_ACCEPTABLE, status: "failed", errorDetails: "Either the requested checkout record does not exist or it does not belong to you"};
+                return result;
+            }
+
+            // Return error if the shipping address is not Nepal and payment currency is not NPR
+            if (checkout.payment_info[0].amount_in_payment_currency.currency != "NPR" || checkout.mailing_address.country != 'Nepal') {
+                result = {httpStatus: httpStatus.NOT_ACCEPTABLE, status: "failed", errorDetails: "Khalti can only be used as a payment method for Nepal"};
+                return result;
+            }
+
+            // If the checkout valid test does not return true, stop here
+            let checkoutValidTest = await this.isCheckoutValid(checkoutId, userObj);
+            if (!checkoutValidTest.responseData) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "something crucial about one of the items in the cart has changed. try again"};
+                return result;
+            }
+            
+            // Go ahead and charge the card (just authorize for now)
+            // Will throw an error directly if the charge fails
+            const chargeObj = await khalti.verifyTransaction(paymentToken, Math.round(checkout.payment_info[0].amount_in_payment_currency.amount * 100));
+
+            // Converting the mongoose object to a regular json object
+            let checkoutObj = checkout.toObject({flattenMaps: true});
+            transformer.castValuesToString(checkoutObj, ["_id", "tariff", "category"])
+
+            // Move the checkout object succesfully to the order collection with a RECEIVED status
+            let order = new Order(checkoutObj);
+            order.overall_status = "RECEIVED";
+            order.payment_info[0].source = 'KHALTI';
+            order.payment_info[0].type = 'SALE';
+            order.payment_info[0].payment_id = chargeObj.idx;
+            order.payment_info[0].transaction_id = chargeObj.idx;
+            
+            order.auditLog.createdOn = new Date();
+            order.auditLog.updatedOn = new Date();
+
+            order = await order.save();
+
+            // If order could not be saved at this point, it must be an internal server error
+            if (!order) {
+                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: "order could not be created"};
+                return result;
+            }
+
+            // Remove the checkout from the checkout collection
+            await Checkout.remove({'_id': checkoutId}).exec()
+
+            // Converting mongoose order object to regular json object to send to email service
+            order = order.toObject({flattenMaps: true});
+            transformer.castValuesToString(order, ["_id", "tariff", "category"]);
+            emailService.emailOrderReceived(order)
+
+            result = {
+                httpStatus: httpStatus.OK,
+                status: "successful", 
+                responseData: {
+                    order_id: order._id
+                }
+            };
+            return result;
+
+        }
+        catch(err) {
+            logger.error("Error in completeCheckoutUsingKhalti Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

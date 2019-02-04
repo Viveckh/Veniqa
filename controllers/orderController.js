@@ -27,6 +27,18 @@ export default {
         }
     },
 
+    async completeCheckoutUsingKhalti(req, res, next) {
+        let response;
+        try {
+            response = await orderService.completeCheckoutUsingKhalti(req.body.checkoutId, req.body.paymentToken, req.user);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            logger.error("Error in completeCheckoutUsingKhalti Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
     async isCheckoutValid(req, res, next) {
         let response;
         try {

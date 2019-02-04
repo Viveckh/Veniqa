@@ -312,6 +312,35 @@
 					"response": []
 				},
 				{
+					"name": "completeCheckoutUsingKhalti",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c58a79d15d7bb1058167902\",\n\t\"paymentToken\": \"QUao9cqFzxPgvWJNi9aKac\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/completeCheckoutUsingKhalti",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"completeCheckoutUsingKhalti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "isCheckoutValid",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true

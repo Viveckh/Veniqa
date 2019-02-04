@@ -3,7 +3,7 @@ import khaltiConfig from '../properties/khalti.json';
 import logger from '../logging/logger';
 
 export default {
-    verifyTransaction(token, amountInNPR) {
+    async verifyTransaction(token, amountInNPR) {
         try {
             // Preparing the request body
             let data = {
@@ -18,13 +18,13 @@ export default {
         
             // Make the API request to Khalti
             response = await axios.post(khaltiConfig.verification_url, data, config);
-
+            
             // Check the response and return the values
             return response.data;
         }
         catch(err) {
             // Let the caller handle it
-            throw err;
+            throw err.response.data;
         }
     }
 }

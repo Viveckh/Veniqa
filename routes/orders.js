@@ -12,6 +12,8 @@ router.post('/createCheckout', passportAuth.isAuthenticated, orderController.cre
 
 router.post('/completeCheckoutUsingCard', passportAuth.isAuthenticated, orderController.completeCheckoutUsingCard);
 
+router.post('/completeCheckoutUsingKhalti', passportAuth.isAuthenticated, orderController.completeCheckoutUsingKhalti);
+
 router.get('/isCheckoutValid', passportAuth.isAuthenticated, orderController.isCheckoutValid);
 
 router.post('/createPaymentToken', passportAuth.isAuthenticated, orderController.createPaymentToken);
