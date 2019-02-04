@@ -192,63 +192,26 @@ export default {
                 return result;
             }
 
-            // Ensure what is in the checkout record is up to date by doing a fresh calculation
-            let freshCalculatedCart = await this.calculateFinalPrice(userObj, false);
-            let orderCartFromSavedCheckout = checkout.cart;
-            // Converting the mongoose object to a regular json object for comparision purposes
-            orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject({flattenMaps: true});
-            transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff", "category"])
-
-            /*
-            console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
-            console.log("------------------------------------")
-            console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
-            console.log("------------------------------------")
-            console.log("checking if checkout cart ids got modified", checkout.cart);
-            */
-
-            // If what is in checkout record does not match what was freshly calculated, return a failure msg
-            if (!_.isEqual(freshCalculatedCart, orderCartFromSavedCheckout)) {
+            // If the checkout valid test does not return true, stop here
+            let checkoutValidTest = await this.isCheckoutValid(checkoutId, userObj);
+            if (!checkoutValidTest.responseData) {
                 result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "something crucial about one of the items in the cart has changed. try again"};
                 return result;
             }
-
-            // Add a placeholder payment info for the stripe transaction sent by the front end,
-            checkout.payment_info = [];
-            checkout.payment_info.push({
-                source: 'STRIPE',
-                type: 'PENDING',
-                payment_id: '0',
-                transaction_id: '0',
-                amount_in_usd: checkout.cart.totalPrice,
-                amount_in_payment_currency: checkout.cart.totalPrice
-            });
-
-            // Updating logs, only update date, cause the modifier will/must be the same as the user who created this checkout record
-            checkout.auditLog.updatedOn = new Date();
-
-            // If we got this far, go ahead and save the payment info in checkout and ensure the checkout object is valid
-            checkout = await checkout.save();
-            if (!checkout) {
-                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)};
-                return result;
-            }
-            // NOW THAT WE HAVE VERIFIED THAT SAVING IN CHECKOUT COLLECTION TAKES PLACE SUCCESSFULLY,
-            // LET'S GO AHEAD AND CHARGE THE CARD, MAKE MINOR ADJUSTMENTS TO CHECKOUT MODEL AND PUSH TO ORDER
 
             // Go ahead and charge the card (just authorize for now)
             // Will throw an error directly if the charge fails
             const chargeObj = await stripe.charges.create({
                 capture: false,
-                amount: checkout.payment_info[0].amount_in_usd.amount,
-                currency: checkout.payment_info[0].amount_in_usd.currency,
+                amount: checkout.cart.totalPrice.amount,
+                currency: 'usd',
                 source: paymentToken,
                 metadata: {
                     user_email: userObj.email
                 },
                 description: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6), // Last six chars of id
                 statement_descriptor: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6)
-            })
+            });
 
 
             // Converting the mongoose object to a regular json object
@@ -258,9 +221,15 @@ export default {
             // Move the checkout object succesfully to the order collection with a RECEIVED status
             let order = new Order(checkoutObj);
             order.overall_status = "RECEIVED";
-            order.payment_info[0].type = 'AUTHORIZATION';
-            order.payment_info[0].payment_id = chargeObj.id,
-            order.payment_info[0].transaction_id = chargeObj.balance_transaction;
+            order.payment_info = [];
+            order.payment_info.push({
+                source: 'STRIPE',
+                type: 'AUTHORIZATION',
+                payment_id: chargeObj.id,
+                transaction_id: chargeObj.balance_transaction,
+                amount_in_usd: checkoutObj.cart.totalPrice,
+                amount_in_payment_currency: checkoutObj.cart.totalPrice
+            });
             order.auditLog.createdOn = new Date();
             order.auditLog.updatedOn = new Date();
 
@@ -268,7 +237,7 @@ export default {
 
             // If order could not be saved at this point, it must be an internal server error
             if (!order) {
-                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: "order could not be saved"};
+                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: "order could not be created"};
                 return result;
             }
 
@@ -292,6 +261,54 @@ export default {
         }
         catch(err) {
             logger.error("Error in completeCheckoutUsingCard Service", {meta: err});
+            result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
+            return result;
+        }
+    },
+
+    async isCheckoutValid(checkoutId, userObj) {
+        let result = {};
+        try {
+            // Make sure at least the required params are passed
+            if (!checkoutId) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: "Missing checkout id"};
+                return result;
+            }
+
+            // Find the checkout
+            let checkout = await Checkout.findOne({'_id': checkoutId, user_email: userObj.email}).exec();
+            if (!checkout) {
+                result = {httpStatus: httpStatus.NOT_ACCEPTABLE, status: "failed", errorDetails: "Either the requested checkout record does not exist or it does not belong to you"};
+                return result;
+            }
+
+            // Ensure what is in the checkout record is up to date by doing a fresh calculation
+            let freshCalculatedCart = await this.calculateFinalPrice(userObj, false);
+            let orderCartFromSavedCheckout = checkout.cart;
+            // Converting the mongoose object to a regular json object for comparision purposes
+            orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject({flattenMaps: true});
+            transformer.castValuesToString(orderCartFromSavedCheckout, ["_id", "tariff", "category"])
+
+            /*
+            console.log("fresh order cart", JSON.stringify(freshCalculatedCart));
+            console.log("------------------------------------")
+            console.log("saved order cart", JSON.stringify(orderCartFromSavedCheckout));
+            console.log("------------------------------------")
+            console.log("checking if checkout cart ids got modified", checkout.cart);
+            */
+
+            // If what is in checkout record does not match what was freshly calculated, return a failure msg
+            if (!_.isEqual(freshCalculatedCart, orderCartFromSavedCheckout)) {
+                result = { httpStatus: httpStatus.OK, status: "successful", responseData: false };
+                return result;
+            }
+
+            // If we have gotten this far, return true
+            result = { httpStatus: httpStatus.OK, status: "successful", responseData: true };
+            return result;
+        }
+        catch(err) {
+            logger.error("Error in isCheckoutValid Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

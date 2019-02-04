@@ -267,7 +267,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"addressId\": \"5c466b471bf2861852c416cb\",\n\t\"shippingMethod\": \"No Rush Shipping\"\n}"
+							"raw": "{\n\t\"addressId\": \"5c562140f6df530073f6c462\",\n\t\"shippingMethod\": \"No Rush Shipping\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/orders/createCheckout",
@@ -277,6 +277,73 @@
 							"path": [
 								"orders",
 								"createCheckout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completeCheckoutUsingCard",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c57950960e27e02f13beafa\",\n\t\"paymentToken\": \"5c466fa242dccc1973be\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/completeCheckoutUsingCard",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"completeCheckoutUsingCard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isCheckoutValid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c466fa242dccc1973be09e5\",\n\t\"paymentToken\": \"5c466fa242dccc1973be\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/isCheckoutValid?checkoutId=5c57950960e27e02f13beafa",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"isCheckoutValid"
+							],
+							"query": [
+								{
+									"key": "checkoutId",
+									"value": "5c57950960e27e02f13beafa"
+								}
 							]
 						}
 					},

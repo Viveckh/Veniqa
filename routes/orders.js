@@ -10,6 +10,10 @@ router.get('/', function(req, res, next) {
 
 router.post('/createCheckout', passportAuth.isAuthenticated, orderController.createCheckout);
 
+router.post('/completeCheckoutUsingCard', passportAuth.isAuthenticated, orderController.completeCheckoutUsingCard);
+
+router.get('/isCheckoutValid', passportAuth.isAuthenticated, orderController.isCheckoutValid);
+
 router.post('/createPaymentToken', passportAuth.isAuthenticated, orderController.createPaymentToken);
 
 router.post('/completeCheckout', passportAuth.isAuthenticated, orderController.completeCheckout);

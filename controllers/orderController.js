@@ -15,6 +15,30 @@ export default {
         }
     },
 
+    async completeCheckoutUsingCard(req, res, next) {
+        let response;
+        try {
+            response = await orderService.completeCheckoutUsingCard(req.body.checkoutId, req.body.paymentToken, req.user);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            logger.error("Error in completeCheckoutUsingCard Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+    async isCheckoutValid(req, res, next) {
+        let response;
+        try {
+            response = await orderService.isCheckoutValid(req.query.checkoutId, req.user);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            logger.error("Error in isCheckoutValid Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
     async createPaymentToken(req, res, next) {
         let response;
         try {
