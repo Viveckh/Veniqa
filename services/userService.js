@@ -153,7 +153,7 @@ export default {
             return result;
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getOrderList Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }
@@ -178,7 +178,7 @@ export default {
             return result;  
         }
         catch(err) {
-            console.log(err);
+            logger.error("Error in getOrderDetails Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
         }

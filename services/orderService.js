@@ -37,18 +37,42 @@ export default {
             }
 
             // Get the freshly calculated order cart, and you must also save any updates resulting during calculation since it isn't a locked deal yet
-            let orderCart = await this.calculateFinalPrice(userObj, true);
+            let orderCart = await this.calculateFinalPrice(userObj, address, true);
 
             // Drop any previous checkouts that are still in the checkout collection for the user
             await Checkout.find({user_email: userObj.email}).remove().exec();
 
+            // Find and calculate local currency depending on shipping location
+            let currency, exchange_rate;
+            if (address.country == 'Bangladesh') {
+                currency = 'BDT';
+            }
+            else if (address.country == 'Nepal') {
+                currency = 'NPR';
+            }
+            else {
+                currency = 'USD';
+            }
+            exchange_rate = await CurrencyExchangeModel.findOne({currency: currency}, '-_id currency one_usd_equals').exec();
+                
             // Create the checkout object
             let checkout = new Checkout({
                 overall_status: 'RECEIVED',
                 cart: orderCart,
                 user_email: userObj.email,
                 mailing_address: address,
-                payment_info: [],
+                payment_info: [{
+                    source: 'NONE',
+                    type: 'PENDING',
+                    payment_id: '0',
+                    transaction_id: '0',
+                    amount_in_usd: orderCart.totalPrice,
+                    exchange_rate: exchange_rate, 
+                    amount_in_payment_currency: {
+                        amount: Math.round(orderCart.totalPrice.amount * exchange_rate.one_usd_equals * 100) / 100,
+                        currency: currency
+                    }
+                }],
                 auditLog: {
                     createdBy: {
                         email: userObj.email,
@@ -105,7 +129,7 @@ export default {
             }
 
             // Ensure what is in the checkout record is up to date by doing a fresh calculation
-            let freshCalculatedCart = await this.calculateFinalPrice(userObj, false);
+            let freshCalculatedCart = await this.calculateFinalPrice(userObj, checkout.mailing_address, false);
             let orderCartFromSavedCheckout = checkout.cart;
             // Converting the mongoose object to a regular json object for comparision purposes
             orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject({flattenMaps: true});
@@ -283,7 +307,7 @@ export default {
             }
 
             // Ensure what is in the checkout record is up to date by doing a fresh calculation
-            let freshCalculatedCart = await this.calculateFinalPrice(userObj, false);
+            let freshCalculatedCart = await this.calculateFinalPrice(userObj, checkout.mailing_address, false);
             let orderCartFromSavedCheckout = checkout.cart;
             // Converting the mongoose object to a regular json object for comparision purposes
             orderCartFromSavedCheckout = orderCartFromSavedCheckout.toObject({flattenMaps: true});
@@ -367,7 +391,7 @@ export default {
         }
     },
 
-    async calculateFinalPrice(userObj, save=false) {
+    async calculateFinalPrice(userObj, shippingAddress, save=false) {
         try {
             // Make the getCart call in ShoppingService first
             let response = await shoppingService.getCart(userObj, true, save);
@@ -385,7 +409,7 @@ export default {
             // Calculating tariff
             for (const [index, item] of shoppingCart.items.entries()) {
                 // TODO: Select proper country while calculating tariff
-                let tariffRate = item.product.tariff.rates['Nepal'] / 100; // This is freshly populated from the get cart above, so tariff will always be up to date value
+                let tariffRate = item.product.tariff.rates[shippingAddress.country] / 100; // This is freshly populated from the get cart above, so tariff will always be up to date value
                 tariffPriceInUSD += Math.round(tariffRate * item.aggregatedPrice.amount * 100) / 100;
                 // To reset the tariff and category back to only its id, because that's how it is saved in checkout and order table
                 shoppingCart.items[index].product.tariff = item.product.tariff._id;  
