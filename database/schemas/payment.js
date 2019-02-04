@@ -8,7 +8,7 @@ let paymentSchema = new mongoose.Schema({
     source: {
         type: String,
         required: true,
-        enum: ['BKASH', 'PAYPAL']
+        enum: ['NONE', 'STRIPE', 'BKASH', 'PAYPAL', 'KHALTI']
     },
     type: {
         type: String,
