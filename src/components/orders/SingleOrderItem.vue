@@ -24,14 +24,15 @@
             <br>
 
             <div class="info">
+              <strong>$ {{item.aggregatedPrice.amount}}</strong><br>
               <span class="info">Sold by: </span>&nbsp;&nbsp;
               <strong>{{item.product.store}}</strong>
               <p>
                 <span class="info">Quantity:</span> &nbsp;&nbsp;
                 <strong>{{item.counts}}</strong>
                 <br>
-                <span class="info">Aggregated Price:</span> &nbsp;&nbsp;
-                <strong>$ {{item.aggregatedPrice.amount}}</strong>
+                <!-- <span class="info">Aggregated Price:</span> &nbsp;&nbsp; -->
+                
               </p>
 
               

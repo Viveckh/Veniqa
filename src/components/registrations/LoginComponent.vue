@@ -36,6 +36,8 @@
       ></b-form-input>
       <!-- <b-form-invalid-feedback id="passwordFeedback">Enter at least 6 characters.</b-form-invalid-feedback> -->
     </b-form-group>
+    <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="recaptchaKey"></vue-recaptcha>
+    <p class="info align-left">Please enter the captcha before loggin in.</p>
 
     <p class="forget-password" v-if="!forgotEnabled" @click="forgetPassword()">Forgot Password?</p>
 
@@ -49,17 +51,38 @@
 
 <script>
 import ProxyUrl from '@/constants/ProxyUrls';
+import VueRecaptcha from 'vue-recaptcha';
+import Config from '@/config.json';
 
 export default {
   name: 'LoginComponent',
+  components: {
+    VueRecaptcha
+  },
   data() {
     return {
       username: '',
       password: '',
-      forgotEnabled: false
+      forgotEnabled: false,
+      recaptchaKey: '',
+      captchaResp: '',
     };
   },
+  
+  created() {
+    this.recaptchaKey = Config.RECAPTCHA;
+  },
+
   methods: {
+    async onVerify (response) {
+      this.captchaResp = response;
+      
+    },
+    onExpired () {
+      // this.resetRecaptcha();
+      this.captchaResp = '';
+    },
+    
     validEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
@@ -70,11 +93,36 @@ export default {
       this.password = '';
     },
 
-    loginClicked() {
-      if (this.usernameState) {
+    // async captchaValidate() {
+    //   try {
+    //     let {data} = await this.$axios({
+    //       headers: {
+    //         'Access-Control-Allow-Origin': '*',
+    //       },
+    //       url: ProxyUrl.recaptcha,
+    //       method: 'post',
+    //       params: {
+    //         secret: Config.RECAPTCHA_SECRET,
+    //         response: this.captchaResp,
+    //       }
+    //     });
+
+    //     if(data && data.success){
+    //       return true;
+    //     }else return false;
+    //   } catch (error) {
+    //     return false;
+    //   }
+      
+    // },
+
+    async loginClicked() {
+      // let isValidated = await this.captchaValidate();
+      if (this.usernameState && this.captchaResp.length > 0) {
         this.$emit('login', {
           email: this.username,
-          password: this.password
+          password: this.password,
+          recaptcha: this.captchaResp
         });
       }
     },
