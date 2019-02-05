@@ -36,6 +36,11 @@ let productSchema = new mongoose.Schema({
             return validator.isURL(value, {allow_underscores: true})
         }
     },
+    store_sku: {
+        type: String,
+        required: true,
+        trim: true
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: MONGO_COLLECTIONS.product_categories,
@@ -106,12 +111,17 @@ let productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    active: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     auditLog: {
         type: auditLogSchema,
         required: true
     }
 });
 
-productSchema.index({store: 'text', brand: 'text', name: 'text', details_html: 'text'});
+productSchema.index({store: 'text', brand: 'text', name: 'text', store_sku: 'text', details_html: 'text'});
 
 module.exports = productSchema;

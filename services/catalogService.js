@@ -7,6 +7,7 @@ export default {
         let result = {};
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
         categoryId ? searchObj.category = categoryId : '';
+        searchObj.active = true; // Only return from active items
 
         try {
             let products = await Product.paginate(searchObj, {
@@ -36,7 +37,7 @@ export default {
     async getProductDetails(productId) {
         let result = {};
         try {
-            let product = await Product.findOne({_id: productId}).populate('category tariff').exec();
+            let product = await Product.findOne({_id: productId, active: true}).populate('category tariff').exec();
             result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
             return result;
         }

@@ -31,7 +31,7 @@ export default {
 
             // Now iterate through the items in the cartEntriesToProcess
             for (let entry of cartEntriesToProcess) {
-                let product = await Product.findOne({_id: entry.product}).exec()
+                let product = await Product.findOne({_id: entry.product, active: true}).exec()
                 
                 // If the product does not exist, continue adding the next item to the list.
                 if (!product) {
