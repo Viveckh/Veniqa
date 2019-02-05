@@ -9,6 +9,7 @@ import ShippingStore from '@/store/shipping';
 import Loader from '@/store/loader';
 import Search from '@/store/search';
 import Order from '@/store/order';
+import ListStore from '@/store/list';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     loaderStore: Loader,
     searchStore: Search,
     orderStore: Order,
+    listStore: ListStore,
   },
 
   plugins: [vuexLocal.plugin],

@@ -2,23 +2,18 @@
 
 <template>
   <div class="align-left description" style="padding: 10px">
-    <h5>{{product.brand}}</h5>
-    <h2>{{product.name}}</h2>
-
-    <h5>
-      <font-awesome-icon icon="dollar-sign"/>
-      {{product.price.currency}} {{product.price.amount}}
-    </h5>
-    <p>
-      <font-awesome-icon icon="weight"/>
-      &nbsp; {{product.weight.quantity}} {{product.weight.unit}}
-    </p>
-
+    <h1>{{product.name}}</h1>
+    <h6>By {{product.brand}}</h6>
+    <br>
+    <div v-html="product.details_html"></div>
+    <br>
+    <h4>{{product.price.currency}} {{product.price.amount}}</h4>
+    <br>
     <div class="custom-attributes">
       <div v-for="(attrib, aid) in customizations" v-bind:key="aid">
         <div v-if="attrib.type === 'Array'">
           <b-form-group
-            :label-cols="3"
+            :label-cols="1"
             :label="attrib.name"
             :label-for="attrib.name+aid"
             horizontal
@@ -26,10 +21,10 @@
             <b-form-select
               v-model="selectedCustomizations[attrib.key]"
               :options="attrib.values"
-              size="sm"
               :name="attrib.name+aid"
               :id="attrib.name+aid"
               style="max-width: 150px"
+              class="selectOptions"
             />
             <b-form-invalid-feedback id="countryFeedback">
               <!-- This will only be shown if the preceeding input has an invalid state -->
@@ -41,7 +36,7 @@
         <!-- Show Color selection for colors -->
         <div v-if="attrib.type==='Colors'">
           <b-row>
-            <b-col md="3">{{attrib.name}}</b-col>
+            <b-col md="1">{{attrib.name}}</b-col>
             <b-col md="9">
               <ul class="color-select">
                 <li v-for="(color, cid) in attrib.values" v-bind:key="cid">
@@ -59,7 +54,7 @@
         </div>
       </div>
     </div>
-
+    <br>
     <p style="margin-top: 20px">
       <b-button class="addToCart" @click="addToCart()">
         <font-awesome-icon icon="shopping-bag"/>&nbsp;
@@ -67,7 +62,6 @@
       </b-button>
     </p>
     <hr>
-    <div v-html="product.details_html"></div>
   </div>
 </template>
 
@@ -200,12 +194,19 @@ export default {
     border: 2px solid black; /* this is for button border*/
     border-radius: 0px;
     color: black;
+    padding: 15px 40px;
   }
   .addToCart:hover {
     background-color: black; /*this for transparent button*/
     border: 2px solid black; /* this is for button border*/
     border-radius: 0px;
     color: white;
+  }
+  .selectOptions {
+    border-radius: 0px;
+  }
+  h1 {
+    color: black;
   }
 }
 </style>
