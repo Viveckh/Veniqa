@@ -6,9 +6,7 @@
       ref="managephoto"
       :detailedUrls="product.detailedImageUrls"
       :thumbnailPropUrls="product.thumbnailUrls"
-      
       :productId="product._id"
-     
       @cancel="showManagePhoto = false"
     />
 
@@ -167,6 +165,36 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <!-- SKU -->
+        <b-form-group horizontal :label-cols="2" label="Store SKU" label-for="sku">
+          <b-form-input
+            id="sku"
+            type="text"
+            name="sku"
+            :state="skuState"
+            v-model="product.store_sku"
+            placeholder="Enter the SKU of store"
+            aria-describedby="storeSKUFeedback"
+            size="sm"
+          ></b-form-input>
+
+          <b-form-invalid-feedback id="storeSKUFeedback">
+            <!-- This will only be shown if the preceeding input has an invalid state -->
+            This field cannot be empty.
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <div>
+          
+        </div>
+
+        <b-form-group horizontal :label-cols="2" label="Active" label-for="sku">
+          <toggle-button
+            v-model="product.active"
+            :labels="{checked: 'Yes', unchecked: 'No'}"
+          />
+        </b-form-group>
+
         <!-- Item URL -->
         <b-form-group horizontal :label-cols="2" label="Item URL" label-for="itemurl">
           <b-form-input
@@ -291,7 +319,7 @@
               >
                 <font-awesome-icon icon="bold"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.italic() }"
@@ -299,7 +327,7 @@
               >
                 <font-awesome-icon icon="italic"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.strike() }"
@@ -307,7 +335,7 @@
               >
                 <font-awesome-icon icon="strikethrough"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.underline() }"
@@ -315,7 +343,7 @@
               >
                 <font-awesome-icon icon="underline"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code() }"
@@ -323,7 +351,7 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.paragraph() }"
@@ -331,25 +359,25 @@
               >
                 <font-awesome-icon icon="paragraph"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                 @click="commands.heading({ level: 1 })"
               >H1</button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                 @click="commands.heading({ level: 2 })"
               >H2</button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                 @click="commands.heading({ level: 3 })"
               >H3</button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.bullet_list() }"
@@ -357,7 +385,7 @@
               >
                 <font-awesome-icon icon="list-ul"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.ordered_list() }"
@@ -365,7 +393,7 @@
               >
                 <font-awesome-icon icon="list-ol"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.blockquote() }"
@@ -373,7 +401,7 @@
               >
                 <font-awesome-icon icon="quote-left"/>
               </button>
-
+              
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code_block() }"
@@ -381,11 +409,11 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-
+              
               <button class="menubar__button" @click="commands.undo">
                 <font-awesome-icon icon="undo"/>
               </button>
-
+              
               <button class="menubar__button" @click="commands.redo">
                 <font-awesome-icon icon="redo"/>
               </button>
@@ -479,7 +507,8 @@ export default {
           category: null,
           subcategory: null,
         },
-
+        store_sku: null,
+        active: true,
         thumbnailUrls: [
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/8ebad3add8ef7424eed96cc560c8d135b14f9fb8',
@@ -562,6 +591,11 @@ export default {
     tariffState() {
       if (this.product.tariff == null) return null;
       return this.product.tariff.length > 0;
+    },
+
+    skuState(){
+      if(this.product.store_sku == null) return null;
+      return this.product.store_sku.length > 0;
     },
 
     productNameState() {
