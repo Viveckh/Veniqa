@@ -9,7 +9,14 @@
     <b-navbar toggleable="md" fixed="top" class="header-color" type="light">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-      <b-navbar-brand to="/">VENIQA</b-navbar-brand>
+      <b-navbar-brand to="/">
+        <img
+          src="@/assets/logo_transparent_blue_black.png"
+          alt="VENIQA"
+          width="180px"
+          style="padding: 0.5rem 0rem;"
+        >
+      </b-navbar-brand>
 
       <b-nav-item class="d-xs-block d-sm-block d-md-none" to="/checkout">
         <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
@@ -51,8 +58,8 @@
               />
             </div>
 
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women's</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men's</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
 
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
@@ -175,6 +182,9 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/global.scss';
+#header-menu {
+  text-transform: uppercase;
+}
 .special-search-input {
   border: none;
   padding: 0px 5px;
@@ -247,13 +257,6 @@ export default {
 }
 .collapse-nav {
   padding: 0.2rem 0rem;
-}
-#header-menu {
-  text-transform: uppercase;
-  font-weight: bold;
-}
-.navbar-brand {
-  font-size: 2.5em !important;
 }
 // 768 is the changing point.
 @media (min-width: 768px) {
