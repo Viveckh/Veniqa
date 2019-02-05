@@ -11,7 +11,7 @@ export default {
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
         try {
             let products = await Product.paginate(searchObj, {
-                select: '_id name brand store price thumbnailUrls',
+                select: '_id name brand store price thumbnailUrls active',
                 populate: [
                     { path: 'category', select: '-_id category subcategory' }
                 ],
