@@ -57,17 +57,10 @@
                 icon="search"
               />
             </div>
-            <b-nav-item-dropdown
-              class="veniqa-nav no-dropdown-display d-none d-md-block"
-              text="Shop"
-            >
-              <b-dropdown-item to="/vendor/amazon">Jackets</b-dropdown-item>
-              <b-dropdown-item to="/vendor/amazon">Tees</b-dropdown-item>
-              <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
-            </b-nav-item-dropdown>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Test</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men's Clothing</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women's Clothing</b-nav-item>
+
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
+
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
@@ -189,6 +182,9 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/global.scss';
+#header-menu {
+  text-transform: uppercase;
+}
 .special-search-input {
   border: none;
   padding: 0px 5px;

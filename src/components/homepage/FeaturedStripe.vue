@@ -63,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 .box {
   height: 50vh;
-  background-color: red;
+  background-color: white;
   background-size: cover;
   background-position: center center;
   padding: 0px 0px 0px 0px !important;

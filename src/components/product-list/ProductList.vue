@@ -20,13 +20,17 @@
               v-for="(product, key) in products"
               class="box d-flex flex-column justify-content-end align-items-center"
               v-bind:key="key"
-              v-bind:style="{ backgroundImage: 'url(' + product.url + ')' }"
+              v-bind:style="{ backgroundImage: 'url(' + product.thumbnailUrls[0] + ')' }"
               href="#"
             >
-              <div class="description d-flex flex-column justify-content-end align-items-center">
-                <h5 class="productInfo">{{product.name}}</h5>
-                <p class="productInfo">{{product.price}}</p>
-              </div>
+              <router-link
+                :to="`/products/${product._id}`"
+                class="description d-flex flex-column justify-content-end align-items-center"
+              >
+                <h6 class="productInfo">{{product.name}}</h6>
+                <p class="productInfo">{{product.brand}}</p>
+                <p class="productInfo">{{product.price.currency}} {{product.price.amount}}</p>
+              </router-link>
             </b-col>
           </b-row>
         </b-col>
@@ -36,9 +40,9 @@
 </template>
 
 <script>
-import RangeSlider from 'vue-range-slider'
+import RangeSlider from 'vue-range-slider';
 // you probably need to import built-in style
-import 'vue-range-slider/dist/vue-range-slider.css'
+import 'vue-range-slider/dist/vue-range-slider.css';
 
 export default {
   data() {
@@ -47,104 +51,18 @@ export default {
       optionsSort: ['Recommended', 'Price', 'Popularity'],
       selectedCategories: 'All Categories',
       optionsCategories: ['All Categories', 'Clothing', 'Accessories', 'Shoes'],
-      products: [
-        {
-          name: 'Telly Rwer',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg',
-        },
-        {
-          name: 'Telly Rwer Jacket',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg',
-        },
-        {
-          name: 'Defined Bold Dress',
-          price: '$44.00',
-          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg',
-        },
-        {
-          name: 'Bugged Shoes',
-          price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
-        },
-        {
-          name: 'Terminal Pants',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg',
-        },
-        {
-          name: 'Shaped Tee',
-          price: '$77.00',
-          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
-        },
-        {
-          name: 'Telly Rwer',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg',
-        },
-        {
-          name: 'Telly Rwer Jacket',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg',
-        },
-        {
-          name: 'Defined Bold Dress',
-          price: '$44.00',
-          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg',
-        },
-        {
-          name: 'Bugged Shoes',
-          price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
-        },
-        {
-          name: 'Terminal Pants',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg',
-        },
-        {
-          name: 'Shaped Tee',
-          price: '$77.00',
-          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
-        },
-        {
-          name: 'Telly Rwer',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00252607-02.jpg',
-        },
-        {
-          name: 'Telly Rwer Jacket',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00262533-01.jpg',
-        },
-        {
-          name: 'Defined Bold Dress',
-          price: '$44.00',
-          url: 'https://www.forever21.com/images/default_330/00335616-02.jpg',
-        },
-        {
-          name: 'Bugged Shoes',
-          price: '$46.00',
-          url: 'https://i.pinimg.com/originals/05/07/fd/0507fd06e18f9101f3a4b95b17f2896c.jpg',
-        },
-        {
-          name: 'Terminal Pants',
-          price: '$45.00',
-          url: 'https://www.forever21.com/images/1_front_750/00239518-02.jpg',
-        },
-        {
-          name: 'Shaped Tee',
-          price: '$77.00',
-          url: 'https://www.forever21.com/images/default_330/00329137-02.jpg',
-        },
-      ],
-    }
+    };
   },
-  components: {
-    RangeSlider,
+  async created() {
+    await this.$store.dispatch('listStore/searchForProduct');
   },
-}
+  computed: {
+    products() {
+      console.log(this.$store.getters['listStore/listResult']);
+      return this.$store.getters['listStore/listResult'];
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -175,14 +93,14 @@ export default {
   margin: 20px !important;
 }
 .box:hover {
-  background-size: 120%;
-  -webkit-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  box-shadow: 0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .description {
   width: inherit;
   color: white;
-  background-color: #2c2b2ab9;
+  background-color: #2c2b2ad2;
   -webkit-transition: background-color 500ms linear;
   -ms-transition: background-color 500ms linear;
   transition: background-color 500ms linear;
@@ -190,5 +108,6 @@ export default {
 .productInfo {
   margin: 0px;
   padding: 0px;
+  text-align: center;
 }
 </style>
