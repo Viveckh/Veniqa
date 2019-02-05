@@ -128,7 +128,7 @@ export default {};
 }
 
 .section3 {
-  background-color: red;
+  background-color: white;
   height: 30vh;
   background: url('https://pmcfootwearnews.files.wordpress.com/2017/08/forever-21-sneakers1.jpg');
   background-size: cover;
@@ -152,7 +152,7 @@ export default {};
 }
 
 .section6 {
-  background-color: red;
+  background-color: white;
   height: 55vh;
   background: url('https://cdnd.lystit.com/photos/9dc1-2015/02/04/forever-21-green-classic-utility-jacket-product-1-27555133-0-532989503-normal.jpeg');
   background-size: cover;

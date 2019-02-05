@@ -9,14 +9,7 @@
     <b-navbar toggleable="md" fixed="top" class="header-color" type="light">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-      <b-navbar-brand to="/">
-        <img
-          src="@/assets/logo_transparent_blue_black.png"
-          alt="VENIQA"
-          width="180px"
-          style="padding: 0.5rem 0rem;"
-        >
-      </b-navbar-brand>
+      <b-navbar-brand to="/">VENIQA</b-navbar-brand>
 
       <b-nav-item class="d-xs-block d-sm-block d-md-none" to="/checkout">
         <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
@@ -57,17 +50,10 @@
                 icon="search"
               />
             </div>
-            <b-nav-item-dropdown
-              class="veniqa-nav no-dropdown-display d-none d-md-block"
-              text="Shop"
-            >
-              <b-dropdown-item to="/vendor/amazon">Jackets</b-dropdown-item>
-              <b-dropdown-item to="/vendor/amazon">Tees</b-dropdown-item>
-              <b-dropdown-item to="/vendor/amazon">Pants</b-dropdown-item>
-            </b-nav-item-dropdown>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Test</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men's Clothing</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women's Clothing</b-nav-item>
+
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women's</b-nav-item>
+            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men's</b-nav-item>
+
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
@@ -261,6 +247,13 @@ export default {
 }
 .collapse-nav {
   padding: 0.2rem 0rem;
+}
+#header-menu {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.navbar-brand {
+  font-size: 2.5em !important;
 }
 // 768 is the changing point.
 @media (min-width: 768px) {
