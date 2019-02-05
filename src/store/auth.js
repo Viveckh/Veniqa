@@ -7,7 +7,7 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
-    emailConfirmed: false
+    emailConfirmed: false,
   },
   actions: {
     async registerUser({ state, commit }, payload) {
@@ -17,7 +17,7 @@ export default {
         const { data } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.registerUrl,
-          data: payload
+          data: payload,
         });
 
         if (data && data.httpStatus == 200) {
@@ -39,7 +39,7 @@ export default {
         const { data } = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.loginUrl,
-          data: payload
+          data: payload,
         });
 
         if (data) {
@@ -58,7 +58,7 @@ export default {
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'get',
-          url: ProxyUrls.logoutUrl
+          url: ProxyUrls.logoutUrl,
         });
 
         if (data) {
@@ -72,7 +72,7 @@ export default {
     async initiateAppSession({ state, commit }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
-        url: ProxyUrls.isSessionActive
+        url: ProxyUrls.isSessionActive,
       });
       if (res && res.data == true) {
         commit('setEmail', localStorage.getItem('email'));
@@ -80,13 +80,13 @@ export default {
         commit('setSessionActive', true);
         commit(
           'setEmailConfirmed',
-          localStorage.getItem('emailConfirmed') == 'true' ||
-            localStorage.getItem('emailConfirmed') == true
+          localStorage.getItem('emailConfirmed') == 'true'
+            || localStorage.getItem('emailConfirmed') == true,
         );
       } else {
         commit('setSessionActive', false);
       }
-    }
+    },
   },
   mutations: {
     setEmailConfirmed(state, val) {
@@ -120,7 +120,7 @@ export default {
       localStorage.removeItem('name');
       localStorage.removeItem('emailConfirmed');
       state.isSessionActive = false;
-    }
+    },
   },
   getters: {
     getName(state) {
@@ -142,6 +142,6 @@ export default {
 
     emailConfirmed(state) {
       return state.emailConfirmed;
-    }
-  }
+    },
+  },
 };

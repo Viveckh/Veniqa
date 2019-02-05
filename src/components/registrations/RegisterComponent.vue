@@ -77,6 +77,9 @@
       <b-form-invalid-feedback id="phoneFeedback" class="align-left">Phone number invalid.</b-form-invalid-feedback>
     </b-form-group>
 
+    <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="recaptchaKey"></vue-recaptcha>
+    <p class="info align-left">Please enter the captcha before loggin in.</p>
+
     <div class="modal-bottom"></div>
     <b-btn class="register-button" @click="registerClicked()">Register</b-btn>
 
@@ -87,32 +90,57 @@
 </template>
 
 <script>
+import ProxyUrl from '@/constants/ProxyUrls';
+import VueRecaptcha from 'vue-recaptcha';
+import Config from '@/config.json';
+
 export default {
   name: 'RegisterComponent',
+  components: {
+    VueRecaptcha
+  },
   data() {
     return {
       username: '',
       password: '',
       confirmPassword: '',
       phone: '',
-      name: ''
+      name: '',
+
+      recaptchaKey:'',
+      captchaResp: '',
     };
   },
 
+  created() {
+    this.recaptchaKey = Config.RECAPTCHA;
+  },
+
   methods: {
+    async onVerify (response) {
+      this.captchaResp = response;
+      
+    },
+    onExpired () {
+      // this.resetRecaptcha();
+      this.captchaResp = '';
+    },
+
     registerClicked() {
       if (
         this.usernameState &&
         this.passwordState &&
         this.confirmPasswordState &&
         this.phoneState &&
-        this.nameState
+        this.nameState && 
+        this.captchaResp.length > 0
       ) {
         this.$emit('register', {
           email: this.username,
           password: this.password,
           phone: this.phone,
-          name: this.name
+          name: this.name,
+          recaptcha: this.captchaResp
         });
       }
     },

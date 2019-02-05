@@ -8,6 +8,7 @@ export default {
   validateResetToken: '/security/validatePasswordResetToken/',
   resetPassword: '/security/resetPassword',
   resendEmailConfirmation: '/security/resendEmailAddressConfirmationLink?email=',
+  recaptcha: 'https://www.google.com/recaptcha/api/siteverify',
 
   searchProduct: '/catalog/search',
   getProductDefinitionUrl: '/catalog/getProductDetails?productId=',
