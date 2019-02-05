@@ -8,51 +8,39 @@
       </h4>
 
       <b-card-group deck class="mb-3">
-        <b-card bg-variant="light" header="Order Status">
+        <b-card bg-variant="light" :header="getOrderDeet()">
           <div class="card-text card-font">
-            <p>
-              <!-- Status goes here -->
-              Status:
-              <span
-                v-bind:class="{'green': order.overall_status != 'CANCELLED', 'red': order.overall_status === 'CANCELLED'}"
-              >
-                <strong>{{order.overall_status}}</strong>
-              </span>
-            </p>
-
-            <p>
-              <strong>Order #</strong>
-              {{order._id}}
-            </p>
-            <p>
-              <strong>Order placed on</strong>
-              {{order.auditLog.createdOn | formattedDate}}
-            </p>
+            <p>Total Weight: <strong>{{order.cart.totalWeight.quantity}} {{order.cart.totalWeight.unit}}</strong></p>
+            <p>Sub Total Price: <strong>$ {{order.cart.subTotalPrice.amount}}</strong></p>
+            <p>Service Charge: <strong>$ {{order.cart.serviceCharge.amount}}</strong></p>
+            <p>Shipping Price: <strong>$ {{order.cart.shippingPrice.amount}}</strong></p>
+            <p>Tariff Price: <strong>$ {{order.cart.tariffPrice.amount}}</strong></p>
+            <p>Total Price: <strong>$ {{order.cart.totalPrice.amount}}</strong></p>
           </div>
         </b-card>
 
         <b-card bg-variant="light" header="Shipping Address" v-if="addr">
-          <div class="card-text">
+          <div class="card-text card-font">
             <p>
-              {{addr.firstName}} {{addr.lastName}}
-              <br>
-              {{addr.addressLine1}}
-              <br>
-              <span v-if="addr.addressLine2">
+              {{addr.firstName}} {{addr.lastName}} </p>
+              <p>
+              {{addr.addressLine1}}</p>
+              
+              <p v-if="addr.addressLine2">
                 {{addr.addressLine2}}
-                <br>
-              </span>
-              {{addr.city}}, {{addr.state}}
-              <br>
-              {{addr.country}} {{addr.zipCode}}
-              <br>
-              {{addr.mobilePhone}}
+              </p>
+              <p>
+              {{addr.city}}, {{addr.state}}</p>
+              <p>
+              {{addr.country}} {{addr.zipCode}}</p>
+              <p>
+              {{addr.mobilePhone}}</p>
             </p>
           </div>
         </b-card>
 
         <b-card bg-variant="light" header="Payment Method" v-if="payments.length > 0">
-          <div class="card-text">
+          <div class="card-text card-font">
             <p v-for="(payment, pind) in payments" v-bind:key="pind">
               <strong>
                 {{payment.source}}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -112,6 +100,8 @@ export default {
     
   },
 
+  
+
   async created() {
     this.order = null;
 
@@ -133,6 +123,34 @@ export default {
     }
   },
 
+  methods: {
+    dateFormat(date){
+      if(date){
+        return moment(date).format("MMMM Do, YYYY");
+      }
+      else return '';
+    },
+
+    getOrderDeet(){
+      return `
+              <div class="info">
+              <!-- Status goes here -->
+              Status:
+              <span
+                v-bind:class="{'green': ${this.order.overall_status} != 'CANCELLED', 'red': ${this.order.overall_status} === 'CANCELLED'}"
+              >
+                <strong>${this.order.overall_status}</strong>
+              </span><br>
+
+              <strong>Order #</strong>
+              ${this.order._id}<br>
+              <strong>Order placed on</strong>
+              ${this.dateFormat(this.order.auditLog.createdOn)}
+              </div>
+      `
+    }
+  },
+
   computed: {
     addr() {
       return this.order ? this.order.mailing_address : null;
@@ -145,7 +163,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #single-order-detail {
   min-height: 90vh;
   width: 70%;
@@ -157,6 +175,13 @@ export default {
 
   .card-font {
     font-size: small;
+  }
+
+  .card-text{
+    p{
+    margin-bottom: 0.5rem;
+
+    }
   }
 
   .cart-items {
