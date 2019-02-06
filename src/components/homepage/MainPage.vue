@@ -1,7 +1,7 @@
 <template>
   <div id="main-page">
     <div class="main-bg"></div>
-    <h1 class="featured-title">Editor's Pick</h1>
+    <h1 class="featured-title">SPRING 2019 COLLECTION</h1>
     <featured-products :products="featuredProducts"/>
     <h1 class="featured-title">Hottest Trends</h1>
     <featured-stripe/>
@@ -57,7 +57,8 @@ export default {
 }
 
 .main-bg {
-  background-image: url('https://www.fearlesss.co.uk/media/wysiwyg/Copy_of_SPRING_TWENTY_NINETEEN-2.jpg');
+  // background-image: url('https://www.fearlesss.co.uk/media/wysiwyg/Copy_of_SPRING_TWENTY_NINETEEN-2.jpg');
+  background-image: url('./../../assets/images/homepage.jpg');
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -81,8 +82,9 @@ export default {
 }
 .featured-title {
   margin: 0px 0px 0px 0px;
-  padding: 20px 10px;
+  padding: 40px 10px;
   color: #5d6d7e;
-  background-color: #eaecee;
+  // background-color: #eaecee;
+  font-family: 'Quicksand'
 }
 </style>

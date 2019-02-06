@@ -130,7 +130,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
 #app {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Quicksand','Raleway', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
