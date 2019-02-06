@@ -6,7 +6,7 @@ export default {
     async updateOrUpsertFeaturedSection(featuredSectionObj) {
         let result = {}
         try {
-            let section = await FeaturedSectionModel.findOneAndUpdate({name: featuredSectionObj.name}, featuredSectionObj,{upsert: true, runValidators: true, new: true}).populate('content.product', '_id name brand store price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
+            let section = await FeaturedSectionModel.findOneAndUpdate({name: featuredSectionObj.name}, featuredSectionObj,{upsert: true, runValidators: true, new: true}).populate('content.product', '_id name brand store marked_price price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
             result = section ? {httpStatus: httpStatus.OK, status: "successful", responseData: section} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
             return result;
         }
@@ -20,7 +20,7 @@ export default {
     async getAllFeaturedSections(){
         let result = {};
         try {
-            let sections = await FeaturedSectionModel.find({}).populate('content.product', '_id name brand store price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
+            let sections = await FeaturedSectionModel.find({}).populate('content.product', '_id name brand store marked_price price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
             result = {httpStatus: httpStatus.OK, status: "successful", responseData: sections};
             return result;
         }
@@ -34,7 +34,7 @@ export default {
     async getFeaturedSection(name){
         let result = {};
         try {
-            let section = await FeaturedSectionModel.findOne({name: name}).populate('content.product', '_id name brand store price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
+            let section = await FeaturedSectionModel.findOne({name: name}).populate('content.product', '_id name brand store marked_price price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
             result = section ? {httpStatus: httpStatus.OK, status: "successful", responseData: section} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
             return result;
         }

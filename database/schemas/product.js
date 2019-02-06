@@ -85,6 +85,10 @@ let productSchema = new mongoose.Schema({
             return true;
         }
     },
+    marked_price: {
+        type: priceSchema,
+        required: false
+    },
     price: {
         type: priceSchema,
         required: true
