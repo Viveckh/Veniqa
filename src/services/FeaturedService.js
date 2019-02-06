@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import ProxyUrls from '@/constants/ProxyUrls';
+import FeaturedDTO from '@/dto/FeaturedProductDTO.json';
 
 /**
  * Service for api calls with feature apis.
@@ -39,17 +40,19 @@ export default {
 
     res.content.forEach((prd) => {
       const conf = prd.config;
-      const val = {
-        _id: prd.product._id || '',
-        design: conf.design || '',
-        name: prd.product.name,
-        store: prd.product.store || '',
-        brand: prd.product.brand || '',
-        price: prd.product.price,
-        detailedImageUrls: prd.product.detailedImageUrls || '',
-        marked_price: prd.product.marked_price,
-      };
+      // const val = {
+      //   _id: prd.product._id || '',
+      //   design: conf.design || '',
+      //   name: prd.product.name,
+      //   store: prd.product.store || '',
+      //   brand: prd.product.brand || '',
+      //   price: prd.product.price,
+      //   detailedImageUrls: prd.product.detailedImageUrls || '',
+      //   marked_price: prd.product.marked_price,
+      // };
 
+      const val = _.assignIn(_.cloneDeep(FeaturedDTO), prd.product);
+      val.design = conf.design;
       data.push(val);
     });
 
