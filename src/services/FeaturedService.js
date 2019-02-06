@@ -16,7 +16,7 @@ export default {
     try {
       const { data } = await Vue.prototype.$axios({
         url: `${ProxyUrls.featuredUrl}${section}`,
-        method: 'get'
+        method: 'get',
       });
 
       if (data && data.httpStatus === 200) {
@@ -37,7 +37,7 @@ export default {
   prepareResponse(res) {
     const data = [];
 
-    res.content.forEach(prd => {
+    res.content.forEach((prd) => {
       const conf = prd.config;
       const val = {
         _id: prd.product._id || '',
@@ -46,12 +46,13 @@ export default {
         store: prd.product.store || '',
         brand: prd.product.brand || '',
         price: prd.product.price,
-        detailedImageUrls: prd.product.detailedImageUrls || ''
+        detailedImageUrls: prd.product.detailedImageUrls || '',
+        marked_price: prd.product.marked_price,
       };
 
       data.push(val);
     });
 
     return data;
-  }
+  },
 };
