@@ -4,6 +4,7 @@ export const Stripe = {
   createSource: null,
   retrieveSource: null,
   elements: null,
+  paymentRequest: null,
 };
 
 export const baseStyle = {
@@ -39,6 +40,19 @@ function init(key, options = {}) {
   } else if (Stripe.elements === null) {
     Stripe.elements = Stripe.instance.elements(options);
   }
+
+  if (!Stripe.paymentRequest) {
+    Stripe.paymentRequest = Stripe.instance.paymentRequest({
+      country: 'US',
+      currency: 'usd',
+      total: {
+        label: 'Demo total',
+        amount: 1000,
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+  }
 }
 
 export function create(elementType, key_or_stripe, options = {}) {
@@ -52,6 +66,14 @@ export function create(elementType, key_or_stripe, options = {}) {
   // Stripe.retrieveSource = options => Stripe.instance.retrieveSource(options);
 
   return element;
+}
+
+export function paymentRequest() {
+  const prButton = Stripe.elements.create('paymentRequestButton', {
+    paymentRequest: Stripe.paymentRequest,
+  });
+
+  return prButton;
 }
 
 export function destroy() {
