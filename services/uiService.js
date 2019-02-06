@@ -7,7 +7,7 @@ export default {
     async getFeaturedSection(name){
         let result = {};
         try {
-            let section = await FeaturedSectionModel.findOne({name: name}).populate('content.product', '_id name brand store price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
+            let section = await FeaturedSectionModel.findOne({name: name}).populate('content.product', '_id name brand store marked_price price thumbnailUrls detailedImageUrls featuredImageUrls').exec();
             result = section ? {httpStatus: httpStatus.OK, status: "successful", responseData: section} : {httpStatus: httpStatus.NOT_FOUND, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.NOT_FOUND)};
             return result;
         }

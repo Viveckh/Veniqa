@@ -11,7 +11,7 @@ export default {
 
         try {
             let products = await Product.paginate(searchObj, {
-                select: '_id name brand store price thumbnailUrls',
+                select: '_id name brand store marked_price price thumbnailUrls',
                 populate: [
                     { path: 'category', select: '-_id category subcategory' }
                 ],
