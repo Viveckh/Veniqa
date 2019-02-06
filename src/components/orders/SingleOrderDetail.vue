@@ -11,11 +11,11 @@
         <b-card bg-variant="light" :header="getOrderDeet()">
           <div class="card-text card-font">
             <p>Total Weight: <strong>{{order.cart.totalWeight.quantity}} {{order.cart.totalWeight.unit}}</strong></p>
-            <p>Sub Total Price: <strong>$ {{order.cart.subTotalPrice.amount}}</strong></p>
-            <p>Service Charge: <strong>$ {{order.cart.serviceCharge.amount}}</strong></p>
-            <p>Shipping Price: <strong>$ {{order.cart.shippingPrice.amount}}</strong></p>
-            <p>Tariff Price: <strong>$ {{order.cart.tariffPrice.amount}}</strong></p>
-            <p>Total Price: <strong>$ {{order.cart.totalPrice.amount}}</strong></p>
+            <p>Sub Total Price: <strong>$ {{order.cart.subTotalPrice.amount | formattedAmount}}</strong></p>
+            <p>Service Charge: <strong>$ {{order.cart.serviceCharge.amount | formattedAmount}}</strong></p>
+            <p>Shipping Price: <strong>$ {{order.cart.shippingPrice.amount | formattedAmount}}</strong></p>
+            <p>Tariff Price: <strong>$ {{order.cart.tariffPrice.amount | formattedAmount}}</strong></p>
+            <p>Total Price: <strong>$ {{order.cart.totalPrice.amount | formattedAmount}}</strong></p>
           </div>
         </b-card>
 
@@ -97,7 +97,11 @@ export default {
       else return '';
     },
 
-    
+    formattedAmount(amt){
+      let val = parseFloat(amt);
+
+      return val.toFixed(2);
+    }
   },
 
   

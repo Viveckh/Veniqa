@@ -145,6 +145,7 @@ export default {
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
+        this.$router.push('/')
       } catch (err) {
         this.$notify({
           group: 'all',
