@@ -12,9 +12,10 @@
       <b-row>
         <b-col md="2">
           <img
-            :src="item.product.thumbnailUrls.length > 0 ? item.product.thumbnailUrls[0] : ''"
+            :src="`https://s3.amazonaws.com/veniqa-catalog-images/permanent-thumbnails/${item.product._id}`"
             alt
             class="item-img"
+            crossorigin="anonymous"
           >
         </b-col>
         <b-col md="7">
