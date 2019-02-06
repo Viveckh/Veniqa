@@ -2,8 +2,8 @@
   <div class="home">
     <header-menu/>
     <div>
-        <!-- <main-page/> -->
-        <router-view/>
+      <!-- <main-page/> -->
+      <router-view/>
     </div>
 
     <!-- <div class="space"></div> -->
@@ -22,8 +22,8 @@ export default {
     // HeaderMenu,
     // MainPage,
     HeaderMenu,
-    FooterView
-  }
+    FooterView,
+  },
 };
 </script>
 

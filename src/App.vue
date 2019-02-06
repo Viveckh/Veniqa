@@ -127,7 +127,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Karla');
 
 #app {
   font-family: 'Quicksand','Raleway', sans-serif;
@@ -135,7 +135,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin: 0px;
-  color: #2c3e50;
+  color: rgba(34,34,34,.7);
   /* height: 100%; */
   font-size: 0.93em;
 }

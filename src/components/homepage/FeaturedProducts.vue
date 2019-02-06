@@ -35,8 +35,8 @@ export default {
   props: {
     products: {
       required: true,
-      type: Array,
-    },
+      type: Array
+    }
   },
   data() {
     return {};
@@ -45,8 +45,8 @@ export default {
     gotoProduct() {
       console.log('PR', this.product);
       this.$router.push(`/products/${this.product._id}`);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -63,7 +63,7 @@ h5 {
 }
 
 .picture1 {
-  background-color: red;
+  background-color: white;
 
   background-size: cover;
   background-position: center center;
@@ -75,7 +75,7 @@ h5 {
 }
 
 .picture2 {
-  background-color: red;
+  background-color: white;
   background: url('https://cdnb.lystit.com/photos/a1b0-2014/06/13/forever-21-purple-lace-up-buckled-combat-boots-product-1-20804550-0-230022788-normal.jpeg');
   background-size: cover;
   background-position: center center;
