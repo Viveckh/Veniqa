@@ -18,7 +18,14 @@
         >
           <h4>{{product.name}}</h4>
           <p>{{product.brand}}</p>
-          <h5>{{product.price.amount + ' ' + product.price.currency}}</h5>
+          <h5>
+            <span v-if="!product.marked_price || product.marked_price.amount <= 0"
+              :class="{'underline': product.marked_price && product.marked_price.amount > 0}"
+            >{{product.price.amount + ' ' + product.price.currency}}</span>
+            <span
+              v-if="product.marked_price && product.marked_price.amount > 0"
+            >{{product.marked_price.amount}} {{product.marked_price.currency}}</span>
+          </h5>
 
           <router-link :to="`/products/${product._id}`">
             <b-button class="addToCart">Shop Now</b-button>

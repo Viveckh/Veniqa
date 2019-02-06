@@ -5,26 +5,24 @@
     <h1>{{product.name}}</h1>
     <h6>By {{product.brand}}</h6>
     <br>
-    <div v-html="product.details_html"></div>
-    <br>
     <h4>{{product.price.currency}} {{product.price.amount}}</h4>
-    <br>
     <div class="custom-attributes">
       <div v-for="(attrib, aid) in customizations" v-bind:key="aid">
         <div v-if="attrib.type === 'Array'">
           <b-form-group
-            :label-cols="1"
+            :label-cols="2"
             :label="attrib.name"
             :label-for="attrib.name+aid"
             horizontal
+            
           >
             <b-form-select
               v-model="selectedCustomizations[attrib.key]"
               :options="attrib.values"
               :name="attrib.name+aid"
               :id="attrib.name+aid"
+              size="sm"
               style="max-width: 150px"
-              class="selectOptions"
             />
             <b-form-invalid-feedback id="countryFeedback">
               <!-- This will only be shown if the preceeding input has an invalid state -->
@@ -36,7 +34,7 @@
         <!-- Show Color selection for colors -->
         <div v-if="attrib.type==='Colors'">
           <b-row>
-            <b-col md="1">{{attrib.name}}</b-col>
+            <b-col md="2">{{attrib.name}}</b-col>
             <b-col md="9">
               <ul class="color-select">
                 <li v-for="(color, cid) in attrib.values" v-bind:key="cid">
@@ -54,14 +52,15 @@
         </div>
       </div>
     </div>
-    <br>
     <p style="margin-top: 20px">
-      <b-button class="addToCart" @click="addToCart()">
+      <b-button class="add-to-cart" @click="addToCart()">
         <font-awesome-icon icon="shopping-bag"/>&nbsp;
         Add to Cart
       </b-button>
     </p>
     <hr>
+    <div v-html="product.details_html"></div>
+
   </div>
 </template>
 
@@ -189,21 +188,18 @@ export default {
   .section-title {
     font-size: 1.2em;
   }
-  .addToCart {
+  .add-to-cart {
     background-color: white; /*this for transparent button*/
     border: 2px solid black; /* this is for button border*/
     border-radius: 0px;
     color: black;
-    padding: 15px 40px;
+    padding: 10px 40px;
   }
-  .addToCart:hover {
+  .add-to-cart:hover {
     background-color: black; /*this for transparent button*/
     border: 2px solid black; /* this is for button border*/
     border-radius: 0px;
     color: white;
-  }
-  .selectOptions {
-    border-radius: 0px;
   }
   h1 {
     color: black;
