@@ -123,6 +123,19 @@
           <b-form-invalid-feedback id="subcategoryFeedback">This field cannot be empty</b-form-invalid-feedback>
         </b-form-group>
 
+        <!-- Marked Price -->
+        <b-form-group horizontal :label-cols="2" label="Marked Price" label-for="markedprice">
+          <b-form-input
+            id="markedprice"
+            type="number"
+            step="0.01"
+            name="markedprice"
+            v-model="product.marked_price.amount"
+            placeholder="Enter the marked price of the product"
+            size="sm"
+          ></b-form-input>
+        </b-form-group>
+
         <!-- Price -->
         <b-form-group horizontal :label-cols="2" label="Price" label-for="price">
           <b-form-input
@@ -142,6 +155,9 @@
             This field cannot be empty or negative.
           </b-form-invalid-feedback>
         </b-form-group>
+
+        
+
         <b-form-group horizontal :label-cols="2" label="Tariff Category" label-for="tariffcategory">
           <b-form-select
             v-model="product.tariff"
@@ -487,7 +503,10 @@ export default {
   },
   created() {
     if (this.data != null) {
-      this.product = _.cloneDeep(this.data);
+      // Assign in assigns the values from data to product. This helps reduce the undefined errors by keeping the 
+      // defaults of product. 
+      this.product = _.assignIn(this.product, this.data);
+      // this.product = _.cloneDeep(this.data);
       this.product.tariff = this.product.tariff._id;
     }
   },
@@ -508,6 +527,10 @@ export default {
           subcategory: null,
         },
         store_sku: null,
+        marked_price: {
+          amount: 0,
+          currency: 'USD'
+        },
         active: true,
         thumbnailUrls: [
           // 'https://s3.amazonaws.com/veniqa-catalog-images/6948edbc43110f0828169a5119e4f0f88436658c/thumbnails/910f997478edfa6f1d444169371f1d3149f6113f',
@@ -669,7 +692,9 @@ export default {
       if (!this.categoryState) {
         this.product.category.category = '';
       }
-      console.log('ID', this.product.category._id);
+      this.product.store_sku = this.skuState == null ? '' : this.product.store_sku;
+
+      
       if (!this.subcategoryState) this.product.category._id = '';
       return (
         this.productNameState
@@ -682,6 +707,7 @@ export default {
         && this.weightState
         && this.unitState
         && this.tariffState
+        && this.skuState
       );
     },
 
