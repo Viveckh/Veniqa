@@ -3,6 +3,7 @@ import cryptoGen from '../authentication/cryptoGen';
 import awsConnections from '../cloudservices/awsConnections';
 import awsConfig from '../properties/aws-config';
 import httpStatus from 'http-status-codes';
+import axios from 'axios';
 import logger from '../logging/logger';
 
 export default {
@@ -45,7 +46,15 @@ export default {
             }
             product = await product.save();
 
-            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+            if (!product) {
+                result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.BAD_REQUEST)};
+                return result;
+            }
+
+            // Upload the brand new permanent thumbnail that will be preserved forever, throws error if unsuccessful
+            await this.uploadPermanentProductThumbnail(product._id, product.thumbnailUrls[0]);
+
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: product};
             return result;
         }
         catch(err) {
@@ -126,6 +135,9 @@ export default {
                 })
             }
 
+            // Upload the brand new permanent thumbnail that will be preserved forever, throws error if unsuccessful
+            await this.uploadPermanentProductThumbnail(product._id, product.thumbnailUrls[0]);
+
             result = {httpStatus: httpStatus.OK, status: "successful", responseData: product};
             return result;
         }
@@ -140,11 +152,49 @@ export default {
         let result = {};
         try {
             // Remove the product
-            let product = await Product.remove({_id: productId}).exec();
-            
-            // We are not deleting the images associated with the product from S3, because those links will be referenced in order tables if the product was previously ordered
+            let product = await Product.findOne({_id: productId}).exec();
+            let res = await Product.remove({_id: productId}).exec();
 
-            result = product ? {httpStatus: httpStatus.OK, status: "successful", responseData: product} : {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)};
+            // if removal not successful, return failure
+            if (!res) {
+                result = {httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)};
+                return result;
+            }
+
+            // If product removal was succesful, go ahead and clear the storage occupied by the product in s3
+            // Prepare a list of images to delete in s3
+            let s3ObjectsToDelete = [];
+            if (product && product.detailedImageUrls && product.detailedImageUrls.length > 0) {
+                let folderName = product.detailedImageUrls[0].split('/')[4];    // That's the index in the url where the folder name for a catalog will be
+
+                for (let url of product.detailedImageUrls) {
+                    s3ObjectsToDelete.push({ Key: folderName + "/detailed-images/" + url.split('/')[6] })
+                }
+
+                for (let url of product.thumbnailUrls) {
+                    s3ObjectsToDelete.push({ Key: folderName + '/thumbnails/' + url.split('/')[6] });
+                }
+
+                for (let url of product.featuredImageUrls) {
+                    s3ObjectsToDelete.push({ Key: folderName + "/featured-images/" + url.split('/')[6] });
+                }
+            }
+
+            // Go ahead and delete the old s3 objects
+            if (s3ObjectsToDelete.length > 0) { 
+                // Delete the s3 objects for this product now
+                awsConnections.s3.deleteObjects({
+                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Delete: {
+                        Objects: s3ObjectsToDelete,
+                        Quiet: false
+                    }
+                }, (err, data) => {
+
+                })
+            }
+
+            result = {httpStatus: httpStatus.OK, status: "successful", responseData: res};
             return result;
         }
         catch(err) {
@@ -257,6 +307,23 @@ export default {
             logger.error("Error in getPresignedUrlsForCatalogImageUploads Service", {meta: err});
             result = {httpStatus: httpStatus.BAD_REQUEST, status: "failed", errorDetails: err};
             return result;
+        }
+    },
+
+    async uploadPermanentProductThumbnail(productId, imageUrl) {
+        try {
+            let res = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+
+            // Go ahead and put the object
+            const response = await awsConnections.s3.putObject({
+                Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                Key: 'permanent-thumbnails/' + productId,
+                Body: res.data,
+                ContentType: 'image/png'
+            }).promise();
+        }
+        catch(err) {
+            throw { message: "Error while uploading permanent thumbnail to S3", error: err };
         }
     }
 }
