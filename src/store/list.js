@@ -10,11 +10,21 @@ export default {
     searchTerm: '',
     paging: _.cloneDeep(PagingOption),
     listResult: [],
+    categories: [],
+    subCategoriesMen: [],
+    subCategoriesWomen: [],
   },
 
   mutations: {
     setSearchTerm(state, payload) {
       state.searchTerm = payload;
+    },
+    setCategories(state, payload) {
+      state.categories = payload;
+      state.subCategoriesMen = _.map(payload["Men's Clothing"], '_id');
+      state.subCategoriesWomen = _.map(payload["Women's Clothing"], '_id');
+
+      console.log(state.categories, state.subCategoriesMen, state.subCategoriesWomen);
     },
 
     setListResult(state, payload) {
@@ -24,19 +34,46 @@ export default {
   },
 
   actions: {
-    async searchForProduct({
+    async getCategoriesData({
       state,
       commit,
     }, payload) {
       try {
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          url: ProxyUrls.categoriesUrl,
+          method: 'get',
+        });
 
+        if (data && data.httpStatus == 200) {
+          const groups = _.mapValues(_.groupBy(data.responseData, 'category'),
+            clist => clist.map(category => _.omit(category, 'category')));
+          commit('setCategories', groups);
+        }
+        return false;
+      } catch (err) {
+        console.log('Error', err);
+        throw err;
+      }
+    },
+    async searchForProduct({
+      state,
+      commit,
+    }, payload) {
+      if (payload == 'Men') {
+        payload = state.subCategoriesMen;
+      } else {
+        payload = state.subCategoriesWomen;
+      }
+      try {
         const {
           data,
         } = await Vue.prototype.$axios({
           url: ProxyUrls.searchProduct,
           method: 'post',
           data: {
-            searchTerm: payload,
+            categoryIds: payload,
             pagingOptions: state.paging,
           },
         });
@@ -70,6 +107,9 @@ export default {
 
     listResult(state) {
       return state.listResult;
+    },
+    getCategories(state) {
+      return state.categories;
     },
   },
 };
