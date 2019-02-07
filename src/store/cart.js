@@ -117,8 +117,6 @@ export default {
         return true;
       }
 
-      const customization = {};
-
       const toSend = _.map(products, p => ({
         product: p._id,
         counts: p.counts == 0 ? 1 : p.counts,
@@ -140,10 +138,11 @@ export default {
             };
 
             await dispatch('createCheckout', reqObj);
-          } else {
+            return true;
+          } 
             commit('setCart', data.responseData);
             return true;
-          }
+          
         } else throw new Error(data.httpStatus);
       } catch (err) {
         throw new Error(err);
