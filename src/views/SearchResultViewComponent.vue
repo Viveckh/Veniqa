@@ -1,6 +1,5 @@
 <template>
   <div id="search-result-view">
-    <div class="space"></div>
     <search-result-view :data="searchResult" :title="pageName"/>
   </div>
 </template>

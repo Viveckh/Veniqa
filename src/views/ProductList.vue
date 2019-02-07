@@ -1,6 +1,5 @@
 <template>
   <div class="product-list-view">
-    <div class="space"></div>
     <search-result-view :data="products" :title="searchTerm"/>
   </div>
 </template>
@@ -37,9 +36,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.product-list-view {
-  width: 80%;
-  margin: auto;
-  margin-bottom: 10px;
-}
 </style>
