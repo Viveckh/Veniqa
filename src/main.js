@@ -15,6 +15,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import '@/assets/css/global.scss';
 import '@/assets/css/overrides.scss';
+import '@/assets/css/sidebar.scss';
 
 import VueScrollTo from 'vue-scrollto';
 import Notifications from 'vue-notification'
