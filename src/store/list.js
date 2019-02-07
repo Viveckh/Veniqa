@@ -47,8 +47,7 @@ export default {
         });
 
         if (data && data.httpStatus == 200) {
-          const groups = _.mapValues(_.groupBy(data.responseData, 'category'),
-            clist => clist.map(category => _.omit(category, 'category')));
+          const groups = _.mapValues(_.groupBy(data.responseData, 'category'));
           commit('setCategories', groups);
         }
         return false;
@@ -63,8 +62,10 @@ export default {
     }, payload) {
       if (payload == 'Men') {
         payload = state.subCategoriesMen;
-      } else {
+      } else if (payload == 'Women') {
         payload = state.subCategoriesWomen;
+      } else {
+        payload = [payload];
       }
       try {
         const {

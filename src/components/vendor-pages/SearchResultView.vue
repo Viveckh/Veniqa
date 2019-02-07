@@ -8,7 +8,7 @@
     <b-row>
       <b-col md="2" class="beginner align-left">
         <div>
-          <p>Filter</p>
+          <side-menu-view :sidebar="categories"></side-menu-view>
         </div>
       </b-col>
       <b-col md="10" class="align-left">
@@ -49,11 +49,16 @@
 
 
 <script>
-import notification from '@/services/NotificationService';
-import SearchResultViewImage from '@/components/vendor-pages/SearchResultViewImage';
+import SearchResultViewImage from '@/components/vendor-pages/SearchResultViewImage.vue';
+import SideMenuView from '@/components/vendor-pages/SideMenuView.vue';
 
 export default {
   name: 'SearchResultView',
+  data() {
+    return {
+      categories: null,
+    };
+  },
   props: {
     data: {
       type: Array,
@@ -66,6 +71,11 @@ export default {
   },
   components: {
     SearchResultViewImage,
+    SideMenuView,
+  },
+
+  created() {
+    this.categories = this.$store.getters['listStore/getCategories'];
   },
 
   methods: {
@@ -77,29 +87,6 @@ export default {
         // height: '350px',
         'margin-bottom': '10px',
       };
-    },
-
-    /**
-     * @deprecated because add to cart doesn't happen from this page anymore.
-     */
-    async addToCart(product) {
-      try {
-        const val = await this.$store.dispatch('cartStore/addToTheCart', [
-          product,
-        ]);
-        if (val) {
-          notification.success(this, `Added ${product.name} to the cart`);
-        }
-      } catch (err) {
-        console.log('Error', err);
-        // handle notification for different status here.
-        notification.error(
-          this,
-          `${
-            product.name
-          } couldn't be added for some reason. Please try again later`,
-        );
-      }
     },
 
     openProductDetail(pid) {
