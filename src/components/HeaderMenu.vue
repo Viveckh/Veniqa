@@ -58,8 +58,8 @@
               />
             </div>
 
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
+            <b-nav-item to="/products" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
+            <b-nav-item to="/products" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
 
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
