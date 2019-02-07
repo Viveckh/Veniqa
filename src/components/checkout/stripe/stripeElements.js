@@ -55,35 +55,9 @@ export function create(elementType, key_or_stripe, options = {}) {
   return element;
 }
 
-export function createPaymentRequest() {
-  console.log('Creating payment request');
-  Stripe.paymentRequest = Stripe.instance.paymentRequest({
-    country: 'US',
-    currency: 'usd',
-    total: {
-      label: 'Total',
-      amount: 200,
-    },
-    requestShipping: true,
-    requestPayerEmail: true,
-    shippingOptions: [
-      {
-        id: 'free',
-        label: 'Free Shipping',
-        detail: 'Delivery within 5 days',
-        amount: 0,
-      },
-    ],
-  });
+export function createPaymentRequest(options) {
+  Stripe.paymentRequest = Stripe.instance.paymentRequest(options);
 
-  Stripe.paymentRequest.canMakePayment().then((val) => {
-    console.log('Can make payment', val);
-  }).catch((err) => {
-    console.log('Error ', err);
-  });
-
-
-  console.log('Created', Stripe.paymentRequest);
   return Stripe.paymentRequest;
 }
 

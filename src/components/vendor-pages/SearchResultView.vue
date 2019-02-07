@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import notification from '@/services/NotificationService';
+import notification from '@/services/notificationService';
 import SearchResultViewImage from '@/components/vendor-pages/SearchResultViewImage';
 
 export default {

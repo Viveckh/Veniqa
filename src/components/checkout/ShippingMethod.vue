@@ -1,6 +1,7 @@
 <template>
   <div id="shipping-detail" class="align-left">
-    <h3>Shipping Method</h3>
+    <br>
+    <h4>Shipping Method</h4>
     <hr>
     <div v-if="isSessionActive">
       <b-form-group>
@@ -28,7 +29,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import notification from '@/services/NotificationService';
+import notification from '@/services/notificationService';
 
 export default {
   name: 'ShippingMethod',

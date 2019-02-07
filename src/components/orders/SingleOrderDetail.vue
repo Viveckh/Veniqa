@@ -67,7 +67,7 @@
 
 <script>
 import ProxyUrls from '@/constants/ProxyUrls';
-import notification from '@/services/NotificationService';
+import notification from '@/services/notificationService';
 import moment from 'moment';
 import SingleOrderItem from '@/components/orders/SingleOrderItem';
 
