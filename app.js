@@ -125,12 +125,9 @@ app.use(passport.session());
 // To Allow cross origin requests originating from selected origins
 app.use(function(req, res, next) {
   var origin = req.headers.origin;
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  /*
   if(ALLOWED_ORIGINS.indexOf(origin) > -1){
       res.setHeader('Access-Control-Allow-Origin', origin);
   }
-  */
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.header('Access-Control-Allow-Credentials', true);
