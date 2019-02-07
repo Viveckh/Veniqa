@@ -33,4 +33,8 @@ export default {
   // Order list
   orderList: '/user/orderList',
   orderDetail: '/user/orderDetails?orderId=',
+
+
+  // Payment URLS
+  stripePay: '/orders/completeCheckoutUsingCard',
 };

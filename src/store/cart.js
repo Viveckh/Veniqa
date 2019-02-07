@@ -75,8 +75,8 @@ export default {
     },
 
     async addToTheCart({
- state, commit, dispatch, rootGetters 
-}, products) {
+      state, commit, dispatch, rootGetters,
+    }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive'] && products.length > 0) {
         const foundIndex = _.findIndex(state.cart, pr => _.isEqual(pr.product, products[0]));
@@ -151,8 +151,8 @@ export default {
     },
 
     async getCart({
- state, commit, dispatch, rootGetters 
-}) {
+      state, commit, dispatch, rootGetters,
+    }) {
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'get',
@@ -167,8 +167,8 @@ export default {
     },
 
     async deleteOrders({
- state, commit, rootGetters, dispatch 
-}, cartItems) {
+      state, commit, rootGetters, dispatch,
+    }, cartItems) {
       const deletedIds = _.map(cartItems, '_id');
 
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
@@ -206,8 +206,8 @@ export default {
     },
 
     async updateOrders({
- state, commit, dispatch, rootGetters 
-}, payloadArray) {
+      state, commit, dispatch, rootGetters,
+    }, payloadArray) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
         // These commits don't do anything but are necessary because they help persist.
@@ -365,6 +365,10 @@ export default {
 
     checkoutInitiated(state) {
       return state.checkoutInitiated;
+    },
+
+    checkoutId(state) {
+      return state.checkoutID;
     },
   },
 };

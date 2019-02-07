@@ -1,47 +1,85 @@
 <template>
-  <div>
-    <!-- <stripe-payment/> -->
-    <card class='stripe-card'
-      :class='{ complete }'
-      :stripe='stripeKey'
-      :options='stripeOptions'
-      @change='complete = $event.complete'
-    /> 
-    <b-btn class='pay-with-stripe' @click='pay' :disabled='!complete'>Pay with credit card</b-btn> 
+  <div id="payment">
+    <h4>Payment</h4>
+    <hr>
+    <stripe-payment :totalCost="totalPrice" :stripeKey="stripeKey" @pay="startPayment"/>
+    <br>
+    <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn>&nbsp;&nbsp;
+    <b-btn disabled class="primary-button">Pay with Khalti</b-btn>
   </div>
 </template>
 
 <script>
-import {Card, Stripe} from './stripe'
+import StripePayment from '@/components/checkout/stripe/Stripe'
+import { mapGetters } from "vuex";
+import notification from '@/services/notificationService';
+import paymentService from '@/services/paymentService';
+import Config from '@/config'
 
 export default {
+  name: 'PaymentDetail',
   components: {
-    Card
-  },
-  data () {
-    return {
-      complete: false,
-      stripeOptions: {
-        // see https://stripe.com/docs/stripe.js#element-options for details
-      },
-      stripeKey: 'pk_test_ulpX3vj4B28cfSq7Evkt1pFz'
-    }
+    StripePayment
   },
 
-  // components: { Card },
+  data() {
+    return {
+      stripeKey: Config.STRIPE_KEY,
+    }
+  },
 
   methods: {
-    pay () {
-      // createToken returns a Promise which resolves in a result object with
-      // either a token or an error key.
-      // See https://stripe.com/docs/api#tokens for the token object.
-      // See https://stripe.com/docs/api#errors for the error object.
-      // More general https://stripe.com/docs/stripe.js#stripe-create-token.
-      Stripe.createToken().then(data => console.log(data.token))
+    async startPayment(token){
+      if(!this.checkoutId || this.checkoutId.length <= 0) return;
+      try {
+        let data = paymentService.payWithStripe(token,this.checkoutId);
+        
+        notification.success(this, 'Payment was successful.');
+      } catch (error) {
+        console.log("Error with Veniqa payment", error);
+        notification.error(this, 'Payment could not be completed at the moment');
+      }
+    },
+
+    async handlePayment() {
+      try {
+        const success = await this.$store.dispatch('cartStore/pay');
+        notification.success(this, 'Payment processed');
+        this.shippingMethod = null;
+      } catch (error) {
+        console.log(error);
+        const msg = error.httpStatus ? '' : error.response.data.errorDetails;
+        notification.error(this, `Error: ${msg}`, 'all');
+      }
+    },
+  },
+
+  computed: {
+    ...mapGetters({
+      'checkoutId': 'cartStore/checkoutId',
+    }),
+
+    totalPrice() {
+      let cost = this.$store.getters['cartStore/getTotal'];
+      if(cost == null) return 0;
+      return parseInt(cost.amount *100) ;
+    },
+
+    shippingMethod: {
+      get() {
+        return this.$store.getters['shippingStore/shippingMethod'];
+      },
+      set(val) {
+        this.$store.commit('shippingStore/setShippingMethod', val);
+      }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
+#payment{
+  margin: 2rem 0rem;
+}
 </style>
+

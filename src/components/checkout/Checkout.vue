@@ -8,7 +8,14 @@
         <b-card bg-variant="light" title="Shipping Details" class="text-left">
           <shipping-detail @selected="addressSelected"/>
           <shipping-method/>
-          <payment-detail/>
+          <transition
+            name="shipping-form-anim"
+            enter-active-class="animated slideInLeft faster"
+            leave-active-class="animated slideOutLeft faster"
+          >
+            <payment-detail v-if="checkoutInitiated"/>
+            
+          </transition>
         </b-card>
       </b-col>
       <b-col md="6">
@@ -36,8 +43,7 @@
         </div>
 
         <div v-if="checkoutInitiated">
-          <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn>&nbsp;&nbsp;
-          <b-btn disabled class="primary-button">Pay with Khalti</b-btn>
+          
         </div>
       </div>
       <div v-else>
@@ -54,7 +60,7 @@ import PaymentDetail from '@/components/checkout/PaymentDetail';
 import ProxyUrls from '@/constants/ProxyUrls';
 import ShippingMethod from '@/components/checkout/ShippingMethod';
 import { mapGetters } from 'vuex';
-import notification from '@/services/NotificationService';
+import notification from '@/services/notificationService';
 
 export default {
   name: 'Checkout',
@@ -73,17 +79,7 @@ export default {
   },
 
   methods: {
-    async handlePayment() {
-      try {
-        const success = await this.$store.dispatch('cartStore/pay');
-        notification.success(this, 'Payment done');
-        this.shippingMethod = null;
-      } catch (error) {
-        console.log(error);
-        const msg = error.httpStatus ? '' : error.response.data.errorDetails;
-        notification.error(this, `Error: ${msg}`, 'all');
-      }
-    },
+    
     async addressSelected(selected) {
       this.$store.commit('shippingStore/addressSelected', selected);
       if (!this.checkoutInitiated) return;

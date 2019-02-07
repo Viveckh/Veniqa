@@ -20,12 +20,14 @@ export default {
     this._card.on('focus', event => this.$emit('focus'))
     this._card.on('change', event => this.$emit('change', event));
 
-    this._paymentRequest = createPaymentRequest();
+    this._paymentRequest = createPaymentRequest(this.paymentReqOptions);
     this._paymentRequest.on('change', event => this.$emit('pchange', event));
     // Callback when the shipping address is updated.
     this._paymentRequest.on('shippingaddresschange', event => {
       event.updateWith({status: 'success'});
     });
+
+    this._paymentRequest.on('token', ev => this.$emit('token', ev));
 
     this._paymentBtn = createPayButton();
   },
@@ -35,17 +37,11 @@ export default {
     const el = document.createElement('div')
     this._card.mount('#card-cc');
 
-
     // Check if the Payment Request is available (or Apple Pay on the Web).
     const paymentRequestSupport = await this._paymentRequest.canMakePayment();
     if (paymentRequestSupport) {
       // Display the Pay button by mounting the Element in the DOM.
       this._paymentBtn.mount('#payment-request-button');
-      // Replace the instruction.
-      // document.querySelector('.instruction').innerText =
-      //   'Or enter your shipping and payment details below';
-      // // Show the payment request section.
-      // document.getElementById('payment-request').classList.add('visible');
     }
     
   },
