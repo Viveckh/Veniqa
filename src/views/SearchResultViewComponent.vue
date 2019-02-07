@@ -9,7 +9,7 @@
 import _ from 'lodash';
 import PagingOption from '@/dto/Pagination';
 import { mapGetters } from 'vuex';
-import notification from '@/services/notificationService';
+import notification from '@/services/NotificationService';
 import SearchResultView from '@/components/vendor-pages/SearchResultView';
 
 export default {

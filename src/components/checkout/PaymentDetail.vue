@@ -13,7 +13,7 @@
 <script>
 import StripePayment from '@/components/checkout/stripe/Stripe'
 import { mapGetters } from "vuex";
-import notification from '@/services/notificationService';
+import notification from '@/services/NotificationService';
 import paymentService from '@/services/paymentService';
 import Config from '@/config'
 

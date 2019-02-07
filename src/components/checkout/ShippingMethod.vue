@@ -29,7 +29,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import notification from '@/services/notificationService';
+import notification from '@/services/NotificationService';
 
 export default {
   name: 'ShippingMethod',
