@@ -2,10 +2,10 @@
   <div id="search-result">
     <div class="search-result-view">
       <div class="result-view">
-        <b-row class="text-center">
+        <b-row>
           <b-col></b-col>
           <b-col cols="10">
-            <p class="align-left" v-if="title != 'Search Results'">Shop ▶ {{title}}</p>
+            <p class="align-left" v-if="title != 'Search Results'">Shop &nbsp; > &nbsp; {{title}}</p>
             <p class="align-left" v-else>{{title}}</p>
             <hr>
 
@@ -127,9 +127,9 @@ export default {
   display: inline-block;
   // box-shadow: 3px 4px 5px 0px #ccc;
   // background-color: white;
-  border-radius: 0.25rem;
+  border-radius: 0px;
   margin: 20px 20px 30px 0px;
-  width: 270px;
+  width: 300px;
 
   // &:hover .img-cls {
   //   transform: scale(1.2);
@@ -138,7 +138,7 @@ export default {
 
   .img-parent {
     height: 315px;
-    width: 270px;
+    width: 300px;
     overflow: hidden;
   }
 
@@ -161,20 +161,6 @@ export default {
   p {
     padding: 3px 5px;
     margin: 0px;
-  }
-
-  // .img-cls {
-  //   border-top-right-radius: 0.25rem;
-  //   border-top-left-radius: 0.25rem;
-  //   height: 100%;
-  //   width: 100%;
-  // }
-
-  .add-cart-button {
-    width: 100%;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    padding: 10px 0px;
   }
 }
 </style>

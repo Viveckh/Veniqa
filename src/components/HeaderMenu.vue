@@ -58,8 +58,8 @@
               />
             </div>
 
-            <b-nav-item to="/products" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
-            <b-nav-item to="/products" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
+            <b-nav-item @click="openCatalogPage('Dress')" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
+            <b-nav-item @click="openCatalogPage('Black')" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
 
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
@@ -131,6 +131,9 @@ export default {
     };
   },
   methods: {
+    openCatalogPage(searchTerm) {
+      this.$router.push(`/catalogs/${searchTerm}`);
+    },
     searchProduct() {
       this.$store.commit('searchStore/setSearchTerm', this.searchTerm);
       this.$router.push('/search');

@@ -29,9 +29,8 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
     },
     {
-      path: 'products',
-      name: 'products',
-
+      path: 'catalogs/:searchTerm',
+      props: true,
       component: ProductList,
     },
     {

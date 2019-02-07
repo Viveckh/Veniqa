@@ -27,16 +27,16 @@ export default {
     async searchForProduct({
       state,
       commit,
-    }, searchTerm) {
+    }, payload) {
       try {
-        console.log('Datdfghjkuygbnju', searchTerm);
+
         const {
           data,
         } = await Vue.prototype.$axios({
           url: ProxyUrls.searchProduct,
           method: 'post',
           data: {
-            category: searchTerm,
+            searchTerm: payload,
             pagingOptions: state.paging,
           },
         });
@@ -48,6 +48,7 @@ export default {
           });
 
           commit('setListResult', transformed);
+          console.log('New Search', transformed);
           return true;
         }
         return false;
