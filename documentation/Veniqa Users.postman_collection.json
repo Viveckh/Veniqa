@@ -455,7 +455,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t},\n\t\"searchTerm\": \"amazon\",\n\t\"categoryId\": \"5c45e46bb720330af113ed50\",\n\t\"sortRule\": \"price -auditLog.createdOn\"\n}"
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t},\n\t\"searchTerm\": \"forever 21\",\n\t\"categoryIds\": [\"5c45ff5ba8ef66002b9e073e\", \"5c461d01a8ef66002b9e0744\"],\n\t\"sortRule\": \"price -auditLog.createdOn\"\n}"
 						},
 						"url": {
 							"raw": "{{server}}/catalog/search",

@@ -3,10 +3,10 @@ import httpStatus from 'http-status-codes';
 import logger from '../logging/logger';
 
 export default {
-    async searchCatalog(pagingOptions, searchTerm, categoryId, sortRule) {
+    async searchCatalog(pagingOptions, searchTerm, categoryIds, sortRule) {
         let result = {};
         let searchObj = searchTerm ? {$text: {$search: searchTerm}} : {};
-        categoryId ? searchObj.category = categoryId : '';
+        categoryIds ? searchObj.category = {$in: categoryIds} : '';
         searchObj.active = true; // Only return from active items
 
         try {

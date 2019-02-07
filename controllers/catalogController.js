@@ -6,7 +6,7 @@ export default {
     async searchCatalog(req, res, next) {
         let response;
         try {
-            response = await catalogService.searchCatalog(req.body.pagingOptions, req.body.searchTerm, req.body.categoryId, req.body.sortRule);
+            response = await catalogService.searchCatalog(req.body.pagingOptions, req.body.searchTerm, req.body.categoryIds, req.body.sortRule);
             return res.status(response.httpStatus).send(response);
         }
         catch(err) {
