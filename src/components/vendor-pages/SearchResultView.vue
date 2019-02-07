@@ -1,7 +1,7 @@
 <template>
   <div id="search-result">
     <div class="search-result-view">
-      <h1>Search Results</h1>
+      <h3>{{title}}</h3>
       <div class="result-view">
         <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
           <div class="link" @click="openProductDetail(product._id)">
@@ -23,7 +23,7 @@
                     class="underline"
                   >{{product.marked_price.currency}} {{product.marked_price.amount}}</strong>&nbsp;&nbsp;
                 </span>
-                
+
                 <strong>
                   <span>{{product.price.currency}} {{product.price.amount}}</span>
                 </strong>
@@ -48,9 +48,13 @@ export default {
       type: Array,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
   },
   components: {
-    SearchResultViewImage
+    SearchResultViewImage,
   },
 
   methods: {

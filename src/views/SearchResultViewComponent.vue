@@ -1,7 +1,7 @@
 <template>
   <div id="search-result-view">
     <div class="space"></div>
-    <search-result-view :data="searchResult"/>
+    <search-result-view :data="searchResult" :title="pageName"/>
   </div>
 </template>
 
@@ -13,14 +13,19 @@ import notification from '@/services/NotificationService';
 import SearchResultView from '@/components/vendor-pages/SearchResultView';
 
 export default {
+  data() {
+    return {
+      pageName: 'Search Results',
+    };
+  },
   name: 'SearchResultViewComponent',
   props: {
     query: {
-      type: [String, Object]
-    }
+      type: [String, Object],
+    },
   },
   components: {
-    SearchResultView
+    SearchResultView,
   },
 
   created() {
@@ -30,26 +35,31 @@ export default {
   watch: {
     searchTerm() {
       this.searchForProduct();
-    }
+    },
   },
 
   methods: {
     async searchForProduct() {
       try {
-        const isSuccess = await this.$store.dispatch('searchStore/searchForProduct');
+        const isSuccess = await this.$store.dispatch(
+          'searchStore/searchForProduct',
+        );
       } catch (error) {
-        notification.error(this, 'Coudnt get the search result because the server went haywire');
+        notification.error(
+          this,
+          'Coudnt get the search result because the server went haywire',
+        );
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
       searchTerm: 'searchStore/searchTerm',
       paging: 'searchStore/paging',
-      searchResult: 'searchStore/searchResult'
-    })
-  }
+      searchResult: 'searchStore/searchResult',
+    }),
+  },
 };
 </script>
 

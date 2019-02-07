@@ -24,13 +24,19 @@ export default {
   },
 
   actions: {
-    async searchForProduct({ state, commit, queryData }) {
+    async searchForProduct({
+      state,
+      commit,
+    }, searchTerm) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        console.log('Datdfghjkuygbnju', searchTerm);
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrls.searchProduct,
           method: 'post',
           data: {
-            category: "Men's Clothing",
+            category: searchTerm,
             pagingOptions: state.paging,
           },
         });
