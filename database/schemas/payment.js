@@ -34,6 +34,10 @@ let paymentSchema = new mongoose.Schema({
     amount_in_payment_currency: {
         type: priceSchema,
         required: true
+    },
+    payment_service_response_dump: {
+        type: {},
+        required: true
     }
 }, {_id: false});
 
