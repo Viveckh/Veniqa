@@ -72,7 +72,8 @@ export default {
                     amount_in_payment_currency: {
                         amount: Math.round(orderCart.totalPrice.amount * exchange_rate.one_usd_equals * 100) / 100,
                         currency: currency
-                    }
+                    },
+                    payment_service_response_dump: {nothing: "here"}
                 }],
                 auditLog: {
                     createdBy: {
@@ -165,7 +166,8 @@ export default {
                     amount_in_payment_currency: {
                         amount: Math.round(checkout.cart.totalPrice.amount * exchange_rate.one_usd_equals * 100) / 100,
                         currency: currency
-                    }
+                    },
+                    payment_service_response_dump: {'nothing': here}
                 })
             }
             else {
@@ -251,9 +253,10 @@ export default {
                 source: 'STRIPE',
                 type: 'AUTHORIZATION',
                 payment_id: chargeObj.id,
-                transaction_id: chargeObj.balance_transaction,
+                transaction_id: chargeObj.balance_transaction || '0',
                 amount_in_usd: checkoutObj.cart.totalPrice,
-                amount_in_payment_currency: checkoutObj.cart.totalPrice
+                amount_in_payment_currency: checkoutObj.cart.totalPrice,
+                payment_service_response_dump: chargeObj
             });
             order.auditLog.createdOn = new Date();
             order.auditLog.updatedOn = new Date();
@@ -335,6 +338,7 @@ export default {
             order.payment_info[0].type = 'SALE';
             order.payment_info[0].payment_id = chargeObj.idx;
             order.payment_info[0].transaction_id = chargeObj.idx;
+            order.payment_info[0].payment_service_response_dump = chargeObj;
             
             order.auditLog.createdOn = new Date();
             order.auditLog.updatedOn = new Date();
