@@ -6,7 +6,7 @@
       fixed="top"
       :class="{'header-color': this.scrollPos > 50}"
     >-->
-    <b-navbar toggleable="md" fixed="top" class="header-color" type="light">
+    <b-navbar toggleable="md" fixed="top" class="header-color header-width" type="light" :style="headerStyle">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand to="/">
@@ -18,7 +18,7 @@
         >
       </b-navbar-brand>
 
-      <b-nav-item class="d-xs-block d-sm-block d-md-none" to="/checkout">
+      <b-nav-item class="d-xs-block d-sm-block d-md-none" @click="$emit('openCart')">
         <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
         <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
       </b-nav-item>
@@ -78,7 +78,8 @@
               <b-dropdown-item @click="logoutClicked()">Logout</b-dropdown-item>
             </b-nav-item-dropdown>
             <!-- </b-nav-item> -->
-            <b-nav-item class="veniqa-nav d-none d-md-block" to="/checkout">
+            <!-- <b-nav-item class="veniqa-nav d-none d-md-block" to="/checkout"> -->
+            <b-nav-item class="veniqa-nav d-none d-md-block" @click="$emit('openCart')">
               <font-awesome-icon icon="shopping-cart" style="font-size: 1.2em"/>
               <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
             </b-nav-item>
@@ -120,9 +121,19 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'HeaderMenu',
-  // mounted() {
-  //   window.addEventListener('scroll', this.updateScroll);
-  // },
+  props: {
+    rightSidebarVisible: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+
+    sidebarWidth: {
+      type: Number,
+      required: false,
+      default: 300
+    }
+  },
   data() {
     return {
       scrollPos: null,
@@ -177,6 +188,13 @@ export default {
     ...mapGetters({
       isSessionActive: 'authStore/isSessionActive',
     }),
+
+    headerStyle() {
+      return {
+        'margin-right': this.rightSidebarVisible ? `${this.sidebarWidth}px` : '0px',
+        // 'min-width': '100%'
+      }
+    }
   },
 };
 </script>
@@ -185,6 +203,12 @@ export default {
 @import '../assets/css/global.scss';
 #header-menu {
   text-transform: uppercase;
+
+  @media (max-width: 767.98px) {
+    .header-width{
+      width: 100%;
+    }
+  }
 }
 .special-search-input {
   border: none;
@@ -226,6 +250,8 @@ export default {
 .header-color {
   background-color: white;
   // color: white !important;
+
+  transition: margin-right 0.5s;
 }
 
 .veniqa-nav {
