@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
+import cors from 'cors';
 
 // Babel imports, even though they aren't directly referenced, they need to be here
 import babelCore from 'babel-core/register';
@@ -123,16 +124,16 @@ app.use(passport.session());
 /************************************************************* */
 
 // To Allow cross origin requests originating from selected origins
-app.use(function(req, res, next) {
-  var origin = req.headers.origin;
-  if(ALLOWED_ORIGINS.indexOf(origin) > -1){
-      res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
+var corsOptions = {
+  origin: ALLOWED_ORIGINS,
+  methods: ['GET, POST, OPTIONS, PUT, DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}
+
+app.use(cors(corsOptions));
+
+/************************************************************** */
 
 app.use('/', indexRouter);
 app.use('/security', securityRouter);
