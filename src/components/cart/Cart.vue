@@ -5,10 +5,11 @@
 
     <div v-if="orders && orders.length <= 0" class="order-empty">
       <div class="content">
-        <div>You have not ordered yet.
+        <div> {{isSessionActive ? 'Your cart is empty.' : 'You need to login first to add to cart'}}
           <br>
-          <br>
-          <b-button @click="gotoDealPage()" class="primary-button">Go Get Orderin</b-button>
+          <b-btn class="primary-button" v-if="!isSessionActive" @click="$router.push('/login')">
+            Login
+          </b-btn>
         </div>
       </div>
     </div>
@@ -45,7 +46,7 @@
                   size="sm"
                   v-model="item.counts"
                   :options="countOptions"
-                  @input="updateCartItem(item)"
+                  @change="updateCartItem(item)"
                   class="mb-3"
                   style="max-width: 100px"
                 />
@@ -115,6 +116,7 @@ export default {
     },
 
     async updateCartItem(item) {
+      console.log("Going here to update the cart item")
       if (item.counts > 0) {
         try {
           const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
@@ -140,6 +142,7 @@ export default {
     ...mapGetters({
       orders: 'cartStore/getCart',
       subtotal: 'cartStore/getSubTotal',
+      isSessionActive: 'authStore/isSessionActive',
     }),
 
 
