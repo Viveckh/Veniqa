@@ -60,7 +60,7 @@ import PaymentDetail from '@/components/checkout/PaymentDetail';
 import ProxyUrls from '@/constants/ProxyUrls';
 import ShippingMethod from '@/components/checkout/ShippingMethod';
 import { mapGetters } from 'vuex';
-import notification from '@/services/NotificationService';
+import notification from '@/services/notificationService';
 
 export default {
   name: 'Checkout',
