@@ -123,7 +123,6 @@ app.use(passport.session());
 /************************************************************* */
 
 // To Allow cross origin requests originating from selected origins
-/*
 app.use(function(req, res, next) {
   var origin = req.headers.origin;
   if(ALLOWED_ORIGINS.indexOf(origin) > -1){
@@ -134,7 +133,6 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
   next();
 });
-*/
 
 app.use('/', indexRouter);
 app.use('/security', securityRouter);
