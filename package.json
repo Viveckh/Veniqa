@@ -16,6 +16,7 @@
     "compression": "^1.7.3",
     "connect-redis": "^3.4.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-rate-limit": "^3.3.2",
