@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist';
+// import VuexPersistence from 'vuex-persist';
 
 // Import modules here.
 import CartStore from '@/store/cart';
@@ -11,13 +11,13 @@ import Search from '@/store/search';
 import Order from '@/store/order';
 import ListStore from '@/store/list';
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-  reducer: state => ({
-    cartStore: state.cartStore,
-    shippingStore: state.shippingStore,
-  }),
-});
+// const vuexLocal = new VuexPersistence({
+//   storage: window.localStorage,
+//   reducer: state => ({
+//     cartStore: state.cartStore,
+//     shippingStore: state.shippingStore,
+//   }),
+// });
 
 Vue.use(Vuex);
 
@@ -32,5 +32,5 @@ export default new Vuex.Store({
     listStore: ListStore,
   },
 
-  plugins: [vuexLocal.plugin],
+  // plugins: [vuexLocal.plugin],
 });

@@ -117,6 +117,7 @@ export default {
         return true;
       }
 
+      console.log("Products", products)
       const toSend = _.map(products, p => ({
         product: p._id,
         counts: p.counts == 0 ? 1 : p.counts,
@@ -140,11 +141,14 @@ export default {
             await dispatch('createCheckout', reqObj);
             return true;
           } 
+          console.log("Setting to cart")
             commit('setCart', data.responseData);
             return true;
           
         } else throw new Error(data.httpStatus);
       } catch (err) {
+        console.log("Error adding", err);
+        console.log("More", err.message);
         throw new Error(err);
       }
     },
@@ -196,10 +200,13 @@ export default {
 
             await dispatch('createCheckout', reqObj);
           } else {
+            console.log("Getting all cart vals")
             commit('setCart', data.responseData);
           }
         }
       } catch (err) {
+        console.log("Error getting cart", err);
+        console.log("More", err.message);
         throw new Error(err);
       }
     },
@@ -249,6 +256,7 @@ export default {
 
             await dispatch('createCheckout', reqObj);
           } else {
+            console.log("Setting cart after successful update")
             commit('setCart', data.responseData);
             return data;
           }
@@ -256,6 +264,8 @@ export default {
           throw new Error(data.httpStatus);
         }
       } catch (err) {
+        console.log("Error getting cart", err);
+        console.log("More", err.message);
         throw new Error(err);
       }
     },
