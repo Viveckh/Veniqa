@@ -1,3 +1,5 @@
+@import './global.scss';
+
 .sidebar {
   height: 100%;
   width: 0;
@@ -5,24 +7,21 @@
   z-index: 2000;
   top: 0;
   right: 0;
-  background-color: #111;
+  background-color: whitesmoke;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 50px;
 }
 
 .sidebar a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: $pitch-black;
   display: block;
   transition: 0.3s;
 }
 
-.sidebar a:hover {
-  color: #f1f1f1;
-}
 
 .sidebar .closebtn {
   position: absolute;

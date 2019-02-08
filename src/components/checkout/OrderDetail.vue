@@ -1,42 +1,44 @@
 <template>
   <div class="order-detail align-left">
-    <ul class="orders">
-      <li v-for="(item, itemIndex) in orders" v-bind:key="itemIndex">
-        <b-row>
-          <b-col md="3">
-            <div
-              class="order-img order-desc"
-              v-if="item.product.thumbnailUrls && item.product.thumbnailUrls.length > 0"
-              @click="gotoProduct(item.product)"
-              :style="orderPicture(item.product.thumbnailUrls[0])"
-            ></div>
-          </b-col>
-          <b-col md="5">
-            <div class="order-desc" @click="gotoProduct(item.product._id)">
-              {{item.product.name}}
-              <br>
-              <div style="font-size: 12px">
-                <span v-for="(custom, cid) of item.customizations" v-bind:key="cid">
-                  {{custom | customDisplay}} |
-                  </span>
+      <ul class="orders">
+        <li v-for="(item, itemIndex) in orders" v-bind:key="itemIndex">
+          <b-row>
+            <b-col md="3">
+              <div
+                class="order-img order-desc"
+                v-if="item.product.thumbnailUrls && item.product.thumbnailUrls.length > 0"
+                @click="gotoProduct(item.product)"
+                :style="orderPicture(item.product.thumbnailUrls[0])"
+              ></div>
+            </b-col>
+            <b-col md="5">
+              <div class="order-desc" @click="gotoProduct(item.product)">
+                {{item.product.name}}
+                <br>
+                <div style="font-size: 12px">
+                  <span
+                    v-for="(custom, cid) of item.customizations"
+                    v-bind:key="cid"
+                  >{{custom | customDisplay}} |</span>
+                </div>
               </div>
-            </div>
-            <span class="delete" @click="deleteSelected(item)">Delete</span>
-          </b-col>
-          <b-col class="align-right">
-            <b-form-select
-              v-model="item.counts"
-              :options="countOptions"
-              @input="updateCartItem(item)"
-              class="mb-3"
-            />
-          </b-col>
-          <b-col
-            class="align-right"
-          >{{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}</b-col>
-        </b-row>
-      </li>
-    </ul>
+              <span class="delete" @click="deleteSelected(item)">Delete</span>
+            </b-col>
+            <b-col class="align-right">
+              <b-form-select
+                size="sm"
+                v-model="item.counts"
+                :options="countOptions"
+                @input="updateCartItem(item)"
+                class="mb-3"
+              />
+            </b-col>
+            <b-col
+              class="align-right"
+            >{{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}</b-col>
+          </b-row>
+        </li>
+      </ul>
     <hr>
 
     <div class="total-line" v-if="orders && orders.length > 0">
@@ -120,8 +122,6 @@ export default {
   name: 'OrderDetail',
   data() {
     return {
-      editMode: true,
-      selectedItems: [],
       countOptions: []
     };
   },
@@ -151,30 +151,12 @@ export default {
       this.$router.push(`/products/${pid._id}`);
     },
 
-    editOrder() {
-      this.editMode = true;
-    },
-
-    itemClicked(item) {
-      // Replace with product ID.
-      const foundIndex = _.findIndex(this.selectedItems, item);
-
-      if (foundIndex < 0) {
-        this.selectedItems.push(item);
-      } else {
-        this.selectedItems.splice(foundIndex, 1);
-      }
-    },
-
     async updateCartItem(item) {
       if (item.counts > 0) {
         try {
-          this.editMode = false;
           const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
           notification.success(this, 'The cart has been successfully updated.');
-          this.editMode = true;
         } catch (err) {
-          this.editMode = true;
           console.log('Error', err);
           notification.error(
             this,
@@ -207,10 +189,6 @@ export default {
       tariffPrice: 'cartStore/getTariffPrice',
       totalWeight: 'cartStore/getTotalWeight'
     }),
-
-    quantityState() {
-      return qty => qty >= 1;
-    }
   }
 };
 </script>
@@ -224,10 +202,7 @@ export default {
   color: #bdbdbd;
   cursor: pointer;
 }
-.delete {
-  color: $primary-red;
-  cursor: pointer;
-}
+
 
 .total-line {
   padding: 10px;

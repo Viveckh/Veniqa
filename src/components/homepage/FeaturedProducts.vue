@@ -99,15 +99,5 @@ h5 {
 .jumbrotron {
   background-color: white;
 }
-.addToCart {
-  margin-top: 2em;
-  background-color: white; /*this for transparent button*/
-  border: 1px solid black; /* this is for button border*/
-  border-radius: 0px;
-  color: black;
-}
-.addToCart:hover {
-  background-color: black; /*this for transparent button*/
-  color: white;
-}
+
 </style>

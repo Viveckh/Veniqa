@@ -8,12 +8,10 @@
     </div>
 
     <div class="sidebar" :style="cartStyle">
-      <a href="javascript:void(0)" class="closebtn" @click="closeRightSidebar()">×</a>
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+      <cart-view v-show="cartViewVisible" @close="closeRightSidebar()" :sidebarWidth="SIDEBAR_WIDTH"/>
+      
     </div>
+    
   </div>
 </template>
 
@@ -21,20 +19,20 @@
 import MainPage from '@/components/homepage/MainPage.vue';
 import HeaderMenu from '@/components/HeaderMenu.vue';
 import FooterView from '@/components/Footer.vue';
+import CartView from '@/components/cart/Cart';
 
 export default {
   name: 'home',
   components: {
-    // HeaderMenu,
-    // MainPage,
     HeaderMenu,
     FooterView,
+    CartView
   },
 
   data() {
     return {
       cartViewVisible: false,
-      SIDEBAR_WIDTH: 300
+      SIDEBAR_WIDTH: 350
     }
   },
 
@@ -48,13 +46,13 @@ export default {
     mainviewStyle() {
       return {
         // 'margin-right': this.cartViewVisible ? `${this.SIDEBAR_WIDTH}px`: '0px',
-        'transform': this.cartViewVisible ? 'translate3d(-300px, 0px, 0px)' : '',
+        'transform': this.cartViewVisible ? `translate3d(-${this.SIDEBAR_WIDTH}px, 0px, 0px)` : '',
       }
     },
 
     cartStyle() {
         return {
-          'width': this.cartViewVisible ? `${this.SIDEBAR_WIDTH}px` : '0px',
+          'width': this.cartViewVisible ?  `${this.SIDEBAR_WIDTH}px` : '0px',
         }
     }
   }

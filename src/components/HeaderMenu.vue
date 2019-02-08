@@ -6,7 +6,7 @@
       fixed="top"
       :class="{'header-color': this.scrollPos > 50}"
     >-->
-    <b-navbar toggleable="md" fixed="top" class="header-color" type="light" :style="headerStyle">
+    <b-navbar toggleable="md" fixed="top" class="header-color header-width" type="light" :style="headerStyle">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand to="/">
@@ -192,7 +192,7 @@ export default {
     headerStyle() {
       return {
         'margin-right': this.rightSidebarVisible ? `${this.sidebarWidth}px` : '0px',
-        'min-width': '100%'
+        // 'min-width': '100%'
       }
     }
   },
@@ -203,6 +203,12 @@ export default {
 @import '../assets/css/global.scss';
 #header-menu {
   text-transform: uppercase;
+
+  @media (max-width: 767.98px) {
+    .header-width{
+      width: 100%;
+    }
+  }
 }
 .special-search-input {
   border: none;
