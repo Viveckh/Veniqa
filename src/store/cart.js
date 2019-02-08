@@ -118,11 +118,23 @@ export default {
       }
 
       console.log("Products", products)
-      const toSend = _.map(products, p => ({
-        product: p._id,
-        counts: p.counts == 0 ? 1 : p.counts,
-        customizations: p.customValues ? p.customValues : null,
-      }));
+      // const toSend = _.map(products, p => ({
+      //   product: p._id,
+      //   counts: p.counts == 0 ? 1 : p.counts,
+      //   customizations: p.customValues ? p.customValues : null,
+      // }));
+      let toSend = [];
+
+      for(let i = 0; i < products.length; i++){
+        let p = products[i];
+        toSend.push({
+          product: p._id,
+          counts: p.counts == 0 ? 1 : p.counts,
+          customizations: p.customValues ? p.customValues : null,
+        })
+      }
+
+      console.log("To send", toSend)
 
       try {
         const { data } = await Vue.prototype.$axios({
@@ -229,14 +241,16 @@ export default {
       }
 
       const orders = [];
-      state.cart.forEach((item) => {
+      // state.cart.forEach((item) => {
+      for(let i = 0; i < state.cart.length; i++) {
+        let item = state.cart[i];
         orders.push({
           product: item.product._id,
           _id: item._id,
           counts: item.counts,
           customizations: item.customizations,
         });
-      });
+      };
 
       try {
         const { data } = await Vue.prototype.$axios({
@@ -330,9 +344,11 @@ export default {
       state.shippingPrice = allCarts.shippingPrice ? allCarts.shippingPrice : null;
       state.tariffPrice = allCarts.tariffPrice ? allCarts.tariffPrice : null;
 
-      allCarts.items.forEach((item) => {
+      // allCarts.items.forEach((item) => {
+      for(let i = 0; i < allCarts.items.length; i++){
+        let item = allCarts.items[i];
         transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
-      });
+      };
 
       state.cart.push(...transformed);
     },
