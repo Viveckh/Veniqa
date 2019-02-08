@@ -116,7 +116,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import notification from '@/services/NotificationService';
+import notification from '@/services/notificationService';
 
 export default {
   name: 'OrderDetail',
