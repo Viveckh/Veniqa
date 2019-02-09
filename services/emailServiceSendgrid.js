@@ -1,9 +1,8 @@
 import sendgridMail from '@sendgrid/mail';
-import sendgridCreds from '../properties/sendgrid';
-import frontEndUrls from '../properties/frontEndUrls';
+import config from 'config';
 import logger from '../logging/logger';
 import * as _ from 'lodash';
-sendgridMail.setApiKey(sendgridCreds.apiKey);
+sendgridMail.setApiKey(process.env.VENIQA_SENDGRID_API_KEY);
 
 export default {
     emailEmailConfirmationInstructions(email, name, token) {
@@ -12,11 +11,11 @@ export default {
             from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: email, // list of receivers
             subject: 'Welcome to Veniqa - Please Confirm Your Email', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to confirm your email address<br><br><button><a href="' + frontEndUrls.emailConfirmationBaseUrl + '/' + token + '">Confirm Your Email Address</a></button>',
-            templateId: sendgridCreds.templates.confirm_account_customer,
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to confirm your email address<br><br><button><a href="' + config.get('frontend_urls.email_confirmation_base_url') + '/' + token + '">Confirm Your Email Address</a></button>',
+            templateId: config.get('sendgrid.templates.confirm_account_customer'),
             dynamic_template_data: {
                 name: name,
-                confirm_account_customer_url: frontEndUrls.emailConfirmationBaseUrl + '/' + token
+                confirm_account_customer_url: config.get('frontend_urls.email_confirmation_base_url') + '/' + token
             }
         };
 
@@ -29,11 +28,11 @@ export default {
             from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: email, // list of receivers
             subject: 'Veniqa - Password Reset', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '">Reset Password</a></button>',
-            templateId: sendgridCreds.templates.reset_password_customer,
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + config.get('frontend_urls.password_reset_base_url') + '/' + token + '">Reset Password</a></button>',
+            templateId: config.get('sendgrid.templates.reset_password_customer'),
             dynamic_template_data: {
                 name: name,
-                reset_password_customer_url: frontEndUrls.passwordResetBaseUrl + '/' + token
+                reset_password_customer_url: config.get('frontend_urls.password_reset_base_url') + '/' + token
             }
 
         };
@@ -48,7 +47,7 @@ export default {
             to: email, // list of receivers
             subject: 'Veniqa - Password Reset Successful', // Subject line
             html: '<b>Hi </b>' +  name + '<br>Your password has been successfully reset.<br><br>',
-            templateId: sendgridCreds.templates.confirmation_password_reset_customer,
+            templateId: config.get('sendgrid.templates.confirmation_password_reset_customer'),
             dynamic_template_data: {
                 name: name
             }
@@ -66,7 +65,7 @@ export default {
             to: condensedOrderObj.user_email, // list of receivers
             subject: 'Veniqa - Order Received', // Subject line
             html: '<b>Hi </b>' + '<br>We have received your order.<br><br>',
-            templateId: sendgridCreds.templates.order_received,
+            templateId: config.get('sendgrid.templates.order_received'),
             dynamic_template_data: condensedOrderObj
         };
 

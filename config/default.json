@@ -1,0 +1,51 @@
+{
+    "server_port": 3000,
+    "mongodb_collections": {
+        "users": "veniqa_users",
+        "curated_products": "veniqa_curated_products",
+        "checkouts": "veniqa_checkouts",
+        "orders": "veniqa_orders",
+        "exchange_rates": "veniqa_currency_exchange_rates",
+        "tariff_rates": "veniqa_tariff_rates",
+        "product_categories": "veniqa_product_categories",
+        "ui_featured_sections": "veniqa_ui_featured_sections"
+    },
+    "mongodb_settings": {
+        "use_new_url_parser": true,
+        "use_create_index": true
+    },
+    "session": {
+        "name": "sessionID",
+        "max_age": 1800000
+    },
+    "allowed_origins": [
+        "https://dev-veniqa-client.netlify.com",
+        "http://localhost:4200"
+    ],
+    "token_validity": {
+        "password_reset_token_valid_for": 3600000
+    },
+    "logging": {
+        "mongodb_collection": "veniqa_client_server_error_log",
+        "combined_log_file_name": "combined.log",
+        "error_log_file_name": "error.log",
+        "exception_log_file_name": "exceptions.log"
+    },
+    "frontend_urls": {
+        "email_confirmation_base_url": "https://dev-veniqa-client.netlify.com/#/email-confirmation",
+        "password_reset_base_url": "https://dev-veniqa-client.netlify.com/#/password-reset"
+    },
+    "sendgrid": {
+        "templates": {
+            "confirm_account_customer": "d-68c570dd120044d894e07566bf951964",
+            "reset_password_customer": "d-e779dcfad7fb47e7be8d79bdfe75fb0c",
+            "confirmation_password_reset_customer": "d-a02ad738dfc8404c8da016b46a754805",
+            "order_received": "d-7732bac6703245c7b68ea53a92d5bed3",
+            "referral_signup": "d-12c2e567ac6246b0a0d379324ede8bd4",
+            "referral_bonus": "d-4fedb8fcd5974229a9e31ff7284afb1d"
+        }
+    },
+    "khalti": {
+        "verification_url": "https://khalti.com/api/v2/payment/verify/"
+    }
+}

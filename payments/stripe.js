@@ -1,6 +1,5 @@
 import Stripe from 'stripe';
-import stripeConfig from '../properties/stripe.json';
 
-const stripe = Stripe(stripeConfig.test_secret_key)
+const stripe = Stripe(process.env.VENIQA_STRIPE_API_KEY)
 
 module.exports = stripe;

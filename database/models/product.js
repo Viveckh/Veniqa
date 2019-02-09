@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import mongoosePaginator from 'mongoose-paginate';
-import MONGO_COLLECTIONS from '../../properties/mongoCollections';
+import config from 'config';
 
 import productSchema from '../schemas/product';
 
@@ -9,4 +9,4 @@ import productSchema from '../schemas/product';
 productSchema.plugin(mongoosePaginator);
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model(MONGO_COLLECTIONS.curated_products, productSchema);
+module.exports = mongoose.model(config.get('mongodb_collections.curated_products'), productSchema);

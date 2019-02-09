@@ -1,7 +1,23 @@
 import nodemailer from 'nodemailer';
-import emailConfig from '../properties/email';
-import frontEndUrls from '../properties/frontEndUrls';
+import config from 'config';
 import logger from '../logging/logger'
+
+// Set up the connection object
+let emailConfig = {
+    credentials: {
+        host: process.env.VENIQA_NODEMAILER_HOST,
+        port: process.env.VENIQA_NODEMAILER_PORT,
+        secure: process.env.VENIQA_NODEMAILER_SECURE,
+        auth: {
+            user: process.env.VENIQA_NODEMAILER_USER,
+            pass: process.env.VENIQA_NODEMAILER_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: process.env.VENIQA_NODEMAILER_REJECT_UNAUTHORIZED
+        }
+    }
+}
+
 let transporter = nodemailer.createTransport(emailConfig.credentials)
 
 // verify connection configuration
@@ -20,7 +36,7 @@ export default {
             from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: 'support@veniqa.com, ' + email, // list of receivers
             subject: 'Veniqa - Confirm Your Email', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to confirm your email address<br><br><button><a href="' + frontEndUrls.emailConfirmationBaseUrl + '/' + token + '">Confirm Your Email Address</a></button>'
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to confirm your email address<br><br><button><a href="' + config.get('frontend_urls.email_confirmation_base_url') + '/' + token + '">Confirm Your Email Address</a></button>'
         };
 
         // send mail with defined transport object
@@ -38,7 +54,7 @@ export default {
             from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: 'support@veniqa.com, ' + email, // list of receivers
             subject: 'Veniqa - Password Reset', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '">Reset Password</a></button>'
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + config.get('frontend_urls.password_reset_base_url') + '/' + token + '">Reset Password</a></button>'
         };
 
         // send mail with defined transport object

@@ -1,3 +1,6 @@
+// Environment and configurations, importing executes the script
+import  './config';
+
 // Standard Express and Node Server imports
 import createError from 'http-errors';
 import express from 'express';
@@ -7,6 +10,7 @@ import logger from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
+import config from 'config';
 
 // Babel imports, even though they aren't directly referenced, they need to be here
 import babelCore from 'babel-core/register';
@@ -17,18 +21,13 @@ import uuidv4 from 'uuid/v4';
 import session from 'express-session';
 import redis from 'redis';
 var RedisStore = require('connect-redis')(session);
-import sessionConfig from './properties/session';
-import redisConfig from './properties/redis';
 
 // Imports for Rate Limiting (DDos attacks prevention)
 import RateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
 
-// Database connection imports, importing initializes it, do this before route imports to initialize db models
-import dbConnection from './database/dbConnection';
-
-// CONSTANT IMPORTS
-import ALLOWED_ORIGINS from './properties/allowedOrigins.json';
+// Database connection imports
+import db from './database/dbConnection';
 
 // Router imports
 import indexRouter from './routes/index';
@@ -45,16 +44,19 @@ import passport from 'passport';
 import passportAuth from './authentication/passportAuth';
 
 /************************************************************* */
+// Establish database connection
+db.dbConnection();
 
+/************************************************************* */
 // Redis client
 var redisClient = redis.createClient({
-  host: redisConfig.host, 
-  port: redisConfig.port, 
-  password: redisConfig.password, 
+  host: process.env.VENIQA_REDIS_HOST, 
+  port: process.env.VENIQA_REDIS_PORT, 
+  password: process.env.VENIQA_REDIS_PASSWORD, 
   tls: {
-    host: redisConfig.host,
-    port: redisConfig.port,
-    servername: redisConfig.host
+    host: process.env.VENIQA_REDIS_HOST,
+    port: process.env.VENIQA_REDIS_PORT,
+    servername: process.env.VENIQA_REDIS_HOST
   }
 });
 
@@ -82,18 +84,18 @@ app.use(session({
     return uuidv4() // Use UUIDs for session IDs
   },
   store: new RedisStore({
-    host: redisConfig.host, 
-    port: redisConfig.port, 
-    pass: redisConfig.password, 
+    host: process.env.VENIQA_REDIS_HOST, 
+    port: process.env.VENIQA_REDIS_PORT, 
+    pass: process.env.VENIQA_REDIS_PASSWORD, 
     client: redisClient
   }),
-  secret: sessionConfig.secretKey,
+  secret: process.env.VENIQA_SESSION_SECRET_KEY,
   resave: false,  // setting true forces a resave in store even if session not changed
   rolling: true,  // setting true updates expiration with maxAge after every user request
   saveUninitialized: true,  // setting true saves even unmodified sessions
   cookie: {
     httpOnly: true,
-    maxAge: sessionConfig.maxAge
+    maxAge: config.get('session.max_age')
     // secure: true, // Set this to true only after veniqa has a ssl enabled site
   }
 }))
@@ -125,7 +127,7 @@ app.use(passport.session());
 
 // To Allow cross origin requests originating from selected origins
 var corsOptions = {
-  origin: ALLOWED_ORIGINS,
+  origin: config.get('allowed_origins'),
   methods: ['GET, POST, OPTIONS, PUT, DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

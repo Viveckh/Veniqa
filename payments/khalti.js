@@ -1,5 +1,5 @@
 import axios from 'axios';
-import khaltiConfig from '../properties/khalti.json';
+import config from 'config';
 import logger from '../logging/logger';
 
 export default {
@@ -12,12 +12,12 @@ export default {
             };
             
             // Preparing the config with authorization headers
-            let config = {
-                headers: { Authorization: 'Key ' + khaltiConfig.test_secret_key }
+            let khaltiConfig = {
+                headers: { Authorization: 'Key ' + process.env.VENIQA_KHALTI_API_KEY }
             };
         
             // Make the API request to Khalti
-            response = await axios.post(khaltiConfig.verification_url, data, config);
+            response = await axios.post(config.get('khalti.verification_url'), data, khaltiConfig);
             
             // Check the response and return the values
             return response.data;

@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 import validator from 'validator';
+import config from 'config';
 import * as _ from 'lodash';
 
 import weightSchema from './weight';
 import priceSchema from './price';
 import auditLogSchema from './auditLog';
 import customizationOptions from './customizationOptions';
-import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 
 import STORES_ARRAY from '../reference-data-files/stores.json';
 
@@ -43,7 +43,7 @@ let productSchema = new mongoose.Schema({
     },
     category: {
         type: Schema.Types.ObjectId,
-        ref: MONGO_COLLECTIONS.product_categories,
+        ref: config.get('mongodb_collections.product_categories'),
         required: true
     },
     thumbnailUrls: {
@@ -99,7 +99,7 @@ let productSchema = new mongoose.Schema({
     },
     tariff: {
         type: Schema.Types.ObjectId,
-        ref: MONGO_COLLECTIONS.tariff_rates,
+        ref: config.get('mongodb_collections.tariff_rates'),
         required: true
     },
     customizationOptions: {

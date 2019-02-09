@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import config from 'config';
 const Schema = mongoose.Schema;
-import MONGO_COLLECTIONS from '../../properties/mongoCollections';
 
 import weightSchema from './weight';
 import priceSchema from './price';
@@ -9,7 +9,7 @@ import priceSchema from './price';
 let cartItemSchema = new mongoose.Schema({
     product: {
         type: Schema.Types.ObjectId,
-        ref: MONGO_COLLECTIONS.curated_products,
+        ref: config.get('mongodb_collections.curated_products'),
         required: true
     },
     counts: {

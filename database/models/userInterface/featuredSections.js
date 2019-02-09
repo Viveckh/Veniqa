@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import config from 'config';
 const Schema = mongoose.Schema;
-import MONGO_COLLECTIONS from '../../../properties/mongoCollections';
 
 let featuredContentSchema = new mongoose.Schema({
     product: {
         type: Schema.Types.ObjectId,
-        ref: MONGO_COLLECTIONS.curated_products,
+        ref: config.get('mongodb_collections.curated_products'),
         required: true
     },
     config: {
@@ -28,4 +28,4 @@ let featuredSectionsSchema = new mongoose.Schema({
 });
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model(MONGO_COLLECTIONS.ui_featured_sections, featuredSectionsSchema);
+module.exports = mongoose.model(config.get('mongodb_collections.ui_featured_sections'), featuredSectionsSchema);

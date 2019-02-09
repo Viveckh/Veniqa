@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
-import MONGO_COLLECTIONS from '../../properties/mongoCollections';
+import config from 'config';
 
 import cartSchema from '../schemas/shoppingCart';
 import addressSchema from '../schemas/address';
@@ -43,4 +43,4 @@ let userSchema = new mongoose.Schema({
 
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model(MONGO_COLLECTIONS.users, userSchema);
+module.exports = mongoose.model(config.get('mongodb_collections.users'), userSchema);
