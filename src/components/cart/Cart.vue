@@ -46,7 +46,7 @@
                   size="sm"
                   v-model="item.counts"
                   :options="countOptions"
-                  @change="updateCartItem(item)"
+                  @change.native="updateCartItem(item)"
                   class="mb-3"
                   style="max-width: 100px"
                 />
@@ -116,19 +116,21 @@ export default {
     },
 
     async updateCartItem(item) {
-      console.log("Going here to update the cart item")
-      if (item.counts > 0) {
-        try {
-          const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
-          notification.success(this, 'The cart has been successfully updated.');
-        } catch (err) {
-          console.log('Error', err);
-          notification.error(
-            this,
-            'Cart could not be updated at the moment. Please try again later.'
-          );
+      this.$nextTick(async () => {
+        if (item.counts > 0) {
+          try {
+            const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
+            notification.success(this, 'The cart has been successfully updated.');
+          } catch (err) {
+            console.log('Error', err);
+            notification.error(
+              this,
+              'Cart could not be updated at the moment. Please try again later.'
+            );
+          }
         }
-      }
+      })
+      
     },
 
     async deleteSelected(item) {

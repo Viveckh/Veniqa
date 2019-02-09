@@ -45,6 +45,7 @@ export default {
       this.initiateApp();
     } else {
       this.$store.commit('shippingStore/resetAddresses');
+      this.$store.commit('cartStore/resetOrders');
     }
   },
 
@@ -103,7 +104,9 @@ export default {
         const isActive = this.checkSessionTimeout();
 
         if (!isActive) {
+          console.log("This is also happening while unsetting loading")
           this.$store.commit('shippingStore/resetAddresses');
+          this.$store.commit('cartStore/resetOrders');
           this.$store.commit('authStore/logoutUser');
         }
       }
