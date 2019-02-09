@@ -118,21 +118,11 @@ export default {
       }
 
       console.log("Products", products)
-      // const toSend = _.map(products, p => ({
-      //   product: p._id,
-      //   counts: p.counts == 0 ? 1 : p.counts,
-      //   customizations: p.customValues ? p.customValues : null,
-      // }));
-      let toSend = [];
-
-      for(let i = 0; i < products.length; i++){
-        let p = products[i];
-        toSend.push({
-          product: p._id,
-          counts: p.counts == 0 ? 1 : p.counts,
-          customizations: p.customValues ? p.customValues : null,
-        })
-      }
+      const toSend = _.map(products, p => ({
+        product: p._id,
+        counts: p.counts == 0 ? 1 : p.counts,
+        customizations: p.customValues ? p.customValues : null,
+      }));
 
       console.log("To send", toSend)
 
@@ -149,11 +139,10 @@ export default {
               address: rootGetters['shippingStore/getSelectedAddress'],
               shippingMethod: rootGetters['shippingStore/shippingMethod'],
             };
-
+            
             await dispatch('createCheckout', reqObj);
             return true;
           } 
-          console.log("Setting to cart")
             commit('setCart', data.responseData);
             return true;
           
