@@ -3,7 +3,8 @@ import axios from 'axios';
 import { eventHub } from '@/utils/EventHub';
 import { SilentUrls, SilentResponseUrls } from '../constants/Constants';
 
-const baseURL = 'https://veniqa.azurewebsites.net/';
+const baseURL = process.env.VUE_APP_API_BASE_URL;
+
 // const baseURL = 'http://37c33ae7.ngrok.io/';
 const instance = axios.create({
   baseURL,

@@ -77,7 +77,7 @@ export default {
 
 <style lang="scss">
 .vendor-page-bg {
-  background-image: url(../assets/images/amazon-bg.png);
+  // background-image: url(../assets/images/amazon-bg.png);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;

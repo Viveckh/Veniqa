@@ -64,7 +64,7 @@
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
               to="/login"
-              v-if="!userSessionActive"
+              v-if="!isSessionActive"
             >Login</b-nav-item>
 
             <b-nav-item-dropdown
@@ -99,13 +99,13 @@
             <b-nav-item class="align-left collapse-nav">Profile
               <hr>
             </b-nav-item>
-            <b-nav-item class="align-left collapse-nav" to="/login" v-if="!userSessionActive">Login</b-nav-item>
+            <b-nav-item class="align-left collapse-nav" to="/login" v-if="!isSessionActive">Login</b-nav-item>
             <hr>
             <b-nav-item class="align-left collapse-nav" v-if="isSessionActive" to="/orders">Orders</b-nav-item>
             <b-nav-item
               class="d-none d-md-block collapse-nav"
               to="/login"
-              v-if="!userSessionActive"
+              v-if="!isSessionActive"
             >Login</b-nav-item>
             <b-nav-item class="align-left collapse-nav" @click="logoutClicked()" v-else>Logout</b-nav-item>
           </div>
@@ -178,9 +178,6 @@ export default {
   computed: {
     nameOfUser() {
       return this.$store.getters['authStore/getFirstName'];
-    },
-    userSessionActive() {
-      return this.$store.getters['authStore/isSessionActive'];
     },
     totalOrders() {
       return this.$store.getters['cartStore/getTotalItems'];
