@@ -10,7 +10,7 @@ if (process.env.NODE_ENV == 'production') {
     }
     else {
         // Load the .env file from the system location where it is stored
-        const envConfig = dotenv.parse(fs.readFileSync('/etc/veniqa/client-server/.env.production'))
+        const envConfig = dotenv.parse(fs.readFileSync('.env.production'))
         for (let k in envConfig) {
             process.env[k] = envConfig[k]
         }
@@ -22,7 +22,7 @@ else {
     }
     else {
         // Load the .env file from the system location where it is stored
-        const envConfig = dotenv.parse(fs.readFileSync('/etc/veniqa/client-server/.env.development'))
+        const envConfig = dotenv.parse(fs.readFileSync('.env.development'))
         for (let k in envConfig) {
             process.env[k] = envConfig[k]
         }
