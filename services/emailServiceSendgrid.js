@@ -1,9 +1,8 @@
 import sendgridMail from '@sendgrid/mail';
-import sendgridCreds from '../properties/sendgrid';
-import frontEndUrls from '../properties/frontEndUrls';
+import config from 'config';
 import logger from '../logging/logger';
 
-sendgridMail.setApiKey(sendgridCreds.apiKey);
+sendgridMail.setApiKey(process.env.VENIQA_SENDGRID_API_KEY);
 
 export default {
     emailAdminWelcomeInstructions(email, name, token) {
@@ -12,11 +11,11 @@ export default {
             from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: email, // list of receivers
             subject: 'Veniqa - Admin Onboarding Instructions', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Thanks for joining Veniqa as an admin. <br> Before you can login, please click the link below to reset your login password<br><br><button><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '">Reset Password</a></button><br><br>Once you reset your password, you will be redirected to the login page.',
-            templateId: sendgridCreds.templates.confirm_account_admin,
+            html: '<b>Hi </b>' +  name + '<br>Thanks for joining Veniqa as an admin. <br> Before you can login, please click the link below to reset your login password<br><br><button><a href="' + config.get('frontend_urls.password_reset_base_url') + '/' + token + '">Reset Password</a></button><br><br>Once you reset your password, you will be redirected to the login page.',
+            templateId: config.get('sendgrid.templates.confirm_account_admin'),
             dynamic_template_data: {
                 name: name,
-                confirm_account_admin_url: frontEndUrls.passwordResetBaseUrl + '/' + token
+                confirm_account_admin_url: config.get('frontend_urls.password_reset_base_url') + '/' + token
             }
         };
 
@@ -29,11 +28,11 @@ export default {
             from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: email, // list of receivers
             subject: 'Veniqa - Password Reset', // Subject line
-            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + frontEndUrls.passwordResetBaseUrl + '/' + token + '">Reset Password</a></button>',
-            templateId: sendgridCreds.templates.reset_password_admin,
+            html: '<b>Hi </b>' +  name + '<br>Please click the link below to reset your password<br><br><button><a href="' + config.get('frontend_urls.password_reset_base_url') + '/' + token + '">Reset Password</a></button>',
+            templateId: config.get('sendgrid.templates.reset_password_admin'),
             dynamic_template_data: {
                 name: name,
-                reset_password_admin_url: frontEndUrls.passwordResetBaseUrl + '/' + token
+                reset_password_admin_url: config.get('frontend_urls.password_reset_base_url') + '/' + token
             }
         };
 
@@ -43,11 +42,11 @@ export default {
     emailPasswordResetConfirmation(email, name) {
         // setup email data with unicode symbols
         let mailOptions = {
-            from: '"Veniqa Support 👾" <support@veniqa.com>', // sender address
+            from: '"Veniqa Support" <support@veniqa.com>', // sender address
             to: email, // list of receivers
             subject: 'Veniqa - Password Reset Successful', // Subject line
             html: '<b>Hi </b>' +  name + '<br>Your password has been successfully reset.<br><br>',
-            templateId: sendgridCreds.templates.confirmation_password_reset_admin,
+            templateId: config.get('sendgrid.templates.confirmation_password_reset_admin'),
             dynamic_template_data: {
                 name: name
             }

@@ -1,6 +1,5 @@
 import crypto from 'crypto'
 import bCrypt from 'bcrypt-nodejs';
-import cryptoConfig from '../properties/crypto';
 
 export default {
     generateRandomToken() {

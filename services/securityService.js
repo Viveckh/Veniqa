@@ -1,6 +1,6 @@
 import User from '../database/models/user';
 import cryptoGen from '../authentication/cryptoGen';
-import tokenValidityConfig from '../properties/tokenValidity';
+import config from 'config';
 import emailService from './emailServiceSendgrid';
 import httpStatus from 'http-status-codes';
 import logger from '../logging/logger';
@@ -23,7 +23,7 @@ export default {
 
             // Generate password reset token and save it
             user.passwordResetToken = token;
-            user.passwordResetExpires = Date.now() + tokenValidityConfig.passwordResetTokenValidFor;
+            user.passwordResetExpires = Date.now() + config.get('token_validity.password_reset_token_valid_for');
             user = await user.save();
 
             // If the user was not properly saved, stop here and return failure

@@ -1,7 +1,7 @@
+import config from 'config';
 import Product from '../database/models/product';
 import cryptoGen from '../authentication/cryptoGen';
 import awsConnections from '../cloudservices/awsConnections';
-import awsConfig from '../properties/aws-config';
 import httpStatus from 'http-status-codes';
 import axios from 'axios';
 import logger from '../logging/logger';
@@ -125,7 +125,7 @@ export default {
             if (s3ObjectsToDelete.length > 0) { 
                 // Delete the old s3 objects for this product now
                 awsConnections.s3.deleteObjects({
-                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Bucket: config.get('aws_settings.s3.buckets.catalog_image_bucket'),
                     Delete: {
                         Objects: s3ObjectsToDelete,
                         Quiet: false
@@ -184,7 +184,7 @@ export default {
             if (s3ObjectsToDelete.length > 0) { 
                 // Delete the s3 objects for this product now
                 awsConnections.s3.deleteObjects({
-                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Bucket: config.get('aws_settings.s3.buckets.catalog_image_bucket'),
                     Delete: {
                         Objects: s3ObjectsToDelete,
                         Quiet: false
@@ -246,13 +246,13 @@ export default {
 
                 // GENERATE LINKS FOR THE THUMBNAIL FIRST
                 let thumbnailObjectKey = folderName + "/thumbnails/" + filename;
-                let thumbnailLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + thumbnailObjectKey;
+                let thumbnailLiveUrl = config.get('aws_settings.s3.s3_resource_live_base_url') + "/" + config.get('aws_settings.s3.buckets.catalog_image_bucket') + "/" + thumbnailObjectKey;
 
                 let thumbnailUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
-                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Bucket: config.get('aws_settings.s3.buckets.catalog_image_bucket'),
                     Key: thumbnailObjectKey,
                     ContentType: 'image/png',
-                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                    Expires: config.get('aws_settings.s3.presigned_url_expires_in')
                 });
 
                 response.thumbnailUrls.push({
@@ -263,13 +263,13 @@ export default {
 
                 // GENERATE LINKS FOR THE DETAILED IMAGES NEXT
                 let detailedImageObjectKey = folderName + "/detailed-images/" + filename;
-                let detailedImageLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + detailedImageObjectKey;
+                let detailedImageLiveUrl = config.get('aws_settings.s3.s3_resource_live_base_url') + "/" + config.get('aws_settings.s3.buckets.catalog_image_bucket') + "/" + detailedImageObjectKey;
 
                 let detailedImageUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
-                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Bucket: config.get('aws_settings.s3.buckets.catalog_image_bucket'),
                     Key: detailedImageObjectKey,
                     ContentType: 'image/png',
-                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                    Expires: config.get('aws_settings.s3.presigned_url_expires_in')
                 });
 
                 response.detailedImageUrls.push({
@@ -284,13 +284,13 @@ export default {
                 // We couldn't replace existing files because if those images were cached in some user's system, the updated image wouldn't show up
                 let filename = await cryptoGen.generateRandomToken();
                 let objectKey = folderName + "/featured-images/" + filename;
-                let objectLiveUrl = awsConfig.S3_RESOURCE_LIVE_BASE_URL + "/" + awsConfig.VENIQA_CATALOG_IMAGE_BUCKET + "/" + objectKey;
+                let objectLiveUrl = config.get('aws_settings.s3.s3_resource_live_base_url') + "/" + config.get('aws_settings.s3.buckets.catalog_image_bucket') + "/" + objectKey;
 
                 let presignedUploadUrl = awsConnections.s3.getSignedUrl('putObject', {
-                    Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                    Bucket: config.get('aws_settings.s3.buckets.catalog_image_bucket'),
                     Key: objectKey,
                     ContentType: 'image/png',
-                    Expires: awsConfig.PRESIGNED_URL_EXPIRES_IN
+                    Expires: config.get('aws_settings.s3.presigned_url_expires_in')
                 });
 
                 response.featuredImageUrls.push({
@@ -316,7 +316,7 @@ export default {
 
             // Go ahead and put the object
             const response = await awsConnections.s3.putObject({
-                Bucket: awsConfig.VENIQA_CATALOG_IMAGE_BUCKET,
+                Bucket: config.get('aws_settings.s3.buckets.catalog_image_bucket'),
                 Key: 'permanent-thumbnails/' + productId,
                 Body: res.data,
                 ContentType: 'image/png'

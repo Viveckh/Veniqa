@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import mongoosePaginator from 'mongoose-paginate';
-import MONGO_COLLECTIONS from '../../properties/mongoCollections';
+import config from 'config';
 
 import orderSchema from '../schemas/order';
 
@@ -9,4 +9,4 @@ import orderSchema from '../schemas/order';
 orderSchema.plugin(mongoosePaginator);
 
 // The first param is the collection name this model represents
-module.exports = mongoose.model(MONGO_COLLECTIONS.orders, orderSchema);
+module.exports = mongoose.model(config.get('mongodb_collections.orders'), orderSchema);

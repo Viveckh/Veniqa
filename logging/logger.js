@@ -1,6 +1,6 @@
 import winston from 'winston';
 import winstonMongoTransport from 'winston-mongodb'; // This will expose winston.transports.MongoDB
-import mongodbConfig from '../properties/mongodb'
+import config from 'config';
 
 // Winston needs to be told about color coding, but it only takes effect on loggers where the format parameter has a colorize called
 winston.addColors({
@@ -24,27 +24,23 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.File({ 
       level: 'error',
-      filename: 'logging/logs/error.log'
+      filename: 'logging/logs/' + config.get('logging.error_log_file_name')
     }),
     new winston.transports.File({ 
-      filename: 'logging/logs/combined.log'
+      filename: 'logging/logs/' + config.get('logging.combined_log_file_name')
+    }),
+    new winston.transports.MongoDB({ 
+      level: 'error',
+      db: process.env.VENIQA_MONGODB_URL,
+      options: {useNewUrlParser: true},
+      collection: config.get('logging.mongodb_collection'),
+      capped: false
     }),
     new winston.transports.Console({}),
   ],
   exceptionHandlers: [
-    new winston.transports.File({ filename: 'logging/logs/exceptions.log'}),
+    new winston.transports.File({ filename: 'logging/logs/' + config.get('logging.exception_log_file_name')}),
   ]
 });
-
-// If in production, only then log to mongodb
-if (process.env.NODE_ENV == 'production') {
-  logger.add(new winston.transports.MongoDB({ 
-      level: 'error',
-      db: mongodbConfig.url,
-      options: {useNewUrlParser: true},
-      collection: 'veniqa_admin_server_error_log',
-      capped: true
-  }));
-}
 
 module.exports = logger;
