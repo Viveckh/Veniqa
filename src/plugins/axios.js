@@ -1,9 +1,14 @@
 import Vue from 'vue';
 import axios from 'axios';
-import { eventHub } from '@/utils/EventHub';
-import { SilentUrls, SilentResponseUrls } from '../constants/Constants';
+import {
+  eventHub
+} from '@/utils/EventHub';
+import {
+  SilentUrls,
+  SilentResponseUrls
+} from '../constants/Constants';
 
-const baseURL = 'https://veniqa.azurewebsites.net/';
+const baseURL = 'http://veniqa-client-server-dev.azurewebsites.net/';
 const instance = axios.create({
   baseURL,
   withCredentials: true

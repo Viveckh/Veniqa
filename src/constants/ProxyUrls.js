@@ -1,5 +1,5 @@
 export default {
-  baseUrl: 'https://veniqa.azurewebsites.net',
+  baseUrl: 'http://veniqa-client-server-dev.azurewebsites.net/',
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
   logoutUrl: '/security/logout',
