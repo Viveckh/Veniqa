@@ -2,7 +2,7 @@
 
 <template>
   <div class="align-left description" style="padding: 10px">
-    <h1>{{product.name}}</h1>
+    <h3>{{product.name}}</h3>
     <h6>By {{product.brand}}</h6>
     <br>
     <h4>{{product.price.currency}} {{product.price.amount}}</h4>
@@ -14,7 +14,6 @@
             :label="attrib.name"
             :label-for="attrib.name+aid"
             horizontal
-            
           >
             <b-form-select
               v-model="selectedCustomizations[attrib.key]"
@@ -226,7 +225,7 @@ export default {
     border-radius: 0px;
     color: white;
   }
-  h1 {
+  h3 {
     color: black;
   }
 }
