@@ -2,9 +2,10 @@ import Vue from 'vue';
 import axios from 'axios';
 import { eventHub } from '@/utils/EventHub';
 
+const baseURL = process.env.VUE_APP_API_BASE_URL;
+
 const instance = axios.create({
-  baseURL: 'https://hsjnruyi2xjmcrl.azurewebsites.net',
-  // baseURL: 'http://d7833ea0.ngrok.io',
+  baseURL,
   withCredentials: true,
 });
 
