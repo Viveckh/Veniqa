@@ -60,7 +60,11 @@
                 v-if="product.name.toUpperCase().includes(query.toUpperCase())"
               >
                 <td>
-                  <img :src="product.thumbnailUrls[0]" class="productTableImg" crossorigin="anonymous">
+                  <img
+                    :src="product.thumbnailUrls[0]"
+                    class="productTableImg"
+                    crossorigin="anonymous"
+                  >
                 </td>
                 <td>{{product.name}}</td>
                 <td>${{product.price.amount}}</td>
@@ -113,8 +117,13 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch('adminStore/getAllProducts');
-    await this.$store.dispatch('adminStore/getReferenceData');
+    try {
+      await this.$store.dispatch('adminStore/getAllProducts');
+      await this.$store.dispatch('adminStore/getReferenceData');
+    } catch (error) {
+      this.$router.push('/login')
+    }
+    
   },
   computed: {
     products() {
