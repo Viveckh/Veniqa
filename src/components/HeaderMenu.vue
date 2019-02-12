@@ -58,8 +58,8 @@
               />
             </div>
 
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
-            <b-nav-item to="products" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
+            <b-nav-item @click="openCatalogPage('Women')" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
+            <b-nav-item @click="openCatalogPage('Men')" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
 
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
@@ -142,6 +142,9 @@ export default {
     };
   },
   methods: {
+    openCatalogPage(searchTerm) {
+      this.$router.push(`/catalogs/${searchTerm}`);
+    },
     searchProduct() {
       this.$store.commit('searchStore/setSearchTerm', this.searchTerm);
       this.$router.push('/search');
@@ -165,16 +168,12 @@ export default {
         });
       }
     },
-    // updateScroll() {
-    //   this.scrollPos = window.scrollY;
-    // },
-    // navType() {
-    //   return this.scrollPos > 50 ? 'dark' : 'light';
-    // },
   },
-  // destroy() {
-  //   window.removeEventListener('scroll', this.updateScroll);
-  // },
+
+  async created() {
+    await this.$store.dispatch('listStore/getCategoriesData');
+  },
+
   computed: {
     nameOfUser() {
       return this.$store.getters['authStore/getFirstName'];

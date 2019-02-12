@@ -1,5 +1,5 @@
 export default {
-  baseUrl: 'https://veniqa.azurewebsites.net',
+  baseUrl: 'http://veniqa-client-server-dev.azurewebsites.net/',
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
   logoutUrl: '/security/logout',
@@ -33,8 +33,9 @@ export default {
   // Order list
   orderList: '/user/orderList',
   orderDetail: '/user/orderDetails?orderId=',
-
-
   // Payment URLS
   stripePay: '/orders/completeCheckoutUsingCard',
+
+  // Categories List
+  categoriesUrl: '/ui/productCategoryList',
 };
