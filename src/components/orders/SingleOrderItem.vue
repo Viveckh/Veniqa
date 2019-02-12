@@ -12,7 +12,7 @@
       <b-row>
         <b-col md="2">
           <img
-            :src="`https://s3.amazonaws.com/veniqa-catalog-images/permanent-thumbnails/${item.product._id}`"
+            :src="`${process.env.VUE_APP_ORDER_S3_BUCKET_URL}/${item.product._id}`"
             alt
             class="item-img"
             crossorigin="anonymous"
