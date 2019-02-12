@@ -1,8 +1,7 @@
 <template>
   <div class="product-detail">
     <div class="space"></div>
-    <br>
-    <br>
+
     <p class="align-left">Shop &nbsp; > &nbsp; {{title}}</p>
     <hr>
     <b-row>
@@ -33,7 +32,7 @@
                     style="color: red"
                   >{{product.marked_price.currency}} {{product.marked_price.amount}}</strong>&nbsp;&nbsp;
                 </span>
-
+                
                 <strong>
                   <span>{{product.price.currency}} {{product.price.amount}}</span>
                 </strong>
@@ -56,25 +55,26 @@ export default {
   name: 'SearchResultView',
   data() {
     return {
-      categories: null,
+      categories: null
     };
   },
   props: {
     data: {
       type: Array,
-      required: true,
+      required: true
     },
     title: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     SearchResultViewImage,
-    SideMenuView,
+    SideMenuView
   },
 
   created() {
+    console.log(this.$store.getters['listStore/getCategories']);
     this.categories = this.$store.getters['listStore/getCategories'];
   },
 
@@ -85,14 +85,14 @@ export default {
         'background-size': 'cover',
         // width: 'auto',
         // height: '350px',
-        'margin-bottom': '10px',
+        'margin-bottom': '10px'
       };
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    },
-  },
+    }
+  }
 };
 </script>
 

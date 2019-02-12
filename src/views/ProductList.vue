@@ -9,29 +9,30 @@ import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
 
 export default {
   components: {
-    SearchResultView,
+    SearchResultView
   },
   props: {
     searchTerm: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   watch: {
     async searchTerm() {
       await this.$store.dispatch('listStore/searchForProduct', this.searchTerm);
-    },
+    }
   },
 
   async created() {
+    console.log('Search Term is: ', this.searchTerm);
     await this.$store.dispatch('listStore/searchForProduct', this.searchTerm);
   },
 
   computed: {
     products() {
       return this.$store.getters['listStore/listResult'];
-    },
-  },
+    }
+  }
 };
 </script>
 

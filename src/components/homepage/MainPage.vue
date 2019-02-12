@@ -20,25 +20,24 @@ export default {
   components: {
     FeaturedCategories,
     FeaturedProducts,
-    FeaturedStripe,
+    FeaturedStripe
   },
   data() {
     return {
       product: null,
       featuredProducts: [],
-      currentSection: 'homepage',
+      currentSection: 'homepage'
     };
   },
 
   created() {
     this.product = Product;
     FeatureService.getFeatureListFor(this.currentSection)
-      .then((data) => {
+      .then(data => {
         this.featuredProducts = data;
-        console.log('Featured data', data);
       })
-      .catch((err) => {});
-  },
+      .catch(err => {});
+  }
 };
 </script>
 
@@ -85,6 +84,6 @@ export default {
   padding: 40px 10px;
   color: #5d6d7e;
   // background-color: #eaecee;
-  font-family: 'Quicksand'
+  font-family: 'Quicksand';
 }
 </style>

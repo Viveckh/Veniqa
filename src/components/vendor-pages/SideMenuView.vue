@@ -6,11 +6,11 @@
         <li v-for="(subcategory, sid) in product" v-bind:key="sid">
           <a
             @click="openCatalogPage(subcategory._id)"
-            class="veniqa-nav d-none d-md-block"
+            class="d-none d-md-block"
           >&nbsp;&nbsp;{{subcategory.subcategory}}</a>
         </li>
       </ul>
-      <br>
+      <hr>
     </li>
   </ul>
 </template>
@@ -20,16 +20,16 @@ export default {
   name: 'SideMenuView',
   props: {
     sidebar: {
-      type: Array,
-      required: true,
-    },
+      type: Object,
+      required: true
+    }
   },
 
   methods: {
     openCatalogPage(searchTerm) {
       this.$router.push(`/catalogs/${searchTerm}`);
-    },
-  },
+    }
+  }
 };
 </script>
 

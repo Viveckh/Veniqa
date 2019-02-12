@@ -4,7 +4,7 @@
   <div class="align-left description" style="padding: 10px">
     <h3>{{product.name}}</h3>
     <h6>By {{product.brand}}</h6>
-    <br>
+
     <h4>{{product.price.currency}} {{product.price.amount}}</h4>
     <div class="custom-attributes">
       <div v-for="(attrib, aid) in customizations" v-bind:key="aid">
@@ -60,35 +60,41 @@
     <hr>
     <div v-html="product.details_html"></div>
 
-
-    <b-popover ref="popover" :show.sync="showLoginPopover" target="add-to-cart-sync" placement="topright">
-      <p class="info">
-        You need to login to add products to the cart.
-      </p>
+    <b-popover
+      ref="popover"
+      :show.sync="showLoginPopover"
+      target="add-to-cart-sync"
+      placement="topright"
+    >
+      <p class="info">You need to login to add products to the cart.</p>
       <div class="align-center">
-        <b-btn size="sm" class="primary-button" style="margin-top: 0.2rem;" @click="$router.push('/login')">Login</b-btn>
-
+        <b-btn
+          size="sm"
+          class="primary-button"
+          style="margin-top: 0.2rem;"
+          @click="$router.push('/login')"
+        >Login</b-btn>
       </div>
     </b-popover>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'ProductDescription',
   props: {
     data: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       product: null,
       selectedCustomizations: {},
-      showLoginPopover: false,
+      showLoginPopover: false
     };
   },
 
@@ -101,7 +107,7 @@ export default {
 
   methods: {
     async addToCart() {
-      if(!this.isSessionActive){
+      if (!this.isSessionActive) {
         this.$refs.popover.$emit('enable');
         this.showLoginPopover = true;
         return;
@@ -111,7 +117,7 @@ export default {
       this.$refs.popover.$emit('disable');
 
       this.product.customValues = {};
-      Object.keys(this.selectedCustomizations).forEach((key) => {
+      Object.keys(this.selectedCustomizations).forEach(key => {
         if (typeof this.selectedCustomizations[key] === 'string') {
           this.product.customValues[key] = this.selectedCustomizations[key];
         } else {
@@ -121,14 +127,14 @@ export default {
         }
       });
       const val = await this.$store.dispatch('cartStore/addToTheCart', [
-        this.product,
+        this.product
       ]);
       if (val) {
         this.$notify({
           group: 'toast',
           type: 'success',
           text: `Added ${this.product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
         });
       } else {
         this.$notify({
@@ -136,7 +142,7 @@ export default {
           type: 'warn',
           text: `${
             this.product.name
-          } couldn't be added for some reason. Please try again later`,
+          } couldn't be added for some reason. Please try again later`
         });
       }
     },
@@ -154,17 +160,17 @@ export default {
       if (this.product.counts < 0) {
         this.product.counts = 0;
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
+      isSessionActive: 'authStore/isSessionActive'
     }),
     customizations() {
       return this.product.customizationOptions.customizations;
-    },
-  },
+    }
+  }
 };
 </script>
 

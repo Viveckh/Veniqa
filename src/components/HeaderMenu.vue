@@ -1,11 +1,5 @@
 <template>
   <div id="header-menu">
-    <!-- <b-navbar
-      toggleable="md"
-      :type="navType()"
-      fixed="top"
-      :class="{'header-color': this.scrollPos > 50}"
-    >-->
     <b-navbar
       toggleable="md"
       fixed="top"
