@@ -1,9 +1,18 @@
 <template>
-  <div id="search-result">
-    <div class="search-result-view">
-      <h1>Search Results</h1>
-      <div class="result-view">
-        <div class="product-card" v-for="(product, pid) in data" v-bind:key="pid">
+  <div class="product-detail">
+    <div class="space"></div>
+    <br>
+    <br>
+    <p class="align-left">Shop &nbsp; > &nbsp; {{title}}</p>
+    <hr>
+    <b-row>
+      <b-col md="2" class="beginner align-left">
+        <div>
+          <side-menu-view :sidebar="categories"></side-menu-view>
+        </div>
+      </b-col>
+      <b-col md="10" class="align-left">
+        <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
           <div class="link" @click="openProductDetail(product._id)">
             <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
               <search-result-view-image :product="product"/>
@@ -21,9 +30,10 @@
                 >
                   <strong
                     class="underline"
+                    style="color: red"
                   >{{product.marked_price.currency}} {{product.marked_price.amount}}</strong>&nbsp;&nbsp;
                 </span>
-                
+
                 <strong>
                   <span>{{product.price.currency}} {{product.price.amount}}</span>
                 </strong>
@@ -32,25 +42,40 @@
           </div>
           <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
         </div>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
+
 <script>
-import notification from '@/services/notificationService';
-import SearchResultViewImage from '@/components/vendor-pages/SearchResultViewImage';
+import SearchResultViewImage from '@/components/vendor-pages/SearchResultViewImage.vue';
+import SideMenuView from '@/components/vendor-pages/SideMenuView.vue';
 
 export default {
   name: 'SearchResultView',
+  data() {
+    return {
+      categories: null,
+    };
+  },
   props: {
     data: {
       type: Array,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
   },
   components: {
-    SearchResultViewImage
+    SearchResultViewImage,
+    SideMenuView,
+  },
+
+  created() {
+    this.categories = this.$store.getters['listStore/getCategories'];
   },
 
   methods: {
@@ -62,29 +87,6 @@ export default {
         // height: '350px',
         'margin-bottom': '10px',
       };
-    },
-
-    /**
-     * @deprecated because add to cart doesn't happen from this page anymore.
-     */
-    async addToCart(product) {
-      try {
-        const val = await this.$store.dispatch('cartStore/addToTheCart', [
-          product,
-        ]);
-        if (val) {
-          notification.success(this, `Added ${product.name} to the cart`);
-        }
-      } catch (err) {
-        console.log('Error', err);
-        // handle notification for different status here.
-        notification.error(
-          this,
-          `${
-            product.name
-          } couldn't be added for some reason. Please try again later`,
-        );
-      }
     },
 
     openProductDetail(pid) {
@@ -103,10 +105,6 @@ export default {
   padding-bottom: 3rem;
 }
 
-#search-result {
-  background-color: #f4f3ef;
-}
-
 .result-view {
   margin-top: 1em;
 }
@@ -115,9 +113,9 @@ export default {
   display: inline-block;
   // box-shadow: 3px 4px 5px 0px #ccc;
   // background-color: white;
-  border-radius: 0.25rem;
+  border-radius: 0px;
   margin: 20px 20px 30px 0px;
-  width: 270px;
+  width: 300px;
 
   // &:hover .img-cls {
   //   transform: scale(1.2);
@@ -126,7 +124,7 @@ export default {
 
   .img-parent {
     height: 315px;
-    width: 270px;
+    width: 300px;
     overflow: hidden;
   }
 
@@ -150,19 +148,11 @@ export default {
     padding: 3px 5px;
     margin: 0px;
   }
+}
 
-  // .img-cls {
-  //   border-top-right-radius: 0.25rem;
-  //   border-top-left-radius: 0.25rem;
-  //   height: 100%;
-  //   width: 100%;
-  // }
-
-  .add-cart-button {
-    width: 100%;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    padding: 10px 0px;
-  }
+.product-detail {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 10px;
 }
 </style>

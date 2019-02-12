@@ -79,60 +79,52 @@ export default {
     }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive'] && products.length > 0) {
-        const foundIndex = _.findIndex(state.cart, pr => _.isEqual(pr.product, products[0]));
+        console.log("Add to cart is not possible because you are not logged in");
+        return;
+        // const foundIndex = _.findIndex(state.cart, pr => _.isEqual(pr.product, products[0]));
 
-        if (Object.keys(state.total).length <= 0) {
-          state.total = {
-            amount: 0,
-            currency: '',
-          };
-        }
-        // Here the assumption currently is that only one product will be there everytime since everything is local.
-        if (foundIndex >= 0) {
-          const order = state.cart[foundIndex];
-          order.counts = parseInt(order.counts) + 1;
-          order.aggregatedPrice = {
-            currency: order.aggregatedPrice.currency,
-            amount:
-              parseFloat(order.product.price.amount) + parseFloat(order.aggregatedPrice.amount),
-          };
-          if (state.total.currency.length == 0) {
-            state.total.currency = order.aggregatedPrice.currency;
-          }
-        } else {
-          const order = _.cloneDeep(OrderDTO);
-          order.product = _.cloneDeep(products[0]);
-          order.counts = 1;
-          order.product_id = products[0]._id;
-          order._id = state.cart.length;
-          order.aggregatedPrice = {
-            currency: products[0].price.currency,
-            amount: products[0].price.amount,
-          };
+        // if (Object.keys(state.total).length <= 0) {
+        //   state.total = {
+        //     amount: 0,
+        //     currency: '',
+        //   };
+        // }
+        // // Here the assumption currently is that only one product will be there everytime since everything is local.
+        // if (foundIndex >= 0) {
+        //   const order = state.cart[foundIndex];
+        //   order.counts = parseInt(order.counts) + 1;
+        //   order.aggregatedPrice = {
+        //     currency: order.aggregatedPrice.currency,
+        //     amount:
+        //       parseFloat(order.product.price.amount) + parseFloat(order.aggregatedPrice.amount),
+        //   };
+        //   if (state.total.currency.length == 0) {
+        //     state.total.currency = order.aggregatedPrice.currency;
+        //   }
+        // } else {
+        //   const order = _.cloneDeep(OrderDTO);
+        //   order.product = _.cloneDeep(products[0]);
+        //   order.counts = 1;
+        //   order.product_id = products[0]._id;
+        //   order._id = state.cart.length;
+        //   order.aggregatedPrice = {
+        //     currency: products[0].price.currency,
+        //     amount: products[0].price.amount,
+        //   };
 
-          state.cart.push(order);
-        }
+        //   state.cart.push(order);
+        // }
 
-        commit('setLocalCart');
-        return true;
+        // commit('setLocalCart');
+        // return true;
       }
 
       console.log("Products", products)
-      // const toSend = _.map(products, p => ({
-      //   product: p._id,
-      //   counts: p.counts == 0 ? 1 : p.counts,
-      //   customizations: p.customValues ? p.customValues : null,
-      // }));
-      let toSend = [];
-
-      for(let i = 0; i < products.length; i++){
-        let p = products[i];
-        toSend.push({
-          product: p._id,
-          counts: p.counts == 0 ? 1 : p.counts,
-          customizations: p.customValues ? p.customValues : null,
-        })
-      }
+      const toSend = _.map(products, p => ({
+        product: p._id,
+        counts: p.counts == 0 ? 1 : p.counts,
+        customizations: p.customValues ? p.customValues : null,
+      }));
 
       console.log("To send", toSend)
 
@@ -149,11 +141,10 @@ export default {
               address: rootGetters['shippingStore/getSelectedAddress'],
               shippingMethod: rootGetters['shippingStore/shippingMethod'],
             };
-
+            
             await dispatch('createCheckout', reqObj);
             return true;
           } 
-          console.log("Setting to cart")
             commit('setCart', data.responseData);
             return true;
           
@@ -229,29 +220,34 @@ export default {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
         // These commits don't do anything but are necessary because they help persist.
-        const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
-        if (updatedItem) {
-          updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(updatedItem.product.price.amount);
-          updatedItem.aggregatedPrice.amount = updatedItem.aggregatedPrice.amount.toFixed(2);
-          commit('setLocalCart');
-          return true;
-        }
+        // const updatedItem = payloadArray.length > 0 ? payloadArray[0] : null;
+        // if (updatedItem) {
+        //   updatedItem.aggregatedPrice.amount = parseInt(updatedItem.counts) * parseFloat(updatedItem.product.price.amount);
+        //   updatedItem.aggregatedPrice.amount = updatedItem.aggregatedPrice.amount.toFixed(2);
+        //   commit('setLocalCart');
+        //   return true;
+        // }
 
-        return false;
+        // return false;
+
+        console.log("Cannot send the request because the user is not logged in");
+        return;
       }
 
+      console.log("Payload array", payloadArray);
+
       const orders = [];
-      // state.cart.forEach((item) => {
-      for(let i = 0; i < state.cart.length; i++) {
-        let item = state.cart[i];
+      state.cart.forEach((item) => {
+        console.log("Count", item.counts);
         orders.push({
           product: item.product._id,
           _id: item._id,
           counts: item.counts,
           customizations: item.customizations,
         });
-      };
+      });
 
+      console.log("Orders", orders)
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'put',

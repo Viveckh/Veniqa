@@ -2,7 +2,7 @@
 
 <template>
   <div class="align-left description" style="padding: 10px">
-    <h1>{{product.name}}</h1>
+    <h3>{{product.name}}</h3>
     <h6>By {{product.brand}}</h6>
     <br>
     <h4>{{product.price.currency}} {{product.price.amount}}</h4>
@@ -14,7 +14,6 @@
             :label="attrib.name"
             :label-for="attrib.name+aid"
             horizontal
-            
           >
             <b-form-select
               v-model="selectedCustomizations[attrib.key]"
@@ -53,7 +52,7 @@
       </div>
     </div>
     <p style="margin-top: 20px">
-      <b-button class="add-to-cart" @click="addToCart()">
+      <b-button id="add-to-cart-sync" class="add-to-cart" @click="addToCart()">
         <font-awesome-icon icon="shopping-bag"/>&nbsp;
         Add to Cart
       </b-button>
@@ -61,10 +60,22 @@
     <hr>
     <div v-html="product.details_html"></div>
 
+
+    <b-popover ref="popover" :show.sync="showLoginPopover" target="add-to-cart-sync" placement="topright">
+      <p class="info">
+        You need to login to add products to the cart.
+      </p>
+      <div class="align-center">
+        <b-btn size="sm" class="primary-button" style="margin-top: 0.2rem;" @click="$router.push('/login')">Login</b-btn>
+
+      </div>
+    </b-popover>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: 'ProductDescription',
   props: {
@@ -77,6 +88,7 @@ export default {
     return {
       product: null,
       selectedCustomizations: {},
+      showLoginPopover: false,
     };
   },
 
@@ -89,6 +101,15 @@ export default {
 
   methods: {
     async addToCart() {
+      if(!this.isSessionActive){
+        this.$refs.popover.$emit('enable');
+        this.showLoginPopover = true;
+        return;
+      }
+
+      // Disable the popover in case the add to cart is possible
+      this.$refs.popover.$emit('disable');
+
       this.product.customValues = {};
       Object.keys(this.selectedCustomizations).forEach((key) => {
         if (typeof this.selectedCustomizations[key] === 'string') {
@@ -137,6 +158,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      isSessionActive: 'authStore/isSessionActive',
+    }),
     customizations() {
       return this.product.customizationOptions.customizations;
     },
@@ -201,7 +225,7 @@ export default {
     border-radius: 0px;
     color: white;
   }
-  h1 {
+  h3 {
     color: black;
   }
 }

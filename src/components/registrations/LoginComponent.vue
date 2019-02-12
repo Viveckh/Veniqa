@@ -36,7 +36,7 @@
       ></b-form-input>
       <!-- <b-form-invalid-feedback id="passwordFeedback">Enter at least 6 characters.</b-form-invalid-feedback> -->
     </b-form-group>
-    <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="recaptchaKey"></vue-recaptcha>
+    <!-- <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="recaptchaKey"></vue-recaptcha> -->
     <p class="info align-left">Please enter the captcha before loggin in.</p>
 
     <p class="forget-password" v-if="!forgotEnabled" @click="forgetPassword()">Forgot Password?</p>
@@ -118,7 +118,7 @@ export default {
 
     async loginClicked() {
       // let isValidated = await this.captchaValidate();
-      if (this.usernameState && this.captchaResp.length > 0) {
+      if (this.usernameState ) { //} && this.captchaResp.length > 0) {
         this.$emit('login', {
           email: this.username,
           password: this.password,

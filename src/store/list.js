@@ -10,11 +10,21 @@ export default {
     searchTerm: '',
     paging: _.cloneDeep(PagingOption),
     listResult: [],
+    categories: [],
+    subCategoriesMen: [],
+    subCategoriesWomen: [],
   },
 
   mutations: {
     setSearchTerm(state, payload) {
       state.searchTerm = payload;
+    },
+    setCategories(state, payload) {
+      state.categories = payload;
+      state.subCategoriesMen = _.map(payload["Men's Clothing"], '_id');
+      state.subCategoriesWomen = _.map(payload["Women's Clothing"], '_id');
+
+      console.log(state.categories, state.subCategoriesMen, state.subCategoriesWomen);
     },
 
     setListResult(state, payload) {
@@ -24,13 +34,47 @@ export default {
   },
 
   actions: {
-    async searchForProduct({ state, commit, queryData }) {
+    async getCategoriesData({
+      state,
+      commit,
+    }, payload) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          url: ProxyUrls.categoriesUrl,
+          method: 'get',
+        });
+
+        if (data && data.httpStatus == 200) {
+          const groups = _.mapValues(_.groupBy(data.responseData, 'category'));
+          commit('setCategories', groups);
+        }
+        return false;
+      } catch (err) {
+        console.log('Error', err);
+        throw err;
+      }
+    },
+    async searchForProduct({
+      state,
+      commit,
+    }, payload) {
+      if (payload == 'Men') {
+        payload = state.subCategoriesMen;
+      } else if (payload == 'Women') {
+        payload = state.subCategoriesWomen;
+      } else {
+        payload = [payload];
+      }
+      try {
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrls.searchProduct,
           method: 'post',
           data: {
-            category: "Men's Clothing",
+            categoryIds: payload,
             pagingOptions: state.paging,
           },
         });
@@ -42,6 +86,7 @@ export default {
           });
 
           commit('setListResult', transformed);
+          console.log('New Search', transformed);
           return true;
         }
         return false;
@@ -63,6 +108,9 @@ export default {
 
     listResult(state) {
       return state.listResult;
+    },
+    getCategories(state) {
+      return state.categories;
     },
   },
 };
