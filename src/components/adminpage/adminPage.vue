@@ -123,7 +123,7 @@
                   v-else
                   :labels="{checked: 'Yes', unchecked: 'No'}"
                   :value="true"
-                  disabled="true"
+                  :disabled="true"
                 />
               </div>
               <!-- form-group end.// -->
