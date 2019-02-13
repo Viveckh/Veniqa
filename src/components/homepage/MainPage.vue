@@ -41,14 +41,37 @@
               />
             </b-col>
           </b-row>
-          <input class="form-control" v-model="query" type="text" placeholder="Search Catalogs">
-          <table class="table table-striped" id="content_loop">
+          <div>
+            <div class="row">
+              <div class="col-sm align-left">
+                <input
+                  class="form-control"
+                  v-model="query"
+                  type="text"
+                  placeholder="Search Catalogs"
+                >
+              </div>
+              <div class="col-sm align-right">
+                <b-form-checkbox
+                  id="checkbox1"
+                  v-model="hideInactive"
+                  value="hide"
+                  unchecked-value="show"
+                >Hide Inactive Items</b-form-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <table class="table table-striped" id="content_loop" style="margin-top: 10px">
             <thead>
               <tr>
                 <th></th>
                 <th>Name</th>
+
+                <th>SKU</th>
                 <th>Price</th>
                 <th>Vendor</th>
+                <th>Status</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -57,7 +80,8 @@
               <tr
                 v-for="(product, pid) in products"
                 v-bind:key="pid"
-                v-if="product.name.toUpperCase().includes(query.toUpperCase())"
+                v-if="product.name.toUpperCase().includes(query.toUpperCase())
+                && !(product.active == false && hideInactive == 'hide')"
               >
                 <td>
                   <img
@@ -66,9 +90,16 @@
                     crossorigin="anonymous"
                   >
                 </td>
+
                 <td>{{product.name}}</td>
+                <td>{{product.store_sku}}</td>
                 <td>${{product.price.amount}}</td>
+
                 <td>{{product.store}}</td>
+                <td>
+                  <span v-if="product.active">Active</span>
+                  <span v-else>Inactive</span>
+                </td>
                 <td>
                   <a @click="editProductFunc(product._id)" v-if="permissionGranted">
                     <i class="fa fa-edit" style="color:green"></i>
@@ -112,6 +143,7 @@ export default {
     return {
       isAddView: false,
       editProductData: null,
+      hideInactive: 'hide',
       query: '',
       perPageOptions: [1, 10, 20, 30, 50],
     };
@@ -121,9 +153,8 @@ export default {
       await this.$store.dispatch('adminStore/getAllProducts');
       await this.$store.dispatch('adminStore/getReferenceData');
     } catch (error) {
-      this.$router.push('/login')
+      this.$router.push('/login');
     }
-    
   },
   computed: {
     products() {

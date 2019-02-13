@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import axios from 'axios';
 import * as _ from 'lodash';
 
 export default {
