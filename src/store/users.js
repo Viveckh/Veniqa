@@ -11,9 +11,13 @@ export default {
   },
 
   actions: {
-    async getRoles({ commit }) {
+    async getRoles({
+      commit,
+    }) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.roles,
           withCredentials: true,
           method: 'get',
@@ -27,10 +31,14 @@ export default {
         console.log(err);
       }
     },
-    async getAdmins({ commit }) {
+    async getAdmins({
+      commit,
+    }) {
       try {
-        const { data } = await axios({
-          url: ProxyUrl.baseUrl + ProxyUrl.allAdmins,
+        const {
+          data,
+        } = await Vue.prototype.$axios({
+          url: ProxyUrl.allAdmins,
           withCredentials: true,
           method: 'get',
           data: {},
@@ -43,9 +51,13 @@ export default {
         throw new Error(err);
       }
     },
-    async addAdmin({ dispatch }, admin) {
+    async addAdmin({
+      dispatch,
+    }, admin) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.addAdmin,
           withCredentials: true,
           method: 'post',
@@ -62,9 +74,13 @@ export default {
         throw new Error(err);
       }
     },
-    async editAdmin({ dispatch }, admin) {
+    async editAdmin({
+      dispatch,
+    }, admin) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.editAdmin,
           withCredentials: true,
           method: 'put',
@@ -81,7 +97,9 @@ export default {
         throw new Error(err);
       }
     },
-    async deleteAdmin({ dispatch }, dEmail) {
+    async deleteAdmin({
+      dispatch,
+    }, dEmail) {
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.deleteAdmin,

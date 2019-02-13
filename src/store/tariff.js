@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import axios from 'axios';
+
 import * as _ from 'lodash';
 
 export default {
@@ -11,10 +11,12 @@ export default {
 
   actions: {
 
-    async getTariffs({ commit }) {
+    async getTariffs({
+      commit,
+    }) {
       try {
-        const res = await axios({
-          url: ProxyUrl.baseUrl + ProxyUrl.allTariffs,
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.allTariffs,
           withCredentials: true,
           method: 'get',
           data: {},
@@ -25,7 +27,9 @@ export default {
         throw new Error(err);
       }
     },
-    async addTariff({ dispatch }, tariff) {
+    async addTariff({
+      dispatch,
+    }, tariff) {
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.addTariff,
@@ -39,7 +43,9 @@ export default {
         throw new Error(err);
       }
     },
-    async editTariff({ dispatch }, tariff) {
+    async editTariff({
+      dispatch,
+    }, tariff) {
       try {
         const res = await Vue.prototype.$axios({
           url: ProxyUrl.editTariff,
