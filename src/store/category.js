@@ -20,7 +20,7 @@ export default {
           method: 'get',
           data: {},
         });
-        console.log('Categorys', res.data.responseData);
+
         commit('setCategorys', res.data.responseData);
       } catch (err) {
         throw new Error(err);
@@ -65,7 +65,7 @@ export default {
 
     setCategorys(state, payload) {
       state.categorys = payload;
-      console.log('Here', state.categorys);
+
     },
   },
   getters: {

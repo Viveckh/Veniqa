@@ -211,7 +211,6 @@ export default {
       this.viewOperation = true;
       this.user = _.cloneDeep(adminData);
       this.isAddView = false;
-      console.log(this.user);
     },
     handleAddButtonClick() {
       this.viewOperation = true;

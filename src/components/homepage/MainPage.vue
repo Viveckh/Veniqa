@@ -51,13 +51,12 @@
                   placeholder="Search Catalogs"
                 >
               </div>
-              <div class="col-sm align-right">
-                <b-form-checkbox
-                  id="checkbox1"
-                  v-model="hideInactive"
-                  value="hide"
-                  unchecked-value="show"
-                >Hide Inactive Items</b-form-checkbox>
+              <div class="col-sm align-right">Show Inactive First
+                <toggle-button
+                  v-model="showInactiveFirst"
+                  :labels="{checked: 'Yes', unchecked: 'No'}"
+                  @change="sortByInactive()"
+                />
               </div>
             </div>
           </div>
@@ -80,8 +79,7 @@
               <tr
                 v-for="(product, pid) in products"
                 v-bind:key="pid"
-                v-if="product.name.toUpperCase().includes(query.toUpperCase())
-                && !(product.active == false && hideInactive == 'hide')"
+                v-if="product.name.toUpperCase().includes(query.toUpperCase())"
               >
                 <td>
                   <img
@@ -143,9 +141,9 @@ export default {
     return {
       isAddView: false,
       editProductData: null,
-      hideInactive: 'hide',
+      showInactiveFirst: false,
       query: '',
-      perPageOptions: [1, 10, 20, 30, 50],
+      perPageOptions: [10, 20, 30, 50, 100],
     };
   },
   async created() {
@@ -180,6 +178,11 @@ export default {
       await this.$store.dispatch('adminStore/getAllProducts');
     },
 
+    async sortByInactive() {
+      this.$store.commit('adminStore/setSortByInactive', this.showInactiveFirst);
+      await this.$store.dispatch('adminStore/getAllProducts');
+    },
+
     async pageLimitChanged(limit) {
       this.pagination.limit = limit;
       this.pageChanged(1);
@@ -192,13 +195,13 @@ export default {
       this.isAddView = true;
       this.editProductData = null;
     },
+
     async editProductFunc(id) {
       const editProductDetails = await this.$store.dispatch(
         'adminStore/getProduct',
         id,
       );
       this.editProductData = editProductDetails;
-      console.log(this.editProductData);
       this.isAddView = true;
     },
   },

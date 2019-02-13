@@ -139,7 +139,6 @@ export default {
   },
   getters: {
     getName(state) {
-      console.log('HERE');
       return state.name;
     },
 

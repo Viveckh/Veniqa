@@ -118,11 +118,9 @@ export default {
   mutations: {
     setRoles(state, payload) {
       state.roles = payload;
-      console.log(state.roles);
     },
     setAdmins(state, payload) {
       state.admins = payload;
-      console.log(state.admins);
     },
   },
   getters: {
