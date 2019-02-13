@@ -15,8 +15,8 @@ export default {
       commit,
     }) {
       try {
-        const res = await axios({
-          url: ProxyUrl.baseUrl + ProxyUrl.allCategories,
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.allCategories,
           withCredentials: true,
           method: 'get',
           data: {},

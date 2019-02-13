@@ -1,5 +1,4 @@
 export default {
-  // baseUrl: 'https://veniqa.azurewebsites.net',
   registerUrl: '/security/signup',
   loginUrl: '/security/login',
   logoutUrl: '/security/logout',
@@ -19,7 +18,6 @@ export default {
   updateCart: '/shopping/updateCart',
 
   // Admin Panel
-  baseUrl: 'https://hsjnruyi2xjmcrl.azurewebsites.net',
   listCatalog: '/catalog/search',
   deleteProduct: '/catalog/deleteProduct',
   addProduct: '/catalog/addProduct',
