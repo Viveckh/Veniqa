@@ -4,11 +4,10 @@ import config from 'config';
 const Schema = mongoose.Schema;
 
 let featuredContentSchema = new mongoose.Schema({
-    product: {
+    products: [{
         type: Schema.Types.ObjectId,
-        ref: config.get('mongodb_collections.curated_products'),
-        required: true
-    },
+        ref: config.get('mongodb_collections.curated_products')
+    }],
     config: {
         type: {},
         required: true
