@@ -21,10 +21,25 @@ $primary-red: hsl(348, 100%, 61%);
   }
 }
 
+li {
+  list-style: none;
+}
 .green{
-  color: $primary-green;
+  color: $primary-green !important;
 }
 
+.green-anchor {
+  color: green !important;
+}
+
+.red-anchor {
+  color: red !important;
+}
+
+.product-card{
+  margin-bottom: 0;
+  
+}
 .space{
   height: 100px;
 }
@@ -37,6 +52,10 @@ $primary-red: hsl(348, 100%, 61%);
     color: $link-hover-color;
     text-decoration: none;
   }
+}
+
+.hand-cursor{
+  cursor: pointer;
 }
 
 a{
