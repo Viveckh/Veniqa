@@ -10,7 +10,7 @@
                 <span class="name">{{product.name}}</span>
                 <span class="amount">$ {{product.price.amount}}</span>
 
-                <b-button class="primary-button">Shop</b-button>
+                <b-button class="primary-button" @click="$emit('shop', product)">Shop</b-button>
               </div>
             </div>
           </div>
@@ -34,7 +34,7 @@
                 <span class="name">{{product.name}}</span>
                 <span class="amount">$ {{product.price.amount}}</span>
 
-                <b-button class="primary-button">Shop</b-button>
+                <b-button class="primary-button" @click="$emit('shop', product)">Shop</b-button>
               </div>
             </div>
           </div>
@@ -47,7 +47,7 @@
 
 <script>
 export default {
-  name: 'FeaturedProductView',
+  name: 'CanvasCrackSingleDesign',
   props: {
     product: {
       required: true,
