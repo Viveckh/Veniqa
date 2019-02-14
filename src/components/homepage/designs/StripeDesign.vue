@@ -19,7 +19,8 @@
           <h4>{{product.name}}</h4>
           <p>{{product.brand}}</p>
           <h5>
-            <span v-if="!product.marked_price || product.marked_price.amount <= 0"
+            <span
+              v-if="!product.marked_price || product.marked_price.amount <= 0"
               :class="{'underline': product.marked_price && product.marked_price.amount > 0}"
             >{{product.price.amount + ' ' + product.price.currency}}</span>
             <span
@@ -27,9 +28,9 @@
             >{{product.marked_price.amount}} {{product.marked_price.currency}}</span>
           </h5>
 
-          <router-link :to="`/products/${product._id}`">
-            <b-button class="addToCart">Shop Now</b-button>
-          </router-link>
+          <!-- <router-link :to="`/products/${product._id}`"> -->
+          <b-button class="addToCart" @click="shop(product)">Shop Now</b-button>
+          <!-- </router-link> -->
         </b-col>
       </b-col>
     </b-row>
@@ -45,13 +46,9 @@ export default {
       type: Array
     }
   },
-  data() {
-    return {};
-  },
   methods: {
-    gotoProduct() {
-      console.log('PR', this.product);
-      this.$router.push(`/products/${this.product._id}`);
+    shop(product){
+      this.$emit('shop', product);
     }
   }
 };
@@ -99,5 +96,4 @@ h5 {
 .jumbrotron {
   background-color: white;
 }
-
 </style>

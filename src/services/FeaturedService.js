@@ -21,7 +21,7 @@ export default {
       });
 
       if (data && data.httpStatus === 200) {
-        return this.prepareResponse(data.responseData);
+        return data.responseData.content;
       }
       throw new Error('Error code');
     } catch (err) {
@@ -35,27 +35,15 @@ export default {
    * @param {*} res Holds the response from the Get API call.
    * @returns the prepared response.
    */
-  prepareResponse(res) {
-    const data = [];
+  // prepareResponse(res) {
+  //   const data = [];
 
-    res.content.forEach((prd) => {
-      const conf = prd.config;
-      // const val = {
-      //   _id: prd.product._id || '',
-      //   design: conf.design || '',
-      //   name: prd.product.name,
-      //   store: prd.product.store || '',
-      //   brand: prd.product.brand || '',
-      //   price: prd.product.price,
-      //   detailedImageUrls: prd.product.detailedImageUrls || '',
-      //   marked_price: prd.product.marked_price,
-      // };
-
-      const val = _.assignIn(_.cloneDeep(FeaturedDTO), prd.product);
-      val.design = conf.design;
-      data.push(val);
-    });
-
-    return data;
-  },
+  //   res.content.forEach((prd) => {
+  //     const conf = prd.config;
+  //     const val = _.assignIn(_.cloneDeep(FeaturedDTO), prd.product);
+  //     data.push(val);
+  //   });
+  //   console.log("Data", data)
+  //   return data;
+  // },
 };
