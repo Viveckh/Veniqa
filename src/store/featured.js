@@ -33,7 +33,7 @@ export default {
         });
 
         if (data && data.httpStatus === 200) {
-          // commit('setMasterList', data.responseData);
+          commit('setMasterList', data.responseData);
           commit('setSections', data.responseData);
         } else throw new Error('Error code');
       } catch (err) {
@@ -44,7 +44,7 @@ export default {
 
     async save({ state, commit }, reqObj) {
       const request = {
-        section: reqObj.section,
+        name: reqObj.section,
         content: [],
       };
 
