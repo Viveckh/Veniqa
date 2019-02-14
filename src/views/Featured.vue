@@ -6,13 +6,13 @@
       </header>
 
       <div id="search-collapse" class="card-body">
-        <b-tabs pills class="tabs">
+        <b-tabs pills>
           <hr>
           <b-tab
             v-for="(section, sid) in sections"
             :key="sid"
             :title="section.toUpperCase()"
-            title-link-class="grey"
+            @click="currentSection = section"
             :active="section === currentSection"
           ></b-tab>
           <!-- <b-tab title="Preview Mode" title-link-class="grey">Tab Contents 2</b-tab> -->
@@ -55,6 +55,12 @@ export default {
       console.log("Setting current section: ", this.currentSection);
     } catch (error) {
       console.log('Feature get error');
+    }
+  },
+
+  methods: {
+    valueChange() {
+      console.log('value has been changed');
     }
   },
 
