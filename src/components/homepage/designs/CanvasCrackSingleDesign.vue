@@ -2,7 +2,7 @@
   <div class="featured-product">
     <div v-if="type == 1" class="type-separator">
       <b-row style="height: 100%">
-        <b-col md="4">
+        <b-col md="7">
           <div class="product-content">
             <div class="product-body">
               <div class="body-content">
@@ -15,7 +15,7 @@
             </div>
           </div>
         </b-col>
-        <b-col md="8">
+        <b-col md="5">
           <div :style="productImageStyle" class="product-clip"></div>
         </b-col>
       </b-row>
@@ -23,10 +23,10 @@
 
     <div v-if="type == 2"  class="type-separator">
       <b-row style="height: 100%">
-        <b-col md="8">
+        <b-col md="5">
           <div :style="productImageStyle" class="product-clip-right"></div>
         </b-col>
-        <b-col md="4">
+        <b-col md="7">
           <div class="product-content">
             <div class="product-body">
               <div class="body-content">
@@ -86,7 +86,7 @@ export default {
     productImageStyle() {
       return {
         'background-image': `url(${this.displayImage})`,
-        'background-size': 'cover',
+        'background-size': 'contain',
         height: '100%',
         // width: 'auto'
       };
@@ -106,7 +106,7 @@ export default {
 
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top;
+    background-position: right;
   }
 
   .product-clip-right{
@@ -116,7 +116,7 @@ clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top;
+    background-position: left;
   }
 
   .type-separator{
