@@ -1,10 +1,7 @@
 {
-  "_id": "",
-  "design": "",
-  "name": "",
-  "store": "",
-  "brand": "",
-  "price": null,
-  "detailedImageUrls": null,
-  "marked_price": null
+  "products": [],
+  "config": {
+    "design_type": null,
+    "name": null
+  }
 }
