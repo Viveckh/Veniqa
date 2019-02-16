@@ -139,6 +139,10 @@ export default {
       }
     },
 
+    resetProducts(state) {
+      state.products = [];
+    },
+
     setProducts(state, payload) {
       // console.log(payload);
       state.products = [];
