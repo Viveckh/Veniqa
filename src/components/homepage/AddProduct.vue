@@ -156,8 +156,6 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        
-
         <b-form-group horizontal :label-cols="2" label="Tariff Category" label-for="tariffcategory">
           <b-form-select
             v-model="product.tariff"
@@ -200,15 +198,10 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <div>
-          
-        </div>
+        <div></div>
 
         <b-form-group horizontal :label-cols="2" label="Active" label-for="sku">
-          <toggle-button
-            v-model="product.active"
-            :labels="{checked: 'Yes', unchecked: 'No'}"
-          />
+          <toggle-button v-model="product.active" :labels="{checked: 'Yes', unchecked: 'No'}"/>
         </b-form-group>
 
         <!-- Item URL -->
@@ -335,7 +328,7 @@
               >
                 <font-awesome-icon icon="bold"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.italic() }"
@@ -343,7 +336,7 @@
               >
                 <font-awesome-icon icon="italic"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.strike() }"
@@ -351,7 +344,7 @@
               >
                 <font-awesome-icon icon="strikethrough"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.underline() }"
@@ -359,7 +352,7 @@
               >
                 <font-awesome-icon icon="underline"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code() }"
@@ -367,7 +360,7 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.paragraph() }"
@@ -375,25 +368,25 @@
               >
                 <font-awesome-icon icon="paragraph"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                 @click="commands.heading({ level: 1 })"
               >H1</button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                 @click="commands.heading({ level: 2 })"
               >H2</button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                 @click="commands.heading({ level: 3 })"
               >H3</button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.bullet_list() }"
@@ -401,7 +394,7 @@
               >
                 <font-awesome-icon icon="list-ul"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.ordered_list() }"
@@ -409,7 +402,7 @@
               >
                 <font-awesome-icon icon="list-ol"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.blockquote() }"
@@ -417,7 +410,7 @@
               >
                 <font-awesome-icon icon="quote-left"/>
               </button>
-              
+
               <button
                 class="menubar__button"
                 :class="{ 'is-active': isActive.code_block() }"
@@ -425,11 +418,11 @@
               >
                 <font-awesome-icon icon="code"/>
               </button>
-              
+
               <button class="menubar__button" @click="commands.undo">
                 <font-awesome-icon icon="undo"/>
               </button>
-              
+
               <button class="menubar__button" @click="commands.redo">
                 <font-awesome-icon icon="redo"/>
               </button>
@@ -503,8 +496,8 @@ export default {
   },
   created() {
     if (this.data != null) {
-      // Assign in assigns the values from data to product. This helps reduce the undefined errors by keeping the 
-      // defaults of product. 
+      // Assign in assigns the values from data to product. This helps reduce the undefined errors by keeping the
+      // defaults of product.
       this.product = _.assignIn(this.product, this.data);
       // this.product = _.cloneDeep(this.data);
       this.product.tariff = this.product.tariff._id;
@@ -529,7 +522,7 @@ export default {
         store_sku: null,
         marked_price: {
           amount: 0,
-          currency: 'USD'
+          currency: 'USD',
         },
         active: true,
         thumbnailUrls: [
@@ -596,8 +589,6 @@ export default {
         this.product.details_html = getHTML();
       },
     });
-
-    // console.log("Content", this.editor)
   },
   beforeDestroy() {
     this.editor.destroy();
@@ -616,8 +607,8 @@ export default {
       return this.product.tariff.length > 0;
     },
 
-    skuState(){
-      if(this.product.store_sku == null) return null;
+    skuState() {
+      if (this.product.store_sku == null) return null;
       return this.product.store_sku.length > 0;
     },
 
@@ -637,7 +628,8 @@ export default {
       if (
         this.product.category.category == undefined
         || this.product.category.category == null
-      ) return null;
+      )
+        {return null};
       return this.product.category.category.length > 0;
     },
 
@@ -645,7 +637,8 @@ export default {
       if (
         this.product.category._id == undefined
         || this.product.category._id == null
-      ) return null;
+      )
+        {return null};
       return this.product.category._id.length > 0;
     },
 
@@ -672,8 +665,8 @@ export default {
     },
 
     filteredSubcategories() {
-      console.log('Category', this.product.category.category);
-      if (this.product.category.category == null) return _.map(this.refdata.categories, 'subcategory');
+      if (this.product.category.category == null)
+        {return _.map(this.refdata.categories, 'subcategory')};
       const val = this.refdata.categories.filter((item) => {
         if (item.category === this.product.category.category) return true;
         return false;
@@ -692,9 +685,8 @@ export default {
       if (!this.categoryState) {
         this.product.category.category = '';
       }
-      this.product.store_sku = this.skuState == null ? '' : this.product.store_sku;
+      this.product.store_sku =        this.skuState == null ? '' : this.product.store_sku;
 
-      
       if (!this.subcategoryState) this.product.category._id = '';
       return (
         this.productNameState

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import axios from 'axios';
 import * as _ from 'lodash';
 
 export default {
@@ -15,13 +14,13 @@ export default {
       commit,
     }) {
       try {
-        const res = await axios({
-          url: ProxyUrl.baseUrl + ProxyUrl.allCategories,
+        const res = await Vue.prototype.$axios({
+          url: ProxyUrl.allCategories,
           withCredentials: true,
           method: 'get',
           data: {},
         });
-        console.log('Categorys', res.data.responseData);
+
         commit('setCategorys', res.data.responseData);
       } catch (err) {
         throw new Error(err);
@@ -66,7 +65,7 @@ export default {
 
     setCategorys(state, payload) {
       state.categorys = payload;
-      console.log('Here', state.categorys);
+
     },
   },
   getters: {

@@ -123,7 +123,7 @@
                   v-else
                   :labels="{checked: 'Yes', unchecked: 'No'}"
                   :value="true"
-                  disabled="true"
+                  :disabled="true"
                 />
               </div>
               <!-- form-group end.// -->
@@ -211,7 +211,6 @@ export default {
       this.viewOperation = true;
       this.user = _.cloneDeep(adminData);
       this.isAddView = false;
-      console.log(this.user);
     },
     handleAddButtonClick() {
       this.viewOperation = true;

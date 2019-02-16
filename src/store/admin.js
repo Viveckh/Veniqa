@@ -13,12 +13,17 @@ export default {
     refDataPayload: [],
     tariffCategories: [],
     pagination: _.cloneDeep(Pagination),
+    sortBy: '-active',
   },
 
   actions: {
-    async getReferenceData({ commit }) {
+    async getReferenceData({
+      commit,
+    }) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.refData,
           withCredentials: true,
           method: 'get',
@@ -31,9 +36,13 @@ export default {
         console.log(err);
       }
     },
-    async deleteProduct({ dispatch }, id) {
+    async deleteProduct({
+      dispatch,
+    }, id) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.deleteProduct,
           withCredentials: true,
           method: 'delete',
@@ -48,9 +57,13 @@ export default {
         console.log(err);
       }
     },
-    async addProduct({ dispatch }, product) {
+    async addProduct({
+      dispatch,
+    }, product) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.addProduct,
           withCredentials: true,
           method: 'post',
@@ -65,9 +78,13 @@ export default {
         throw new Error(err);
       }
     },
-    async editProduct({ dispatch }, product) {
+    async editProduct({
+      dispatch,
+    }, product) {
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.editProduct,
           withCredentials: true,
           method: 'put',
@@ -82,10 +99,14 @@ export default {
         throw new Error(err);
       }
     },
-    async getProduct({ dispatch }, id) {
+    async getProduct({
+      dispatch,
+    }, id) {
       const productGetUrl = `${ProxyUrl.getProduct}?productId=${id}`;
       try {
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: productGetUrl,
           withCredentials: true,
           method: 'get',
@@ -97,7 +118,10 @@ export default {
         throw new Error(err);
       }
     },
-    async getAllProducts({ commit, state }, filters) {
+    async getAllProducts({
+      commit,
+      state,
+    }, filters) {
       try {
         let reqPayload = {};
         if (filters) {
@@ -110,10 +134,13 @@ export default {
             },
 
             pagingOptions: state.pagination,
+            sortRule: state.sortBy,
           };
         }
 
-        const { data } = await Vue.prototype.$axios({
+        const {
+          data,
+        } = await Vue.prototype.$axios({
           url: ProxyUrl.searchProduct,
           withCredentials: true,
           method: 'post',
@@ -142,9 +169,15 @@ export default {
     resetProducts(state) {
       state.products = [];
     },
+    setSortByInactive(state, payload) {
+      if (payload) {
+        state.sortBy = 'active';
+      } else {
+        state.sortBy = '-active';
+      }
+    },
 
     setProducts(state, payload) {
-      // console.log(payload);
       state.products = [];
       state.products.push(...payload);
     },
@@ -156,16 +189,13 @@ export default {
       state.refDataPayload = payload || {};
       state.subcategories = [];
       state.tariffCategories = payload.tariff_categories || [];
-      // console.log(state);
     },
   },
   getters: {
     allProducts(state) {
-      // console.log(state.products);
       return state.products;
     },
     allStateData(state) {
-      console.log('Returned State: ', state);
       return state;
     },
 

@@ -164,7 +164,6 @@ export default {
       this.viewOperation = true;
       this.tariff = _.cloneDeep(tariffData);
       this.isAddView = false;
-      console.log(this.tariff);
     },
     handleAddButtonClick() {
       this.viewOperation = true;
