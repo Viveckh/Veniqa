@@ -44,8 +44,8 @@ export default {
       .then((data) => {
         this.featuredDesigns = data;
       })
-      .catch((err) => {});
-  },
+      .catch(err => {});
+  }
 };
 </script>
 
@@ -95,6 +95,6 @@ export default {
   padding: 40px 10px;
   color: #5d6d7e;
   // background-color: #eaecee;
-  font-family: 'Quicksand'
+  font-family: 'Quicksand';
 }
 </style>
