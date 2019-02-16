@@ -21,7 +21,6 @@ export default {
           method: 'get',
           data: {},
         });
-        console.log('Tariffs', res.data.responseData);
         commit('setTariffs', res.data.responseData);
       } catch (err) {
         throw new Error(err);
@@ -66,7 +65,6 @@ export default {
 
     setTariffs(state, payload) {
       state.tariffs = payload;
-      console.log('Here', state.tariffs);
     },
   },
   getters: {

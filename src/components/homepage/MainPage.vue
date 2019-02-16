@@ -41,14 +41,36 @@
               />
             </b-col>
           </b-row>
-          <input class="form-control" v-model="query" type="text" placeholder="Search Catalogs">
-          <table class="table table-striped" id="content_loop">
+          <div>
+            <div class="row">
+              <div class="col-sm align-left">
+                <input
+                  class="form-control"
+                  v-model="query"
+                  type="text"
+                  placeholder="Search Catalogs"
+                >
+              </div>
+              <div class="col-sm align-right">Show Inactive First
+                <toggle-button
+                  v-model="showInactiveFirst"
+                  :labels="{checked: 'Yes', unchecked: 'No'}"
+                  @change="sortByInactive()"
+                />
+              </div>
+            </div>
+          </div>
+
+          <table class="table table-striped" id="content_loop" style="margin-top: 10px">
             <thead>
               <tr>
                 <th></th>
                 <th>Name</th>
+
+                <th>SKU</th>
                 <th>Price</th>
                 <th>Vendor</th>
+                <th>Status</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -66,9 +88,16 @@
                     crossorigin="anonymous"
                   >
                 </td>
+
                 <td>{{product.name}}</td>
-                <td>${{product.price.amount}}</td>
+                <td>{{product.store_sku}}</td>
+                <td>$ {{product.price.amount}}</td>
+
                 <td>{{product.store}}</td>
+                <td>
+                  <span v-if="product.active">Active</span>
+                  <span v-else>Inactive</span>
+                </td>
                 <td>
                   <a @click="editProductFunc(product._id)" v-if="permissionGranted">
                     <i class="fa fa-edit" style="color:green"></i>
@@ -112,8 +141,9 @@ export default {
     return {
       isAddView: false,
       editProductData: null,
+      showInactiveFirst: false,
       query: '',
-      perPageOptions: [1, 10, 20, 30, 50],
+      perPageOptions: [10, 20, 30, 50, 100],
     };
   },
   async created() {
@@ -121,9 +151,8 @@ export default {
       await this.$store.dispatch('adminStore/getAllProducts');
       await this.$store.dispatch('adminStore/getReferenceData');
     } catch (error) {
-      this.$router.push('/login')
+      this.$router.push('/login');
     }
-    
   },
   computed: {
     products() {
@@ -149,6 +178,11 @@ export default {
       await this.$store.dispatch('adminStore/getAllProducts');
     },
 
+    async sortByInactive() {
+      this.$store.commit('adminStore/setSortByInactive', this.showInactiveFirst);
+      await this.$store.dispatch('adminStore/getAllProducts');
+    },
+
     async pageLimitChanged(limit) {
       this.pagination.limit = limit;
       this.pageChanged(1);
@@ -161,13 +195,13 @@ export default {
       this.isAddView = true;
       this.editProductData = null;
     },
+
     async editProductFunc(id) {
       const editProductDetails = await this.$store.dispatch(
         'adminStore/getProduct',
         id,
       );
       this.editProductData = editProductDetails;
-      console.log(this.editProductData);
       this.isAddView = true;
     },
   },

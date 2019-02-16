@@ -153,7 +153,6 @@ export default {
       this.viewOperation = true;
       this.category = _.cloneDeep(categoryData);
       this.isAddView = false;
-      console.log(this.category);
     },
     handleAddButtonClick() {
       this.viewOperation = true;
