@@ -40,7 +40,6 @@ export default {
     eventHub.$on('response-error', this.unsetLoading);
 
     await this.$store.dispatch('authStore/initiateAppSession');
-
     if (this.isSessionActive) {
       this.initiateApp();
     } else {

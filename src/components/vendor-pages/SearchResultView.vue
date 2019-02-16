@@ -2,12 +2,12 @@
   <div class="product-detail">
     <div class="space"></div>
 
-    <p class="align-left">Shop &nbsp; > &nbsp; {{title}}</p>
-    <hr>
+    <p class="align-left bcrumb">Shop &nbsp; >> &nbsp; {{title}}</p>
+    <br>
     <b-row>
-      <b-col md="2" class="beginner align-left">
+      <b-col md="2" class="beginner align-left" >
         <div>
-          <side-menu-view :sidebar="categories"></side-menu-view>
+          <side-menu-view :sidebar="menu"></side-menu-view>
         </div>
       </b-col>
       <b-col md="10" class="align-left">
@@ -53,18 +53,16 @@ import SideMenuView from '@/components/vendor-pages/SideMenuView.vue';
 
 export default {
   name: 'SearchResultView',
-  data() {
-    return {
-      categories: null
-    };
-  },
   props: {
     data: {
-      type: Array,
+      type: Array ,
       required: true
     },
     title: {
       type: String,
+      required: true
+    }, 
+    menu: {
       required: true
     }
   },
@@ -73,18 +71,11 @@ export default {
     SideMenuView
   },
 
-  created() {
-    console.log(this.$store.getters['listStore/getCategories']);
-    this.categories = this.$store.getters['listStore/getCategories'];
-  },
-
   methods: {
     getPictureStyle(img) {
       return {
         'background-image': `url(${img})`,
         'background-size': 'cover',
-        // width: 'auto',
-        // height: '350px',
         'margin-bottom': '10px'
       };
     },
@@ -127,6 +118,7 @@ export default {
     width: 300px;
     overflow: hidden;
   }
+ 
 
   .product-card-desc {
     margin-top: 0.5em;
@@ -149,7 +141,9 @@ export default {
     margin: 0px;
   }
 }
-
+.bcrumb {
+  font-size: 0.75em;
+}
 .product-detail {
   width: 80%;
   margin: auto;

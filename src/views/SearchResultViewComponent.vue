@@ -1,6 +1,6 @@
 <template>
   <div id="search-result-view">
-    <search-result-view :data="searchResult" :title="pageName"/>
+    <search-result-view :data="searchResult" :title="pageName" :menu="categories"/>
   </div>
 </template>
 
@@ -27,8 +27,10 @@ export default {
     SearchResultView,
   },
 
-  created() {
+  async created() {
     this.searchForProduct();
+    await this.$store.dispatch('listStore/getCategoriesData');
+
   },
 
   watch: {
@@ -58,6 +60,9 @@ export default {
       paging: 'searchStore/paging',
       searchResult: 'searchStore/searchResult',
     }),
+    categories(){
+            return this.$store.getters['listStore/getCategories'];
+    }
   },
 };
 </script>

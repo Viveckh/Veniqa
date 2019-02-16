@@ -166,9 +166,7 @@ export default {
     }
   },
 
-  async created() {
-    await this.$store.dispatch('listStore/getCategoriesData');
-  },
+  
 
   computed: {
     nameOfUser() {

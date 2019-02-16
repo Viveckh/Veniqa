@@ -1,6 +1,6 @@
 <template>
   <div class="product-list-view">
-    <search-result-view :data="products" :title="searchTerm"/>
+    <search-result-view :data="products" :title="searchTerm" :menu="categories"/>
   </div>
 </template>
 
@@ -24,13 +24,22 @@ export default {
   },
 
   async created() {
-    console.log('Search Term is: ', this.searchTerm);
+    await this.$store.dispatch('listStore/getCategoriesData');
     await this.$store.dispatch('listStore/searchForProduct', this.searchTerm);
   },
 
   computed: {
     products() {
       return this.$store.getters['listStore/listResult'];
+    },
+    categories(){
+      let returnedData = (this.$store.getters['listStore/getCategories']);
+      console.log("hereeeeeeeeeeeeee", returnedData)
+     if(this.searchTerm=="Men"){
+           return {"Men's Clothing": returnedData["Men's Clothing"]}
+     }else{
+            return {"Women's Clothing": returnedData["Women's Clothing"]}
+     }
     }
   }
 };

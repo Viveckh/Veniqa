@@ -2,7 +2,7 @@
   <div class="product-detail">
     <div class="space"></div>
     <div v-if="product != null">
-      <p class="align-left">Shop &nbsp; > &nbsp; {{product.name}}</p>
+      <p class="align-left breadcrumb">Shop &nbsp; > &nbsp; {{product.name}}</p>
       <hr>
       <b-row>
         <b-col md="7" class="beginner">

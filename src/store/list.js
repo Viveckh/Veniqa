@@ -3,6 +3,7 @@ import PagingOption from '@/dto/Pagination.json';
 import ProductDTO from '@/dto/Products.json';
 import ProxyUrls from '@/constants/ProxyUrls';
 import Vue from 'vue';
+import { type } from 'os';
 
 export default {
   namespaced: true,
@@ -48,7 +49,7 @@ export default {
 
         if (data && data.httpStatus == 200) {
           const groups = _.mapValues(_.groupBy(data.responseData, 'category'));
-
+          console.log('Categories Data', groups);
           commit('setCategories', groups);
         }
         return false;
@@ -110,6 +111,7 @@ export default {
       return state.listResult;
     },
     getCategories(state) {
+      console.log("Type of Value Returned", typeof(state.categories));
       return state.categories;
     },
   },

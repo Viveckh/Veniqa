@@ -1,16 +1,16 @@
 <template>
   <ul>
-    <li v-for="(product, pid) in sidebar" v-bind:key="pid">
+    <li v-for="(product, pid) in sidebar" v-bind:key="pid" v-if="Object.keys(sidebar).length > 0">
       <strong>{{product[0].category}}</strong>
       <ul>
         <li v-for="(subcategory, sid) in product" v-bind:key="sid">
           <a
             @click="openCatalogPage(subcategory._id)"
             class="d-none d-md-block"
-          >&nbsp;&nbsp;{{subcategory.subcategory}}</a>
+          >{{subcategory.subcategory}}</a>
         </li>
       </ul>
-      <hr>
+      <br>
     </li>
   </ul>
 </template>
@@ -20,7 +20,6 @@ export default {
   name: 'SideMenuView',
   props: {
     sidebar: {
-      type: Object,
       required: true
     }
   },
@@ -37,9 +36,14 @@ export default {
 ul {
   padding: 0px;
   list-style-type: none;
+
 }
 a {
   padding: 0px !important;
   margin: 0px !important;
+}
+li{
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 </style>
