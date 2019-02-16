@@ -12,7 +12,7 @@
       <b-row>
         <b-col md="2">
           <img
-            :src="`https://s3.amazonaws.com/veniqa-catalog-images/permanent-thumbnails/${item.product._id}`"
+            :src="`${s3BucketUrl}/${item.product._id}`"
             alt
             class="item-img"
             crossorigin="anonymous"
@@ -94,6 +94,10 @@ export default {
   computed: {
     itemStatusDeet() {
       return this.item.order_line_level_processing_details;
+    },
+
+    s3BucketUrl() {
+      return process.env.VUE_APP_ORDER_S3_BUCKET_URL;
     }
   }
 }

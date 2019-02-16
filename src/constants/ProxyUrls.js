@@ -35,6 +35,7 @@ export default {
   orderDetail: '/user/orderDetails?orderId=',
   // Payment URLS
   stripePay: '/orders/completeCheckoutUsingCard',
+  khaltiPay: '/orders/completeCheckoutUsingKhalti',
 
   // Categories List
   categoriesUrl: '/ui/productCategoryList',
