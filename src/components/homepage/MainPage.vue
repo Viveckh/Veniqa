@@ -91,7 +91,7 @@
 
                 <td>{{product.name}}</td>
                 <td>{{product.store_sku}}</td>
-                <td>${{product.price.amount}}</td>
+                <td>$ {{product.price.amount}}</td>
 
                 <td>{{product.store}}</td>
                 <td>
