@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "epic-spinners": "^1.0.4",
     "i": "^0.3.6",
+    "khalti-web": "^1.1.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "npm": "^6.4.1",
