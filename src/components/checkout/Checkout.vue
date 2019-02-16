@@ -79,9 +79,9 @@ export default {
   },
 
   created() {
-    if(!this.isSessionActive || this.carts.length <= 0){
-      this.$router.push('/');
-    }
+    // if(!this.isSessionActive || this.carts.length <= 0){
+    //   this.$router.push('/');
+    // }
   },
 
   methods: {
