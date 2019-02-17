@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import Home from '@/views/Home.vue';
 import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
-import ProductList from '@/views/ProductList.vue';
 import Login from '@/views/Login.vue';
 import SearchResultViewComponent from '@/views/SearchResultViewComponent';
 import PageNotFound from '@/views/Notfound.vue';
@@ -31,7 +30,7 @@ const router = new Router({
     {
       path: 'catalogs/:searchTerm',
       props: true,
-      component: ProductList,
+      component: () => import('@/views/ProductList.vue'),
     },
     {
       path: 'faqs',

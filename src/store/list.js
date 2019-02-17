@@ -3,6 +3,7 @@ import PagingOption from '@/dto/Pagination.json';
 import ProductDTO from '@/dto/Products.json';
 import ProxyUrls from '@/constants/ProxyUrls';
 import Vue from 'vue';
+import { type } from 'os';
 
 export default {
   namespaced: true,
@@ -23,8 +24,6 @@ export default {
       state.categories = payload;
       state.subCategoriesMen = _.map(payload["Men's Clothing"], '_id');
       state.subCategoriesWomen = _.map(payload["Women's Clothing"], '_id');
-
-      console.log(state.categories, state.subCategoriesMen, state.subCategoriesWomen);
     },
 
     setListResult(state, payload) {
@@ -38,6 +37,8 @@ export default {
       state,
       commit,
     }, payload) {
+
+
       try {
         const {
           data,
@@ -48,6 +49,7 @@ export default {
 
         if (data && data.httpStatus == 200) {
           const groups = _.mapValues(_.groupBy(data.responseData, 'category'));
+          console.log('Categories Data', groups);
           commit('setCategories', groups);
         }
         return false;
@@ -86,7 +88,6 @@ export default {
           });
 
           commit('setListResult', transformed);
-          console.log('New Search', transformed);
           return true;
         }
         return false;
@@ -110,6 +111,7 @@ export default {
       return state.listResult;
     },
     getCategories(state) {
+      console.log("Type of Value Returned", typeof(state.categories));
       return state.categories;
     },
   },
