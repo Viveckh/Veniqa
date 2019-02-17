@@ -123,7 +123,7 @@ body {
   background-color: rgb(134, 136, 143);
   border: none;
   border-radius: 40px;
-  color: #fff; !important
+  color: #fff important;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
