@@ -52,7 +52,8 @@ db.dbConnection();
 var redisClient = redis.createClient({
   host: process.env.VENIQA_REDIS_HOST, 
   port: process.env.VENIQA_REDIS_PORT, 
-  password: process.env.VENIQA_REDIS_PASSWORD, 
+  password: process.env.VENIQA_REDIS_PASSWORD,
+  db: Number(process.env.VENIQA_REDIS_DB_NUMBER),
   tls: {
     host: process.env.VENIQA_REDIS_HOST,
     port: process.env.VENIQA_REDIS_PORT,
@@ -87,6 +88,7 @@ app.use(session({
     host: process.env.VENIQA_REDIS_HOST, 
     port: process.env.VENIQA_REDIS_PORT, 
     pass: process.env.VENIQA_REDIS_PASSWORD, 
+    db: Number(process.env.VENIQA_REDIS_DB_NUMBER),
     client: redisClient
   }),
   secret: process.env.VENIQA_SESSION_SECRET_KEY,
