@@ -1,14 +1,13 @@
 <template>
   <div class="product-detail">
     <div class="space"></div>
+
+    <p class="align-left bcrumb">Shop &nbsp; >> &nbsp; {{title}}</p>
     <br>
-    <br>
-    <p class="align-left">Shop &nbsp; > &nbsp; {{title}}</p>
-    <hr>
     <b-row>
-      <b-col md="2" class="beginner align-left">
+      <b-col md="2" class="beginner align-left" >
         <div>
-          <side-menu-view :sidebar="categories"></side-menu-view>
+          <side-menu-view :sidebar="menu"></side-menu-view>
         </div>
       </b-col>
       <b-col md="10" class="align-left">
@@ -33,7 +32,7 @@
                     style="color: red"
                   >{{product.marked_price.currency}} {{product.marked_price.amount}}</strong>&nbsp;&nbsp;
                 </span>
-
+                
                 <strong>
                   <span>{{product.price.currency}} {{product.price.amount}}</span>
                 </strong>
@@ -54,28 +53,22 @@ import SideMenuView from '@/components/vendor-pages/SideMenuView.vue';
 
 export default {
   name: 'SearchResultView',
-  data() {
-    return {
-      categories: null,
-    };
-  },
   props: {
     data: {
-      type: Array,
-      required: true,
+      type: Array ,
+      required: true
     },
     title: {
       type: String,
-      required: true,
-    },
+      required: true
+    }, 
+    menu: {
+      required: true
+    }
   },
   components: {
     SearchResultViewImage,
-    SideMenuView,
-  },
-
-  created() {
-    this.categories = this.$store.getters['listStore/getCategories'];
+    SideMenuView
   },
 
   methods: {
@@ -83,16 +76,14 @@ export default {
       return {
         'background-image': `url(${img})`,
         'background-size': 'cover',
-        // width: 'auto',
-        // height: '350px',
-        'margin-bottom': '10px',
+        'margin-bottom': '10px'
       };
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -127,6 +118,7 @@ export default {
     width: 300px;
     overflow: hidden;
   }
+ 
 
   .product-card-desc {
     margin-top: 0.5em;
@@ -149,7 +141,9 @@ export default {
     margin: 0px;
   }
 }
-
+.bcrumb {
+  font-size: 0.75em;
+}
 .product-detail {
   width: 80%;
   margin: auto;

@@ -1,19 +1,19 @@
 <template>
   <div id="header-menu">
-    <!-- <b-navbar
+    <b-navbar
       toggleable="md"
-      :type="navType()"
       fixed="top"
-      :class="{'header-color': this.scrollPos > 50}"
-    >-->
-    <b-navbar toggleable="md" fixed="top" class="header-color header-width" type="light" :style="headerStyle">
+      class="header-color header-width"
+      type="light"
+      :style="headerStyle"
+    >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand to="/">
         <img
           src="@/assets/logo_transparent_blue_black.png"
           alt="VENIQA"
-          width="180px"
+          width="125px"
           style="padding: 0.5rem 0rem;"
         >
       </b-navbar-brand>
@@ -45,11 +45,7 @@
                 @keydown.esc="showSearch = false"
               >
             </transition>
-            <div
-              class="veniqa-nav d-none d-md-block"
-              style="padding-top: 8px; font-size: x-large"
-              v-if="!showSearch"
-            >
+            <div class="veniqa-nav d-none d-md-block" v-if="!showSearch">
               <font-awesome-icon
                 @click="showSearch = true"
                 style="color: rgba(0, 0, 0, 0.5)"
@@ -125,7 +121,7 @@ export default {
     rightSidebarVisible: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
 
     sidebarWidth: {
@@ -138,7 +134,7 @@ export default {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: '',
+      searchTerm: ''
     };
   },
   methods: {
@@ -155,24 +151,22 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.',
+          text: 'You have been successfully logged out.'
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
-        this.$router.push('/')
+        this.$router.push('/');
       } catch (err) {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.',
+          text: 'Sorry but we could not log you out at the moment.'
         });
       }
-    },
+    }
   },
 
-  async created() {
-    await this.$store.dispatch('listStore/getCategoriesData');
-  },
+  
 
   computed: {
     nameOfUser() {
@@ -182,26 +176,26 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
+      isSessionActive: 'authStore/isSessionActive'
     }),
 
     headerStyle() {
       return {
-        'margin-right': this.rightSidebarVisible ? `${this.sidebarWidth}px` : '0px',
+        'margin-right': this.rightSidebarVisible
+          ? `${this.sidebarWidth}px`
+          : '0px'
         // 'min-width': '100%'
-      }
+      };
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss">
 @import '../assets/css/global.scss';
 #header-menu {
-  text-transform: uppercase;
-
   @media (max-width: 767.98px) {
-    .header-width{
+    .header-width {
       width: 100%;
     }
   }
@@ -253,6 +247,7 @@ export default {
 .veniqa-nav {
   padding: 5px 10px;
   margin-left: 2rem;
+  font-weight: bold;
 }
 .registration-mode {
   .modal-content {
