@@ -22,8 +22,8 @@ export default {
     },
     setCategories(state, payload) {
       state.categories = payload;
-      state.subCategoriesMen = _.map(payload["Men's Clothing"], '_id');
-      state.subCategoriesWomen = _.map(payload["Women's Clothing"], '_id');
+      state.subCategoriesMen = _.map(payload["Men"], '_id');
+      state.subCategoriesWomen = _.map(payload["Women"], '_id');
     },
 
     setListResult(state, payload) {
