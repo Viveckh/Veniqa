@@ -13,7 +13,20 @@
   padding-top: 50px;
 }
 
-.sidebar a {
+.left-sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 50px;
+}
+
+.sidebar a,
+.left-sidebar a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
@@ -22,8 +35,9 @@
   transition: 0.3s;
 }
 
-
-.sidebar .closebtn {
+.sidebar .closebtn,
+.left-sidebar .closebtn,
+.closebtn {
   position: absolute;
   top: 0;
   right: 25px;

@@ -1,61 +1,96 @@
 <template>
   <div id="home">
-      <header-menu @openCart="cartViewVisible = true" :rightSidebarVisible="cartViewVisible" :sidebarWidth="SIDEBAR_WIDTH"/>
+    <header-menu
+      @openCart="openCart()"
+      :rightSidebarVisible="cartViewVisible"
+      :sidebarWidth="SIDEBAR_WIDTH"
+      @activateSidebar="openSidebar"
+    />
 
     <div class="mainview" :style="mainviewStyle">
       <router-view/>
       <footer-view/>
     </div>
 
-    <div class="sidebar" :style="cartStyle">
-      <cart-view v-show="cartViewVisible" @close="closeRightSidebar()" :sidebarWidth="SIDEBAR_WIDTH"/>
-      
+    <div class="left-sidebar" :style="menuStyle">
+      <left-menu-view @close="menuViewVisible=false"/>
     </div>
-    
+
+    <div class="sidebar" :style="cartStyle">
+      <cart-view
+        v-show="cartViewVisible"
+        @close="closeRightSidebar()"
+        :sidebarWidth="SIDEBAR_WIDTH"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import MainPage from '@/components/homepage/MainPage.vue';
 import HeaderMenu from '@/components/HeaderMenu.vue';
 import FooterView from '@/components/Footer.vue';
-import CartView from '@/components/cart/Cart';
+import CartView from '@/components/cart/Cart.vue';
+import LeftMenuView from '@/components/LeftMenu.vue';
 
 export default {
   name: 'home',
   components: {
     HeaderMenu,
     FooterView,
-    CartView
+    CartView,
+    LeftMenuView,
   },
 
   data() {
     return {
       cartViewVisible: false,
-      SIDEBAR_WIDTH: 350
-    }
+      menuViewVisible: false,
+      SIDEBAR_WIDTH: 350,
+    };
   },
 
   methods: {
-    closeRightSidebar(){
+    closeRightSidebar() {
       this.cartViewVisible = false;
-    }
+    },
+
+    openCart() {
+      this.cartViewVisible = true;
+      this.menuViewVisible = false;
+    },
+
+    openSidebar() {
+      this.menuViewVisible = true;
+      this.cartViewVisible = false;
+    },
   },
 
   computed: {
     mainviewStyle() {
+      let str = '';
+      if (this.cartViewVisible) {
+        str = `translate3d(-${this.SIDEBAR_WIDTH}px, 0px, 0px)`;
+      } else if (this.menuViewVisible) {
+        str = `translate3d(${this.SIDEBAR_WIDTH}px, 0px, 0px)`;
+      }
       return {
         // 'margin-right': this.cartViewVisible ? `${this.SIDEBAR_WIDTH}px`: '0px',
-        'transform': this.cartViewVisible ? `translate3d(-${this.SIDEBAR_WIDTH}px, 0px, 0px)` : '',
-      }
+        transform: str,
+      };
+    },
+
+    menuStyle() {
+      return {
+        width: this.menuViewVisible ? `${this.SIDEBAR_WIDTH}px` : '0px',
+      };
     },
 
     cartStyle() {
-        return {
-          'width': this.cartViewVisible ?  `${this.SIDEBAR_WIDTH}px` : '0px',
-        }
-    }
-  }
+      return {
+        width: this.cartViewVisible ? `${this.SIDEBAR_WIDTH}px` : '0px',
+      };
+    },
+  },
 };
 </script>
 

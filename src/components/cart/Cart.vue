@@ -5,11 +5,14 @@
 
     <div v-if="orders && orders.length <= 0" class="order-empty">
       <div class="content">
-        <div> {{isSessionActive ? 'Your cart is empty.' : 'You need to login first to add to cart'}}
+        <div>
+          {{isSessionActive ? 'Your cart is empty.' : 'You need to login first to add to cart'}}
           <br>
-          <b-btn class="primary-button" v-if="!isSessionActive" @click="$router.push('/login')">
-            Login
-          </b-btn>
+          <b-btn
+            class="primary-button"
+            v-if="!isSessionActive"
+            @click="$router.push('/login')"
+          >Login</b-btn>
         </div>
       </div>
     </div>
@@ -28,10 +31,10 @@
           <b-col cols="9">
             <div class="order-desc" @click="gotoProduct(item.product)">
               <strong>
-              {{item.product.name}}
-              <br>
-              {{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}
-              <br>
+                {{item.product.name}}
+                <br>
+                {{item ? item.aggregatedPrice.currency : ''}} {{item ? item.aggregatedPrice.amount : ''}}
+                <br>
               </strong>
               <div style="font-size: 12px; margin-top: 5px; ">
                 <span
@@ -42,16 +45,15 @@
             </div>
             <div class="delete" @click="deleteSelected(item)" style="margin: 5px 0px">Delete</div>
             <div>
-                <b-form-select
-                  size="sm"
-                  v-model="item.counts"
-                  :options="countOptions"
-                  @change.native="updateCartItem(item)"
-                  class="mb-3"
-                  style="max-width: 100px"
-                />
+              <b-form-select
+                size="sm"
+                v-model="item.counts"
+                :options="countOptions"
+                @change.native="updateCartItem(item)"
+                class="mb-3"
+                style="max-width: 100px"
+              />
             </div>
-           
           </b-col>
         </b-row>
       </li>
@@ -63,7 +65,9 @@
         <b-col cols="8" class="align-left">
           <strong>Sub Total</strong>
         </b-col>
-        <b-col class="align-right"><strong> {{subtotal.currency}} {{parseFloat(subtotal.amount).toFixed(2)}}</strong></b-col>
+        <b-col class="align-right">
+          <strong>{{subtotal.currency}} {{parseFloat(subtotal.amount).toFixed(2)}}</strong>
+        </b-col>
       </b-row>
       <br>
       <p class="info align-center">Final cost will be calculated during checkout.</p>
@@ -73,8 +77,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import notification from '@/services/notificationService'
+import { mapGetters } from 'vuex';
+import notification from '@/services/notificationService';
 
 export default {
   name: 'CartView',
@@ -83,12 +87,12 @@ export default {
       type: Number,
       required: false,
       default: 350,
-    }
+    },
   },
 
   data() {
     return {
-      countOptions: []
+      countOptions: [],
     };
   },
 
@@ -99,12 +103,12 @@ export default {
   filters: {
     customDisplay(val) {
       return val.indexOf('|') >= 0 ? val.split('|')[0] : val;
-    }
+    },
   },
 
   methods: {
     gotoCheckout() {
-      if(this.orders && this.orders.length > 0){
+      if (this.orders && this.orders.length > 0) {
         this.$router.push('/checkout');
         this.$emit('close');
       }
@@ -119,25 +123,29 @@ export default {
       this.$nextTick(async () => {
         if (item.counts > 0) {
           try {
-            const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
-            notification.success(this, 'The cart has been successfully updated.');
+            const data = await this.$store.dispatch('cartStore/updateOrders', [
+              item,
+            ]);
+            notification.success(
+              this,
+              'The cart has been successfully updated.',
+            );
           } catch (err) {
             console.log('Error', err);
             notification.error(
               this,
-              'Cart could not be updated at the moment. Please try again later.'
+              'Cart could not be updated at the moment. Please try again later.',
             );
           }
         }
-      })
-      
+      });
     },
 
     async deleteSelected(item) {
       try {
         await this.$store.dispatch('cartStore/deleteOrders', [item]);
       } catch (err) {}
-    }
+    },
   },
 
   computed: {
@@ -146,24 +154,22 @@ export default {
       subtotal: 'cartStore/getSubTotal',
       isSessionActive: 'authStore/isSessionActive',
     }),
-
-
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 #cart {
   padding: 0rem 0.5rem;
-  h4{
+  h4 {
     margin-bottom: 2rem;
   }
 
-  .total-line{
-    padding:0.5rem 1rem;
+  .total-line {
+    padding: 0.5rem 1rem;
   }
 
-  .bottom-action{
+  .bottom-action {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -219,4 +225,3 @@ export default {
   }
 }
 </style>
-
