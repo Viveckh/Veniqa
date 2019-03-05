@@ -7,7 +7,9 @@
       type="light"
       :style="headerStyle"
     >
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <button target="nav_collapse" @click="burgerClick()" class="d-sm-block d-md-none burger">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
       <b-navbar-brand to="/">
         <img
@@ -83,7 +85,8 @@
 
           <!-- Displays only when collapsible option is true -->
           <div class="sidenav ml-auto d-md-none">
-            <div class="align-right close-icon">
+            <left-menu-view/>
+            <!-- <div class="align-right close-icon">
               <font-awesome-icon v-b-toggle.nav_collapse icon="times"/>
             </div>
             <b-nav-item class="align-left collapse-nav" to="/vendor/amazon">Men's Clothing
@@ -103,7 +106,7 @@
               to="/login"
               v-if="!isSessionActive"
             >Login</b-nav-item>
-            <b-nav-item class="align-left collapse-nav" @click="logoutClicked()" v-else>Logout</b-nav-item>
+            <b-nav-item class="align-left collapse-nav" @click="logoutClicked()" v-else>Logout</b-nav-item>-->
           </div>
           <!-- End of Collapsible view display -->
         </b-collapse>
@@ -114,30 +117,37 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import LeftMenuView from '@/components/LeftMenu.vue';
 
 export default {
   name: 'HeaderMenu',
+  components: {
+    LeftMenuView,
+  },
   props: {
     rightSidebarVisible: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
 
     sidebarWidth: {
       type: Number,
       required: false,
-      default: 300
-    }
+      default: 300,
+    },
   },
   data() {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: ''
+      searchTerm: '',
     };
   },
   methods: {
+    burgerClick() {
+      this.$emit('activateSidebar');
+    },
     openCatalogPage(searchTerm) {
       this.$router.push(`/catalogs/${searchTerm}`);
     },
@@ -151,7 +161,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.'
+          text: 'You have been successfully logged out.',
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
@@ -160,13 +170,11 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.'
+          text: 'Sorry but we could not log you out at the moment.',
         });
       }
-    }
+    },
   },
-
-  
 
   computed: {
     nameOfUser() {
@@ -176,18 +184,18 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive'
+      isSessionActive: 'authStore/isSessionActive',
     }),
 
     headerStyle() {
       return {
         'margin-right': this.rightSidebarVisible
           ? `${this.sidebarWidth}px`
-          : '0px'
+          : '0px',
         // 'min-width': '100%'
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -262,6 +270,12 @@ export default {
 .modal-backdrop.show {
   opacity: 0.7 !important;
 }
+
+.burger {
+  border: 0;
+  background: none;
+}
+
 .navbar-override {
   width: 90%;
   margin-left: auto;
