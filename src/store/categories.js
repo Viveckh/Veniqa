@@ -5,8 +5,8 @@ import Vue from 'vue';
 export default {
   namespaced: true,
   state: {
-    categories: [],
-    subCategories: [],
+    categories: {},
+    masterList: [],
   },
 
   mutations: {
@@ -14,24 +14,24 @@ export default {
       state.categories = payload;
     },
 
+    setMasterList(state, payload) {
+      state.masterList = payload;
+    },
   },
 
   actions: {
-    async getData({
-      state,
-      commit,
-    }, payload) {
+    async getCategoriesData({ commit }) {
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           url: ProxyUrls.categoriesUrl,
           method: 'get',
         });
 
-        if (data && data.httpStatus == 200) {
-          const groups = _.mapValues(_.groupBy(data.responseData, 'category'), clist => clist.map(category => _.omit(category, 'category')));
+        if (data && data.httpStatus === 200) {
+          const groups = _.mapValues(_.groupBy(data.responseData, 'category'));
+          console.log('Categories Data', groups);
           commit('setCategories', groups);
+          commit('setMasterList', data.responseData);
         }
         return false;
       } catch (err) {
@@ -42,8 +42,12 @@ export default {
   },
 
   getters: {
-    getCategories(state) {
+    categories(state) {
       return state.categories;
+    },
+
+    masterList(state) {
+      return state.masterList;
     },
   },
 };
