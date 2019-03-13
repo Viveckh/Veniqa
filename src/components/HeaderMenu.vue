@@ -56,8 +56,8 @@
               />
             </div>
 
-            <b-nav-item @click="openCatalogPage('Women')" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
-            <b-nav-item @click="openCatalogPage('Men')" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
+            <b-nav-item @click="openCategory('Women')" class="veniqa-nav d-none d-md-block">Women</b-nav-item>
+            <b-nav-item @click="openCategory('Men')" class="veniqa-nav d-none d-md-block">Men</b-nav-item>
 
             <b-nav-item
               class="veniqa-nav d-none d-md-block"
@@ -122,38 +122,48 @@ import LeftMenuView from '@/components/LeftMenu.vue';
 export default {
   name: 'HeaderMenu',
   components: {
-    LeftMenuView,
+    LeftMenuView
   },
   props: {
     rightSidebarVisible: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
 
     sidebarWidth: {
       type: Number,
       required: false,
-      default: 300,
-    },
+      default: 300
+    }
   },
   data() {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: '',
+      searchTerm: ''
     };
   },
   methods: {
     burgerClick() {
       this.$emit('activateSidebar');
     },
-    openCatalogPage(searchTerm) {
-      this.$router.push(`/catalogs/${searchTerm}`);
+    openCategory(cat) {
+      this.$router.push({
+        path: '/search',
+        query: {
+          category: cat
+        }
+      });
     },
     searchProduct() {
-      this.$store.commit('searchStore/setSearchTerm', this.searchTerm);
-      this.$router.push('/search');
+      // this.$store.commit('searchStore/setSearchTerm', this.searchTerm);
+      this.$router.push({
+        path: '/search',
+        query: {
+          term: this.searchTerm
+        }
+      });
     },
     async logoutClicked() {
       try {
@@ -161,7 +171,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.',
+          text: 'You have been successfully logged out.'
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
@@ -170,10 +180,10 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.',
+          text: 'Sorry but we could not log you out at the moment.'
         });
       }
-    },
+    }
   },
 
   computed: {
@@ -184,18 +194,18 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
+      isSessionActive: 'authStore/isSessionActive'
     }),
 
     headerStyle() {
       return {
         'margin-right': this.rightSidebarVisible
           ? `${this.sidebarWidth}px`
-          : '0px',
+          : '0px'
         // 'min-width': '100%'
       };
-    },
-  },
+    }
+  }
 };
 </script>
 

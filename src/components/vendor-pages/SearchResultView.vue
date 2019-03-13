@@ -5,41 +5,53 @@
     <p class="align-left bcrumb">Shop &nbsp; >> &nbsp; {{title}}</p>
     <br>
     <b-row>
-      <b-col md="2" class="beginner align-left" >
+      <b-col md="2" class="beginner align-left">
         <div>
-          <side-menu-view :sidebar="menu"></side-menu-view>
+          <side-menu-view
+            :sidebar="menu"
+            :category="category"
+            :subCategory="subCategory"
+            :term="term"
+          ></side-menu-view>
         </div>
       </b-col>
       <b-col md="10" class="align-left">
-        <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
-          <div class="link" @click="openProductDetail(product._id)">
-            <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
-              <search-result-view-image :product="product"/>
-            </div>
+        <div v-if="data && data.length > 0">
+          <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
+            <div class="link" @click="openProductDetail(product._id)">
+              <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
+                <search-result-view-image :product="product"/>
+              </div>
 
-            <p v-else style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd">
-              <font-awesome-icon icon="shopping-bag" width="100%"/>
-            </p>
-            <div class="product-card-desc">
-              <p class="info">{{product.store}}</p>
-              <p class="title">{{product.name}}</p>
-              <p>
-                <span
-                  v-if="product.marked_price && product.marked_price.amount > product.price.amount"
-                >
-                  <strong
-                    class="underline"
-                    style="color: red"
-                  >{{product.marked_price.currency}} {{product.marked_price.amount}}</strong>&nbsp;&nbsp;
-                </span>
-                
-                <strong>
-                  <span>{{product.price.currency}} {{product.price.amount}}</span>
-                </strong>
+              <p
+                v-else
+                style="font-size: 5em; padding: 10px 0px; text-align: center; color: #bdbdbd"
+              >
+                <font-awesome-icon icon="shopping-bag" width="100%"/>
               </p>
+              <div class="product-card-desc">
+                <p class="info">{{product.store}}</p>
+                <p class="title">{{product.name}}</p>
+                <p>
+                  <span
+                    v-if="product.marked_price && product.marked_price.amount > product.price.amount"
+                  >
+                    <strong
+                      class="underline"
+                      style="color: red"
+                    >{{product.marked_price.currency}} {{product.marked_price.amount}}</strong>&nbsp;&nbsp;
+                  </span>
+
+                  <strong>
+                    <span>{{product.price.currency}} {{product.price.amount}}</span>
+                  </strong>
+                </p>
+              </div>
             </div>
           </div>
-          <!-- <b-button class="primary-button add-cart-button" @click="addToCart(product)">Add to Cart</b-button> -->
+        </div>
+        <div v-else>
+          <div class="info" style="font-size: 50px">No result found ...</div>
         </div>
       </b-col>
     </b-row>
@@ -55,20 +67,37 @@ export default {
   name: 'SearchResultView',
   props: {
     data: {
-      type: Array ,
-      required: true
+      type: Array,
+      required: true,
     },
     title: {
       type: String,
-      required: true
-    }, 
+      required: true,
+    },
     menu: {
-      required: true
-    }
+      required: true,
+    },
+    term: {
+      required: false,
+      default: '',
+      type: String,
+    },
+
+    category: {
+      required: false,
+      default: '',
+      type: String,
+    },
+
+    subCategory: {
+      required: false,
+      default: '',
+      type: String,
+    },
   },
   components: {
     SearchResultViewImage,
-    SideMenuView
+    SideMenuView,
   },
 
   methods: {
@@ -76,14 +105,14 @@ export default {
       return {
         'background-image': `url(${img})`,
         'background-size': 'cover',
-        'margin-bottom': '10px'
+        'margin-bottom': '10px',
       };
     },
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -118,7 +147,6 @@ export default {
     width: 300px;
     overflow: hidden;
   }
- 
 
   .product-card-desc {
     margin-top: 0.5em;
