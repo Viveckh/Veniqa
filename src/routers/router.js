@@ -4,7 +4,6 @@ import Home from '@/views/Home.vue';
 import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
-import SearchResultViewComponent from '@/views/SearchResultViewComponent';
 import PageNotFound from '@/views/Notfound.vue';
 
 Vue.use(Router);
@@ -29,11 +28,7 @@ const router = new Router({
           // which is lazy-loaded when the route is visited.
           component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
         },
-        {
-          path: 'catalogs/:searchTerm',
-          props: true,
-          component: () => import('@/views/ProductList.vue'),
-        },
+
         {
           path: 'search',
           component: () => import('@/views/SearchView.vue'),
@@ -54,14 +49,7 @@ const router = new Router({
           // which is lazy-loaded when the route is visited.
           component: () => import(/* webpackChunkName: "about" */ '@/views/Contact.vue'),
         },
-        {
-          path: 'vendor/:vendorName',
-          props: true,
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '@/views/VendorPage.vue'),
-        },
+
         {
           path: 'checkout',
           component: Checkout,
@@ -86,13 +74,6 @@ const router = new Router({
           component: () => import('@/views/ProductDetail.vue'),
           props: true,
         },
-        // {
-        //   path: 'search',
-        //   name: 'search',
-        //   component: SearchResultViewComponent,
-
-        //   // props: (route) => ({ query: route.query })
-        // },
       ],
     },
 
