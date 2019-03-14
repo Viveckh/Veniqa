@@ -27,8 +27,14 @@ export default {
   name: 'LeftMenuComponent',
 
   methods: {
-    openCatalogPage(searchTerm) {
-      this.$router.push(`/catalogs/${searchTerm}`);
+    openCatalogPage(cat) {
+      // this.$router.push(`/catalogs/${searchTerm}`);
+      this.$router.push({
+        path: '/search',
+        query: {
+          category: cat,
+        },
+      });
       this.$emit('close');
     },
 
@@ -86,6 +92,7 @@ export default {
 
       li {
         border-bottom: 0.5px solid #dbdbdb;
+        list-style-type: none;
       }
     }
 
