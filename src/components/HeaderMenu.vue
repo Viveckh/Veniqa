@@ -122,26 +122,26 @@ import LeftMenuView from '@/components/LeftMenu.vue';
 export default {
   name: 'HeaderMenu',
   components: {
-    LeftMenuView
+    LeftMenuView,
   },
   props: {
     rightSidebarVisible: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
 
     sidebarWidth: {
       type: Number,
       required: false,
-      default: 300
-    }
+      default: 300,
+    },
   },
   data() {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: ''
+      searchTerm: '',
     };
   },
   methods: {
@@ -152,8 +152,8 @@ export default {
       this.$router.push({
         path: '/search',
         query: {
-          category: cat
-        }
+          category: cat,
+        },
       });
     },
     searchProduct() {
@@ -161,8 +161,8 @@ export default {
       this.$router.push({
         path: '/search',
         query: {
-          term: this.searchTerm
-        }
+          term: this.searchTerm,
+        },
       });
     },
     async logoutClicked() {
@@ -171,7 +171,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.'
+          text: 'You have been successfully logged out.',
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
@@ -180,10 +180,10 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.'
+          text: 'Sorry but we could not log you out at the moment.',
         });
       }
-    }
+    },
   },
 
   computed: {
@@ -194,18 +194,18 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive'
+      isSessionActive: 'authStore/isSessionActive',
     }),
 
     headerStyle() {
       return {
         'margin-right': this.rightSidebarVisible
           ? `${this.sidebarWidth}px`
-          : '0px'
+          : '0px',
         // 'min-width': '100%'
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
