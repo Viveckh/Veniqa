@@ -135,7 +135,7 @@ export default {
   // background-color: white;
   border-radius: 0px;
   margin: 20px 20px 30px 0px;
-  width: 300px;
+  width: 225px;
 
   // &:hover .img-cls {
   //   transform: scale(1.2);
@@ -143,8 +143,8 @@ export default {
   // }
 
   .img-parent {
-    height: 315px;
-    width: 300px;
+    height: 300px;
+    width: 225px;
     overflow: hidden;
   }
 
@@ -173,8 +173,9 @@ export default {
   font-size: 0.75em;
 }
 .product-detail {
-  width: 80%;
-  margin: auto;
+  width: 90%;
+  margin-left: auto;
+
   margin-bottom: 10px;
 }
 </style>
