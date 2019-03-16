@@ -47,7 +47,7 @@
                 @keydown.esc="showSearch = false"
               >
             </transition>
-            <div class="veniqa-nav d-none d-md-block" v-if="!showSearch">
+            <div class="veniqa-nav d-none d-md-block" v-if="!showSearch" style="margin-top: 0.5rem">
               <font-awesome-icon
                 @click="showSearch = true"
                 style="color: rgba(0, 0, 0, 0.5)"

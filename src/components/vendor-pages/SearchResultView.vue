@@ -49,6 +49,13 @@
               </div>
             </div>
           </div>
+          <div class="align-center">
+            <b-btn
+              class="primary-button"
+              @click="loadMoreProducts()"
+              v-show="data.length < paging.total"
+            >See More</b-btn>
+          </div>
         </div>
         <div v-else>
           <div class="info" style="font-size: 50px">No result found ...</div>
@@ -94,6 +101,12 @@ export default {
       default: '',
       type: String,
     },
+
+    paging: {
+      required: false,
+      default: null,
+      type: Object,
+    },
   },
   components: {
     SearchResultViewImage,
@@ -111,6 +124,10 @@ export default {
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
+    },
+
+    loadMoreProducts() {
+      this.$emit('nextpage');
     },
   },
 };

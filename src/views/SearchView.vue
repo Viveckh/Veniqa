@@ -7,6 +7,8 @@
       :term="term"
       :category="category"
       :subCategory="subCategory"
+      :paging="paging"
+      @nextpage="loadMoreData"
     />
   </div>
 </template>
@@ -14,6 +16,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
+import PagingOption from '@/dto/Pagination.json';
 
 export default {
   name: 'SearchView',
@@ -25,6 +28,7 @@ export default {
       term: '',
       category: '',
       subCategory: '',
+      paging: _.cloneDeep(PagingOption),
     };
   },
 
@@ -50,6 +54,9 @@ export default {
 
       if (value.term) this.term = value.term;
       else this.term = '';
+
+      this.$store.commit('searchStore/resetStore');
+      this.paging.page = 1;
 
       this.performSearch();
     },
@@ -78,11 +85,21 @@ export default {
       } else if (this.category.length > 0) {
         payload.subcategories = _.map(this.categories[this.category], '_id');
       }
-      // else {
-      //   payload.subcategories = [];
-      // }
 
-      await this.$store.dispatch('searchStore/searchForProduct', payload);
+      payload.paging = this.paging;
+
+      const pageResp = await this.$store.dispatch(
+        'searchStore/searchForProduct',
+        payload,
+      );
+
+      _.assign(this.paging, pageResp);
+    },
+
+    loadMoreData() {
+      this.paging.page += parseInt(1);
+
+      this.performSearch();
     },
   },
 
