@@ -25,7 +25,7 @@
         <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
       </b-nav-item>
 
-      <div class="mobile-search-bar">
+      <div class="mobile-search-bar d-xs-block d-sm-block d-md-none">
         <input
           type="text"
           class="special-search-input"
