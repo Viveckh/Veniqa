@@ -25,6 +25,18 @@
         <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
       </b-nav-item>
 
+      <div class="mobile-search-bar">
+        <input
+          type="text"
+          class="special-search-input"
+          placeholder="Search for products"
+          v-model="searchTerm"
+          style="width: 100%"
+          @keyup.enter="searchProduct()"
+          @keydown.esc="showSearch = false"
+        >
+      </div>
+
       <transition
         name="shipping-form-anim"
         enter-active-class="animated slideInLeft slower"
@@ -47,7 +59,7 @@
                 @keydown.esc="showSearch = false"
               >
             </transition>
-            <div class="veniqa-nav d-none d-md-block" v-if="!showSearch">
+            <div class="veniqa-nav d-none d-md-block" v-if="!showSearch" style="margin-top: 0.5rem">
               <font-awesome-icon
                 @click="showSearch = true"
                 style="color: rgba(0, 0, 0, 0.5)"
@@ -122,26 +134,26 @@ import LeftMenuView from '@/components/LeftMenu.vue';
 export default {
   name: 'HeaderMenu',
   components: {
-    LeftMenuView
+    LeftMenuView,
   },
   props: {
     rightSidebarVisible: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
 
     sidebarWidth: {
       type: Number,
       required: false,
-      default: 300
-    }
+      default: 300,
+    },
   },
   data() {
     return {
       scrollPos: null,
       showSearch: false,
-      searchTerm: ''
+      searchTerm: '',
     };
   },
   methods: {
@@ -152,8 +164,8 @@ export default {
       this.$router.push({
         path: '/search',
         query: {
-          category: cat
-        }
+          category: cat,
+        },
       });
     },
     searchProduct() {
@@ -161,8 +173,8 @@ export default {
       this.$router.push({
         path: '/search',
         query: {
-          term: this.searchTerm
-        }
+          term: this.searchTerm,
+        },
       });
     },
     async logoutClicked() {
@@ -171,7 +183,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'success',
-          text: 'You have been successfully logged out.'
+          text: 'You have been successfully logged out.',
         });
         this.$store.commit('cartStore/resetOrders');
         this.$store.commit('shippingStore/resetAddresses');
@@ -180,10 +192,10 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Sorry but we could not log you out at the moment.'
+          text: 'Sorry but we could not log you out at the moment.',
         });
       }
-    }
+    },
   },
 
   computed: {
@@ -194,18 +206,18 @@ export default {
       return this.$store.getters['cartStore/getTotalItems'];
     },
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive'
+      isSessionActive: 'authStore/isSessionActive',
     }),
 
     headerStyle() {
       return {
         'margin-right': this.rightSidebarVisible
           ? `${this.sidebarWidth}px`
-          : '0px'
+          : '0px',
         // 'min-width': '100%'
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -217,11 +229,17 @@ export default {
       width: 100%;
     }
   }
+
+  .mobile-search-bar {
+    padding: 10px 0px;
+    width: 100%;
+    margin-bottom: 0.3rem;
+  }
 }
 .special-search-input {
   border: none;
-  padding: 0px 5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 0px 10px;
+  border-bottom: 1px solid #dbdbdb;
   min-width: 20rem;
   &:focus {
     outline: none;
