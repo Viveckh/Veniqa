@@ -25,6 +25,18 @@
         <b-badge :pill="true" variant="danger">{{totalOrders}}</b-badge>
       </b-nav-item>
 
+      <div class="mobile-search-bar">
+        <input
+          type="text"
+          class="special-search-input"
+          placeholder="Search for products"
+          v-model="searchTerm"
+          style="width: 100%"
+          @keyup.enter="searchProduct()"
+          @keydown.esc="showSearch = false"
+        >
+      </div>
+
       <transition
         name="shipping-form-anim"
         enter-active-class="animated slideInLeft slower"
@@ -217,11 +229,17 @@ export default {
       width: 100%;
     }
   }
+
+  .mobile-search-bar {
+    padding: 10px 0px;
+    width: 100%;
+    margin-bottom: 0.3rem;
+  }
 }
 .special-search-input {
   border: none;
-  padding: 0px 5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 0px 10px;
+  border-bottom: 1px solid #dbdbdb;
   min-width: 20rem;
   &:focus {
     outline: none;

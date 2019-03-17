@@ -1,12 +1,12 @@
 <template>
   <div class="product-detail">
     <div class="space"></div>
-
+    <br>
     <p class="align-left bcrumb">Shop &nbsp; >> &nbsp; {{title}}</p>
     <br>
     <b-row>
       <b-col md="2" class="beginner align-left">
-        <div>
+        <div class="d-none d-md-block">
           <side-menu-view
             :sidebar="menu"
             :category="category"
@@ -15,7 +15,7 @@
           ></side-menu-view>
         </div>
       </b-col>
-      <b-col md="10" class="align-left">
+      <b-col md="10">
         <div v-if="data && data.length > 0">
           <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
             <div class="link" @click="openProductDetail(product._id)">
