@@ -3,7 +3,9 @@
     <ul v-show="Object.keys(sidebar).length > 0">
       <li v-for="(product, pkey) in sidebar" v-bind:key="pkey">
         <div v-if="product && product.length > 0 && shouldProductDisplay(pkey, product)">
-          <strong>{{product[0].category}}</strong>
+          <span style="font-size:large">
+            <strong>{{product[0].category}}</strong>
+          </span>
           <ul>
             <li v-for="(subcategory, sid) in product" v-bind:key="sid">
               <a
@@ -66,12 +68,13 @@ export default {
     shouldProductDisplay(catgry, subcats) {
       if (this.category.length <= 0) {
         if (
-          this.subCategory.length > 0 &&
-          _.findIndex(subcats, v => v.subcategory === this.subCategory) >= 0
+          this.subCategory.length > 0
+          && _.findIndex(subcats, v => v.subcategory === this.subCategory) >= 0
         ) {
           return true;
-        } if (this.subCategory.length <= 0) return true;
-        else return false;
+        }
+        if (this.subCategory.length <= 0) return true;
+        return false;
       }
       if (this.category === catgry) return true;
       return false;
