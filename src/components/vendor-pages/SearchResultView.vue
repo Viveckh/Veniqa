@@ -16,7 +16,7 @@
         </div>
       </b-col>
       <b-col md="10">
-        <div v-if="data && data.length > 0">
+        <div v-if="data && data.length > 0" class="align-left">
           <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
             <div class="link" @click="openProductDetail(product._id)">
               <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
@@ -170,7 +170,7 @@ export default {
     .title {
       height: 2em;
       text-overflow: ellipsis;
-      overflow: auto;
+      overflow: hidden;
     }
 
     .price {
