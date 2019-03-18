@@ -170,7 +170,7 @@ export default {
     .title {
       height: 2em;
       text-overflow: ellipsis;
-      overflow: auto;
+      overflow: hidden;
     }
 
     .price {
