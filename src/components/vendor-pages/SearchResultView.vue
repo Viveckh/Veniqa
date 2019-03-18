@@ -2,7 +2,7 @@
   <div class="product-detail">
     <div class="space"></div>
     <br>
-    <p class="align-left bcrumb">Shop &nbsp; >> &nbsp; {{title}}</p>
+    <p class="align-left bcrumb">Shop &nbsp; / &nbsp; {{title}}</p>
     <br>
     <b-row>
       <b-col md="2" class="beginner align-left">
