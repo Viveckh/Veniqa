@@ -3,7 +3,7 @@
 <template>
   <div class="align-left description" style="padding: 10px">
     <h3>{{product.name}}</h3>
-    <h6>By {{product.brand}}</h6>
+    <h6>By {{product.store}}</h6>
 
     <h4>{{product.price.currency}} {{product.price.amount}}</h4>
     <div class="custom-attributes">
@@ -87,14 +87,14 @@ export default {
   props: {
     data: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       product: null,
       selectedCustomizations: {},
-      showLoginPopover: false
+      showLoginPopover: false,
     };
   },
 
@@ -117,7 +117,7 @@ export default {
       this.$refs.popover.$emit('disable');
 
       this.product.customValues = {};
-      Object.keys(this.selectedCustomizations).forEach(key => {
+      Object.keys(this.selectedCustomizations).forEach((key) => {
         if (typeof this.selectedCustomizations[key] === 'string') {
           this.product.customValues[key] = this.selectedCustomizations[key];
         } else {
@@ -127,14 +127,14 @@ export default {
         }
       });
       const val = await this.$store.dispatch('cartStore/addToTheCart', [
-        this.product
+        this.product,
       ]);
       if (val) {
         this.$notify({
           group: 'toast',
           type: 'success',
           text: `Added ${this.product.name} to the cart`,
-          title: 'Added to Cart<font-awesome-icon icon="cart"/>'
+          title: 'Added to Cart<font-awesome-icon icon="cart"/>',
         });
       } else {
         this.$notify({
@@ -142,7 +142,7 @@ export default {
           type: 'warn',
           text: `${
             this.product.name
-          } couldn't be added for some reason. Please try again later`
+          } couldn't be added for some reason. Please try again later`,
         });
       }
     },
@@ -160,17 +160,17 @@ export default {
       if (this.product.counts < 0) {
         this.product.counts = 0;
       }
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive'
+      isSessionActive: 'authStore/isSessionActive',
     }),
     customizations() {
       return this.product.customizationOptions.customizations;
-    }
-  }
+    },
+  },
 };
 </script>
 
