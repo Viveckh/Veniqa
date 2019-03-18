@@ -89,6 +89,7 @@ export default {
       max-height: 65vh;
       overflow-x: hidden;
       overflow-y: scroll;
+      padding: 0;
 
       li {
         border-bottom: 0.5px solid #dbdbdb;
@@ -99,6 +100,7 @@ export default {
     li {
       padding: 1rem 1.5rem;
       cursor: pointer;
+      list-style-type: none;
     }
 
     .footer {

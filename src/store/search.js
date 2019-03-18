@@ -8,7 +8,6 @@ export default {
   namespaced: true,
   state: {
     searchTerm: '',
-    paging: _.cloneDeep(PagingOption),
     searchResult: [],
   },
 
@@ -18,8 +17,12 @@ export default {
     },
 
     setSearchResult(state, payload) {
-      state.searchResult.splice(0, state.searchResult.length);
+      // state.searchResult.splice(0, state.searchResult.length);
       state.searchResult.push(...payload);
+    },
+
+    resetStore(state) {
+      state.searchResult = [];
     },
   },
 
@@ -32,7 +35,7 @@ export default {
           data: {
             searchTerm: payload.term,
             categoryIds: payload.subcategories,
-            pagingOptions: state.paging,
+            pagingOptions: payload.paging,
           },
         });
 
@@ -43,9 +46,12 @@ export default {
           });
 
           commit('setSearchResult', transformed);
-          return true;
+          return {
+            total: data.responseData.total,
+            pages: data.responseData.pages,
+          };
         }
-        return false;
+        throw new Error('result error');
       } catch (err) {
         console.log('Error', err);
         throw err;

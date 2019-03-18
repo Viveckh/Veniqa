@@ -1,12 +1,12 @@
 <template>
   <div class="product-detail">
     <div class="space"></div>
-
+    <br>
     <p class="align-left bcrumb">Shop &nbsp; >> &nbsp; {{title}}</p>
     <br>
     <b-row>
       <b-col md="2" class="beginner align-left">
-        <div>
+        <div class="d-none d-md-block">
           <side-menu-view
             :sidebar="menu"
             :category="category"
@@ -15,8 +15,8 @@
           ></side-menu-view>
         </div>
       </b-col>
-      <b-col md="10" class="align-left">
-        <div v-if="data && data.length > 0">
+      <b-col md="10">
+        <div v-if="data && data.length > 0" class="align-left">
           <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
             <div class="link" @click="openProductDetail(product._id)">
               <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
@@ -48,6 +48,13 @@
                 </p>
               </div>
             </div>
+          </div>
+          <div class="align-center">
+            <b-btn
+              class="primary-button"
+              @click="loadMoreProducts()"
+              v-show="data.length < paging.total"
+            >See More</b-btn>
           </div>
         </div>
         <div v-else>
@@ -94,6 +101,12 @@ export default {
       default: '',
       type: String,
     },
+
+    paging: {
+      required: false,
+      default: null,
+      type: Object,
+    },
   },
   components: {
     SearchResultViewImage,
@@ -111,6 +124,10 @@ export default {
 
     openProductDetail(pid) {
       this.$router.push(`/products/${pid}`);
+    },
+
+    loadMoreProducts() {
+      this.$emit('nextpage');
     },
   },
 };
@@ -153,7 +170,7 @@ export default {
     .title {
       height: 2em;
       text-overflow: ellipsis;
-      overflow: auto;
+      overflow: hidden;
     }
 
     .price {
