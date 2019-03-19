@@ -166,20 +166,20 @@ export default {
       }
     },
 
+    resetProducts(state) {
+      state.products = [];
+    },
     setSortByInactive(state, payload) {
       if (payload) {
         state.sortBy = 'active';
       } else {
         state.sortBy = '-active';
       }
-
     },
 
     setProducts(state, payload) {
       state.products = [];
       state.products.push(...payload);
-
-
     },
     setRefData(state, payload) {
       state.stores = payload.stores || [];

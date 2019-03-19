@@ -25,7 +25,7 @@
               <b-col sm="4">
                 <img
                   :src="product.detailedImageUrls[0]"
-                  alt="Broken"
+                  alt="No Image"
                   width="60px"
                   height="auto"
                   crossorigin="anonymous"
