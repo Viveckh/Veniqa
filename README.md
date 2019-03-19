@@ -1,10 +1,8 @@
 # veniqa
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/db94f1df-1599-4500-9067-8e31878e3b53/deploy-status)](https://app.netlify.com/sites/dev-veniqa-client/deploys)
+Veniqa Client Dev: [![Netlify Status](https://api.netlify.com/api/v1/badges/db94f1df-1599-4500-9067-8e31878e3b53/deploy-status)](https://app.netlify.com/sites/dev-veniqa-client/deploys)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c95aadbb-cf5b-4e35-a86d-69646f345690/deploy-status)](https://app.netlify.com/sites/prod-veniqa-client/deploys)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/fe1848aa-0430-4f92-9091-b8a110b4d55a/deploy-status)](https://app.netlify.com/sites/dev-veniqa-admin/deploys)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/bb8d700a-4136-4b65-acc1-f29e14aed779/deploy-status)](https://app.netlify.com/sites/prod-veniqa-admin/deploys)
+Veniqa Client PROD: [![Netlify Status](https://api.netlify.com/api/v1/badges/c95aadbb-cf5b-4e35-a86d-69646f345690/deploy-status)](https://app.netlify.com/sites/prod-veniqa-client/deploys)
 
 ## Project setup
 
