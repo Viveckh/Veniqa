@@ -778,6 +778,7 @@ export default {
           // this.preassignedUrls = null;
         }
         await this.$store.dispatch('adminStore/editProduct', this.product);
+        this.$store.commit('adminStore/resetProducts');
         this.$emit('cancelTrigger');
       } catch (err) {
         // if (err) this.preassignedUrls = err;
