@@ -1,0 +1,65 @@
+/* 2D TRANSITIONS */
+/* Grow */
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+/* Icon Up */
+@-webkit-keyframes hvr-icon-up {
+  0%,
+	50%,
+	100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25%,
+	75% {
+    -webkit-transform: translateY(-6px);
+    transform: translateY(-6px);
+  }
+}
+@keyframes hvr-icon-up {
+  0%,
+	50%,
+	100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25%,
+	75% {
+    -webkit-transform: translateY(-6px);
+    transform: translateY(-6px);
+  }
+}
+/* Icon Up */
+.hvr-icon-up {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.hvr-icon-up .hvr-icon {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.hvr-icon-up:hover .hvr-icon, .hvr-icon-up:focus .hvr-icon, .hvr-icon-up:active .hvr-icon {
+  -webkit-animation-name: hvr-icon-up;
+  animation-name: hvr-icon-up;
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}

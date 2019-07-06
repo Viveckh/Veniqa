@@ -1,0 +1,28 @@
+{
+  "_id": "1",
+  "store": "macys",
+  "brand": "Tommy Hilfiger",
+  "name": "Men's Quilted Puffer Jacket, Created for Macy's",
+  "item_url": "https://www.macys.com/shop/product/tommy-hilfiger-mens-quilted-puffer-jacket-created-for-macys?ID=6550128&CategoryID=3763&tdp=cm_app~zMCOM-NAVAPP~xcm_zone~zC2FLEX_ZONE_C~xcm_choiceId~zcidM62MFQ-be1b50c1-c01d-4310-964e-e3963d68c3d4%40H92%40Shop%2BFriends%2B%2526%2BFamily%2BNow%2445236%246550128~xcm_pos~zPos1~xcm_srcCatID~z3763",
+  "category": "Coats and Jackets",
+  "subcategory": "jacket",
+  "picture_urls": [
+    "https://slimages.macysassets.com/is/image/MCY/products/8/optimized/9916788_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/3/optimized/9916793_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/9916795_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/6/optimized/9916796_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/8/optimized/9916788_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/3/optimized/9916793_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/9916795_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
+    "https://slimages.macysassets.com/is/image/MCY/products/6/optimized/9916796_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$"
+  
+
+  ],
+  "price": {
+    "currency": "USD",
+    "amount": "225"
+  },
+  "custom_attributes": {},
+  "details_html": "",
+  "count": 0
+}

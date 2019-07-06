@@ -1,0 +1,10 @@
+{
+  "country": "US",
+  "currency": "usd",
+  "total": {
+    "label": "Total",
+    "amount": 0
+  },
+  "requestShipping": false,
+  "requestPayerEmail": true
+}

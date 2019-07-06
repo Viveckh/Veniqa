@@ -1,0 +1,19 @@
+[
+  {
+    "_id": "1",
+    "store": "amazon",
+    "brand": "Cognac",
+    "name": "Dubuex",
+    "item_url": "www.google.com",
+    "category": "alcohol",
+    "subcategory": "hard",
+    "picture_urls": [],
+    "price": {
+      "currency": "USD",
+      "amount": "1000"
+    },
+    "custom_attributes": {
+    },
+    "details_html": ""
+  }
+]

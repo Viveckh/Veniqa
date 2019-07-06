@@ -1,0 +1,27 @@
+{
+  "product": {
+    "price": {
+      "currency": "",
+      "amount": 0
+    },
+    "thumbnailUrls": [],
+    "_id": "",
+    "store": "",
+    "brand": "",
+    "name": "",
+    "weight": {
+      "quantity": 0,
+      "unit": ""
+    }
+  },
+  "counts": 0,
+  "aggregatedPrice": {
+    "currency": "",
+    "amount": 0
+  },
+  "aggregatedWeight": {
+    "quantity": 0,
+    "unit": ""
+  },
+  "_id": ""
+}

@@ -1,0 +1,32 @@
+@import "./global.scss";
+
+.main-notification {
+  margin: 0px !important;
+  border-left: 0px !important;
+  font-size: 18px !important;
+  text-align: center !important;
+  padding: 20px 10px !important;
+}
+
+.dropdown-toggle::after{
+  margin-left: 0.75rem;
+}
+
+.no-dropdown-display{
+  .dropdown-toggle::after{
+    display: none;
+  }
+}
+
+.dropdown-menu{
+  color: $pitch-black;
+  border: none;
+
+  .dropdown-item {
+    padding: 0.35rem 1.5rem !important;
+  }
+}
+
+.nav-link{
+  padding: 0.5rem 1rem !important;
+}
