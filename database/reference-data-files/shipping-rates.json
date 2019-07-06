@@ -1,0 +1,138 @@
+[
+    {
+        "country": "Bangladesh",
+        "shipping_options": [
+            {
+                "id": "veniqa_bd_expedited",
+                "name": "Veniqa Expedited",
+                "summary": "7-10 days",
+                "maximum_days": 10,
+                "shipping_providers": [
+                    "MyUS - FedEx Priority"
+                ],
+                "rates_in_lbs_to_usd": {
+                    "1": 32,
+                    "2": 35,
+                    "3": 39,
+                    "4": 43,
+                    "5": 51,
+                    "6": 55,
+                    "7": 59,
+                    "8": 64,
+                    "9": 68,
+                    "10": 72
+                }
+            },
+            {
+                "id": "veniqa_bd_priority",
+                "name": "Veniqa Priority",
+                "summary": "15-20 days",
+                "maximum_days": 20,
+                "shipping_providers": [
+                    "MyUS - FedEx Economy"
+                ],
+                "rates_in_lbs_to_usd": {
+                    "1": 30,
+                    "2": 33,
+                    "3": 37,
+                    "4": 41,
+                    "5": 47,
+                    "6": 53,
+                    "7": 58,
+                    "8": 62,
+                    "9": 66,
+                    "10": 70
+                }
+            },
+            {
+                "id": "veniqa_bd_economy",
+                "name": "Veniqa Budget Economy",
+                "summary": "25-30 days",
+                "maximum_days": 30,
+                "shipping_providers": [
+                    "MyUS - Budget Economy"
+                ],
+                "rates_in_lbs_to_usd": {
+                    "1": 20,
+                    "2": 28,
+                    "3": 32,
+                    "4": 35,
+                    "5": 41,
+                    "6": 47,
+                    "7": 53,
+                    "8": 56,
+                    "9": 60,
+                    "10": 64
+                }
+            }
+        ]
+    },
+    {
+        "country": "Nepal",
+        "shipping_options": [
+            {
+                "id": "veniqa_npl_expedited",
+                "name": "Veniqa Expedited",
+                "summary": "7-10 days",
+                "maximum_days": 10,
+                "shipping_providers": [
+                    "MyUS - FedEx Priority"
+                ],
+                "rates_in_lbs_to_usd": {
+                    "1": 35,
+                    "2": 38,
+                    "3": 43,
+                    "4": 46,
+                    "5": 55,
+                    "6": 56,
+                    "7": 61,
+                    "8": 65,
+                    "9": 69,
+                    "10": 73
+                }
+            },
+            {
+                "id": "veniqa_npl_priority",
+                "name": "Veniqa Priority",
+                "summary": "15-20 days",
+                "maximum_days": 20,
+                "shipping_providers": [
+                    "MyUS - FedEx Economy"
+                ],
+                "rates_in_lbs_to_usd": {
+                    "1": 32,
+                    "2": 35,
+                    "3": 39,
+                    "4": 43,
+                    "5": 49,
+                    "6": 52,
+                    "7": 58,
+                    "8": 62,
+                    "9": 66,
+                    "10": 70
+                }
+            },
+            {
+                "id": "veniqa_npl_economy",
+                "name": "Veniqa Budget Economy",
+                "summary": "25-30 days",
+                "maximum_days": 30,
+                "shipping_providers": [
+                    "MyUS - Budget Economy"
+                ],
+                "rates_in_lbs_to_usd": {
+                    "1": 20,
+                    "2": 30,
+                    "3": 35,
+                    "4": 39,
+                    "5": 45,
+                    "6": 47,
+                    "7": 53,
+                    "8": 56,
+                    "9": 60,
+                    "10": 64
+                }
+            }
+        ]
+    }
+]

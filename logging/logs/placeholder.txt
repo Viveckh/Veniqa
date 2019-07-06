@@ -1,0 +1,2 @@
+This file serves as a placeholder so that this folder gets committed to version control.
+It should pre-exist since the log files point to this folder.

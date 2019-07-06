@@ -1,0 +1,868 @@
+{
+	"info": {
+		"_postman_id": "7cf522b6-10a6-4537-9d2a-e90968ee7c71",
+		"name": "Veniqa Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"random\",\n\t\"name\": \"Vivek Pandey\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/signup",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resendEmailAddressConfirmationLink",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/resendEmailAddressConfirmationLink?email=vpandey@ngineerx.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"resendEmailAddressConfirmationLink"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vpandey@ngineerx.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirmEmailAddress",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/confirmEmailAddress/35ecbf438aed2842e43fc2b0e987a94908de725b",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"confirmEmailAddress",
+								"35ecbf438aed2842e43fc2b0e987a94908de725b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"vpandey@ngineerx.com\",\n\t\"password\": \"random\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/forgotPassword?email=vpandey@ngineerx.com",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"forgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vpandey@ngineerx.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validatePasswordResetToken",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/validatePasswordResetToken/3d421ad1d212b5a72177a3e8546ea8abaae85580",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"validatePasswordResetToken",
+								"3d421ad1d212b5a72177a3e8546ea8abaae85580"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"3d421ad1d212b5a72177a3e8546ea8abaae85580\",\n\t\"newPassword\": \"golang\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/security/resetPassword",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isLoggedIn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/isLoggedIn",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"isLoggedIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/security/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"security",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "createCheckout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"addressId\": \"5c562140f6df530073f6c462\",\n\t\"shippingMethod\": \"No Rush Shipping\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/createCheckout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"createCheckout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completeCheckoutUsingCard",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c57950960e27e02f13beafa\",\n\t\"paymentToken\": \"5c466fa242dccc1973be\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/completeCheckoutUsingCard",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"completeCheckoutUsingCard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completeCheckoutUsingKhalti",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c58a79d15d7bb1058167902\",\n\t\"paymentToken\": \"QUao9cqFzxPgvWJNi9aKac\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/completeCheckoutUsingKhalti",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"completeCheckoutUsingKhalti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isCheckoutValid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c466fa242dccc1973be09e5\",\n\t\"paymentToken\": \"5c466fa242dccc1973be\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/isCheckoutValid?checkoutId=5c57950960e27e02f13beafa",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"isCheckoutValid"
+							],
+							"query": [
+								{
+									"key": "checkoutId",
+									"value": "5c57950960e27e02f13beafa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaymentToken",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"checkoutId\": \"5c466fa242dccc1973be09e5\",\n\t\"paymentSource\": \"BKASH\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/createPaymentToken",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"createPaymentToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completeCheckout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"paymentSource\": \"BKASH\",\n\t\"paymentId\": \"bae46a9c711cabb6355b179fd51dc95ab0207b43\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/orders/completeCheckout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"orders",
+								"completeCheckout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "catalog search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 3\n\t},\n\t\"searchTerm\": \"forever 21\",\n\t\"categoryIds\": [\"5c45ff5ba8ef66002b9e073e\", \"5c461d01a8ef66002b9e0744\"],\n\t\"sortRule\": \"price -auditLog.createdOn\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/catalog/search",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/catalog/getProductDetails?productId=5c465b51484bd2148fcfca64",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"catalog",
+								"getProductDetails"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "5c465b51484bd2148fcfca64"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shopping",
+			"item": [
+				{
+					"name": "addToCart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n\t\"product\": \"5c465b51484bd2148fcfca64\",\n\t\"counts\": 2,\n\t\"customizations\": {\n\t\t\"size\": \"S\"\n\t}\n}]"
+						},
+						"url": {
+							"raw": "{{server}}/shopping/addToCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"addToCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cartItems\": [\n\t\t{\n\t\t\t\"_id\": \"5c3ade8f908d26990c884d26\",\n\t\t\t\"product\": \"5c3920c4e0bdef00918f6a04\",\n\t\t\t\"counts\": 5,\n\t\t\t\"customizations\": {\n\t\t\t\t\"size\": \"M\"\n\t\t\t}\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/shopping/updateCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"updateCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/shopping/getCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"getCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteFromCart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cartItemIds\": [\n\t\t\"5c3add6a944f7498fe0eded5\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{server}}/shopping/deleteFromCart",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"shopping",
+								"deleteFromCart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Arjun\",\n\t\"lastName\": \"Bastola\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
+						},
+						"url": {
+							"raw": "{{server}}/user/address",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/user/address",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "address",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\": \"5c2ea24165b93c460b2ad66f\",\n\t\"firstName\": \"Vivek\",\n\t\"lastName\": \"Pandey\",\n\t\"addressLine1\": \"505 Ramapo Valley Road\",\n\t\"addressLine2\": \"c11\",\n\t\"city\": \"Mahwah\",\n\t\"state\": \"NJ\",\n\t\"zipCode\": \"07430\",\n\t\"country\": \"United States of America\",\n\t\"mobilePhone\": \"2016757777\"\n}\n"
+						},
+						"url": {
+							"raw": "{{server}}/user/address",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "address",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"addressId\": \"5c2ea24165b93c460b2ad66f\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/user/address",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "orderList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pagingOptions\": {\n\t\t\"page\": 1,\n\t\t\"limit\": 10\n\t},\n\t\"sortRule\": \"-auditLog.createdOn\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/user/orderList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"orderList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "orderDetails",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/user/orderDetails?orderId=5c4c7be034a2b90c1fa32611",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"orderDetails"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "5c4c7be034a2b90c1fa32611"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UI",
+			"item": [
+				{
+					"name": "featured",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/ui/featured?name=section_identifier",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"featured"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "section_identifier"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productCategoryList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/ui/productCategoryList",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ui",
+								"productCategoryList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
