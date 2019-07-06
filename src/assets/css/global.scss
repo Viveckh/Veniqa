@@ -1,0 +1,218 @@
+$link-hover-color: #C99B80;
+$app-text-color: #2c3e50;
+$pitch-black: #202428;
+$white-shade: rgba(255, 255, 255, 0.5);
+$home-button-bg: rgba(199,203,210,0.8);
+$gradient-color: linear-gradient(to right, #136a8a, #267871) !important;
+$primary-green: #00e676;
+$primary-red: hsl(348, 100%, 61%);
+
+.primary-button{
+  background-image: $gradient-color;
+}
+
+.inline-list{
+  list-style-type: none;
+
+  li {
+    display: inline-block;
+    padding: 15px 20px;
+    margin-right: 5px !important;
+  }
+}
+
+li {
+  list-style: none;
+}
+.green{
+  color: $primary-green !important;
+}
+
+.green-anchor {
+  color: green !important;
+}
+
+.red-anchor {
+  color: red !important;
+}
+
+.product-card{
+  margin-bottom: 0;
+  
+}
+.space{
+  height: 100px;
+}
+
+.list-link{
+  li {
+    cursor: pointer;
+  }
+  li:hover, a:hover{
+    color: $link-hover-color;
+    text-decoration: none;
+  }
+}
+
+.hand-cursor{
+  cursor: pointer;
+}
+
+a{
+  color: $app-text-color;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover{
+    color: lightness($color: $app-text-color) !important;
+  }
+}
+
+.main-screen{
+  min-height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.align-right{
+  text-align: right;
+}
+
+.align-left{
+  text-align: left;
+}
+
+.align-center{
+  text-align: center;
+}
+
+.veniqa-button{
+  padding: 10px 20px;
+  margin: 5px 10px;
+  font-size: larger;
+  background-color: $home-button-bg;
+  color: $pitch-black;
+  font-weight: bold;
+  border: 2px solid $pitch-black;
+  border-radius: 0;
+
+  &.dark{
+    border: 2px solid $white-shade !important;
+    background-color: $pitch-black;
+    color: white;
+  }
+}
+
+.vendor-search-input{
+  padding: 25px !important;
+}
+
+.dark-button{
+  border: 2px solid $white-shade !important;
+    background-color: $pitch-black;
+    color: white;
+}
+
+.low-side-padding{
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.general-padding{
+  padding: 10px 10px;
+  width: 100%;
+}
+
+.modal-bottom {
+  margin-bottom: 50px;
+}
+
+
+.confirmation-page {
+  height: 700px;
+  line-height: 700px;
+
+  .req-success {
+    color: $primary-green;
+  }
+
+  .req-err {
+    color: $primary-red;
+  }
+  .page {
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    font-size: 1.5em;
+  }
+
+  .check-button {
+    font-size: 3em;
+    margin: 20px 0px;
+  }
+}
+
+.list-row {
+  background: #f6f5f3;
+}
+
+.header-margin-top{
+  margin-top: 1rem;
+}
+
+.item-status {
+  padding: 3px 15px;
+  border-radius: 15px;
+  color: white;
+  background-color: $primary-green;
+}
+
+.footer-modal{
+  button {
+    margin-left: 10px;
+  }
+}
+
+.theme-orange .vdatetime-popup__header,
+.theme-orange .vdatetime-calendar__month__day--selected > span > span,
+.theme-orange .vdatetime-calendar__month__day--selected:hover > span > span {
+  background: #FF9800;
+}
+
+.theme-orange .vdatetime-year-picker__item--selected,
+.theme-orange .vdatetime-time-picker__item--selected,
+.theme-orange .vdatetime-popup__actions__button {
+  color: #ff9800;
+}
+
+.vdatetime-overlay{
+  background: transparent!important;
+}
+
+.vdatetime-input{
+  height: calc(1.8125rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.icon:hover{
+  cursor: pointer;
+}
+
+.empty-info {
+  display: flex;
+  width: 50%;
+  height: 100px;
+  margin: auto;
+  font-size: xx-large;
+  color: grey;
+
+  p {
+    margin: auto;
+    /* Important */
+    text-align: center;
+  }
+}
