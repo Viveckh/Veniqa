@@ -31,7 +31,7 @@ In Progress ...
 
 ## Core Team
 
-* [Vivek Pandey (Platform Architecture, Server-side and DevOps Engineering, Database Modeling)](https://viveckh.com)
+* [(EJ) Vivek Pandey (Platform Architecture, Server-side and DevOps Engineering, Database Modeling)](https://viveckh.com)
 * [Sujil Maharjan (UX/UI Design, Frontend Engineering)](https://smaharj1.github.io/)
 * [Arjun Bastola (Frontend Engineering, Graphics Design)](https://github.com/abastola)
 
