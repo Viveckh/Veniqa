@@ -102,7 +102,6 @@
 <script>
 import ImageShowcase from '@/components/homepage/ImageShowcase';
 import ProxyUrls from '@/constants/ProxyUrls';
-import AWSParams from '@/constants/AwsParams';
 
 export default {
   name: 'ManagePhoto',
