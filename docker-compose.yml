@@ -1,0 +1,18 @@
+version: '3'
+services:
+  shopping-server:
+    build: ./shopping-server
+    ports:
+      - 4201:3000
+    environment:
+      NODE_ENV: development
+      VENIQA_ENV: local
+
+  management-server:
+    build: ./management-server
+    ports:
+      - 4202:3000
+    environment:
+      NODE_ENV: development
+      VENIQA_ENV: local
+
