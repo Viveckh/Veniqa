@@ -16,3 +16,14 @@ services:
       NODE_ENV: development
       VENIQA_ENV: local
 
+
+  shopping-webclient:
+    build: ./shopping-webclient
+    ports:
+      - 5201:8080
+    
+  management-webclient:
+    build: ./management-webclient
+    ports:
+      - 5202:8080
+

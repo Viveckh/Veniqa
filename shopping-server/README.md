@@ -1,13 +1,3 @@
-# Veniqa-Server
+## Veniqa Shopping Server
 
-## Install the dependencies
-`npm install`
-
-## To start the server in dev-mode (Detects new changes and auto restarts server)
-`npm run devstart`
-
-## To build, and start the server in prod mode
-`npm run start`
-
-## To only build the server
-`npm run build`
+For Documentation, Refer to [Wiki](https://github.com/Viveckh/Veniqa/wiki).
