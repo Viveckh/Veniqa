@@ -1,0 +1,62 @@
+/*! -- Stack Switchable Sections -- */
+
+@media all and (min-width: 768px){
+.switchable{
+	.container > .row{
+		flex-flow: row-reverse;
+	}
+	&.switchable--switch{
+		.container > .row{
+			flex-flow: row;
+		}
+	}
+}
+}
+
+.switchable{
+	.switchable__text{
+		margin-top: @base-line-height;
+	}
+	[class*='col-']{
+		&:first-child{
+			.switchable__text{
+				margin-bottom: @base-line-height*1.5;
+			}
+		}
+	}
+}
+
+.section--overlap{
+	.row{
+		position: relative;
+		margin-top: -@base-line-height*7;
+	}
+}
+
+@media all and (max-width: 990px){
+	.switchable{
+		.switchable__text{
+			margin-top: 0;
+		}
+	}
+}
+
+
+@media all and (max-width: 767px){
+	.switchable{
+		.switchable__text{
+			margin-top: @base-line-height;
+		}
+		.imageblock__content[class*='col-']{
+			float: none !important;
+		}
+		.row{
+			> div[class*='col-']{
+				float: none !important;
+				&:last-child:not(:only-child){
+					margin-top: @base-line-height;
+				}
+			}
+		}
+	}
+}

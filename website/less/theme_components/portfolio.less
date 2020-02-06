@@ -1,0 +1,113 @@
+/*! -- Stack Portfolio -- */
+
+.project-thumb{
+	> a{
+		display: block;
+	}
+	&:not(.hover-element){
+		> a{
+			.transition(0.3s,ease);
+			margin-bottom: @base-line-height;
+			&:hover{
+				opacity: .85;
+			}
+		}
+	}
+	&.hover-element{
+		margin: 0;
+		> a{
+			height: @base-line-height*13;
+			text-decoration: none;
+			font-weight: normal;
+		}
+		.background-image-holder{
+			.transition(0.5s,ease-out);
+		}
+		.hover-element__reveal{
+			.project-thumb__title{
+				padding: @base-line-height;
+				z-index: 2;
+				position: relative;
+				color: #fff;
+				h5{
+					margin: 0;
+				}
+			}
+		}
+		&.hover--active{
+			.transition(0.3s,ease);
+			&:hover{
+				opacity: .85;
+			}
+		}
+		&:not(.hover--active)[data-scrim-top]{
+			.hover-element__reveal{
+				.transition(0.5s,ease);
+				.translate3d(0,-100px,0);
+			}
+			&:hover{
+				.hover-element__reveal{
+					.translate3d(0,0,0);
+				}
+			}
+		}
+		[data-scrim-top]{
+			&:before{
+				height: 100%;
+			}
+		}
+	}
+	h4{
+		margin-bottom: 0;
+	}
+	&.height-40{
+		min-height: 350px;
+	}
+}
+
+@media all and (max-width: 767px){
+	.project-thumb{
+		&.height-40{
+			height: 350px;
+			min-width: 100%;
+		}
+	}
+}
+
+@media all and (min-width: 768px){
+	.col-xs-12:not(.col-sm-6){
+		.project-thumb{
+			&.hover-element{
+				>a{
+					height: @base-line-height*25;
+				}
+			}
+		}
+	}
+}
+
+.project-thumb{
+	&.border--round{
+		.background-image-holder{
+			border-radius: 6px;
+		}
+		>a{
+			border-radius: 6px;
+			overflow: hidden;
+		}
+		&:before{
+			border-radius: 6px;
+			overflow: hidden;
+		}
+	}
+}
+
+.col-md-4{
+	.project-thumb{
+		> a{
+			&:not(.imagebg){
+				margin-bottom: @base-line-height/2;
+			}
+		}
+	}
+}

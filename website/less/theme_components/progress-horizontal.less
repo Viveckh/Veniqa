@@ -1,0 +1,39 @@
+/*! -- Stack Progress Horizontal -- */
+
+.progress-horizontal{
+	&:not(:last-child){
+		margin-bottom: @base-line-height;
+	}
+	&.progress-horizontal--lg{
+		.progress-horizontal__bar{
+			height: @base-line-height;
+		}
+	}
+	&.progress-horizontal--sm{
+		.progress-horizontal__bar{
+			height: @base-line-height/4;
+		}
+	}
+}
+
+.progress-horizontal__bar{
+	height: @base-line-height/2;
+	border-radius: 100px;
+	background: @color-bg-secondary;
+	border: 1px solid rgba(0,0,0,0.1);
+	&:not(:last-child){
+		margin-bottom: @base-line-height/4;
+	}
+}
+
+.progress-horizontal__progress{
+	background: @color-primary;
+	border-radius: 100px;		
+}
+
+.imagebg{
+	.progress-horizontal__bar{
+		background: rgba(20,20,20,0.2);
+		border: none;
+	}
+}
