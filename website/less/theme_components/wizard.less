@@ -1,0 +1,167 @@
+/*! -- Stack Wizard -- */
+
+.wizard{
+	transition: opacity .3s ease;
+	opacity: 0;
+	&.active{
+		opacity: 1;
+	}
+}
+
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active{
+	background: @color-primary;
+	transition: all .3s ease;
+	padding: @base-line-height/4 @base-line-height;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: 1px;
+	color: #fff;
+}
+
+.wizard > .steps .current a, .wizard > .steps .current a:hover, .wizard > .steps .current a:active{
+	background: none;
+	color: @color-dark;
+}
+
+.wizard > .steps a{
+	position: relative;
+	&:before{
+		content: '';
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		position: absolute;
+		left: 50%;
+		margin-left: -10px;
+		background: #eee;
+		display: block;
+		bottom: 0;
+		transition: all .2s ease;
+	}
+	&:after{
+		content: '';
+		position: absolute;
+		width: 100%;
+		bottom: 7px;
+		height: 2px;
+		background: #eee;
+		left: 0;
+		transition: all .2s ease;
+	}
+}
+
+.wizard > .steps li{
+	&:first-child{
+		a{
+			&:after{
+				width: 50%;
+				left: 50%;
+			}
+		}
+	}
+	&:last-child{
+		a{
+			&:after{
+				width: 50%;
+			}
+		}
+	}
+	&.current{
+		a{
+			&:after, &:before{
+				background-color: @color-primary;
+			}
+		}
+	}
+}
+
+.wizard > .steps a, .wizard > .steps a:hover{
+	padding-bottom: @base-line-height*1.5;
+}
+
+.wizard > .steps .done a, .wizard > .steps .done a:hover, .wizard > .steps .done a:active, .wizard > .steps .disabled a, .wizard > .steps .disabled a:hover, .wizard > .steps .disabled a:active{
+	background: none;
+	color: @color-dark;
+}
+
+.wizard > .steps a, .wizard > .steps a:hover, .wizard > .steps a:active{
+	margin: 0;
+}
+
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active{
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+.wizard > .steps > ul, .wizard > .actions{
+	text-align: center;
+}
+
+.wizard > .steps > ul > li, .wizard > .actions > ul > li{
+	float: none;
+	display: inline-block;
+}
+
+.wizard > section{
+	padding: 0;
+}
+
+.wizard > .content{
+	background: @color-bg-secondary;
+	margin-top: @base-line-height;
+	margin-bottom: @base-line-height;
+	border: 1px solid #ececec;
+}
+
+.wizard > .content > .body{
+	padding: @base-line-height;
+	width: 100%;
+	height: 100%;
+}
+
+.wizard > .steps .number{
+	font-size: 1em;
+}
+
+@media all and (max-width: 767px){
+	.wizard > .steps .number{
+		display: block;
+	}
+	.wizard > .content{
+		min-height: 25em;
+	}
+	.wizard{
+		.pos-vertical-center{
+			top: 50%;
+			transform: translateY(-50%);
+			-wekbit-transform: translateY(-50%);
+		}
+	}
+}
+
+.wizard{
+	&.bg--white{
+		background: none !important;
+		> .content{
+			background: #fff;
+		}
+	}
+	> .content{
+		img{
+			max-height: 240px;
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.wizard{
+		> .content{
+			img{
+				max-height: 120px;
+				margin-bottom: @base-line-height/2;
+			}
+		}
+	}
+}

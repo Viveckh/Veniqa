@@ -1,0 +1,42 @@
+/*! -- Stack Instagram -- */
+
+.instafeed{
+	a{
+		.transition(0.3s,ease);
+		&:hover{
+			opacity: .75;
+		}
+	}
+	&:not(.instafeed--gapless){
+		li{
+			padding: @base-line-height/4;
+		}
+	}
+	&.instafeed--gapless{
+		li{
+			margin-bottom: -1px;
+		}
+	}
+	+.btn{
+		margin-top: @base-line-height*1.5;
+	}
+	&[data-grid="1"][data-amount="8"]{
+		li{
+			display: inline-block;
+			width: 12.5%;
+		}
+	}
+}
+
+.instagram{
+	position: relative;
+	&.unpad{
+		.btn{
+			position: absolute;
+			z-index: 2;
+			top: 50%;
+			.translate3d(-50%,-50%,0);
+			margin: 0;
+		}
+	}
+}

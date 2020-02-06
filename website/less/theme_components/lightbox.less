@@ -1,0 +1,47 @@
+/*! -- Stack Lightboxes -- */
+
+.lb-close{
+	position: relative;
+	top: 10px;
+	&:before{
+		content: '\00D7';
+		color: #fff;
+		font-size: 2.5em;
+		font-weight: 400;
+	}
+	&:hover{
+		text-decoration: none;
+	}
+}
+
+.lb-prev,.lb-next{
+	&:after{
+		font-family: 'stack-interface';
+		position: fixed;
+	}
+}
+.lb-prev{
+	&:after{
+		content: '\e801';
+		left: @base-line-height;
+	}
+}
+.lb-next{
+	&:after{
+		content: '\e802';
+		right: @base-line-height;
+	}
+}
+
+.lb-data{
+	overflow: hidden;
+	min-height: 30px;
+}
+
+a[data-lightbox]{
+	.transition(0.3s,ease);
+	&:hover{
+		opacity: .8;
+		cursor: zoom-in;
+	}
+}

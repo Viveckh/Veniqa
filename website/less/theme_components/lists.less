@@ -1,0 +1,169 @@
+/*! -- Stack Lists -- */
+
+ul:not([class*='menu']){
+	li{
+		> a{
+			font-weight: normal;
+			&:hover{
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+ol{
+	list-style-position: outside;
+	list-style-type: decimal;
+	li{
+		&:not(:last-child){
+			margin-bottom: @base-line-height;
+		}
+	}
+	&.lead{
+		li{
+			&:not(:last-child){
+				margin-bottom: 1.26315789473684em;
+			}
+		}
+	}
+}
+
+.list-inline{
+	margin-left: 0;
+	display: inline-block;
+	li{
+		display: inline-block;
+		padding: 0;
+		&:not(:last-child){
+			margin-right: @base-line-height;
+		}
+	}
+	&:not(:last-child){
+		margin-right: @base-line-height;
+	}
+}
+
+.list-inline--images{
+	img{
+		max-height: @base-line-height*1.5;
+	}
+}
+
+@media all and (min-width: 768px){
+	.list-inline--images{
+		li{
+			&:not(:last-child){
+				margin-right: @base-line-height*3;
+			}
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.list-inline--images{
+		li{
+			&:not(:last-child){
+				margin-bottom: @base-line-height;
+			}
+		}
+	}
+}
+
+.list--loose{
+	> li{
+		&:not(:last-child){
+			margin-bottom: @base-line-height/4;
+		}
+	}
+}
+
+.list--hover{
+		li{
+			.transition(0.2s,ease);
+			&:not(:hover){
+				opacity: .6;
+			}
+		}
+	}
+
+.social-list{
+	a{
+		color: @color-dark;
+	}
+}
+
+.imagebg:not(.image--light){
+	.social-list{
+		a{
+			color: #fff;
+		}
+	}
+}
+
+.results-list{
+	> li > a:first-child{
+		display: flex;
+		align-items: center;
+		span{
+			display: inline-block;
+			margin-left: @base-line-height/4;
+		}
+		h4{
+			display: inline-block;
+			margin-bottom: 0;
+		}
+		&:hover{
+			h4,span{
+				text-decoration: underline;
+			}
+		}
+		margin-bottom: @base-line-height/2;
+	}
+	> li{
+		&:not(:last-child){
+			margin-bottom: @base-line-height;
+			padding-bottom: @base-line-height;
+			border-bottom: 1px solid rgba(0,0,0,0.1);
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.list-inline{
+		&:not(.social-list):not(.list-inline--images){
+			display: block;
+			li{
+				display: block;
+				margin: 0;
+				&:not(:last-child){
+					margin-bottom: @base-line-height/4;
+				}
+			}
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.list-inline{
+		min-width: 100%;
+	}
+}
+
+.row--list{
+	span.h6{
+		margin-bottom: 0;
+	}
+	span.h3{
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.row--list{
+		> li{
+			margin-bottom: @base-line-height/2;
+		}
+	}
+}

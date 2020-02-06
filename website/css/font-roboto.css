@@ -1,0 +1,24 @@
+body{
+  font-family: 'Roboto','Verdana','Helvetica', sans-serif;
+}
+
+.menu > li{
+	font-family: 'Roboto','Verdana','Helvetica', sans-serif;	
+}
+
+.btn,.btn__text,button{
+	font-family: 'Roboto','Verdana','Helvetica', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6,
+.h1,.h2,.h3,.h4,.h5,.h6{
+  font-family: 'Roboto','Helvetica', sans-serif;
+}
+
+h5{
+	font-weight: 500;
+}
+
+.bar-1 .menu-horizontal>li>.dropdown__trigger, .bar-1 .menu-horizontal>li>a{
+	font-weight: 500;
+}
