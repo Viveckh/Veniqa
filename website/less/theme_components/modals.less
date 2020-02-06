@@ -1,0 +1,80 @@
+/*! -- Stack Modals -- */
+
+.modal-container .modal-content:not(.height--natural){
+	height: auto;
+	width: auto;
+}
+
+.modal-instance{
+	&:not(.block){
+		display: inline-block;
+	}
+	&.block{
+		> .btn{
+			display: block;
+		}
+	}
+}
+
+@media all and (min-width: 768px){
+	.modal-instance{
+		+span{
+			&:last-child{
+				display: inline-block;
+				margin-left: @base-line-height/2;
+			}
+		}
+	}
+}
+
+.modal-container{
+	.modal-content{
+		max-height: 95%;
+		transform: translateX(-50%) translateY(-50%);
+		-webkit-transform: translateX(-50%) translateY(-50%);
+		.feature:only-child{
+			margin-bottom: 0;
+			.boxed{
+				margin-bottom: 0;
+			}
+		}
+		.imagebg:not(.image--light){
+			.modal-close-cross{
+				&:before{
+					color: #fff;
+				}
+			}
+		}
+		.container{
+			width: 100vw;
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.modal-container{
+		.modal-content{
+			>.modal-close-cross{
+				top: 3em;
+			    background: #222;
+			    width: 2em;
+			    height: 2em;
+			    text-align: center;
+			    border-radius: 50%;
+			    color: #fff;
+			}
+		}
+		&:not(.modal-active){
+			.modal-content{
+				display: none;
+			}
+		}
+	}
+}
+
+.modal-content{
+	-ms-overflow-style: none;
+}
+.modal-content::-webkit-scrollbar { 
+    display: none;
+}

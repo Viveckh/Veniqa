@@ -1,0 +1,24 @@
+/*! -- Stack Typed Text -- */
+
+span{
+	+.typed-text{
+		&.h2{
+			margin-left: 4px;
+		}
+		&.h1{
+			margin-left: 6px;
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.typed-text{
+		display: block;
+	}
+	.typed-headline{
+		h1,.h1{
+			margin-bottom: 0;
+		}
+		margin-bottom: @base-line-height;
+	}
+}

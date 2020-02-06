@@ -1,0 +1,21 @@
+body{
+  font-family: 'Lato','Verdana','Helvetica', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6,
+.h1,.h2,.h3,.h4,.h5,.h6{
+  font-family: 'Rubik','Helvetica', sans-serif;
+}
+
+h5,h6,.h5,.h6{
+	font-weight: 500;
+}
+
+.menu > li{
+	font-family: 'Lato','Verdana','Helvetica', sans-serif;
+}
+
+.btn,.btn__text,button{
+	font-family: 'Lato','Verdana','Helvetica', sans-serif;
+}
+

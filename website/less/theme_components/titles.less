@@ -1,0 +1,41 @@
+/*! -- Stack Titles -- */
+
+.breadcrumbs{
+	list-style: none;
+	li{
+		font-size: 0.85714285714286em;
+		display: inline-block;
+		&:not(:last-child){
+			margin-right: 1.08333333333334em;
+			&:after{
+				content: '\00bb';
+				margin-left: 1.08333333333334em;
+			}
+		}
+		a{
+			font-weight: normal;
+		}
+	}
+}
+
+.imagebg,.bg--primary{
+	.breadcrumbs{
+		color: #fff;
+		a{
+			color: #fff;
+			font-weight: 600;
+		}
+	}
+}
+
+.elements-title{
+	border-top: none !important;
+	+.tabs-container,+section{
+		&:not(:nth-last-child(2)){
+			margin-bottom: @base-line-height*5;
+		}
+	}
+	+section:not(.imagebg):not([class*='bg-']):not(.unpad){
+		padding-top: @base-line-height;
+	}
+}

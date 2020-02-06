@@ -1,0 +1,55 @@
+/*! -- Stack Helpers -- */
+
+@media all and (max-width: 767px){
+	.block--xs{
+		margin-top: @base-line-height/2;
+	}
+}
+
+.container{
+	.container{
+		max-width: 100%;
+	}
+}
+
+.switchable-toggle{
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.back-to-top{
+	position: fixed;
+    width: @base-line-height*2;
+    height: @base-line-height*2;
+    background: #fff;
+    border-radius: 50%;
+    text-align: center;
+    right: @base-line-height;
+    bottom: @base-line-height*2;
+    padding-top: 12px;
+    .box-shadow;
+    z-index: 99;
+    border: 1px solid #ececec;
+    i{
+    	color: @color-dark;
+    }
+    .transition(0.2s,ease-out);
+    &:not(.active){
+    	opacity: 0;
+    	.translate3d(0,20px,0);
+    	pointer-events: none;
+    }
+    &.active{
+    	&:hover{
+    		.translate3d(0,-5px,0);
+    	}
+    }
+}
+
+.disable-scroll-bars{
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { 
+        display: none;
+    }
+}

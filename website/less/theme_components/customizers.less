@@ -1,0 +1,81 @@
+/*! -- Stack Customizers -- */
+
+.box-shadow{
+	box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.04);
+}
+
+.box-shadow-shallow{
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.06);
+}
+
+.box-shadow-wide{
+	box-shadow: 0 23px 40px rgba(0, 0, 0, 0.2);
+}
+
+.border--round{
+	border-radius: 6px;
+	&:before{
+		border-radius: 6px;
+	}
+	.background-image-holder{
+		border-radius: 6px;
+	}
+	[data-scrim-top]:before,[data-scrim-bottom]:before,[data-overlay]:before{
+		border-radius: 6px;
+	}
+}
+
+.imageblock.border--round{
+	.background-image-holder{
+		border-radius: 6px 0 0 6px;
+	}
+}
+
+@media all and (max-width: 767px){
+	.imageblock.border--round{
+		.background-image-holder{
+			border-radius: 6px 6px 0 0;
+		}
+	}	
+}
+
+.theme--square{
+	.border--round,.btn{
+		border-radius: 0px;
+	}
+}
+
+.theme--bordered{
+	border: @base-line-height/2 solid @color-dark;
+}
+
+.main-container{
+	&.transition--fade{
+		&:not(.transition--active){
+			cursor: wait;
+		}
+	}
+}
+
+@media all and (min-width: (@boxed-layout-width)){
+	body.boxed-layout{
+		> section.bar-3:first-of-type{
+			border-radius: 6px 6px 0 0;
+		}
+		.main-container{
+			> footer{
+				&:last-child{
+					border-radius: 0 0 6px 6px;
+				}
+			}
+		}
+	}
+}
+
+body.boxed-layout{
+	.modal-container{
+		section:not([class*='bg-']){
+			background: none;
+		}
+	}
+}
