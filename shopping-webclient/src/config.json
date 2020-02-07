@@ -1,4 +1,5 @@
 {
   "RECAPTCHA": "6Lekbo8UAAAAAF9AfuxEUc4gUYiwToWNGoLkZV7v",
-  "STRIPE_KEY": "pk_test_ulpX3vj4B28cfSq7Evkt1pFz"
+  "STRIPE_KEY": "pk_test_ulpX3vj4B28cfSq7Evkt1pFz",
+  "KHALTI_KEY": "INSERT_KHALTI_KEY_HERE"
 }

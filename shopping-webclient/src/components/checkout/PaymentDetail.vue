@@ -1,35 +1,33 @@
 <template>
   <div id="payment">
     <h4>Payment</h4>
-    <hr>
-    <stripe-payment :totalCost="totalPrice" :stripeKey="stripeKey" @pay="startPayment"/>
-    <br>
-    <hr>
+    <hr />
+    <stripe-payment :totalCost="totalPrice" :stripeKey="stripeKey" @pay="startPayment" />
+    <br />
+    <hr />
     <div class="align-center">
       <b-btn class="primary-button" @click="handlePayment()">Pay with BKASH</b-btn>&nbsp;&nbsp;
-
     </div>
     <!-- <b-btn disabled class="primary-button">Pay with Khalti</b-btn> -->
     <div class="align-center">
-    <khalti :text="'Pay with Khalti'" :config="khaltiConfig" :total="totalPrice"/>
-
+      <khalti :text="'Pay with Khalti'" :config="khaltiConfig" :total="totalPrice" />
     </div>
   </div>
 </template>
 
 <script>
-import StripePayment from '@/components/checkout/stripe/Stripe'
-import { mapGetters } from "vuex";
+import StripePayment from '@/components/checkout/stripe/Stripe';
+import { mapGetters } from 'vuex';
 import notification from '@/services/notificationService';
 import paymentService from '@/services/paymentService';
-import Config from '@/config'
-import { Khalti } from "@/components/checkout/khalti";
+import Config from '@/config';
+import { Khalti } from '@/components/checkout/khalti';
 
 export default {
   name: 'PaymentDetail',
   components: {
     StripePayment,
-    Khalti
+    Khalti,
   },
 
   data() {
@@ -37,9 +35,10 @@ export default {
       stripeKey: Config.STRIPE_KEY,
       khaltiConfig: {
         productIdentity: '0000',
-        productName: 'Veniqa'
-      }, 
-    }
+        productName: 'Veniqa',
+        key: Config.KHALTI_KEY,
+      },
+    };
   },
 
   created() {
@@ -47,33 +46,41 @@ export default {
   },
 
   methods: {
-    async startPayment(token){
-      if(!this.checkoutId || this.checkoutId.length <= 0) return;
+    async startPayment(token) {
+      if (!this.checkoutId || this.checkoutId.length <= 0) return;
       try {
-        let data = await paymentService.payWithStripe(token,this.checkoutId);
-        
+        const data = await paymentService.payWithStripe(token, this.checkoutId);
+
         this.$store.commit('cartStore/resetOrders');
         this.$router.push(`/orders/${data.order_id}`);
         notification.success(this, 'Payment was successful.');
-
       } catch (error) {
-        console.log("Error with Veniqa payment", error);
-        notification.error(this, 'Payment could not be completed at the moment');
+        console.log('Error with Veniqa payment', error);
+        notification.error(
+          this,
+          'Payment could not be completed at the moment',
+        );
       }
     },
 
-    async startKhaltiPayment(payload){
-      if(!this.checkoutId || this.checkoutId.length <=0) return;
+    async startKhaltiPayment(payload) {
+      if (!this.checkoutId || this.checkoutId.length <= 0) return;
 
       try {
-        let data  = await paymentService.payWithKhalti(payload.token, this.checkoutId);
+        const data = await paymentService.payWithKhalti(
+          payload.token,
+          this.checkoutId,
+        );
 
         this.$store.commit('cartStore/resetOrders');
         this.$router.push(`/orders/${data.order_id}`);
         notification.success(this, 'Payment was successful.');
       } catch (error) {
-        console.log("Error with Veniqa payment", error);
-        notification.error(this, 'Payment could not be completed at the moment');
+        console.log('Error with Veniqa payment', error);
+        notification.error(
+          this,
+          'Payment could not be completed at the moment',
+        );
       }
     },
 
@@ -92,13 +99,13 @@ export default {
 
   computed: {
     ...mapGetters({
-      'checkoutId': 'cartStore/checkoutId',
+      checkoutId: 'cartStore/checkoutId',
     }),
 
     totalPrice() {
-      let cost = this.$store.getters['cartStore/getTotal'];
-      if(cost == null) return 0;
-      return parseInt(cost.amount *100) ;
+      const cost = this.$store.getters['cartStore/getTotal'];
+      if (cost == null) return 0;
+      return parseInt(cost.amount * 100);
     },
 
     shippingMethod: {
@@ -107,15 +114,14 @@ export default {
       },
       set(val) {
         this.$store.commit('shippingStore/setShippingMethod', val);
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-#payment{
+#payment {
   margin: 2rem 0rem;
 }
 </style>
-
