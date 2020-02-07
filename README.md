@@ -4,6 +4,9 @@ Veniqa (Originally Veniqa New York) was a New York based fashion retail startup 
 
 Upon its demise, the tech platform that powered Veniqa is owned by [Qarece New York](https://qarece.com) and has been open sourced as a 100% customizable framework under the MIT License.
 
+## Official Website & Previews
+[https://veniqa.com](https://veniqa.com)
+
 ## The Suite
 * API Server for Shopping Applications | [Code](https://github.com/Viveckh/Veniqa/tree/master/shopping-server)
 * API Server for Management Applications | [Code](https://github.com/Viveckh/Veniqa/tree/master/management-server)
@@ -32,9 +35,9 @@ Refer to [Wiki](https://github.com/Viveckh/Veniqa/wiki)
 
 We're still in the process of preparing more detailed documentation and utility tools to simplify the lives of developers interested in contributing to the platform.
 
-## Core Engineering Team
+## Blame These People For
 
-* [(EJ) Vivek Pandey (Platform Architecture, Server-side Development, DevOps Engineering, Database Modeling)](https://viveckh.com)
+* [(EJ) Vivek Pandey (Platform Architecture, Backend Engineering, DevOps, & Data Modeling)](https://viveckh.com)
 * [Sujil Maharjan (UX/UI Design, Frontend Engineering)](https://smaharj1.github.io/)
 * [Arjun Bastola (Frontend Engineering, Graphics Design)](https://github.com/abastola)
 
