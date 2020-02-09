@@ -1,8 +1,21 @@
 var LocalStrategy   = require('passport-local').Strategy;
 import bCrypt from 'bcrypt-nodejs';
+import HttpStatusCode from "http-status-codes";
 import User from '../database/models/user';
 import * as _ from 'lodash';
 import logger from '../logging/logger';
+
+const checkPermissions = (req, res, validPermissions, done) => {
+    const found = req.user.permissions.some(permission => validPermissions.includes(permission));
+    if (found) {
+        done();
+    }
+    else {
+        logger.verbose('User doesnt have necessary permission to access this.');
+        return res.status(HttpStatusCode.UNAUTHORIZED)
+                .send('Permission denied for the user. User is not permitted to access this route');
+    }
+}
 
 export default {
     initializePassport(passport) {
@@ -138,5 +151,25 @@ export default {
         else {
             return res.status(401).send('permission denied to view orders');
         }
+    },
+
+    canViewTariff(req, res, done) {
+        const validPermissions = ['SUPERADMIN', 'TARRIFF_VIEW', 'TARIFF_MANAGE'];
+        return checkPermissions(req, res, validPermissions, done);
+    },
+
+    canManageTariff(req, res, done) {
+        const validPermissions = ['SUPERADMIN', 'TARIFF_MANAGE'];
+        return checkPermissions(req, res, validPermissions, done);
+    },
+
+    canViewCategories(req, res, done) {
+        const validPermissions = ['SUPERADMIN', 'CATEGORIES_VIEW', 'CATEGORIES_MANAGE'];
+        return checkPermissions(req, res, validPermissions, done);
+    },
+
+    canManageCategories(req, res, done) {
+        const validPermissions = ['SUPERADMIN', 'CATEGORIES_MANAGE'];
+        return checkPermissions(req, res, validPermissions, done);
     }
 }
