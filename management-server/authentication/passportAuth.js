@@ -13,7 +13,7 @@ const checkPermissions = (req, res, validPermissions, done) => {
     else {
         logger.verbose('User doesnt have necessary permission to access this.');
         return res.status(HttpStatusCode.UNAUTHORIZED)
-                .send('Permission denied for the user. User is not permitted to access this route');
+                .send('Permission denied for the user. User is not permitted to perform this');
     }
 }
 
@@ -170,6 +170,16 @@ export default {
 
     canManageCategories(req, res, done) {
         const validPermissions = ['SUPERADMIN', 'CATEGORIES_MANAGE'];
+        return checkPermissions(req, res, validPermissions, done);
+    },
+
+    canViewFeatured(req, res, done) {
+        const validPermissions = ['SUPERADMIN', 'FEATURED_MANAGE', 'FEATURED_VIEW', 'FEATURED_PREVIEW'];
+        return checkPermissions(req, res, validPermissions, done);
+    },
+
+    canManageFeatured(req, res, done) {
+        const validPermissions = ['SUPERADMIN', 'FEATURED_MANAGE'];
         return checkPermissions(req, res, validPermissions, done);
     }
 }
