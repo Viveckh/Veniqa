@@ -8,12 +8,12 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa User Interface Customizations' });
 });
 
-router.post('/featured', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, uiController.updateOrUpsertFeaturedSection);
+router.post('/featured', passportAuth.canManageFeatured, uiController.updateOrUpsertFeaturedSection);
 
-router.get('/featuredList', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, uiController.getAllFeaturedSections);
+router.get('/featuredList', passportAuth.canViewFeatured, uiController.getAllFeaturedSections);
 
-router.get('/featured', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, uiController.getFeaturedSection);
+router.get('/featured', passportAuth.canViewFeatured, uiController.getFeaturedSection);
 
-router.delete('/featured', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, uiController.deleteFeaturedSection);
+router.delete('/featured', passportAuth.canManageFeatured, uiController.deleteFeaturedSection);
 
 module.exports = router;
