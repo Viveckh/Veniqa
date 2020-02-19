@@ -142,9 +142,9 @@ app.use('/', indexRouter);
 app.use('/security', securityRouter);
 app.use('/superAdmin', superAdminRouter);
 app.use('/catalog', catalogRouter);
-app.use('/referenceData', referenceDataRouter);
+app.use('/referenceData', passportAuth.isAuthenticated, referenceDataRouter);
 app.use('/orders', orderRouter);
-app.use('/ui', uiRouter);
+app.use('/ui', passportAuth.isAuthenticated, uiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

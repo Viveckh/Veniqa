@@ -10,28 +10,28 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Reference Data' });
 });
 
-router.get('/getCatalogBundle', passportAuth.isAuthenticated, referenceDataController.getCatalogBundle);
+router.get('/getCatalogBundle', referenceDataController.getCatalogBundle);
 
-router.get('/getStores', passportAuth.isAuthenticated, referenceDataController.getStores);
+router.get('/getStores', referenceDataController.getStores);
 
-router.get('/getRoles', passportAuth.isAuthenticated, referenceDataController.getRoles);
+router.get('/getRoles', referenceDataController.getRoles);
 
-router.get('/getWeightUnits', passportAuth.isAuthenticated, referenceDataController.getWeightUnits);
+router.get('/getWeightUnits', referenceDataController.getWeightUnits);
 
-router.get('/productCategoryList', passportAuth.isAuthenticated, passportAuth.canViewCatalog, referenceDataController.getProductCategoryList);
+router.get('/productCategoryList', passportAuth.canViewCategories, referenceDataController.getProductCategoryList);
 
-router.post('/productCategory', passportAuth.isAuthenticated, passportAuth.canManageCatalog, referenceDataController.addProductCategory);
+router.post('/productCategory', passportAuth.canManageCategories, referenceDataController.addProductCategory);
 
-router.get('/productCategory', passportAuth.isAuthenticated, passportAuth.canViewCatalog, referenceDataController.getProductCategory);
+router.get('/productCategory', passportAuth.canViewCategories, referenceDataController.getProductCategory);
 
-router.put('/productCategory', passportAuth.isAuthenticated, passportAuth.canManageCatalog, referenceDataController.updateProductCategory);
+router.put('/productCategory', passportAuth.canManageCategories, referenceDataController.updateProductCategory);
 
-router.get('/tariffList', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.getTariffList);
+router.get('/tariffList', passportAuth.canViewTariff, referenceDataController.getTariffList);
 
-router.post('/tariff', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.addTariffCategory);
+router.post('/tariff', passportAuth.canManageTariff, referenceDataController.addTariffCategory);
 
-router.get('/tariff', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.getTariffCategory);
+router.get('/tariff', passportAuth.canViewTariff, referenceDataController.getTariffCategory);
 
-router.put('/tariff', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, referenceDataController.updateTariffCategory);
+router.put('/tariff', passportAuth.canManageTariff, referenceDataController.updateTariffCategory);
 
 module.exports = router;
