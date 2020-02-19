@@ -6,7 +6,7 @@ Upon its demise, the tech platform that powered Veniqa is maintained by [Qarece 
 
 ___
 
-## Official Website For Details And Demos
+## Official Website For Details, Documentation & Demos
 [https://veniqa.com](https://veniqa.com)
 
 ---
@@ -57,7 +57,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ## Documentation
 
-Refer to [Wiki](https://github.com/Viveckh/Veniqa/wiki)
+Refer to [Official Documentation](https://documentation.veniqa.com/)
 
 We're still in the process of preparing more detailed documentation and utility tools to simplify the lives of developers interested in contributing to the platform.
 
