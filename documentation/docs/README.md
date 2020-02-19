@@ -1,3 +1,20 @@
+---
+home: true
+heroImage: /img/veniqa_logo_transparent.png
+heroText: Official Documentation
+tagline: Open-source E-commerce Solution
+actionText: Get Started →
+actionLink: /servers/setup.html
+features:
+- title: Built using the MEVN Stack & The Usual Suspects
+  details: MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer (for fallback), Stripe.
+- title: Performant & Secure - cause we like it that way
+  details: Distributed requests utilizing all system cores, encrypted authentication and sessions, backend equipped with request rate limiting to prevent scripted attacks and bot crawling, database & file-based logging.
+- title: Built for the Cloud, with developers in mind
+  details: CD/CI friendly codebase and configuration setup, simplified dev-prod and local-cloud switches, docker scripts, AWS S3 Integration for cheap image storage.
+footer: MIT Licensed | Copyright © 2019-present Qarece New York
+---
+
 # Veniqa Open-Source E-commerce Solution
 
 Veniqa (Originally Veniqa New York) was a New York based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
@@ -6,7 +23,7 @@ Upon its demise, the tech platform that powered Veniqa is maintained by [Qarece 
 
 ___
 
-## Official Website For Details, Documentation & Demos
+## Official Website For Details And Demos
 [https://veniqa.com](https://veniqa.com)
 
 ---
@@ -57,7 +74,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ## Documentation
 
-Refer to [Official Documentation](https://documentation.veniqa.com/)
+Refer to [Wiki](https://github.com/Viveckh/Veniqa/wiki)
 
 We're still in the process of preparing more detailed documentation and utility tools to simplify the lives of developers interested in contributing to the platform.
 
@@ -74,10 +91,5 @@ We're still in the process of preparing more detailed documentation and utility 
 ## Professional Services From The Engineers Who Built it
 
 Whether you are looking for a consultation to adopt Veniqa in production or want a custom implementation of Veniqa with feature enhancements, reach out to `support@qarece.com`
-
-
-
-
-
 
 
