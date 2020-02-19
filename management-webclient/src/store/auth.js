@@ -1,5 +1,7 @@
-import ProxyUrls from '@/constants/ProxyUrls.js';
+import ProxyUrls from '@/constants/ProxyUrls';
 import Vue from 'vue';
+import _ from 'lodash';
+import PermissionConsts from '../constants/permissions';
 
 export default {
   namespaced: true,
@@ -7,20 +9,17 @@ export default {
     email: '',
     name: '',
     isSessionActive: false,
-    permissions: [],
+    permissions: []
   },
   actions: {
-    async registerUser({
-      state,
-      commit,
-    }, payload) {
+    async registerUser({ commit }, payload) {
       if (!payload) return null;
 
       try {
         const res = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.registerUrl,
-          data: payload,
+          data: payload
         });
 
         if (res && res.data) {
@@ -35,17 +34,14 @@ export default {
       }
     },
 
-    async login({
-      state,
-      commit,
-    }, payload) {
+    async login({ commit }, payload) {
       if (!payload) return null;
 
       try {
         const res = await Vue.prototype.$axios({
           method: 'post',
           url: ProxyUrls.loginUrl,
-          data: payload,
+          data: payload
           // withCredentials: true,
         });
 
@@ -54,6 +50,7 @@ export default {
           commit('setName', res.data.name);
           commit('setSessionActive', true);
           commit('setPermissions', res.data.permissions);
+          localStorage.setItem('permissions', res.data.permissions);
         }
         return res;
       } catch (err) {
@@ -61,16 +58,11 @@ export default {
       }
     },
 
-    async logout({
-      state,
-      commit,
-    }, payload) {
+    async logout({ commit }) {
       try {
-        const {
-          data,
-        } = await Vue.prototype.$axios({
+        const { data } = await Vue.prototype.$axios({
           method: 'get',
-          url: ProxyUrls.logoutUrl,
+          url: ProxyUrls.logoutUrl
         });
 
         if (data) {
@@ -83,29 +75,24 @@ export default {
       }
     },
 
-    async initiateAppSession({
-      state,
-      commit,
-    }) {
+    async initiateAppSession({ commit }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
-        url: ProxyUrls.isSessionActive,
-        // withCredentials: true,
+        url: ProxyUrls.isSessionActive
       });
-      if (res && res.data == true) {
+      if (res && res.data === true) {
         commit('setEmail', localStorage.getItem('email'));
         commit('setName', localStorage.getItem('name'));
-        commit('setPermissions', localStorage.getItem('permissions'));
+        commit('setPermissions', localStorage.getItem('permissions').split(','));
         commit('setSessionActive', true);
       } else {
         commit('setSessionActive', false);
       }
-    },
+    }
   },
   mutations: {
     setPermissions(state, payload) {
       state.permissions = payload;
-      localStorage.setItem('permissions', payload);
     },
 
     setEmail(state, email) {
@@ -135,7 +122,7 @@ export default {
       localStorage.removeItem('email');
       localStorage.removeItem('name');
       localStorage.removeItem('permissions');
-    },
+    }
   },
   getters: {
     getName(state) {
@@ -157,5 +144,30 @@ export default {
     permissions(state) {
       return state.permissions;
     },
-  },
+
+    featuredPermissionGranted(state) {
+      const requiredPerms = [
+        PermissionConsts.FEATURED_MANAGE,
+        PermissionConsts.FEATURED_PREVIEW,
+        PermissionConsts.FEATURED_VIEW,
+        PermissionConsts.SUPERADMIN
+      ];
+      return _.intersection(state.permissions, requiredPerms).length > 0;
+    },
+
+    tariffViewGranted(state) {
+      // eslint-disable-next-line max-len
+      const requiredPerms = [PermissionConsts.TARIFF_VIEW, PermissionConsts.TARIFF_MANAGE, PermissionConsts.SUPERADMIN];
+      return _.intersection(state.permissions, requiredPerms).length > 0;
+    },
+
+    categoriesViewGranted(state) {
+      const requiredPerms = [
+        PermissionConsts.CATEGORIES_VIEW,
+        PermissionConsts.CATEGORIES_MANAGE,
+        PermissionConsts.SUPERADMIN
+      ];
+      return _.intersection(state.permissions, requiredPerms).length > 0;
+    }
+  }
 };

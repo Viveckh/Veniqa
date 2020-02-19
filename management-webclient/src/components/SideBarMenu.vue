@@ -5,7 +5,7 @@
       <aside class="menu-sidebar2">
         <div class="logo">
           <a href="#">
-            <img src="./../assets/logo.png" alt="Cool Admin">
+            <img src="./../assets/logo.png" alt="Cool Admin" />
           </a>
         </div>
         <div class="menu-sidebar2__content js-scrollbar1">
@@ -14,9 +14,9 @@
               <img
                 src="https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Alien-512.png"
                 alt="Admin"
-              >
+              />
             </div>
-            <h4 class="name">{{adminname}}</h4>
+            <h4 class="name">{{ adminname }}</h4>
             <a @click="signout()" class="signout">Sign out</a>
           </div>
           <nav class="navbar-sidebar2">
@@ -34,9 +34,9 @@
                   Orders
                 </a>
               </li>
-              <li class="nav-item" @click="navigate('featured')" v-if="isSuperAdmin">
+              <li class="nav-item" @click="navigate('featured')" v-if="featuredPermissionGranted">
                 <a class="nav-link">
-                  <font-awesome-icon icon="star"/>Featured Posts
+                  <font-awesome-icon icon="star" />Featured Posts
                 </a>
               </li>
               <li class="nav-item" @click="navigate('adminsetting')" v-if="isSuperAdmin">
@@ -45,13 +45,17 @@
                   Users Setting
                 </a>
               </li>
-              <li class="nav-item" @click="navigate('tariffsetting')" v-if="isSuperAdmin">
+              <li class="nav-item" @click="navigate('tariffsetting')" v-if="tariffViewGranted">
                 <a class="nav-link">
                   <i class="fa fa-plane"></i>
                   Tariffs Setting
                 </a>
               </li>
-              <li class="nav-item" @click="navigate('categorysetting')" v-if="isSuperAdmin">
+              <li
+                class="nav-item"
+                @click="navigate('categorysetting')"
+                v-if="categoriesViewGranted"
+              >
                 <a class="nav-link">
                   <i class="fa fa-th"></i>
                   Categories Setting
@@ -71,7 +75,7 @@
               <div class="row">
                 <div class="col-md-6 col-lg-12">
                   <div class="statistic__item">
-                    <router-view/>
+                    <router-view />
                   </div>
                 </div>
               </div>
@@ -105,7 +109,7 @@ export default {
           this.$notify({
             group: 'all',
             type: 'success',
-            text: 'Logout successful',
+            text: 'Logout successful'
           });
 
           this.$router.push('/login');
@@ -115,15 +119,18 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'Logout was unsuccessful. Please try again later.',
+          text: 'Logout was unsuccessful. Please try again later.'
         });
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters({
       permissions: 'authStore/permissions',
+      featuredPermissionGranted: 'authStore/featuredPermissionGranted',
+      tariffViewGranted: 'authStore/tariffViewGranted',
+      categoriesViewGranted: 'authStore/categoriesViewGranted'
     }),
 
     adminname() {
@@ -131,20 +138,17 @@ export default {
     },
 
     isSuperAdmin() {
-      return (
-        this.permissions && this.permissions.indexOf(Permission.SUPERADMIN) >= 0
-      );
+      return this.permissions && this.permissions.indexOf(Permission.SUPERADMIN) >= 0;
     },
 
     orderPermissionGranted() {
       if (this.isSuperAdmin) return true;
       return (
         this.permissions
-        && (this.permissions.indexOf(Permission.ORDER_VIEW) >= 0
-          || this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0)
+        && (this.permissions.indexOf(Permission.ORDER_VIEW) >= 0 || this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0)
       );
-    },
-  },
+    }
+  }
 };
 </script>
 
