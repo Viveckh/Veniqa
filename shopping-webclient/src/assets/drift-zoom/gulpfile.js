@@ -17,7 +17,7 @@ const paths = {
   test: `${__dirname}/test/**/*.js`,
   js: `${__dirname}/src/js/**/*.js`,
   jsEntry: `${__dirname}/src/js/Drift.js`,
-  css: `${__dirname}/src/css/**/*.css`
+  css: `${__dirname}/src/css/**/*.css`,
 };
 
 function runKarmaTests(configObj, done, singleRun) {
@@ -28,7 +28,7 @@ function runKarmaTests(configObj, done, singleRun) {
     config.singleRun = singleRun;
   }
 
-  new Server(config, exitCode => {
+  new Server(config, (exitCode) => {
     if (exitCode !== 0) {
       throw new gutil.PluginError({ plugin: 'karma', message: 'Karma tests failed' });
     }
@@ -46,20 +46,20 @@ gulp.task('build-ci', () => {
   runSequence(['build', 'test-headless']);
 });
 
-gulp.task('test-local', done => {
+gulp.task('test-local', (done) => {
   runKarmaTests(karmaConfig.local, done, true);
 });
 
-gulp.task('test-headless', done => {
+gulp.task('test-headless', (done) => {
   runKarmaTests(karmaConfig.headless, done, true);
 });
 
-gulp.task('test-full', done => {
+gulp.task('test-full', (done) => {
   if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
     throw new gutil.PluginError({
       plugin: 'test-full',
       message:
-        'Unable to run full tests. Please make sure both SAUCE_USERNAME and SAUCE_ACCESS_KEY are defined in the environment.'
+        'Unable to run full tests. Please make sure both SAUCE_USERNAME and SAUCE_ACCESS_KEY are defined in the environment.',
     });
   }
 
@@ -70,7 +70,7 @@ gulp.task('build-js', () => {
   const b = browserify({
     standalone: 'Drift',
     entries: paths.jsEntry,
-    transform: [babelify]
+    transform: [babelify],
   }).bundle();
 
   return b
@@ -82,14 +82,12 @@ gulp.task('build-js', () => {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build-css', () =>
-  gulp
+gulp.task('build-css', () => gulp
   .src(paths.css)
   .pipe(gulp.dest('dist'))
   .pipe(cssnano())
   .pipe(rename({ suffix: '.min' }))
-  .pipe(gulp.dest('dist'))
-);
+  .pipe(gulp.dest('dist')));
 
 gulp.task('watch', () => {
   gulp.watch([paths.js, paths.test], () => {

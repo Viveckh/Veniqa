@@ -28,36 +28,36 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import SingleOrder from '@/components/orders/SingleOrder';
+import { mapGetters } from 'vuex';
+import SingleOrder from '@/components/orders/SingleOrder.vue';
 
 export default {
   name: 'OrderView',
   components: {
-    SingleOrder
+    SingleOrder,
   },
   data() {
     return {
       tabs: [
         {
           name: 'Orders',
-          key: 'all'
+          key: 'all',
         },
         {
           name: 'Open Orders',
-          key: 'open'
+          key: 'open',
         },
         {
           name: 'Completed',
-          key: 'completed'
+          key: 'completed',
         },
         {
           name: 'Cancelled',
-          key: 'cancelled'
-        }
+          key: 'cancelled',
+        },
       ],
 
-      activeTab: 'all'
+      activeTab: 'all',
     };
   },
 
@@ -69,7 +69,7 @@ export default {
   methods: {
     tabSelected(key) {
       this.activeTab = key;
-    }
+    },
   },
 
   computed: {
@@ -78,21 +78,19 @@ export default {
     }),
 
     filteredOrders() {
-
-      if(this.activeTab === 'open') {
+      if (this.activeTab === 'open') {
         return _.filter(this.orders, i => i.overall_status !== 'COMPLETED' && i.overall_status !== 'CANCELLED');
       }
-      else if (this.activeTab === 'completed'){
-        return _.filter(this.orders, i => i.overall_status === 'COMPLETED')
+      if (this.activeTab === 'completed') {
+        return _.filter(this.orders, i => i.overall_status === 'COMPLETED');
       }
-      else if (this.activeTab === 'cancelled'){
+      if (this.activeTab === 'cancelled') {
         return _.filter(this.orders, i => i.overall_status === 'CANCELLED');
       }
-      else {
-        return this.orders;
-      }
-    }
-  }
+
+      return this.orders;
+    },
+  },
 };
 </script>
 

@@ -23,19 +23,19 @@
           <div class="card-text card-font">
             <p>
               {{addr.firstName}} {{addr.lastName}} </p>
-              <p>
-              {{addr.addressLine1}}</p>
-              
-              <p v-if="addr.addressLine2">
-                {{addr.addressLine2}}
-              </p>
-              <p>
-              {{addr.city}}, {{addr.state}}</p>
-              <p>
-              {{addr.country}} {{addr.zipCode}}</p>
-              <p>
-              {{addr.mobilePhone}}</p>
+            <p>
+            {{addr.addressLine1}}</p>
+
+            <p v-if="addr.addressLine2">
+              {{addr.addressLine2}}
             </p>
+            <p>
+            {{addr.city}}, {{addr.state}}</p>
+            <p>
+            {{addr.country}} {{addr.zipCode}}</p>
+            <p>
+            {{addr.mobilePhone}}</p>
+
           </div>
         </b-card>
 
@@ -69,7 +69,7 @@
 import ProxyUrls from '@/constants/ProxyUrls';
 import notification from '@/services/notificationService';
 import moment from 'moment';
-import SingleOrderItem from '@/components/orders/SingleOrderItem';
+import SingleOrderItem from '@/components/orders/SingleOrderItem.vue';
 
 export default {
   name: 'SingleOrderDetail',
@@ -86,39 +86,37 @@ export default {
   data() {
     return {
       order: null,
-    }
+    };
   },
 
   filters: {
-    formattedDate(date){
-      if(date){
-        return moment(date).format("MMMM Do, YYYY");
+    formattedDate(date) {
+      if (date) {
+        return moment(date).format('MMMM Do, YYYY');
       }
-      else return '';
+      return '';
     },
 
-    formattedAmount(amt){
-      let val = parseFloat(amt);
+    formattedAmount(amt) {
+      const val = parseFloat(amt);
 
       return val.toFixed(2);
-    }
+    },
   },
 
-  
 
   async created() {
     this.order = null;
 
     try {
-      const {data} = await this.$axios({
+      const { data } = await this.$axios({
         url: ProxyUrls.orderDetail + this.id,
         method: 'get',
       });
 
-      if(data && data.httpStatus === 200){
+      if (data && data.httpStatus === 200) {
         this.order = data.responseData;
-      }
-      else {
+      } else {
         throw new Error();
       }
     } catch (error) {
@@ -128,20 +126,21 @@ export default {
   },
 
   methods: {
-    dateFormat(date){
-      if(date){
-        return moment(date).format("MMMM Do, YYYY");
+    dateFormat(date) {
+      if (date) {
+        return moment(date).format('MMMM Do, YYYY');
       }
-      else return '';
+      return '';
     },
 
-    getOrderDeet(){
+    getOrderDeet() {
       return `
               <div class="info">
               <!-- Status goes here -->
               Status:
               <span
-                v-bind:class="{'green': ${this.order.overall_status} != 'CANCELLED', 'red': ${this.order.overall_status} === 'CANCELLED'}"
+                v-bind:class="{'green': ${this.order.overall_status} != 'CANCELLED', 
+                'red': ${this.order.overall_status} === 'CANCELLED'}"
               >
                 <strong>${this.order.overall_status}</strong>
               </span><br>
@@ -151,8 +150,8 @@ export default {
               <strong>Order placed on</strong>
               ${this.dateFormat(this.order.auditLog.createdOn)}
               </div>
-      `
-    }
+      `;
+    },
   },
 
   computed: {
@@ -162,9 +161,9 @@ export default {
 
     payments() {
       return this.order && this.order.payment_info ? this.order.payment_info : null;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -193,4 +192,3 @@ export default {
   }
 }
 </style>
-

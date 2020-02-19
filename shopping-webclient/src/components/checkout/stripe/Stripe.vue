@@ -8,22 +8,20 @@
       :paymentReqOptions='reqParams'
       @change='complete = $event.complete'
       @token='payWithGpay'
-    /> 
+    />
     <br>
-    <b-btn class='pay-with-stripe' @click='pay' :disabled='!complete'>Pay with credit card</b-btn> 
+    <b-btn class='pay-with-stripe' @click='pay' :disabled='!complete'>Pay with credit card</b-btn>
   </div>
 </template>
 
 <script>
-import {Card, Stripe} from './index'
-import paymentService from '@/services/paymentService'
-import { mapGetters } from "vuex";
-import PaymentRequestDTO from './StripePaymentRequestDTO'
 import _ from 'lodash';
+import { Card, Stripe } from './index';
+import PaymentRequestDTO from './StripePaymentRequestDTO.json';
 
 export default {
   components: {
-    Card
+    Card,
   },
   props: {
     totalCost: {
@@ -34,9 +32,9 @@ export default {
     stripeKey: {
       type: String,
       required: true,
-    }
+    },
   },
-  data () {
+  data() {
     return {
       complete: false,
       stripeOptions: {
@@ -44,34 +42,34 @@ export default {
       },
       // stripeKey: '',
       reqParams: _.cloneDeep(PaymentRequestDTO),
-    }
+    };
   },
 
   watch: {
-    totalCost(val){
+    totalCost(val) {
       this.reqParams.total.amount = parseInt(val);
-    }
+    },
   },
 
   methods: {
-    async pay () {
+    async pay() {
       // createToken returns a Promise which resolves in a result object with
       // either a token or an error key.
       // See https://stripe.com/docs/api#tokens for the token object.
       // See https://stripe.com/docs/api#errors for the error object.
       // More general https://stripe.com/docs/stripe.js#stripe-create-token.
       try {
-        let data = await Stripe.createToken();
-        this.$emit('pay',data.token);
+        const data = await Stripe.createToken();
+        this.$emit('pay', data.token);
       } catch (error) {
-        console.log("Stripe error", error.message);
+        console.log('Stripe error', error.message);
       }
       // let data  = await Stripe.createToken().then(data => console.log(data.token))
     },
 
     payWithGpay(token) {
-      this.$emit('pay',token)
-    }
+      this.$emit('pay', token);
+    },
   },
 
   computed: {
@@ -80,9 +78,9 @@ export default {
     //   params.total.amount = this.totalCost;
     //   return params;
     // }
-  }
+  },
 
-  
+
 };
 </script>
 

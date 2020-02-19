@@ -122,7 +122,7 @@ export default {
   name: 'OrderDetail',
   data() {
     return {
-      countOptions: []
+      countOptions: [],
     };
   },
 
@@ -137,7 +137,7 @@ export default {
         width: '100%',
         height: '70px',
         'background-size': 'contain',
-        'background-repeat': 'no-repeat'
+        'background-repeat': 'no-repeat',
       };
     },
 
@@ -152,34 +152,35 @@ export default {
     },
 
     async updateCartItem(item) {
-      this.$nextTick( async () => {
+      this.$nextTick(async () => {
         if (item.counts > 0) {
           try {
-            const data = await this.$store.dispatch('cartStore/updateOrders', [item]);
+            await this.$store.dispatch('cartStore/updateOrders', [item]);
             notification.success(this, 'The cart has been successfully updated.');
           } catch (err) {
             console.log('Error', err);
             notification.error(
               this,
-              'Cart could not be updated at the moment. Please try again later.'
+              'Cart could not be updated at the moment. Please try again later.',
             );
           }
         }
-      })
-      
+      });
     },
 
     async deleteSelected(item) {
       try {
         await this.$store.dispatch('cartStore/deleteOrders', [item]);
-      } catch (err) {}
-    }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 
   filters: {
     customDisplay(val) {
       return val.indexOf('|') >= 0 ? val.split('|')[0] : val;
-    }
+    },
   },
 
   computed: {
@@ -190,9 +191,9 @@ export default {
       serviceCharge: 'cartStore/getServiceCharge',
       shippingPrice: 'cartStore/getShippingPrice',
       tariffPrice: 'cartStore/getTariffPrice',
-      totalWeight: 'cartStore/getTotalWeight'
+      totalWeight: 'cartStore/getTotalWeight',
     }),
-  }
+  },
 };
 </script>
 
