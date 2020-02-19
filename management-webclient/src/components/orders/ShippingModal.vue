@@ -1,7 +1,8 @@
 <template>
   <div id="shipping">
     <div>
-      <b-modal centered no-close-on-backdrop no-close-on-esc title="Shipping Details" visible ok-title="Fulfill" hide-footer @hide="cancelClicked()">
+      <b-modal centered no-close-on-backdrop no-close-on-esc
+        title="Shipping Details" visible ok-title="Fulfill" hide-footer @hide="cancelClicked()">
 
         <b-form-group horizontal :label-cols="4" label="Provider" label-for="provider">
           <b-form-select
@@ -90,7 +91,7 @@
 </template>
 
 <script>
-import ShippingDetailDTO from '@/dto/ShippingDetailDTO';
+import ShippingDetailDTO from '@/dto/ShippingDetailDTO.json';
 
 export default {
   name: 'ShippingModal',

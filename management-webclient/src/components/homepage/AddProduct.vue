@@ -460,8 +460,8 @@
 
 <script>
 import * as _ from 'lodash';
-import ManagePhoto from '@/components/homepage/ManagePhoto';
-import CustomAttributes from '@/components/homepage/CustomAttributes';
+import ManagePhoto from '@/components/homepage/ManagePhoto.vue';
+import CustomAttributes from '@/components/homepage/CustomAttributes.vue';
 // Import the editor
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
 import { mapGetters } from 'vuex';
@@ -584,7 +584,7 @@ export default {
         new History(),
       ],
 
-      onUpdate: ({ getJSON, getHTML }) => {
+      onUpdate: ({ getHTML }) => {
         // this.json = getJSON()
         this.product.details_html = getHTML();
       },
@@ -626,7 +626,7 @@ export default {
 
     categoryState() {
       if (
-        this.product.category.category == undefined
+        this.product.category.category === undefined
         || this.product.category.category == null
       ) { return null; }
       return this.product.category.category.length > 0;
@@ -634,7 +634,7 @@ export default {
 
     subcategoryState() {
       if (
-        this.product.category._id == undefined
+        this.product.category._id === undefined
         || this.product.category._id == null
       ) { return null; }
       return this.product.category._id.length > 0;

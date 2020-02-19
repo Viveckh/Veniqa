@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import ImageShowcase from '@/components/homepage/ImageShowcase';
+import ImageShowcase from '@/components/homepage/ImageShowcase.vue';
 import ProxyUrls from '@/constants/ProxyUrls';
 
 export default {
@@ -185,8 +185,6 @@ export default {
     if (this.detailedUrls && this.detailedUrls.length > 0) {
       // ASSUMPTION: The detailed urls and thumbnail urls are always going to be the same.
       this.finalImages = new Array(this.detailedUrls.length).fill(null);
-
-      const totalCallsToMake = this.detailedUrls.length * 2;
 
       this.detailedUrls.forEach((imageUrl, index) => {
         // for (let index = 0; index < this.detailedUrls.length ; index++){
@@ -290,7 +288,7 @@ export default {
           data = res.data.responseData;
         } catch (error) {
           console.log('Preassign error');
-          reject(false);
+          reject(error);
         }
         // } else {
         //   data = this.preassignedUrls;
@@ -302,7 +300,7 @@ export default {
 
         console.log('Total calls to make', totalCallsToMake);
 
-        if (totalCallsToMake == 0) {
+        if (totalCallsToMake === 0) {
           const newObj = {
             detailedImageUrls: this.detailedImageUrls,
             featuredImageUrls: this.featuredImageUrls,
@@ -340,10 +338,11 @@ export default {
          * done() is called everytime the request passes with success. This will run the done function from above
          * after all the calls succeed.
          *
-         * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
+         * Since the axios calls are done through forEach, the indexes are saved even
+         * though we don't await for the response.
          */
         // this.finalImages.forEach((imageObj, ind) => {
-        for (let ind = 0; ind < this.finalImages.length; ind++) {
+        for (let ind = 0; ind < this.finalImages.length; ind += 1) {
           const imageObj = this.finalImages[ind];
 
           // Call for detailed image urls.
@@ -356,11 +355,11 @@ export default {
             data: imageObj.largeBlob,
             withCredentials: false,
           })
-            .then((res) => {
+            .then(() => {
               this.detailedImageUrls[ind] = data.detailedImageUrls[ind].liveUrl;
               done();
             })
-            .catch((err) => {
+            .catch(() => {
               this.handleError(imageObj.name);
               reject(data);
             });
@@ -375,11 +374,11 @@ export default {
             data: imageObj.thumbnailBlob,
             withCredentials: false,
           })
-            .then((res) => {
+            .then(() => {
               this.thumbnailUrls[ind] = data.thumbnailUrls[ind].liveUrl;
               done();
             })
-            .catch((err) => {
+            .catch(() => {
               this.handleError(imageObj.name);
               reject(data);
             });
@@ -422,7 +421,7 @@ export default {
       // let numberOfDetailedImages = 0;
       const productId = this.productId ? this.productId : '';
 
-      this.finalImages.forEach((imageObj) => {
+      this.finalImages.forEach(() => {
         // Right now, everything is +1 except the featured images.
         // numberOfThumbnails += 1;
         // numberOfDetailedImages += 1;

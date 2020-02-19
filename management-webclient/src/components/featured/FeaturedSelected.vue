@@ -63,10 +63,9 @@
 
 <script>
 // import FeaturedProductDTO from '@/dto/FeaturedProductDTO'
-import { mapGetters } from 'vuex';
-import FeaturedSelectedSingle from '@/components/featured/FeaturedSelectedSingle';
-import FeaturedAddDesign from '@/components/featured/FeaturedAddDesign';
-import DesignEntry from '@/components/featured/designs/DesignEntry';
+import FeaturedSelectedSingle from '@/components/featured/FeaturedSelectedSingle.vue';
+import FeaturedAddDesign from '@/components/featured/FeaturedAddDesign.vue';
+import DesignEntry from '@/components/featured/designs/DesignEntry.vue';
 import notification from '@/services/NotificationService';
 
 export default {
@@ -98,7 +97,7 @@ export default {
 
   watch: {
     section(newVal, oldVal) {
-      if (newVal != oldVal) {
+      if (newVal !== oldVal) {
         this.featuredDesigns = [];
         this.featuredDesigns.push(...this.$store.getters['featuredStore/getDesignsByName'](this.section));
       }
@@ -114,7 +113,7 @@ export default {
   methods: {
     async saveFeatured() {
       try {
-        const data = await this.$store.dispatch('featuredStore/save', {
+        await this.$store.dispatch('featuredStore/save', {
           section: this.section,
           featuredDesigns: this.featuredDesigns
         });
@@ -161,6 +160,5 @@ export default {
 </script>
 
 <style lang="scss">
-#featured-add {
-}
+
 </style>

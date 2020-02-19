@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import axios from 'axios';
-import * as _ from 'lodash';
 
 export default {
   namespaced: true,
@@ -24,7 +22,7 @@ export default {
           data: {},
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           commit('setRoles', data.responseData);
         } else throw new Error('No Content');
       } catch (err) {
@@ -44,7 +42,7 @@ export default {
           data: {},
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           commit('setAdmins', data.responseData);
         } else throw new Error('No Content');
       } catch (err) {
@@ -64,7 +62,7 @@ export default {
           data: admin,
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           dispatch('getAdmins');
           return true;
         }
@@ -87,7 +85,7 @@ export default {
           data: admin,
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           dispatch('getAdmins');
           return true;
         }
@@ -101,7 +99,7 @@ export default {
       dispatch,
     }, dEmail) {
       try {
-        const res = await Vue.prototype.$axios({
+        await Vue.prototype.$axios({
           url: ProxyUrl.deleteAdmin,
           withCredentials: true,
           method: 'delete',

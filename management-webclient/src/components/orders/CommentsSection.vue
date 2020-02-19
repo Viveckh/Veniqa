@@ -153,7 +153,7 @@ export default {
     },
 
     commentOwned(email) {
-      return email == this.userEmail;
+      return email === this.userEmail;
     },
   },
 

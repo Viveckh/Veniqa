@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import PageSetup from '@/dto/PageDTO';
+import PageSetup from '@/dto/PageDTO.json';
 import _ from 'lodash';
 
 export default {
@@ -45,7 +45,6 @@ export default {
   actions: {
     async commentRequest({
       commit,
-      state,
     }, reqData) {
       try {
         reqData.url = ProxyUrl[`${reqData.method}Comment`];
@@ -55,7 +54,7 @@ export default {
 
         if (!data) throw new Error("Data doesn't exist");
 
-        if (data.httpStatus == 200) {
+        if (data.httpStatus === 200) {
           commit('setComments', data.responseData);
           return true;
         }
@@ -66,7 +65,6 @@ export default {
     },
     async cancelOrder({
       commit,
-      state,
     }, orderId) {
       try {
         const {
@@ -82,12 +80,12 @@ export default {
         if (!data) {
           throw new Error('No Data');
         }
-        if (data.httpStatus == 200) {
+        if (data.httpStatus === 200) {
           commit('setOpenOrder', null);
           return true;
         }
 
-        console.log('HTTP', data.httpStatus == 200);
+        console.log('HTTP', data.httpStatus === 200);
         return false;
       } catch (error) {
         throw new Error(error);
@@ -95,7 +93,6 @@ export default {
     },
     async markAsDelivered({
       commit,
-      state,
     }, {
       deliveryDetail,
       editMode,
@@ -109,7 +106,7 @@ export default {
           data: deliveryDetail,
         });
 
-        if (data.httpStatus == 200) {
+        if (data.httpStatus === 200) {
           commit('setOpenOrder', data.responseData);
           return true;
         }
@@ -122,7 +119,6 @@ export default {
 
     async markAsShipped({
       commit,
-      state,
     }, {
       shippingDetails,
       editMode,
@@ -136,7 +132,7 @@ export default {
           data: shippingDetails,
         });
 
-        if (data.httpStatus == 200) {
+        if (data.httpStatus === 200) {
           commit('setOpenOrder', data.responseData);
           return true;
         }
@@ -149,7 +145,6 @@ export default {
 
     async fulfillItem({
       commit,
-      state,
     }, payload) {
       try {
         const {
@@ -160,7 +155,7 @@ export default {
           data: payload.fulfillmentDetail,
         });
 
-        if (data.httpStatus == 200) {
+        if (data.httpStatus === 200) {
           commit('setOpenOrder', data.responseData);
           return true;
         }
@@ -192,7 +187,7 @@ export default {
           data: reqObj,
         });
 
-        if (data.httpStatus == 200) {
+        if (data.httpStatus === 200) {
           commit('setOpenOrder', data.responseData);
           return true;
         }

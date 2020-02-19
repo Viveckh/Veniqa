@@ -199,9 +199,9 @@ export default {
     },
 
     resetFields() {
-      for (const key in this.shippingDeet) {
+      Object.keys(this.shippingDeet).forEach(key => {
         this.shippingDeet[key] = null;
-      }
+      });
     },
 
     addressEqual(givenAdd) {
@@ -213,11 +213,12 @@ export default {
     },
 
     saveAddress() {
-      for (const key in this.shippingDeet) {
+      Object.keys(this.shippingDeet).forEach(key => {
         if (this.shippingDeet[key] == null) {
           this.shippingDeet[key] = '';
         }
-      }
+      });
+
       if (
         this.firstNameState
         && this.address1State

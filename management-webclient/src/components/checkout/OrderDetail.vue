@@ -109,7 +109,7 @@ export default {
 
     done() {
       let validated = true;
-      for (let i = 0; i < this.orders.length; i++) {
+      for (let i = 0; i < this.orders.length; i += 1) {
         const item = this.orders[i];
         if (!this.quantityState(item.counts)) {
           validated = false;
@@ -128,7 +128,9 @@ export default {
           'cartStore/deleteOrders',
           this.selectedItems,
         );
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
       this.selectedItems = [];
     },
   },

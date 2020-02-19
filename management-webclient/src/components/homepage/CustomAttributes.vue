@@ -21,8 +21,8 @@
 
 <script>
 import _ from 'lodash';
-import ProductAttribDTO from '@/dto/ProductAttribute';
-import AttributeRow from '@/components/homepage/AttributeFormRow';
+import ProductAttribDTO from '@/dto/ProductAttribute.json';
+import AttributeRow from '@/components/homepage/AttributeFormRow.vue';
 import { Attributes } from '@/constants/Constants';
 
 export default {
@@ -66,7 +66,7 @@ export default {
     save() {
       if (this.validateForms()) {
         let isTrue = true;
-        for (let i = 0; i < this.attributes.length; i++) {
+        for (let i = 0; i < this.attributes.length; i += 1) {
           const obj = this.attributes[i];
           if (obj.values.length <= 1) {
             isTrue = false;
@@ -92,25 +92,25 @@ export default {
     },
 
     validateForms() {
-      for (let i = 0; i < this.attributes.length; i++) {
+      for (let i = 0; i < this.attributes.length; i += 1) {
         const attr = this.attributes[i];
 
         if (
           attr.name == null
-          || attr.name.length == 0
+          || attr.name.length === 0
           || attr.type == null
-          || attr.type.length == 0
+          || attr.type.length === 0
           || attr.key == null
-          || attr.key.length == 0
+          || attr.key.length === 0
           || attr.values == null
-          || attr.values.length == 0
+          || attr.values.length === 0
         ) {
           return false;
         }
 
         // Separate logic is needed for color.
         if (attr.type === Attributes.COLOR) {
-          for (let j = 0; j < attr.values.length; j++) {
+          for (let j = 0; j < attr.values.length; j += 1) {
             const obj = attr.values[j];
             if (obj.hexValue == null || obj.name == null || obj.name.trim().length === 0) return false;
           }
