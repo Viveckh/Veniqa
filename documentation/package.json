@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Viveckh/Veniqa#readme",
   "devDependencies": {
+    "@vuepress/plugin-google-analytics": "^1.3.0",
     "vuepress": "^1.3.0"
   }
 }
