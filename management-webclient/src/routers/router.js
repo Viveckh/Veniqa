@@ -13,6 +13,7 @@ import OrdersComponent from '@/views/OrderView.vue';
 import OrderDetail from '@/components/orders/OrderDetail.vue';
 import PageNotFound from '@/views/notfound.vue';
 import VueAnalytics from 'vue-analytics';
+import Config from '@/app-configs';
 
 Vue.use(Router);
 
@@ -72,7 +73,7 @@ const router = new Router({
           path: '/orders',
           component: OrdersComponent,
           meta: {
-            // Doing a basic route level permission.
+            SUPERADMIN: true,
             ORDER_VIEW: true,
             ORDER_MANAGE: true
           },
@@ -203,7 +204,7 @@ router.beforeEach((to, from, next) => {
 });
 
 Vue.use(VueAnalytics, {
-  id: 'UA-132822290-1',
+  id: Config.analyticsId,
   router
 });
 
