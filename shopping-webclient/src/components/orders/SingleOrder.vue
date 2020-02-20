@@ -14,8 +14,8 @@
             <div class="align-right">
               <div>
                 <!-- Status goes here -->
-              Status: 
-              <span  v-bind:class="{'green': order.overall_status != 'CANCELLED', 'red': order.overall_status === 'CANCELLED'}">
+              Status:
+              <span v-bind:class="{'green': order.overall_status != 'CANCELLED', 'red': order.overall_status === 'CANCELLED'}">
                 <strong>{{order.overall_status}}</strong>
               </span>
               </div>
@@ -37,7 +37,7 @@
 
 <script>
 import moment from 'moment';
-import SingleOrderItem from '@/components/orders/SingleOrderItem';
+import SingleOrderItem from '@/components/orders/SingleOrderItem.vue';
 
 export default {
   name: 'SingleOrder',
@@ -45,29 +45,29 @@ export default {
     order: {
       type: Object,
       required: true,
-    }
+    },
   },
   components: {
-    SingleOrderItem
+    SingleOrderItem,
   },
 
   data() {
     return {
 
-    }
+    };
   },
 
   filters: {
-    formattedDate(date){
-      if(date){
-        return moment(date).format("MMMM Do, YYYY");
+    formattedDate(date) {
+      if (date) {
+        return moment(date).format('MMMM Do, YYYY');
       }
-      else return '';
-    }
-  }
+      return '';
+    },
+  },
 
-  
-}
+
+};
 </script>
 
 <style lang="scss">
@@ -75,4 +75,3 @@ export default {
   margin: 1.5rem 0rem;
 }
 </style>
-

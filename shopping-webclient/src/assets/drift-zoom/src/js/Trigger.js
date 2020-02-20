@@ -15,7 +15,7 @@ export default class Trigger {
       hoverBoundingBox = throwIfMissing(),
       touchBoundingBox = throwIfMissing(),
       namespace = null,
-      zoomFactor = throwIfMissing()
+      zoomFactor = throwIfMissing(),
     } = options;
 
     this.settings = {
@@ -30,14 +30,14 @@ export default class Trigger {
       hoverBoundingBox,
       touchBoundingBox,
       namespace,
-      zoomFactor
+      zoomFactor,
     };
 
     if (this.settings.hoverBoundingBox || this.settings.touchBoundingBox) {
       this.boundingBox = new BoundingBox({
         namespace: this.settings.namespace,
         zoomFactor: this.settings.zoomFactor,
-        containerEl: this.settings.el.offsetParent
+        containerEl: this.settings.el.offsetParent,
       });
     }
 
@@ -74,7 +74,7 @@ export default class Trigger {
     }
   }
 
-  _handleEntry = e => {
+  _handleEntry = (e) => {
     e.preventDefault();
     this._lastMovement = e;
 
@@ -100,18 +100,18 @@ export default class Trigger {
     this.settings.zoomPane.show(
       this.settings.el.getAttribute(this.settings.sourceAttribute),
       this.settings.el.clientWidth,
-      this.settings.el.clientHeight
+      this.settings.el.clientHeight,
     );
 
     if (this._lastMovement) {
       const touchActivated = this._lastMovement.touches;
       if (
-        (touchActivated && this.settings.touchBoundingBox) ||
-        (!touchActivated && this.settings.hoverBoundingBox)
+        (touchActivated && this.settings.touchBoundingBox)
+        || (!touchActivated && this.settings.hoverBoundingBox)
       ) {
         this.boundingBox.show(
           this.settings.zoomPane.el.clientWidth,
-          this.settings.zoomPane.el.clientHeight
+          this.settings.zoomPane.el.clientHeight,
         );
       }
     }
@@ -119,7 +119,7 @@ export default class Trigger {
     this._handleMovement();
   };
 
-  _hide = e => {
+  _hide = (e) => {
     e.preventDefault();
 
     this._lastMovement = null;
@@ -140,7 +140,7 @@ export default class Trigger {
     this.settings.zoomPane.hide();
   };
 
-  _handleMovement = e => {
+  _handleMovement = (e) => {
     if (e) {
       e.preventDefault();
       this._lastMovement = e;

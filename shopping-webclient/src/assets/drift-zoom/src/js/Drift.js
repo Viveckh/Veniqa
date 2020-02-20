@@ -70,7 +70,7 @@ export default class Drift {
       hoverBoundingBox = false,
       // If true, a bounding box will show the area currently being previewed
       // during touch events
-      touchBoundingBox = false
+      touchBoundingBox = false,
     } = options;
 
     if (inlinePane !== true && !isDOMElement(paneContainer)) {
@@ -98,7 +98,7 @@ export default class Drift {
       hoverDelay,
       touchDelay,
       hoverBoundingBox,
-      touchBoundingBox
+      touchBoundingBox,
     };
 
     if (this.settings.injectBaseStyles) {
@@ -132,7 +132,7 @@ export default class Drift {
       namespace: this.settings.namespace,
       inlineOffsetX: this.settings.inlineOffsetX,
       inlineOffsetY: this.settings.inlineOffsetY,
-      inlineContainer: this.settings.inlineContainer
+      inlineContainer: this.settings.inlineContainer,
     });
   }
 
@@ -149,7 +149,7 @@ export default class Drift {
       hoverBoundingBox: this.settings.hoverBoundingBox,
       touchBoundingBox: this.settings.touchBoundingBox,
       namespace: this.settings.namespace,
-      zoomFactor: this.settings.zoomFactor
+      zoomFactor: this.settings.zoomFactor,
     });
   }
 

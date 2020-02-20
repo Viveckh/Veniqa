@@ -3,15 +3,15 @@ const baseConfig = {
   files: [{ pattern: 'src/**/*.js', included: false, served: false }, 'test/**/test*.js'],
   preprocessors: {
     'src/**/*.js': 'browserify',
-    'test/**/*.js': 'browserify'
+    'test/**/*.js': 'browserify',
   },
   browserify: {
-    transform: ['babelify']
+    transform: ['babelify'],
   },
   concurrency: 5,
   captureTimeout: 90000,
   browserConnectTimeout: 3000,
-  browserNoActivityTimeout: 15000
+  browserNoActivityTimeout: 15000,
 };
 
 const stringConfig = JSON.stringify(baseConfig);
@@ -36,7 +36,7 @@ fullConfig.browsers = [
   'sl_ios_9',
   'sl_ios_8',
   'sl_android_5',
-  'sl_android_4'
+  'sl_android_4',
 ];
 fullConfig.customLaunchers = {
   sl_chrome: { base: 'SauceLabs', browserName: 'Chrome' },
@@ -49,7 +49,7 @@ fullConfig.customLaunchers = {
   sl_ios_9: { base: 'SauceLabs', browserName: 'iPhone', version: '9.2' },
   sl_ios_8: { base: 'SauceLabs', browserName: 'iPhone', version: '8.4' },
   sl_android_5: { base: 'SauceLabs', browserName: 'Android', version: '5.1' },
-  sl_android_4: { base: 'SauceLabs', browserName: 'Android', version: '4.4' }
+  sl_android_4: { base: 'SauceLabs', browserName: 'Android', version: '4.4' },
 };
 
 exports.headless = headlessConfig;

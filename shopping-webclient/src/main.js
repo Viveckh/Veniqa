@@ -12,6 +12,8 @@ import App from './App.vue';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+// eslint-disable-next-line
+import VueAxios from './plugins/axios';
 
 import '@/assets/css/global.scss';
 import '@/assets/css/overrides.scss';

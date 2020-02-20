@@ -1,3 +1,4 @@
+/* eslint-disable  */
 // Object.assign polyfill from
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
 if (typeof Object.assign !== 'function') {

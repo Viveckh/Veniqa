@@ -1,4 +1,4 @@
-import ProxyUrls from '@/constants/ProxyUrls.js';
+import ProxyUrls from '@/constants/ProxyUrls';
 import Vue from 'vue';
 
 export default {
@@ -10,7 +10,8 @@ export default {
     emailConfirmed: false,
   },
   actions: {
-    async registerUser({ state, commit }, payload) {
+    // eslint-disable-next-line no-unused-vars
+    async registerUser({ state }, payload) {
       if (!payload) return null;
 
       try {
@@ -20,7 +21,7 @@ export default {
           data: payload,
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           // commit('setEmail', data.responseData.email);
           // commit('setName', data.responseData.name);
           // commit('setSessionActive', true);
@@ -32,7 +33,7 @@ export default {
       }
     },
 
-    async login({ state, commit }, payload) {
+    async login({ commit }, payload) {
       if (!payload) return null;
 
       try {
@@ -46,7 +47,7 @@ export default {
           commit('setEmail', data.email);
           commit('setName', data.name);
           commit('setSessionActive', true);
-          commit('setEmailConfirmed', data.emailConfirmed == 'true' || data.emailConfirmed == true);
+          commit('setEmailConfirmed', data.emailConfirmed === 'true' || data.emailConfirmed === true);
         }
         return data;
       } catch (err) {
@@ -69,19 +70,19 @@ export default {
       }
     },
 
-    async initiateAppSession({ state, commit }) {
+    async initiateAppSession({ commit }) {
       const res = await Vue.prototype.$axios({
         method: 'get',
         url: ProxyUrls.isSessionActive,
       });
-      if (res && res.data == true) {
+      if (res && res.data === true) {
         commit('setEmail', localStorage.getItem('email'));
         commit('setName', localStorage.getItem('name'));
         commit('setSessionActive', true);
         commit(
           'setEmailConfirmed',
-          localStorage.getItem('emailConfirmed') == 'true'
-            || localStorage.getItem('emailConfirmed') == true,
+          localStorage.getItem('emailConfirmed') === 'true'
+            || localStorage.getItem('emailConfirmed') === true,
         );
       } else {
         commit('setSessionActive', false);
