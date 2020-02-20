@@ -147,7 +147,7 @@ export default {
   },
 
   filters: {
-    filterDate(dd){
+    filterDate(dd) {
       return moment(dd).format('dddd, MMMM Do YYYY, h:mm:ss a');
     }
   },

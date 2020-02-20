@@ -1,28 +1,26 @@
 <template>
-    <!-- This templates was made by Colorlib (https://colorlib.com) -->
-  	<div id="notfound">
-		<div class="notfound">
-			<div class="notfound-404">
-				<div></div>
-				<h1>404</h1>
-			</div>
-			<h2>Page not found</h2>
-			<p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
-			<a href="/">Return to home page</a>
-		</div>
-	</div>
+  <!-- This templates was made by Colorlib (https://colorlib.com) -->
+  <div id="notfound">
+    <div class="notfound">
+      <div class="notfound-404">
+        <div></div>
+        <h1>404</h1>
+      </div>
+      <h2>Page not found</h2>
+      <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
+      <a href="/">Return to home page</a>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style lang="css">
 * {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
@@ -40,8 +38,8 @@ body {
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .notfound {
@@ -58,21 +56,21 @@ body {
   margin: 0px auto 50px;
 }
 
-.notfound .notfound-404>div:first-child {
+.notfound .notfound-404 > div:first-child {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background: #FFA500;
+  background: #ffa500;
   -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
   border: 5px solid #000;
   border-radius: 5px;
 }
 
-.notfound .notfound-404>div:first-child:before {
+.notfound .notfound-404 > div:first-child:before {
   content: '';
   position: absolute;
   left: -5px;
@@ -80,7 +78,7 @@ body {
   bottom: -5px;
   top: -5px;
   -webkit-box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
-          box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
   border-radius: 5px;
 }
 
@@ -93,8 +91,8 @@ body {
   position: absolute;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   left: 50%;
   text-align: center;
   height: 40px;
@@ -123,7 +121,7 @@ body {
   background-color: rgb(134, 136, 143);
   border: none;
   border-radius: 40px;
-  color: #fff; !important
+  color: #fff !important;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
@@ -135,5 +133,4 @@ body {
 .notfound a:hover {
   background-color: #2c2c2c;
 }
-
 </style>

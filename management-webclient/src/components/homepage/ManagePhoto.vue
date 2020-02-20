@@ -200,16 +200,16 @@ export default {
           featured: false,
         };
         this.finalImages[index] = _.cloneDeep(newObj);
-        let url = window.location.href;
+        const url = window.location.href;
 
-        let protocol = url.split(':')[0];
+        const protocol = url.split(':')[0];
 
         this.$axios({
           withCredentials: false,
           method: 'get',
           url: this.detailedUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
-          headers: {"Access-Control-Allow-Origin": "*"}
+          headers: { 'Access-Control-Allow-Origin': '*' }
         })
           .then((res) => {
             this.finalImages[index].largeBlob = new File(
@@ -225,7 +225,7 @@ export default {
             // done();
           })
           .catch((err) => {
-            console.log("Error message", err.message);
+            console.log('Error message', err.message);
             console.log(err);
             this.handleError('image');
           });
@@ -236,7 +236,7 @@ export default {
           method: 'get',
           url: this.thumbnailPropUrls[index].replace('https', protocol),
           responseType: 'arraybuffer',
-          headers: {"Access-Control-Allow-Origin": "*"}
+          headers: { 'Access-Control-Allow-Origin': '*' }
         })
           .then((res) => {
             this.finalImages[index].thumbnailBlob = new File(
@@ -247,8 +247,8 @@ export default {
             // done();
           })
           .catch(err => {
-            console.log("Error msg", err.message);
-            this.handleError('image')
+            console.log('Error msg', err.message);
+            this.handleError('image');
           });
       });
     }
@@ -280,27 +280,27 @@ export default {
          */
         let data = null;
         // if (!this.preassignedUrls) {
-          try {
-            const res = await this.$axios({
-              method: 'get',
-              url: ProxyUrls.predefinedUrls,
-              params,
-            });
+        try {
+          const res = await this.$axios({
+            method: 'get',
+            url: ProxyUrls.predefinedUrls,
+            params,
+          });
 
-            data = res.data.responseData;
-          } catch (error) {
-            console.log('Preassign error');
-            reject(false);
-          }
+          data = res.data.responseData;
+        } catch (error) {
+          console.log('Preassign error');
+          reject(false);
+        }
         // } else {
         //   data = this.preassignedUrls;
         // }
 
         const totalCallsToMake = data.detailedImageUrls.length
-          + data.thumbnailUrls.length
+          + data.thumbnailUrls.length;
           // + data.featuredImageUrls.length;
 
-        console.log("Total calls to make", totalCallsToMake);
+        console.log('Total calls to make', totalCallsToMake);
 
         if (totalCallsToMake == 0) {
           const newObj = {
@@ -309,7 +309,7 @@ export default {
             thumbnailUrls: this.thumbnailUrls,
           };
 
-          console.log("Sending out this obj", newObj)
+          console.log('Sending out this obj', newObj);
           resolve(newObj);
         }
         const done = _.after(totalCallsToMake, () => {
@@ -343,8 +343,8 @@ export default {
          * Since the axios calls are done through forEach, the indexes are saved even though we don't await for the response.
          */
         // this.finalImages.forEach((imageObj, ind) => {
-        for(let ind = 0; ind < this.finalImages.length; ind++){
-          let imageObj = this.finalImages[ind];
+        for (let ind = 0; ind < this.finalImages.length; ind++) {
+          const imageObj = this.finalImages[ind];
 
           // Call for detailed image urls.
           this.$axios({
@@ -404,7 +404,7 @@ export default {
           //       reject(data);
           //     });
           // }
-        };
+        }
       });
     },
 
@@ -418,7 +418,7 @@ export default {
 
     configureParams() {
       let numberOfThumbnailAndDetailedImages = 0;
-      let numberOfFeaturedImages = 0;
+      const numberOfFeaturedImages = 0;
       // let numberOfDetailedImages = 0;
       const productId = this.productId ? this.productId : '';
 
@@ -454,7 +454,7 @@ export default {
         this.finalImages[index].largeBlob = largeBlob;
         this.finalImages[index].thumbnailBlob = thumbnailBlob;
       }
-      this.setImages(null,null,null);
+      this.setImages(null, null, null);
     },
 
     /**
@@ -556,9 +556,8 @@ export default {
           url: URL.createObjectURL(thumbUrl),
           name,
         };
-      }
-      else {
-        this.thumbnailInitImage = {}
+      } else {
+        this.thumbnailInitImage = {};
       }
 
       if (url) {
@@ -566,8 +565,7 @@ export default {
           url: URL.createObjectURL(url),
           name,
         };
-      }
-      else {
+      } else {
         this.largeInitImage = {};
       }
 
@@ -581,11 +579,10 @@ export default {
         file => file.name === this.largeInitImage.name,
       );
 
-      if(index >= 0){
+      if (index >= 0) {
         this.finalImages.splice(index, 1);
         this.cropSection.remove();
       }
-      
     },
 
     moveImage(direction) {
@@ -624,7 +621,7 @@ export default {
   .croppa-container,
   .actions {
     margin: 10px;
-    
+
   }
 
   .croppa-container{

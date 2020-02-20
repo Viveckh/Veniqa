@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    shop(product){
+    shop(product) {
       this.$emit('shop', product);
     }
   }
