@@ -23,7 +23,6 @@
 <script>
 import { mapGetters } from 'vuex';
 import { FingerprintSpinner } from 'epic-spinners';
-import axios from 'axios';
 import { eventHub } from '@/utils/EventHub';
 import moment from 'moment';
 
@@ -79,10 +78,12 @@ export default {
 
           await this.$store.dispatch('cartStore/createCheckout', reqObj);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
     setLoading() {
-      this.refCount++;
+      this.refCount += 1;
       this.isLoading = true;
     },
 
@@ -103,7 +104,7 @@ export default {
         const isActive = this.checkSessionTimeout();
 
         if (!isActive) {
-          console.log("This is also happening while unsetting loading")
+          console.log('This is also happening while unsetting loading');
           this.$store.commit('shippingStore/resetAddresses');
           this.$store.commit('cartStore/resetOrders');
           this.$store.commit('authStore/logoutUser');
@@ -111,7 +112,7 @@ export default {
       }
 
       if (this.refCount > 0) {
-        this.refCount--;
+        this.refCount -= 1;
         this.isLoading = this.refCount > 0;
       }
     },

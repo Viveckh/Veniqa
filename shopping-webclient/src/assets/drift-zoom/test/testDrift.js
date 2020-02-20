@@ -73,7 +73,7 @@ describe('Drift', () => {
         new Drift(anchor, conf);
       }).toThrowError(
         TypeError,
-        '`paneContainer` must be a DOM element when `inlinePane !== true`'
+        '`paneContainer` must be a DOM element when `inlinePane !== true`',
       );
     });
 
@@ -87,7 +87,7 @@ describe('Drift', () => {
         new Drift(anchor, conf);
       }).toThrowError(
         TypeError,
-        '`paneContainer` must be a DOM element when `inlinePane !== true`'
+        '`paneContainer` must be a DOM element when `inlinePane !== true`',
       );
     });
 

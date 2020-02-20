@@ -1,11 +1,11 @@
 // import './lib'
 import { Stripe, baseStyle } from './stripeElements';
-import StripeElement from './StripeElement';
-import Card from './Card';
-import CardExpiry from './CardExpiry';
-import CardCvc from './CardCvc';
-import CardNumber from './CardNumber';
-import PostalCode from './PostalCode';
+import StripeElement from './StripeElement.vue';
+import Card from './Card.vue';
+import CardExpiry from './CardExpiry.vue';
+import CardCvc from './CardCvc.vue';
+import CardNumber from './CardNumber.vue';
+import PostalCode from './PostalCode.vue';
 
 export {
   Card,

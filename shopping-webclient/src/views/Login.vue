@@ -16,13 +16,13 @@ import UserAccountModal from '@/components/registrations/UserAccountModal.vue';
 export default {
   name: 'Login',
   components: {
-    UserAccountModal
+    UserAccountModal,
   },
 
   data() {
     return {
       registrationClass: ['registration-mode'],
-      userLoggedIn: false
+      userLoggedIn: false,
     };
   },
 
@@ -31,8 +31,8 @@ export default {
       // Do something when logged in.
       this.$router.push('/');
       this.$store.commit('loaderStore/unsetLoader');
-    }
-  }
+    },
+  },
 };
 </script>
 

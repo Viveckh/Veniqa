@@ -13,17 +13,17 @@
 </template>
 
 <script>
-import props from './props'
-import StripeElement from './StripeElement'
+import props from './props';
+import StripeElement from './StripeElement.vue';
 
 export default {
   props,
   components: { StripeElement },
   methods: {
-    blur () { this.$refs.element.blur() },
-    clear () { this.$refs.element.clear() },
-    focus () { this.$refs.element.focus() },
-    update (options) { this.$refs.element.update(options) }
-  }
-}
+    blur() { this.$refs.element.blur(); },
+    clear() { this.$refs.element.clear(); },
+    focus() { this.$refs.element.focus(); },
+    update(options) { this.$refs.element.update(options); },
+  },
+};
 </script>

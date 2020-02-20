@@ -42,15 +42,15 @@ function init(key, options = {}) {
   }
 }
 
-export function create(elementType, key_or_stripe, options = {}) {
-  init(key_or_stripe, options.elements || {});
+export function create(elementType, keyOrStripe, options = {}) {
+  init(keyOrStripe, options.elements || {});
   options.style = Object.assign(baseStyle, options.style || {});
 
   const element = Stripe.elements.create(elementType, options);
 
-  Stripe.createToken = options => Stripe.instance.createToken(element, options);
-  Stripe.createSource = options => Stripe.instance.createSource(element, options);
-  Stripe.retrieveSource = options => Stripe.instance.retrieveSource(options);
+  Stripe.createToken = opts => Stripe.instance.createToken(element, opts);
+  Stripe.createSource = opts => Stripe.instance.createSource(element, opts);
+  Stripe.retrieveSource = opts => Stripe.instance.retrieveSource(opts);
 
   return element;
 }
