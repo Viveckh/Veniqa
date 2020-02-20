@@ -17,9 +17,11 @@ footer: MIT Licensed | Copyright © 2019-present Qarece New York
 
 # Veniqa Open-Source E-commerce Solution
 
-Veniqa (Originally Veniqa New York) was a New York based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
+Veniqa (Originally Veniqa New York) was a New York-based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
 
-Upon its demise due to logistical complications, the tech platform that powered Veniqa is maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders. Veniqa is now open-sourced as a 100% customizable framework under the MIT License.
+Upon its demise due to logistical complications, the tech platform that powered Veniqa was open-sourced as a 100% customizable framework under the MIT License.
+
+It is developed and maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders.
 
 ___
 
