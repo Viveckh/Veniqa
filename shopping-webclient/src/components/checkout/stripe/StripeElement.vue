@@ -7,24 +7,26 @@
 </template>
 
 <script>
-import props from './props'
-import { create, destroy, createPaymentRequest, createPayButton, getPaymentRequest } from './stripeElements'
+import props from './props';
+import {
+  create, destroy, createPaymentRequest, createPayButton,
+} from './stripeElements';
 
 export default {
   // please see https://stripe.com/docs/elements/reference for details
-  props: Object.assign({type: {type:String, required:true}}, props),
+  props: Object.assign({ type: { type: String, required: true } }, props),
 
-  beforeMount () {
-    this._card = create(this.type, this.stripe, this.options)
-    this._card.on('blur', event => this.$emit('blur'))
-    this._card.on('focus', event => this.$emit('focus'))
+  beforeMount() {
+    this._card = create(this.type, this.stripe, this.options);
+    this._card.on('blur', () => this.$emit('blur'));
+    this._card.on('focus', () => this.$emit('focus'));
     this._card.on('change', event => this.$emit('change', event));
 
     this._paymentRequest = createPaymentRequest(this.paymentReqOptions);
     this._paymentRequest.on('change', event => this.$emit('pchange', event));
     // Callback when the shipping address is updated.
-    this._paymentRequest.on('shippingaddresschange', event => {
-      event.updateWith({status: 'success'});
+    this._paymentRequest.on('shippingaddresschange', (event) => {
+      event.updateWith({ status: 'success' });
     });
 
     this._paymentRequest.on('token', ev => this.$emit('token', ev));
@@ -32,9 +34,9 @@ export default {
     this._paymentBtn = createPayButton();
   },
 
-  async mounted () {
+  async mounted() {
     // Vue likes to stay in control of $el but Stripe needs a real element
-    const el = document.createElement('div')
+    // const el = document.createElement('div');
     this._card.mount('#card-cc');
 
     // Check if the Payment Request is available (or Apple Pay on the Web).
@@ -43,20 +45,19 @@ export default {
       // Display the Pay button by mounting the Element in the DOM.
       this._paymentBtn.mount('#payment-request-button');
     }
-    
   },
 
-  beforeDestroy () {
-    this._card.unmount()
-    this._card.destroy()
-    destroy()
+  beforeDestroy() {
+    this._card.unmount();
+    this._card.destroy();
+    destroy();
   },
 
   methods: {
-    blur () { this._card.blur() },
-    clear () { this._card.clear() },
-    focus () { this._card.focus() },
-    update () { this._card.update() }
-  }
-}
+    blur() { this._card.blur(); },
+    clear() { this._card.clear(); },
+    focus() { this._card.focus(); },
+    update() { this._card.update(); },
+  },
+};
 </script>

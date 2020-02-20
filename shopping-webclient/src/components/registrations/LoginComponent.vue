@@ -51,14 +51,10 @@
 
 <script>
 import ProxyUrl from '@/constants/ProxyUrls';
-import VueRecaptcha from 'vue-recaptcha';
 import Config from '@/config.json';
 
 export default {
   name: 'LoginComponent',
-  components: {
-    VueRecaptcha
-  },
   data() {
     return {
       username: '',
@@ -68,22 +64,22 @@ export default {
       captchaResp: '',
     };
   },
-  
+
   created() {
     this.recaptchaKey = Config.RECAPTCHA;
   },
 
   methods: {
-    async onVerify (response) {
+    async onVerify(response) {
       this.captchaResp = response;
-      
     },
-    onExpired () {
+    onExpired() {
       // this.resetRecaptcha();
       this.captchaResp = '';
     },
-    
+
     validEmail(email) {
+      // eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
@@ -113,16 +109,16 @@ export default {
     //   } catch (error) {
     //     return false;
     //   }
-      
+
     // },
 
     async loginClicked() {
       // let isValidated = await this.captchaValidate();
-      if (this.usernameState ) { //} && this.captchaResp.length > 0) {
+      if (this.usernameState) { // } && this.captchaResp.length > 0) {
         this.$emit('login', {
           email: this.username,
           password: this.password,
-          recaptcha: this.captchaResp
+          recaptcha: this.captchaResp,
         });
       }
     },
@@ -132,23 +128,23 @@ export default {
         try {
           const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrl.forgotPassword + this.username
+            url: ProxyUrl.forgotPassword + this.username,
           });
 
-          if (data && data.httpStatus == 200) {
+          if (data && data.httpStatus === 200) {
             this.$emit('close');
 
             this.$notify({
               group: 'all',
               type: 'success',
-              text: 'The email was just sent. Please check your email and follow the instructions.'
+              text: 'The email was just sent. Please check your email and follow the instructions.',
             });
           }
         } catch (err) {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'The email could not be sent right now. Please try again later'
+            text: 'The email could not be sent right now. Please try again later',
           });
         }
       }
@@ -156,14 +152,14 @@ export default {
 
     register() {
       this.$emit('register');
-    }
+    },
   },
   computed: {
     usernameState() {
-      if (this.username.length == 0) return null;
+      if (this.username.length === 0) return null;
       return this.validEmail(this.username);
-    }
-  }
+    },
+  },
 };
 </script>
 

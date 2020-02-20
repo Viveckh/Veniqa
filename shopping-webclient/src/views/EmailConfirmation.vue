@@ -47,15 +47,15 @@
 </template>
 
 <script>
-import ProxyUrls from '@/constants/ProxyUrls.js';
+import ProxyUrls from '@/constants/ProxyUrls';
 
 export default {
   name: 'EmailConfirmation',
   props: {
     token: {
       required: true,
-      default: String
-    }
+      default: String,
+    },
   },
 
   async created() {
@@ -63,16 +63,18 @@ export default {
       try {
         const { data } = await this.$axios({
           method: 'get',
-          url: `${ProxyUrls.confirmEmail}/${this.token}`
+          url: `${ProxyUrls.confirmEmail}/${this.token}`,
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           this.value = true;
           this.$router.push('/');
         } else {
           this.value = false;
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
 
@@ -80,12 +82,13 @@ export default {
     return {
       value: null,
       resendHit: false,
-      email: ''
+      email: '',
     };
   },
 
   methods: {
     validEmail(email) {
+      // eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
@@ -94,14 +97,14 @@ export default {
         try {
           const { data } = await this.$axios({
             method: 'get',
-            url: ProxyUrls.resendEmail + this.email
+            url: ProxyUrls.resendEmail + this.email,
           });
 
           if (data && data.httpStatus === 200) {
             this.$notify({
               group: 'all',
               type: 'success',
-              text: 'Email successfully sent. Please check your inbox.'
+              text: 'Email successfully sent. Please check your inbox.',
             });
 
             const sessionActive = this.$store.getters['authStore/isSessionActive'];
@@ -114,19 +117,19 @@ export default {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'Some error occured while trying to send the email. Please try later.'
+            text: 'Some error occured while trying to send the email. Please try later.',
           });
         }
       }
-    }
+    },
   },
 
   computed: {
     emailState() {
-      if (this.email.length == 0) return null;
+      if (this.email.length === 0) return null;
       return this.validEmail(this.email);
-    }
-  }
+    },
+  },
 };
 </script>
 

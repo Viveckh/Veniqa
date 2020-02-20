@@ -5,19 +5,19 @@ import { addClasses, removeClasses } from './util/dom';
 // account for, just in case.
 const divStyle = document.createElement('div').style;
 
-const HAS_ANIMATION =  typeof document === 'undefined'
-    ? false
-    : 'animation' in divStyle || 'webkitAnimation' in divStyle;
+const HAS_ANIMATION = typeof document === 'undefined'
+  ? false
+  : 'animation' in divStyle || 'webkitAnimation' in divStyle;
 
-const __instance = (function() {
+const __instance = (function () {
   let instance;
-  return newInstance => {
+  return (newInstance) => {
     if (newInstance) {
       instance = newInstance;
     }
     return instance;
   };
-})();
+}());
 export default class ZoomPane {
   constructor(options = {}) {
     this.isShowing = false;
@@ -31,7 +31,7 @@ export default class ZoomPane {
       containInline = throwIfMissing(),
       inlineOffsetX = 0,
       inlineOffsetY = 0,
-      inlineContainer = document.body
+      inlineContainer = document.body,
     } = options;
 
     this.settings = {
@@ -43,7 +43,7 @@ export default class ZoomPane {
       containInline,
       inlineOffsetX,
       inlineOffsetY,
-      inlineContainer
+      inlineContainer,
     };
 
     this.openClasses = this._buildClasses('open');
@@ -105,15 +105,15 @@ export default class ZoomPane {
       const scrollY = window.pageYOffset;
 
       let inlineLeft = triggerRect.left;
-      percentageOffsetX * triggerRect.width -
-        this.el.clientWidth / 2 +
-        this.settings.inlineOffsetX +
-        scrollX;
+      percentageOffsetX * triggerRect.width
+        - this.el.clientWidth / 2
+        + this.settings.inlineOffsetX
+        + scrollX;
       let inlineTop = triggerRect.top;
-      percentageOffsetY * triggerRect.height -
-        this.el.clientHeight / 2 +
-        this.settings.inlineOffsetY +
-        scrollY;
+      percentageOffsetY * triggerRect.height
+        - this.el.clientHeight / 2
+        + this.settings.inlineOffsetY
+        + scrollY;
 
       if (this.settings.containInline) {
         const elRect = this.el.getBoundingClientRect();
@@ -121,8 +121,8 @@ export default class ZoomPane {
         if (inlineLeft < triggerRect.left + scrollX) {
           inlineLeft = triggerRect.left + scrollX;
         } else if (
-          inlineLeft + this.el.clientWidth >
-          triggerRect.left + triggerRect.width + scrollX
+          inlineLeft + this.el.clientWidth
+          > triggerRect.left + triggerRect.width + scrollX
         ) {
           inlineLeft = triggerRect.left + triggerRect.width - this.el.clientWidth + scrollX;
         }
@@ -130,8 +130,8 @@ export default class ZoomPane {
         if (inlineTop < triggerRect.top + scrollY) {
           inlineTop = triggerRect.top + scrollY;
         } else if (
-          inlineTop + this.el.clientHeight >
-          triggerRect.top + triggerRect.height + scrollY
+          inlineTop + this.el.clientHeight
+          > triggerRect.top + triggerRect.height + scrollY
         ) {
           inlineTop = triggerRect.top + triggerRect.height - this.el.clientHeight + scrollY;
         }

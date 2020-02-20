@@ -179,7 +179,7 @@ export default {
     },
     async logoutClicked() {
       try {
-        const res = await this.$store.dispatch('authStore/logout');
+        await this.$store.dispatch('authStore/logout');
         this.$notify({
           group: 'all',
           type: 'success',

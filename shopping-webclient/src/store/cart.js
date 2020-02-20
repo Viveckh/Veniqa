@@ -13,7 +13,7 @@ export default {
     shippingPrice: {},
     tariffPrice: {},
     checkoutInitiated: false,
-    checkoutID: null,
+    checkoutID: null
   },
   actions: {
     /**
@@ -27,8 +27,8 @@ export default {
         method: 'post',
         data: {
           checkoutId: state.checkoutID,
-          paymentSource: 'NONE',
-        },
+          paymentSource: 'NONE'
+        }
       });
 
       if (data.httpStatus === 200) {
@@ -39,8 +39,8 @@ export default {
           method: 'post',
           data: {
             paymentSource: 'NONE',
-            paymentId,
-          },
+            paymentId
+          }
         });
 
         if (newData.data.httpStatus === 200) {
@@ -48,16 +48,16 @@ export default {
         }
       }
     },
-    async createCheckout({ state, commit }, { address, shippingMethod }) {
+    async createCheckout({ commit }, { address, shippingMethod }) {
       const reqData = {
         shippingMethod: shippingMethod._id,
-        addressId: address._id,
+        addressId: address._id
       };
       try {
         const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.createCheckout,
           method: 'post',
-          data: reqData,
+          data: reqData
         });
 
         if (data.httpStatus === 200) {
@@ -75,11 +75,11 @@ export default {
     },
 
     async addToTheCart({
-      state, commit, dispatch, rootGetters,
+      state, commit, dispatch, rootGetters
     }, products) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive'] && products.length > 0) {
-        console.log("Add to cart is not possible because you are not logged in");
+        console.log('Add to cart is not possible because you are not logged in');
         return;
         // const foundIndex = _.findIndex(state.cart, pr => _.isEqual(pr.product, products[0]));
 
@@ -119,50 +119,52 @@ export default {
         // return true;
       }
 
-      console.log("Products", products)
+      console.log('Products', products);
       const toSend = _.map(products, p => ({
         product: p._id,
-        counts: p.counts == 0 ? 1 : p.counts,
-        customizations: p.customValues ? p.customValues : null,
+        counts: p.counts === 0 ? 1 : p.counts,
+        customizations: p.customValues ? p.customValues : null
       }));
 
-      console.log("To send", toSend)
+      console.log('To send', toSend);
 
       try {
         const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.addToCart,
           method: 'post',
-          data: toSend,
+          data: toSend
         });
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
             const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
-              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod']
             };
-            
+
             await dispatch('createCheckout', reqObj);
+            // eslint-disable-next-line consistent-return
             return true;
-          } 
-            commit('setCart', data.responseData);
-            return true;
-          
-        } else throw new Error(data.httpStatus);
+          }
+          commit('setCart', data.responseData);
+          // eslint-disable-next-line consistent-return
+          return true;
+        }
+        throw new Error(data.httpStatus);
       } catch (err) {
-        console.log("Error adding", err);
-        console.log("More", err.message);
+        console.log('Error adding', err);
+        console.log('More', err.message);
         throw new Error(err);
       }
     },
 
     async getCart({
-      state, commit, dispatch, rootGetters,
+      commit
     }) {
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'get',
-          url: ProxyUrl.getCart,
+          url: ProxyUrl.getCart
         });
         if (data.httpStatus === 200) {
           commit('setCart', data.responseData);
@@ -173,7 +175,7 @@ export default {
     },
 
     async deleteOrders({
-      state, commit, rootGetters, dispatch,
+      state, commit, rootGetters, dispatch
     }, cartItems) {
       const deletedIds = _.map(cartItems, '_id');
 
@@ -190,32 +192,32 @@ export default {
           method: 'delete',
           url: ProxyUrl.deleteCart,
           data: {
-            cartItemIds: deletedIds,
-          },
+            cartItemIds: deletedIds
+          }
         });
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
             const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
-              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod']
             };
 
             await dispatch('createCheckout', reqObj);
           } else {
-            console.log("Getting all cart vals")
+            console.log('Getting all cart vals');
             commit('setCart', data.responseData);
           }
         }
       } catch (err) {
-        console.log("Error getting cart", err);
-        console.log("More", err.message);
+        console.log('Error getting cart', err);
+        console.log('More', err.message);
         throw new Error(err);
       }
     },
 
     async updateOrders({
-      state, commit, dispatch, rootGetters,
+      state, commit, dispatch, rootGetters
     }, payloadArray) {
       // Checks if the session is active. If not, it means that the user is not logged in. So, just do things locally.
       if (!rootGetters['authStore/isSessionActive']) {
@@ -230,43 +232,43 @@ export default {
 
         // return false;
 
-        console.log("Cannot send the request because the user is not logged in");
+        console.log('Cannot send the request because the user is not logged in');
         return;
       }
 
-      console.log("Payload array", payloadArray);
+      console.log('Payload array', payloadArray);
 
       const orders = [];
-      state.cart.forEach((item) => {
-        console.log("Count", item.counts);
+      state.cart.forEach(item => {
+        console.log('Count', item.counts);
         orders.push({
           product: item.product._id,
           _id: item._id,
           counts: item.counts,
-          customizations: item.customizations,
+          customizations: item.customizations
         });
       });
 
-      console.log("Orders", orders)
+      console.log('Orders', orders);
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'put',
           url: ProxyUrl.updateCart,
           data: {
-            cartItems: orders,
-          },
+            cartItems: orders
+          }
         });
 
         if (data.httpStatus === 200) {
           if (state.checkoutInitiated) {
             const reqObj = {
               address: rootGetters['shippingStore/getSelectedAddress'],
-              shippingMethod: rootGetters['shippingStore/shippingMethod'],
+              shippingMethod: rootGetters['shippingStore/shippingMethod']
             };
 
             await dispatch('createCheckout', reqObj);
           } else {
-            console.log("Setting cart after successful update")
+            console.log('Setting cart after successful update');
             commit('setCart', data.responseData);
             return data;
           }
@@ -274,11 +276,11 @@ export default {
           throw new Error(data.httpStatus);
         }
       } catch (err) {
-        console.log("Error getting cart", err);
-        console.log("More", err.message);
+        console.log('Error getting cart', err);
+        console.log('More', err.message);
         throw new Error(err);
       }
-    },
+    }
   },
   mutations: {
     setCheckoutId(state, payload) {
@@ -300,9 +302,9 @@ export default {
       state.checkoutID = null;
     },
     appendToCart(state, newProducts) {
-      newProducts.forEach((pr) => {
+      newProducts.forEach(pr => {
         const ind = _.findIndex(state.cart, {
-          _id: pr._id,
+          _id: pr._id
         });
 
         if (ind < 0) {
@@ -316,17 +318,18 @@ export default {
       state.cart = [...state.cart];
 
       let amount = 0;
-      let currency = '';
-      state.cart.forEach((item) => {
+      let curr = '';
+      state.cart.forEach(item => {
         amount += parseFloat(item.aggregatedPrice.amount);
-        if (currency.length == 0) {
-          currency = item.aggregatedPrice.currency;
+        if (curr.length === 0) {
+          const { aggregatedPrice: currency } = item;
+          curr = currency;
         }
       });
       amount = amount.toFixed(2);
       state.total = {
         amount,
-        currency,
+        curr
       };
     },
     setCart(state, allCarts) {
@@ -341,13 +344,13 @@ export default {
       state.tariffPrice = allCarts.tariffPrice ? allCarts.tariffPrice : null;
 
       // allCarts.items.forEach((item) => {
-      for(let i = 0; i < allCarts.items.length; i++){
-        let item = allCarts.items[i];
+      for (let i = 0; i < allCarts.items.length; i += 1) {
+        const item = allCarts.items[i];
         transformed.push(_.assign(_.cloneDeep(OrderDTO), item));
-      };
+      }
 
       state.cart.push(...transformed);
-    },
+    }
   },
   getters: {
     getCart(state) {
@@ -360,7 +363,7 @@ export default {
 
     getTotalItems(state) {
       let total = 0;
-      state.cart.forEach((item) => {
+      state.cart.forEach(item => {
         total += parseInt(item.counts);
       });
 
@@ -390,6 +393,6 @@ export default {
 
     checkoutId(state) {
       return state.checkoutID;
-    },
-  },
+    }
+  }
 };
