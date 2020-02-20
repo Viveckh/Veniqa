@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import StripeDesign from '@/components/featured/designs/StripeDesign';
-import CanvasCrackSingle from '@/components/featured/designs/CanvasCrackSingleDesign';
+import StripeDesign from '@/components/featured/designs/StripeDesign.vue';
+import CanvasCrackSingle from '@/components/featured/designs/CanvasCrackSingleDesign.vue';
 
 export default {
   props: {

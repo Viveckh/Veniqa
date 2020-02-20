@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
 
-
 export default {
   namespaced: true,
   state: {
@@ -9,7 +8,6 @@ export default {
   },
   actions: {
     async addToTheCart({
-      state,
       commit,
     }, payload) {
       try {
@@ -23,12 +21,11 @@ export default {
 
         commit('setCart', res.data);
       } catch (err) {
-
+        console.log('Error occured', err);
       }
     },
 
     async getCart({
-      state,
       commit,
     }) {
       try {
@@ -46,7 +43,6 @@ export default {
     },
 
     async deleteOrders({
-      state,
       commit,
     }, products) {
       const deletedIds = _.map(products, '_id');

@@ -27,12 +27,8 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import Pagination from '@/dto/Pagination';
-import FeatureService from '@/services/FeatureService';
-import notify from '@/services/NotificationService';
 import { mapGetters } from 'vuex';
-import FeaturedSelected from '@/components/featured/FeaturedSelected';
+import FeaturedSelected from '@/components/featured/FeaturedSelected.vue';
 
 export default {
   name: 'Featured',

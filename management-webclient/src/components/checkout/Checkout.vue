@@ -18,7 +18,7 @@
 <script>
 import ShippingDetail from '@/components/checkout/ShippingDetail.vue';
 import OrderDetail from '@/components/checkout/OrderDetail.vue';
-import PaymentDetail from '@/components/checkout/PaymentDetail';
+import PaymentDetail from '@/components/checkout/PaymentDetail.vue';
 
 export default {
   name: 'Checkout',

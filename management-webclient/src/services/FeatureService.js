@@ -28,7 +28,7 @@ export default {
         method: 'post',
         data: req,
       });
-      if (data && data.httpStatus == 200) {
+      if (data && data.httpStatus === 200) {
         return true;
       } throw new Error('Failed');
     } catch (error) {

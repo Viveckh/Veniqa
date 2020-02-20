@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
 import * as _ from 'lodash';
-import Pagination from '@/dto/Pagination';
+import Pagination from '@/dto/Pagination.json';
 
 export default {
   namespaced: true,
@@ -50,7 +50,7 @@ export default {
             productId: id,
           },
         });
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           dispatch('getAllProducts');
         } else throw new Error('No Content');
       } catch (err) {
@@ -70,7 +70,7 @@ export default {
           data: product,
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           dispatch('getAllProducts');
         } else throw new Error('No Content');
       } catch (err) {
@@ -91,7 +91,7 @@ export default {
           data: product,
         });
 
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           dispatch('getAllProducts');
         } else throw new Error('No Content');
       } catch (err) {
@@ -100,6 +100,7 @@ export default {
       }
     },
     async getProduct({
+      // eslint-disable-next-line no-unused-vars
       dispatch,
     }, id) {
       const productGetUrl = `${ProxyUrl.getProduct}?productId=${id}`;
@@ -146,7 +147,7 @@ export default {
           method: 'post',
           data: reqPayload,
         });
-        if (data && data.httpStatus == 200) {
+        if (data && data.httpStatus === 200) {
           commit('setProducts', data.responseData.docs);
           commit('setPagination', data.responseData);
         } else throw new Error('No content');

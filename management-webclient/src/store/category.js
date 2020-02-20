@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import * as _ from 'lodash';
 
 export default {
   namespaced: true,
@@ -30,7 +29,7 @@ export default {
       dispatch,
     }, category) {
       try {
-        const res = await Vue.prototype.$axios({
+        await Vue.prototype.$axios({
           url: ProxyUrl.addCategory,
           withCredentials: true,
           method: 'post',
@@ -46,7 +45,7 @@ export default {
       dispatch,
     }, category) {
       try {
-        const res = await Vue.prototype.$axios({
+        await Vue.prototype.$axios({
           url: ProxyUrl.editCategory,
           withCredentials: true,
           method: 'put',
