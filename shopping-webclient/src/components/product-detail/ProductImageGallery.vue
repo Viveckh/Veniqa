@@ -100,13 +100,13 @@ export default {
     move_button() {
       return this.options.move_button_style === 'chevron'
         ? {
-            left: 'chevron-left',
-            right: 'chevron-right'
-          }
+          left: 'chevron-left',
+          right: 'chevron-right'
+        }
         : {
-            left: 'angle-double-left',
-            right: 'angle-double-right'
-          };
+          left: 'angle-double-left',
+          right: 'angle-double-right'
+        };
     }
   },
   mounted() {
@@ -166,8 +166,8 @@ export default {
     }
 
     if (
-      this.options.pane === 'container-round' ||
-      this.options.pane === 'container'
+      this.options.pane === 'container-round'
+      || this.options.pane === 'container'
     ) {
       this.options.hoverBoundingBox = false;
     } else {
