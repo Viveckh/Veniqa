@@ -11,7 +11,7 @@
       <b-col class="align-right">
         <a @click="$emit('remove')" class="red-anchor">Remove</a>
         <a @click="$emit('edit')" style="margin-left: 30px;" class="green-anchor">Edit</a>
-        
+
         <a style="margin-left: 30px; font-size: x-large" @click="showDetail = !showDetail">
           <font-awesome-icon icon="sort-down"/>
         </a>
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       showDetail: false,
-    }
+    };
   },
 
   computed: {
@@ -78,7 +78,7 @@ export default {
       return this.design.config.name || `${this.section} Design - ${this.index}`;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -110,4 +110,3 @@ export default {
   }
 }
 </style>
-

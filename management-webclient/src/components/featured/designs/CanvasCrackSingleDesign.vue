@@ -72,12 +72,14 @@ export default {
       && this.product.detailedImageUrls
       && this.product.detailedImageUrls.length > 0
     ) {
+      // eslint-disable-next-line prefer-destructuring
       this.displayImage = this.product.detailedImageUrls[0];
     }
   },
 
   watch: {
     product() {
+      // eslint-disable-next-line prefer-destructuring
       this.displayImage = this.product.detailedImageUrls[0];
     },
   },

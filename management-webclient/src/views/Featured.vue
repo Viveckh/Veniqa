@@ -27,12 +27,8 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import Pagination from '@/dto/Pagination';
-import FeatureService from '@/services/FeatureService';
-import notify from '@/services/NotificationService';
-import { mapGetters } from "vuex";
-import FeaturedSelected from '@/components/featured/FeaturedSelected';
+import { mapGetters } from 'vuex';
+import FeaturedSelected from '@/components/featured/FeaturedSelected.vue';
 
 export default {
   name: 'Featured',
@@ -50,9 +46,9 @@ export default {
   async created() {
     // Load all the existing feature list.
     try {
-      await this.$store.dispatch('featuredStore/getAllFeaturedList')
+      await this.$store.dispatch('featuredStore/getAllFeaturedList');
       this.currentSection = this.sections.length > 0 ? this.sections[0] : '';
-      console.log("Setting current section: ", this.currentSection);
+      console.log('Setting current section: ', this.currentSection);
     } catch (error) {
       console.log('Feature get error');
     }

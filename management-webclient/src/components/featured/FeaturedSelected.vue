@@ -14,7 +14,7 @@
 
     <!-- Selected Products -->
     <div v-if="featuredDesigns && featuredDesigns.length > 0" class="section">
-      
+
       <b-btn
         size="sm"
         variant="primary"
@@ -63,10 +63,9 @@
 
 <script>
 // import FeaturedProductDTO from '@/dto/FeaturedProductDTO'
-import { mapGetters } from "vuex";
-import FeaturedSelectedSingle from '@/components/featured/FeaturedSelectedSingle';
-import FeaturedAddDesign from '@/components/featured/FeaturedAddDesign';
-import DesignEntry from '@/components/featured/designs/DesignEntry';
+import FeaturedSelectedSingle from '@/components/featured/FeaturedSelectedSingle.vue';
+import FeaturedAddDesign from '@/components/featured/FeaturedAddDesign.vue';
+import DesignEntry from '@/components/featured/designs/DesignEntry.vue';
 import notification from '@/services/NotificationService';
 
 export default {
@@ -88,7 +87,7 @@ export default {
       editMode: false,
       featuredDesigns: [],
       editDesignObj: null,
-    }
+    };
   },
 
   created() {
@@ -97,8 +96,8 @@ export default {
   },
 
   watch: {
-    section(newVal, oldVal){
-      if(newVal != oldVal){
+    section(newVal, oldVal) {
+      if (newVal !== oldVal) {
         this.featuredDesigns = [];
         this.featuredDesigns.push(...this.$store.getters['featuredStore/getDesignsByName'](this.section));
       }
@@ -106,7 +105,7 @@ export default {
   },
 
   filters: {
-    upperCase(val){
+    upperCase(val) {
       return val.charAt(0).toUpperCase() + val.slice(1);
     }
   },
@@ -114,40 +113,39 @@ export default {
   methods: {
     async saveFeatured() {
       try {
-        const data = await this.$store.dispatch('featuredStore/save', {
+        await this.$store.dispatch('featuredStore/save', {
           section: this.section,
           featuredDesigns: this.featuredDesigns
-        })
+        });
         notification.success(this, 'The featured designs have been successfully saved');
       } catch (error) {
-        console.log("Error occured",error)
+        console.log('Error occured', error);
         notification.error(this, 'Something happened in our servers. Please hold tight and try again.');
       }
     },
 
-    addDesign(design){
+    addDesign(design) {
       this.featuredDesigns.push(design);
       this.showAddDesign = false;
     },
 
-    editTrigger(design){
+    editTrigger(design) {
       this.editMode = true;
       this.editDesignObj = design;
       this.showAddDesign = true;
     },
 
-    editDesign(design){
-      let ind = _.findIndex(this.featuredDesigns, d => _.isEqual(d, this.editDesignObj));
+    editDesign(design) {
+      const ind = _.findIndex(this.featuredDesigns, d => _.isEqual(d, this.editDesignObj));
 
-      if(ind >=0) this.featuredDesigns.splice(ind, 1, design);
+      if (ind >= 0) this.featuredDesigns.splice(ind, 1, design);
 
       this.editMode = false;
       this.editDesignObj = null;
       this.showAddDesign = false;
-
     },
 
-    async removeDesign(ind){
+    async removeDesign(ind) {
       this.featuredDesigns.splice(ind, 1);
       await this.$nextTick();
     }
@@ -158,10 +156,9 @@ export default {
     //   return this.$store.getters['featuredStore/getDesignsByName'](this.section);
     // }
   }
-}
+};
 </script>
 
 <style lang="scss">
-#featured-add {
-}
+
 </style>

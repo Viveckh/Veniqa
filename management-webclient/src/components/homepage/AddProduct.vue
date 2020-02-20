@@ -460,8 +460,8 @@
 
 <script>
 import * as _ from 'lodash';
-import ManagePhoto from '@/components/homepage/ManagePhoto';
-import CustomAttributes from '@/components/homepage/CustomAttributes';
+import ManagePhoto from '@/components/homepage/ManagePhoto.vue';
+import CustomAttributes from '@/components/homepage/CustomAttributes.vue';
 // Import the editor
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
 import { mapGetters } from 'vuex';
@@ -584,7 +584,7 @@ export default {
         new History(),
       ],
 
-      onUpdate: ({ getJSON, getHTML }) => {
+      onUpdate: ({ getHTML }) => {
         // this.json = getJSON()
         this.product.details_html = getHTML();
       },
@@ -626,19 +626,17 @@ export default {
 
     categoryState() {
       if (
-        this.product.category.category == undefined
+        this.product.category.category === undefined
         || this.product.category.category == null
-      )
-        {return null};
+      ) { return null; }
       return this.product.category.category.length > 0;
     },
 
     subcategoryState() {
       if (
-        this.product.category._id == undefined
+        this.product.category._id === undefined
         || this.product.category._id == null
-      )
-        {return null};
+      ) { return null; }
       return this.product.category._id.length > 0;
     },
 
@@ -665,8 +663,7 @@ export default {
     },
 
     filteredSubcategories() {
-      if (this.product.category.category == null)
-        {return _.map(this.refdata.categories, 'subcategory')};
+      if (this.product.category.category == null) { return _.map(this.refdata.categories, 'subcategory'); }
       const val = this.refdata.categories.filter((item) => {
         if (item.category === this.product.category.category) return true;
         return false;
@@ -685,7 +682,7 @@ export default {
       if (!this.categoryState) {
         this.product.category.category = '';
       }
-      this.product.store_sku =        this.skuState == null ? '' : this.product.store_sku;
+      this.product.store_sku = this.skuState == null ? '' : this.product.store_sku;
 
       if (!this.subcategoryState) this.product.category._id = '';
       return (

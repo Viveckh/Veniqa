@@ -174,10 +174,10 @@
 </template>
 
 <script>
-import FeaturedDTO from '@/dto/FeaturedProductDTO';
+import FeaturedDTO from '@/dto/FeaturedProductDTO.json';
 import _ from 'lodash';
-import { DesignTypes } from "@/config";
-import Pagination from '@/dto/Pagination';
+import { DesignTypes } from '@/config';
+import Pagination from '@/dto/Pagination.json';
 import notification from '@/services/NotificationService';
 
 export default {
@@ -203,11 +203,11 @@ export default {
       searchPagination: _.cloneDeep(Pagination),
       products: [],
       designProductLimit: 0,
-    }
+    };
   },
 
   created() {
-    if(this.editMode){
+    if (this.editMode) {
       this.designObj = _.assignIn(this.designObj, this.design);
       this.designTypeChange();
     }
@@ -220,14 +220,13 @@ export default {
       // IDK why this is important but the model isn't updating until the next tick on change.
       await this.$nextTick();
 
-      let found = _.find(DesignTypes, d => d.type === this.designObj.config.design_type);
+      const found = _.find(DesignTypes, d => d.type === this.designObj.config.design_type);
 
-      if(found){
+      if (found) {
         this.designProductLimit = found.productLimit;
         // Also remove extra images from the selected list.
-        this.designObj.products.splice(this.designProductLimit , this.designObj.products.length);
-      }
-      else {
+        this.designObj.products.splice(this.designProductLimit, this.designObj.products.length);
+      } else {
         this.designProductLimit = 0;
         this.designObj.products = [];
       }
@@ -238,7 +237,7 @@ export default {
       this.$emit('cancel');
     },
 
-    async searchForProduct(){
+    async searchForProduct() {
       try {
         const data = await this.$store.dispatch('adminStore/getAllProducts', {
           searchTerm: this.searchText,
@@ -259,25 +258,24 @@ export default {
       await this.searchForProduct();
     },
 
-    async selectProduct(prd){
-      if(!this.designObj.products) this.designObj.products = [];
+    async selectProduct(prd) {
+      if (!this.designObj.products) this.designObj.products = [];
 
       // Validate if the number of products for the design type is figured out.
-      if(!this.designTypeState) {
+      if (!this.designTypeState) {
         this.designObj.config.design_type = '';
-        notification.warn(this, "Please select the design type before selecting the product");
+        notification.warn(this, 'Please select the design type before selecting the product');
         return;
       }
 
-      if(this.designObj.products.length >= this.designProductLimit){
-        notification.warn(this, "The limit of the total products for this design type has been set");
+      if (this.designObj.products.length >= this.designProductLimit) {
+        notification.warn(this, 'The limit of the total products for this design type has been set');
         return;
       }
 
-      if(_.findIndex(this.designObj.products, ['_id', prd._id]) >=0) {
-        notification.warn(this, "The Product is already selected. Select something else");
-      }
-      else {
+      if (_.findIndex(this.designObj.products, ['_id', prd._id]) >= 0) {
+        notification.warn(this, 'The Product is already selected. Select something else');
+      } else {
         try {
           const data = await this.$store.dispatch(
             'adminStore/getProduct',
@@ -292,24 +290,23 @@ export default {
     },
 
     removeFeaturedProduct(product) {
-      let ind = _.findIndex(this.designObj.products, p => p._id === product._id);
-      if(ind >= 0){
+      const ind = _.findIndex(this.designObj.products, p => p._id === product._id);
+      if (ind >= 0) {
         this.designObj.products.splice(ind, 1);
       }
     },
 
-     addDesign() {
-      if (this.designObj.products.length < this.designProductLimit){
+    addDesign() {
+      if (this.designObj.products.length < this.designProductLimit) {
         notification.warn(this, `You need exactly ${this.designProductLimit} products to add this design`);
         return;
       }
-      if(this.editMode){
+      if (this.editMode) {
         this.$emit('edit', _.cloneDeep(this.designObj));
-      }
-      else {
+      } else {
         this.$emit('add', _.cloneDeep(this.designObj));
       }
-     },
+    },
   },
 
   computed: {
@@ -323,7 +320,7 @@ export default {
       return this.designObj.config.design_type.length > 0;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -359,4 +356,3 @@ export default {
   }
 }
 </style>
-

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import ProxyUrls from '@/constants/ProxyUrls.js';
+import ProxyUrls from '@/constants/ProxyUrls';
 
 export default {
   name: 'EmailConfirmation',
@@ -71,7 +71,9 @@ export default {
         } else {
           this.value = false;
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log('There was an error');
+      }
     }
   },
 
@@ -85,13 +87,14 @@ export default {
 
   methods: {
     validEmail(email) {
+      // eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
     async resendEmail() {
       if (this.emailState) {
         try {
-          const { data } = await this.$axios({
+          await this.$axios({
             method: 'get',
             url: ProxyUrls.resendEmail + this.email,
           });
@@ -115,7 +118,7 @@ export default {
 
   computed: {
     emailState() {
-      if (this.email.length == 0) return null;
+      if (this.email.length === 0) return null;
       return this.validEmail(this.email);
     },
   },

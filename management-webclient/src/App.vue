@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <notifications group="all" width="100%" position="bottom center"/>
+    <notifications group="all" width="100%" position="bottom center" />
     <div v-if="isLoading">
-      <fingerprint-spinner class="spinner" :animation-duration="1500" :size="150" color="#136a8a"/>
+      <fingerprint-spinner class="spinner" :animation-duration="1500" :size="150" color="#136a8a" />
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { FingerprintSpinner } from 'epic-spinners';
-import axios from 'axios';
 import { eventHub } from '@/utils/EventHub';
 
 export default {
@@ -24,7 +23,7 @@ export default {
     return {
       refCount: 0,
       isLoading: false
-    }
+    };
   },
 
   async created() {
@@ -45,13 +44,13 @@ export default {
 
   methods: {
     setLoading() {
-      this.refCount++;
+      this.refCount += 1;
       this.isLoading = true;
     },
 
     unsetLoading() {
       if (this.refCount > 0) {
-        this.refCount--;
+        this.refCount -= 1;
         this.isLoading = this.refCount > 0;
       }
     }
@@ -59,15 +58,13 @@ export default {
 
   computed: {
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
-    }),
-  },
+      isSessionActive: 'authStore/isSessionActive'
+    })
+  }
 };
 </script>
 
 <style lang="scss">
-
-
 .notifications {
   .notification-wrapper {
     width: 100vw;

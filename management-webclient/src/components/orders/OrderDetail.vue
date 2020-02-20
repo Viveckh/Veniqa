@@ -120,9 +120,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import SingleListItem from '@/components/orders/SingleListItem';
-import ConfirmationPage from '@/components/common/ConfirmationPage';
-import CommentsSection from '@/components/orders/CommentsSection';
+import SingleListItem from '@/components/orders/SingleListItem.vue';
+import ConfirmationPage from '@/components/common/ConfirmationPage.vue';
+import CommentsSection from '@/components/orders/CommentsSection.vue';
 import Permission from '@/constants/permissions';
 import moment from 'moment';
 
@@ -147,7 +147,7 @@ export default {
   },
 
   filters: {
-    filterDate(dd){
+    filterDate(dd) {
       return moment(dd).format('dddd, MMMM Do YYYY, h:mm:ss a');
     }
   },

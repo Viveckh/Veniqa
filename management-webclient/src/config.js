@@ -1,4 +1,4 @@
-const DesignTypes = [
+export const DesignTypes = [
   {
     type: 'Stripe',
     productLimit: 2,
@@ -14,6 +14,4 @@ const DesignTypes = [
 
 ];
 
-export {
-  DesignTypes,
-};
+export default DesignTypes;

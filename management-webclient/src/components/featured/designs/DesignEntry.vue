@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import StripeDesign from '@/components/featured/designs/StripeDesign';
-import CanvasCrackSingle from '@/components/featured/designs/CanvasCrackSingleDesign';
+import StripeDesign from '@/components/featured/designs/StripeDesign.vue';
+import CanvasCrackSingle from '@/components/featured/designs/CanvasCrackSingleDesign.vue';
 
 export default {
   props: {
@@ -30,11 +30,11 @@ export default {
   },
 
   methods: {
-    shop(product){
+    shop(product) {
       this.$emit('shop', product);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -42,4 +42,3 @@ export default {
   font-family: 'Quicksand', sans-serif;
 }
 </style>
-

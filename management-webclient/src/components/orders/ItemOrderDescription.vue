@@ -84,11 +84,13 @@
               $ {{parseFloat(shippingDetail.paid_postage.amount).toFixed(2)}}
               <br>
               <br>
-              <a :href="`mailto:${shippingDetail.auditLog.createdBy.email}`">{{shippingDetail.auditLog.createdBy.name}}</a>
+              <a :href="`mailto:${shippingDetail.auditLog.createdBy.email}`">
+                {{shippingDetail.auditLog.createdBy.name}}</a>
               <br>
               {{shippingDetail.auditLog.createdOn | formattedDate}}
               <br>
-              <a :href="`mailto:${shippingDetail.auditLog.updatedBy.email}`">{{shippingDetail.auditLog.updatedBy.name}}</a>
+              <a :href="`mailto:${shippingDetail.auditLog.updatedBy.email}`">
+                {{shippingDetail.auditLog.updatedBy.name}}</a>
               <br>
               {{shippingDetail.auditLog.updatedOn | formattedDate}}
               <br>
@@ -137,11 +139,13 @@
               $ {{parseFloat(fulfillmentDetail.total_cost_price_of_item.amount).toFixed(2)}}
               <br>
               <br>
-              <a :href="`mailto:${fulfillmentDetail.auditLog.createdBy.email}`">{{fulfillmentDetail.auditLog.createdBy.name}}</a>
+              <a :href="`mailto:${fulfillmentDetail.auditLog.createdBy.email}`">
+                {{fulfillmentDetail.auditLog.createdBy.name}}</a>
               <br>
               {{fulfillmentDetail.auditLog.createdOn | formattedDate}}
               <br>
-              <a :href="`mailto:${fulfillmentDetail.auditLog.updatedBy.email}`">{{fulfillmentDetail.auditLog.updatedBy.name}}</a>
+              <a :href="`mailto:${fulfillmentDetail.auditLog.updatedBy.email}`">
+                {{fulfillmentDetail.auditLog.updatedBy.name}}</a>
               <br>
               {{fulfillmentDetail.auditLog.updatedOn | formattedDate}}
               <br>
@@ -150,7 +154,6 @@
           </b-row>
         </div>
 
-        
 
         <div v-if="displayDelivery">
           <b-row>
@@ -208,7 +211,7 @@ export default {
   },
 
   filters: {
-     formattedDate(dateString) {
+    formattedDate(dateString) {
       const obj = moment(dateString);
       const DATE_FORMAT = 'dddd, MMMM Do YYYY, h:mm:ss a';
       return obj.format(DATE_FORMAT);
@@ -216,7 +219,7 @@ export default {
   },
 
   methods: {
-   
+
 
     editClicked(status) {
       this.$emit('edit', status);
@@ -235,8 +238,8 @@ export default {
     displayFulfillmentOrder() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status != 'PROCESSING'
-        && this.orderStatus != 'RECEIVED'
+        this.item.order_line_level_processing_details.status !== 'PROCESSING'
+        && this.orderStatus !== 'RECEIVED'
       );
     },
 
@@ -248,16 +251,16 @@ export default {
     displayShipment() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status != 'PROCESSING'
-        && this.orderStatus != 'RECEIVED'
-        && this.item.order_line_level_processing_details.status != 'FULFILLING'
+        this.item.order_line_level_processing_details.status !== 'PROCESSING'
+        && this.orderStatus !== 'RECEIVED'
+        && this.item.order_line_level_processing_details.status !== 'FULFILLING'
       );
     },
 
     displayDelivery() {
       if (!this.item.order_line_level_processing_details) return false;
       return (
-        this.item.order_line_level_processing_details.status == 'DELIVERED'
+        this.item.order_line_level_processing_details.status === 'DELIVERED'
       );
     },
 
