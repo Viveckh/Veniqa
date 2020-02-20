@@ -21,7 +21,7 @@
     "allowed_origins": [
         "https://www.veniqa.com", 
         "https://veniqa.com",
-        "https://prod-veniqa-client.netlify.com"
+        "https://shop.veniqa.com"
     ],
     "token_validity": {
         "password_reset_token_valid_for": 3600000
@@ -33,8 +33,8 @@
         "exception_log_file_name": "exceptions.log"
     },
     "frontend_urls": {
-        "email_confirmation_base_url": "https://prod-veniqa-client.netlify.com/#/email-confirmation",
-        "password_reset_base_url": "https://prod-veniqa-client.netlify.com/#/password-reset"
+        "email_confirmation_base_url": "https://shop.veniqa.com/#/email-confirmation",
+        "password_reset_base_url": "https://shop.veniqa.com/#/password-reset"
     },
     "sendgrid": {
         "templates": {
