@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import VendorSearch from '@/components/vendor-pages/Vendor';
+import VendorSearch from '@/components/vendor-pages/Vendor.vue';
 import SearchResultView from '@/components/vendor-pages/SearchResultView.vue';
 import ProxyUrls from '@/constants/ProxyUrls';
 import ProductDTO from '@/dto/Products.json';
@@ -41,7 +41,7 @@ export default {
   },
 
   methods: {
-    async searchForProduct(searchTerm) {
+    async searchForProduct() {
       const res = await this.$axios({
         url: ProxyUrls.searchProduct,
         method: 'post',

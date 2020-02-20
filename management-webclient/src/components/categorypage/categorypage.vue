@@ -33,7 +33,8 @@
               <tbody>
                 <tr
                   v-for="(category, index) in categorys"
-                  v-if="categorys.length > 0 && (category.category.toUpperCase().includes(query.toUpperCase()) || category.subcategory.toUpperCase().includes(query.toUpperCase()))"
+                  v-if="categorys.length > 0 && (category.category.toUpperCase().includes(query.toUpperCase())
+                  || category.subcategory.toUpperCase().includes(query.toUpperCase()))"
                   v-bind:key="index"
                 >
                   <td>{{category.category}}</td>

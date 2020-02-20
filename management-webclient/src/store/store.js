@@ -7,8 +7,8 @@ import CartStore from '@/store/cart';
 import AuthStore from '@/store/auth';
 import AdminStore from '@/store/admin';
 import UserStore from '@/store/users';
-import TariffStore from '@/store/tariff.js';
-import CategoryStore from '@/store/category.js';
+import TariffStore from '@/store/tariff';
+import CategoryStore from '@/store/category';
 import OrderStore from '@/store/orders';
 import FeaturedStore from '@/store/featured';
 

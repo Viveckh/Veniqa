@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     validEmail(email) {
+      // eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
@@ -88,7 +89,7 @@ export default {
             method: 'get',
             url: ProxyUrl.forgotPassword + this.username,
           });
-          if (data && data.httpStatus == 200) {
+          if (data && data.httpStatus === 200) {
             this.$emit('close');
 
             this.$notify({
@@ -115,12 +116,12 @@ export default {
   },
   computed: {
     usernameState() {
-      if (this.username.length == 0) return null;
+      if (this.username.length === 0) return null;
       return this.validEmail(this.username);
     },
 
     passwordState() {
-      if (this.password.length == 0) return null;
+      if (this.password.length === 0) return null;
       return this.password.length >= 6;
     },
   },

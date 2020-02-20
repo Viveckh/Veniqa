@@ -87,7 +87,7 @@ export default {
         url: ProxyUrl.validateResetToken + this.token,
       });
 
-      if (data && data.httpStatus == 200) {
+      if (data && data.httpStatus === 200) {
         this.isReset = true;
         this.$notify({
           group: 'all',
@@ -115,6 +115,7 @@ export default {
 
   methods: {
     validEmail(email) {
+      // eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
@@ -126,7 +127,7 @@ export default {
             url: ProxyUrl.forgotPassword + this.username,
           });
 
-          if (data && data.httpStatus == 200) {
+          if (data && data.httpStatus === 200) {
             this.$notify({
               group: 'all',
               type: 'success',
@@ -155,7 +156,7 @@ export default {
               newPassword: this.password,
             },
           });
-          if (data && data.httpStatus == 200) {
+          if (data && data.httpStatus === 200) {
             this.$notify({
               group: 'all',
               type: 'success',
@@ -188,17 +189,17 @@ export default {
 
   computed: {
     passwordState() {
-      if (this.password.length == 0) return null;
+      if (this.password.length === 0) return null;
       return this.password.length > 6;
     },
 
     confirmPasswordState() {
-      if (this.confirmPassword.length == 0) return null;
-      return this.confirmPassword == this.password;
+      if (this.confirmPassword.length === 0) return null;
+      return this.confirmPassword === this.password;
     },
 
     usernameState() {
-      if (this.username.length == 0) return null;
+      if (this.username.length === 0) return null;
       return this.validEmail(this.username);
     },
   },

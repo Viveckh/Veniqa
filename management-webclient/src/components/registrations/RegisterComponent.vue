@@ -61,7 +61,9 @@
         placeholder="Re-enter the password"
         aria-describedby="confirmPasswordFeedback"
       ></b-form-input>
-      <b-form-invalid-feedback id="confirmPasswordFeedback">It should match the password entered.</b-form-invalid-feedback>
+      <b-form-invalid-feedback id="confirmPasswordFeedback">
+        It should match the password entered.
+      </b-form-invalid-feedback>
     </b-form-group>
 
     <b-form-group>
@@ -94,24 +96,18 @@ export default {
       password: '',
       confirmPassword: '',
       phone: '',
-      name: '',
+      name: ''
     };
   },
 
   methods: {
     registerClicked() {
-      if (
-        this.usernameState
-        && this.passwordState
-        && this.confirmPasswordState
-        && this.phoneState
-        && this.nameState
-      ) {
+      if (this.usernameState && this.passwordState && this.confirmPasswordState && this.phoneState && this.nameState) {
         this.$emit('register', {
           email: this.username,
           password: this.password,
           phone: this.phone,
-          name: this.name,
+          name: this.name
         });
       }
     },
@@ -121,36 +117,37 @@ export default {
     },
 
     validEmail(email) {
+      // eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
-    },
+    }
   },
   computed: {
     usernameState() {
-      if (this.username.length == 0) return null;
+      if (this.username.length === 0) return null;
       return this.validEmail(this.username);
     },
 
     passwordState() {
-      if (this.password.length == 0) return null;
+      if (this.password.length === 0) return null;
       return this.password.length > 6;
     },
 
     confirmPasswordState() {
-      if (this.confirmPassword.length == 0) return null;
-      return this.confirmPassword == this.password;
+      if (this.confirmPassword.length === 0) return null;
+      return this.confirmPassword === this.password;
     },
 
     phoneState() {
-      if (this.phone.length == 0) return null;
-      return this.phone.length == 10;
+      if (this.phone.length === 0) return null;
+      return this.phone.length === 10;
     },
 
     nameState() {
-      if (this.name.length == 0) return null;
+      if (this.name.length === 0) return null;
       return this.name.length > 0;
-    },
-  },
+    }
+  }
 };
 </script>
 

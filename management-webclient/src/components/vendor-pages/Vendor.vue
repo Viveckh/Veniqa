@@ -46,6 +46,7 @@ export default {
 
   methods: {
     getPath() {
+      // eslint-disable-next-line
       return require(`./../../assets/${this.vendor}-logo.png`);
     },
     searchForProduct() {
