@@ -154,7 +154,7 @@ export default {
     },
 
     canViewTariff(req, res, done) {
-        const validPermissions = ['SUPERADMIN', 'TARRIFF_VIEW', 'TARIFF_MANAGE'];
+        const validPermissions = ['SUPERADMIN', 'TARIFF_VIEW', 'TARIFF_MANAGE'];
         return checkPermissions(req, res, validPermissions, done);
     },
 
