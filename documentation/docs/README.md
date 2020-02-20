@@ -50,14 +50,20 @@ With Veniqa, you have choices.
 
 ## Demo
 ### [Shoppers](https://shop.veniqa.com)
+*Responsive across all devices*
+
 Feel free to sign up and checkout using dummy credit card `4242 4242 4242 4242`.
 
 ### [Admin](https://admin.veniqa.com)
-Use the following credentials to explore the admin panel. Only preview and read only permissions are granted, so some edit-exclusive features are hidden.
+*Currently only responsive for laptop and tablet view*
 
-**Email:** demouser@veniqa.com
+Any edit attempts made in demo admin panel are blocked, and will fail.
 
-**Password:** demo$12
+**Demo Credentials**
+
+**Email:** veniqademo@gmail.com
+
+**Password:** pass$12
 
 ---
 
