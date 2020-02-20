@@ -17,7 +17,7 @@
         "max_age": 1800000
     },
     "allowed_origins": [
-        "https://prod-veniqa-admin.netlify.com"
+        "https://admin.veniqa.com"
     ],
     "token_validity": {
         "password_reset_token_valid_for": 3600000
@@ -29,7 +29,7 @@
         "exception_log_file_name": "exceptions.log"
     },
     "frontend_urls": {
-        "password_reset_base_url": "https://prod-veniqa-admin.netlify.com/#/password-reset"
+        "password_reset_base_url": "https://admin.veniqa.com/#/password-reset"
     },
     "aws_settings": {
         "s3": {
