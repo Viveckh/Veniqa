@@ -59,7 +59,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ## Blame These People For
 
-* [(EJ) Vivek Pandey (Platform Architecture, Backend Engineering, DevOps, & Data Modeling)](https://viveckh.com)
+* [(EJ) Vivek Pandey (Platform Architecture, Backend Engineering, DevOps, Data Modeling & Websites)](https://viveckh.com)
 * [Sujil Maharjan (UX/UI Design, Frontend Engineering)](https://smaharj1.github.io/)
 * [Arjun Bastola (Frontend Engineering, Graphics Design)](https://github.com/abastola)
 
