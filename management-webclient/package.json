@@ -1,5 +1,5 @@
 {
-  "name": "arjun",
+  "name": "veniqa",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,14 +14,14 @@
     "@fortawesome/vue-fontawesome": "^0.1.2",
     "animate.css": "^3.7.0",
     "autocomplete-vue": "^1.1.0",
-    "axios": "^0.18.0",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "axios": "^0.18.1",
+    "bootstrap-vue": "^2.4.0",
     "epic-spinners": "^1.0.4",
     "i": "^0.3.6",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "luxon": "^1.10.0",
     "moment": "^2.23.0",
-    "npm": "^6.4.1",
+    "npm": "^6.13.7",
     "tiptap": "^1.7.0",
     "tiptap-extensions": "^1.7.0",
     "v-autocomplete": "^1.8.2",
@@ -47,7 +47,7 @@
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.6.0",
     "eslint-plugin-vue": "^5.0.0-0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   }

@@ -150,7 +150,6 @@
           </b-row>
         </div>
 
-        
 
         <div v-if="displayDelivery">
           <b-row>
@@ -208,7 +207,7 @@ export default {
   },
 
   filters: {
-     formattedDate(dateString) {
+    formattedDate(dateString) {
       const obj = moment(dateString);
       const DATE_FORMAT = 'dddd, MMMM Do YYYY, h:mm:ss a';
       return obj.format(DATE_FORMAT);
@@ -216,7 +215,7 @@ export default {
   },
 
   methods: {
-   
+
 
     editClicked(status) {
       this.$emit('edit', status);

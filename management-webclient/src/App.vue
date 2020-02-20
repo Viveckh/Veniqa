@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <notifications group="all" width="100%" position="bottom center"/>
+    <notifications group="all" width="100%" position="bottom center" />
     <div v-if="isLoading">
-      <fingerprint-spinner class="spinner" :animation-duration="1500" :size="150" color="#136a8a"/>
+      <fingerprint-spinner class="spinner" :animation-duration="1500" :size="150" color="#136a8a" />
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
     return {
       refCount: 0,
       isLoading: false
-    }
+    };
   },
 
   async created() {
@@ -59,15 +59,13 @@ export default {
 
   computed: {
     ...mapGetters({
-      isSessionActive: 'authStore/isSessionActive',
-    }),
-  },
+      isSessionActive: 'authStore/isSessionActive'
+    })
+  }
 };
 </script>
 
 <style lang="scss">
-
-
 .notifications {
   .notification-wrapper {
     width: 100vw;
