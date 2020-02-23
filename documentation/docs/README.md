@@ -99,6 +99,10 @@ We're still in the process of preparing more detailed documentation and utility 
 
 ---
 
+## Contribution
+
+We are currently in the process of building test suites, docker images and writing extensive documentation to speed up startup time for developers. In the meantime, any Pull Requests/Issues found are appreciated.
+
 ## Blame These People For
 
 * [(EJ) Vivek Pandey (Platform Architecture, Backend Engineering, DevOps, Data Modeling, & Websites)](https://viveckh.com)
