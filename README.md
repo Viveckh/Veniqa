@@ -61,7 +61,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 We are currently in the process of building test suites, docker images and writing extensive documentation to speed up startup time for developers. In the meantime, any Pull Requests/Issues found are appreciated.
 
----
+
 
 ## Blame These People For
 
