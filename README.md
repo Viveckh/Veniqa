@@ -1,4 +1,5 @@
-<div style="text-align: center"><img src="./website/img/team/veniqa-logo.png" height="50px"></div>
+<div style="text-align: center"><img src="./website/img/team/veniqa-logo.png" height="50px" /></div>
+
 # Veniqa Open-Source E-commerce Solution
 
 Veniqa (Originally Veniqa New York) was a New York-based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
