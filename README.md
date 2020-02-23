@@ -1,4 +1,7 @@
-<div style="text-align: center"><img src="./website/img/team/veniqa-logo.png" height="50px"></div>
+
+<div style="text-align: center"><img src="./website/img/team/veniqa-logo.png" height="50px"/></div>
+
+
 # Veniqa Open-Source E-commerce Solution
 
 Veniqa (Originally Veniqa New York) was a New York-based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
@@ -16,9 +19,13 @@ ___
 
 ## Build Status
 
-| shop.veniqa.com  | admin.veniqa.com  |
-|:-:|:-:|:-:|:-:|
-| [![Netlify Status](https://api.netlify.com/api/v1/badges/c95aadbb-cf5b-4e35-a86d-69646f345690/deploy-status)](https://app.netlify.com/sites/prod-veniqa-client/deploys)  | [![Netlify Status](https://api.netlify.com/api/v1/badges/bb8d700a-4136-4b65-acc1-f29e14aed779/deploy-status)](https://app.netlify.com/sites/prod-veniqa-admin/deploys)  |
+shop.veniqa.com 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c95aadbb-cf5b-4e35-a86d-69646f345690/deploy-status)](https://app.netlify.com/sites/prod-veniqa-client/deploys)
+
+admin.veniqa.com
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bb8d700a-4136-4b65-acc1-f29e14aed779/deploy-status)](https://app.netlify.com/sites/prod-veniqa-admin/deploys)  
 
 ---
 
