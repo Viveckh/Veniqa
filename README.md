@@ -1,4 +1,6 @@
+
 <div style="text-align: center"><img src="./website/img/team/veniqa-logo.png" height="50px"/></div>
+
 
 # Veniqa Open-Source E-commerce Solution
 
