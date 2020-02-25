@@ -158,7 +158,7 @@ export default {
     DEMO STYLE
 */
 
-@import './../assets/css/dashboard.css';
+/* @import './../assets/css/dashboard.css'; */
 @import url('https://fonts.googleapis.com/css?family=Cairo');
 body {
   font-family: 'Cairo', sans-serif !important;
