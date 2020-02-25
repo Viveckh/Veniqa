@@ -136,10 +136,14 @@
             </div>
         </div>
         <div class="main-container">
+            <!--
             <section class="page-navigator">
                 <ul>
                     <li>
                         <a href="#welcome" class="inner-link" data-title="Code"></a>
+                    </li>
+                    <li>
+                        <a href="#as-seen-on" class="inner-link" data-title="As Seen On"></a>
                     </li>
                     <li>
                         <a href="#overview" class="inner-link" data-title="Overview"></a>
@@ -167,6 +171,7 @@
                     </li>
                 </ul>
             </section>
+            -->
             <section class="cover height-100 text-center" id="welcome">
                 <div class="container pos-vertical-center">
                     <div class="row">
@@ -211,7 +216,28 @@
                     </div>
                 </div>
             </section>
-            <section class="cover height-auto bg--dark" id="overview">
+
+            <section class="bg--dark space-xxs" id="as-seen-on">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2><b>Appeared as a trending topic on</b></h2>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="cta cta--horizontal text-center row">
+                        <div class="col-md-6 seen-on-logo">
+                            <img alt="Image" class="image--xs" src="img/assets/github-logo-white.png">
+                            
+                        </div>
+                        <div class="col-md-6 seen-on-logo">
+                            <img alt="Image" class="image--xs" src="img/assets/hackernews-logo.png">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cover height-auto bg--dark text-center space-xxs" id="overview">
                 <div class="container pos-vertical-center">
                     <div class="row">
                         <div class="col-md-11 col-lg-8"> 
@@ -219,7 +245,7 @@
                             <p>
                                 <span class="color--primary">Veniqa </span>
                                 was originally a New York based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
-                                Upon its demise, the tech platform that powered Veniqa is maintained by <a class="color--primary" style="text-decoration: none;" href="https://qarece.com" target="_blank" onclick="gtag('event', 'click', { 'event_category': 'outbound_link', 'event_label': 'qarece_website', 'event_value': 1})">Qarece New York</a> and has been open sourced as a 100% customizable solution under the MIT License.
+                                Upon its demise due to logistical complications, the tech platform that powered Veniqa is maintained by <a class="color--primary" style="text-decoration: none;" href="https://qarece.com" target="_blank" onclick="gtag('event', 'click', { 'event_category': 'outbound_link', 'event_label': 'qarece_website', 'event_value': 1})">Qarece New York</a> and has been open sourced as a 100% customizable solution under the MIT License.
                                 <br>
                             </p>
                             </span>
@@ -485,6 +511,11 @@
                                             <blockquote> “Within a few days, I was able to spin up an Inventory Management Application for my clients by leveraging Veniqa's codebase. Thanks to the modular architecture, things were a breeze.” </blockquote>
                                             <h5>Matthew Cunningham</h5> <span>Freelance Developer</span> </div>
                                     </li>
+                                    <li>
+                                        <div class="testimonial">
+                                            <blockquote> “We found out about Veniqa just about a week ago from HackerNews. The team decided to plug in Veniqa for users and roles management in a client project. Modular, and easy to adopt! Highly recommended.” </blockquote>
+                                            <h5>Ahmed Rahim</h5> <span>Full Stack Developer</span> </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -549,6 +580,38 @@
                         <div class="col-md-6 col-lg-5">
                             <div class="switchable__text">
                                 <div class="switchable__text">
+                                    <h2>Join our community</h2>
+                                    <p class="lead">You are more than welcome to join us as a contributor on Github. Anything helps - Whether it is a simple bug fix or an entire new feature implementation. <br><br> <strong>While we're at it, any sponsors out there willing to help us keep our servers running?</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="pricing pricing-2 boxed boxed--border boxed--lg row no-gutters"> <span class="label">community</span>
+                                <div class="col-lg-6 col-12 text-center">
+                                    <h5>Love our work?</h5> <span class="h2"><span>Join our community</span></span>
+                                    <a class="btn btn--primary" href="mailto:veniqademo@gmail.com" onclick="gtag('event', 'click', { 'event_category': 'contact_attempt', 'event_label': 'email_support', 'event_value': 1})"> <span class="btn__text">Email Us</span> </a>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <ul>
+                                        <li><span class="checkmark bg--primary-1"> </span><span>Code contributions</span></li>
+                                        <li><span class="checkmark bg--primary-1"> </span><span>Bug fixes</span></li>
+                                        <li><span class="checkmark bg--primary-1"> </span><span>Suggestions</span></li>
+                                        <li><span class="checkmark bg--primary-1"></span><span>Word-of-mouth promotions</span></li>
+                                        <li><span class="checkmark bg--primary-1"></span><span>Sponsor the project</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--
+            <section class="switchable" id="support">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="switchable__text">
+                                <div class="switchable__text">
                                     <h2>Professional services from the engineers who built it</h2>
                                     <p class="lead">Whether you are looking for a consultation to adopt Veniqa in production or want a custom implementation of Veniqa with feature enhancements, reach out to us.</p>
                                 </div>
@@ -575,36 +638,8 @@
                     </div>
                 </div>
             </section>
-
-            <!-- <section class="text-center bg--primary space--xs">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2><b>As Seen On</b></h2>
-                        </div>
-                    </div>
-                </div>
-            </section> -->
-            <!--
-            <section class="bg--secondary" id="participating-retailers">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="slider slider--inline-arrows slider--arrows-hover text-center" data-arrows="true">
-                                <ul class="slides">
-                                    <li class="col-md-3 col-6"> <img alt="Image" class="image--xxs" src="img/bluprint-nordstorm-logo.png"> </li>
-                                    <li class="col-md-3 col-6"> <img alt="Image" class="image--xxs" src="img/bluprint-asos-logo.png"> </li>
-                                    <li class="col-md-3 col-6"> <img alt="Image" class="image--xxs" src="img/bluprint-macys-logo.png"> </li>
-                                    <li class="col-md-3 col-6"> <img alt="Image" class="image--xxs" src="img/bluprint-zara-logo.png"> </li>
-                                    <li class="col-md-3 col-6"> <img alt="Image" class="image--xxs" src="img/bluprint-h&amp;m-logo.png"> </li>
-                                    <li class="col-md-3 col-6"> <img alt="Image" class="image--xxs" src="img/bluprint-kohls-logo.png"> </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
             -->
+
             <footer class="footer-7 text-center-xs">
                 <div class="container">
                     <div class="row">
