@@ -1,5 +1,5 @@
 
-<div style="text-align: center"><img src="./website/img/team/veniqa-logo.png" height="50px"/></div>
+<div style="text-align: center"><img src="https://www.veniqa.com/img/team/veniqa-logo.png" height="50px"/></div>
 
 
 # Veniqa Open-Source E-commerce Solution
@@ -81,7 +81,7 @@ We are currently in the process of building test suites, docker images and writi
 
 ## Blame These People For
 
-<a href="https://github.com/Viveckh/Veniqa/graphs/contributors"><img src="./website/img/team/veniqa-contributors.png" /></a>
+<a href="https://github.com/Viveckh/Veniqa/graphs/contributors"><img src="https://www.veniqa.com/img/team/veniqa-contributors.png" /></a>
 
 
 
