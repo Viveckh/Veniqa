@@ -20,7 +20,7 @@
     },
     "allowed_origins": [
         "https://dev-veniqa-client.netlify.com",
-        "http://localhost:4200"
+        "http://localhost:5201"
     ],
     "token_validity": {
         "password_reset_token_valid_for": 3600000
