@@ -1,7 +1,9 @@
 version: '3'
 services:
   shopping-server:
-    build: ./shopping-server
+    build:
+      context: ./shopping-server
+      dockerfile: Dockerfile-local
     volumes:
       - './shopping-server:/app'
       - '/app/node_modules'
@@ -11,31 +13,37 @@ services:
       NODE_ENV: development
       VENIQA_ENV: local
 
-  # management-server:
-  #   build: ./management-server
-  #   volumes:
-  #     - './management-server:/app'
-  #     - '/app/node_modules'
-  #   ports:
-  #     - 4202:3000
-  #   environment:
-  #     NODE_ENV: development
-  #     VENIQA_ENV: local
+  management-server:
+    build:
+      context: ./management-server
+      dockerfile: Dockerfile-local
+    volumes:
+      - './management-server:/app'
+      - '/app/node_modules'
+    ports:
+      - 4202:3000
+    environment:
+      NODE_ENV: development
+      VENIQA_ENV: local
 
 
-  # shopping-webclient:
-  #   build: ./shopping-webclient
-  #   volumes:
-  #     - './shopping-webclient:/app'
-  #     - '/app/node_modules'
-  #   ports:
-  #     - 5201:4200
+  shopping-webclient:
+    build:
+      context: ./shopping-webclient
+      dockerfile: Dockerfile-local
+    volumes:
+      - './shopping-webclient:/app'
+      - '/app/node_modules'
+    ports:
+      - 5201:4200
     
-  # management-webclient:
-  #   build: ./management-webclient
-  #   volumes:
-  #     - './management-webclient:/app'
-  #     - '/app/node_modules'
-  #   ports:
-  #     - 5202:4200
+  management-webclient:
+    build:
+      context: ./management-webclient
+      dockerfile: Dockerfile-local
+    volumes:
+      - './management-webclient:/app'
+      - '/app/node_modules'
+    ports:
+      - 5202:4200
 

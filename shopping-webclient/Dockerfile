@@ -1,15 +1,24 @@
 FROM node:lts-alpine
 
-# set working directory
+# install simple http server for serving static content
+RUN npm install -g http-server
+
+# make the 'app' folder the current working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
 
-# install and cache app dependencies
-COPY package.json /app/package.json
+# install project dependencies
 RUN npm install
-RUN npm install @vue/cli@3.7.0 -g
 
-# start app
-CMD ["npm", "run", "serve"]
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . .
+
+# build app for production with minification
+RUN npm run build
+
+EXPOSE 3000
+
+# http-server by default launches it on port 8080
+CMD [ "http-server", "dist" ]
