@@ -1,15 +1,21 @@
 version: '3'
 services:
-  # shopping-server:
-  #   build: ./shopping-server
-  #   ports:
-  #     - 4201:3000
-  #   environment:
-  #     NODE_ENV: development
-  #     VENIQA_ENV: local
+  shopping-server:
+    build: ./shopping-server
+    volumes:
+      - './shopping-server:/app'
+      - '/app/node_modules'
+    ports:
+      - 4201:3000
+    environment:
+      NODE_ENV: development
+      VENIQA_ENV: local
 
   # management-server:
   #   build: ./management-server
+  #   volumes:
+  #     - './management-server:/app'
+  #     - '/app/node_modules'
   #   ports:
   #     - 4202:3000
   #   environment:
@@ -25,11 +31,11 @@ services:
   #   ports:
   #     - 5201:4200
     
-  management-webclient:
-    build: ./management-webclient
-    volumes:
-      - './management-webclient:/app'
-      - '/app/node_modules'
-    ports:
-      - 5202:4200
+  # management-webclient:
+  #   build: ./management-webclient
+  #   volumes:
+  #     - './management-webclient:/app'
+  #     - '/app/node_modules'
+  #   ports:
+  #     - 5202:4200
 
