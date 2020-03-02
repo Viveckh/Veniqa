@@ -1,29 +1,63 @@
 version: '3'
 services:
+  mongo: 
+    build:
+      context: .
+      dockerfile: Dockerfile-mongo
+    ports:
+      - 27017:27017
+
   shopping-server:
-    build: ./shopping-server
+    build:
+      context: ./shopping-server
+      dockerfile: Dockerfile-local
+    volumes:
+      - './shopping-server:/app'
+      - '/app/node_modules'
     ports:
       - 4201:3000
+    depends_on: 
+      - mongo
     environment:
       NODE_ENV: development
       VENIQA_ENV: local
+      VENIQA_MONGODB_DB: veniqa-prod-db
+      VENIQA_MONGODB_URL: mongodb://mongo:27017/veniqa-prod-db
 
   management-server:
-    build: ./management-server
+    build:
+      context: ./management-server
+      dockerfile: Dockerfile-local
+    volumes:
+      - './management-server:/app'
+      - '/app/node_modules'
     ports:
       - 4202:3000
+    depends_on: 
+      - mongo
     environment:
       NODE_ENV: development
       VENIQA_ENV: local
-
+      VENIQA_MONGODB_DB: veniqa-prod-db
+      VENIQA_MONGODB_URL: mongodb://mongo:27017/veniqa-prod-db
 
   shopping-webclient:
-    build: ./shopping-webclient
+    build:
+      context: ./shopping-webclient
+      dockerfile: Dockerfile-local
+    volumes:
+      - './shopping-webclient:/app'
+      - '/app/node_modules'
     ports:
-      - 5201:8080
+      - 5201:4200
     
   management-webclient:
-    build: ./management-webclient
+    build:
+      context: ./management-webclient
+      dockerfile: Dockerfile-local
+    volumes:
+      - './management-webclient:/app'
+      - '/app/node_modules'
     ports:
-      - 5202:8080
+      - 5202:4200
 
