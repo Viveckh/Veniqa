@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"veniqa-prod-db.veniqa_admin_server_error_log"},{"v":2,"key":{"timestamp":-1},"name":"timestamp_1","ns":"veniqa-prod-db.veniqa_admin_server_error_log","background":true}],"uuid":"2a82d36082ec44bb9fc5e1ed33f54b57"}

@@ -18,7 +18,7 @@
     },
     "allowed_origins": [
         "https://dev-veniqa-admin.netlify.com",
-        "http://localhost:4200"
+        "http://localhost:5202"
     ],
     "token_validity": {
         "password_reset_token_valid_for": 3600000
