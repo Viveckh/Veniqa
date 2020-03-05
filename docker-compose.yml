@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile-mongo
     ports:
-      - 27017:27017
+      - 27000:27017
 
   shopping-server:
     build:
