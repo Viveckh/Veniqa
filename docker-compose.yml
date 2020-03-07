@@ -5,7 +5,19 @@ services:
       context: .
       dockerfile: Dockerfile-mongo
     ports:
-      - 27017:27017
+      - 27000:27017
+
+  redis:
+    image: "redis:alpine"
+    container_name: cache
+
+    command: redis-server --requirepass SOME_PASSWORD
+
+    ports:
+      - 6379:6379
+
+    environment:
+      - REDIS_REPLICATION_MODE=master
 
   shopping-server:
     build:
@@ -18,11 +30,16 @@ services:
       - 4201:3000
     depends_on: 
       - mongo
+      - redis
     environment:
       NODE_ENV: development
       VENIQA_ENV: local
       VENIQA_MONGODB_DB: veniqa-prod-db
       VENIQA_MONGODB_URL: mongodb://mongo:27017/veniqa-prod-db
+      VENIQA_REDIS_HOST: redis://cache
+      VENIQA_REDIS_PORT: 6379
+      VENIQA_REDIS_PASSWORD: SOME_PASSWORD
+      VENIQA_REDIS_DB_NUMBER: 0
 
   management-server:
     build:
@@ -35,11 +52,16 @@ services:
       - 4202:3000
     depends_on: 
       - mongo
+      - redis
     environment:
       NODE_ENV: development
       VENIQA_ENV: local
       VENIQA_MONGODB_DB: veniqa-prod-db
       VENIQA_MONGODB_URL: mongodb://mongo:27017/veniqa-prod-db
+      VENIQA_REDIS_HOST: redis://cache
+      VENIQA_REDIS_PORT: 6379
+      VENIQA_REDIS_PASSWORD: SOME_PASSWORD
+      VENIQA_REDIS_DB_NUMBER: 1
 
   shopping-webclient:
     build:
