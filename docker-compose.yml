@@ -1,11 +1,17 @@
 version: '3'
 services:
+  s3-bucket:
+    image: andrewgaul/s3proxy
+    ports:
+      - 3000:80
+    environment: 
+      S3PROXY_AUTHORIZATION: none
   mongo: 
     build:
       context: .
       dockerfile: Dockerfile-mongo
     ports:
-      - 27017:27017
+      - 27000:27017
 
   shopping-server:
     build:
