@@ -12,8 +12,8 @@ const checkPermissions = (req, res, validPermissions, done) => {
     }
     else {
         logger.verbose('User doesnt have necessary permission to access this.');
-        return res.status(HttpStatusCode.UNAUTHORIZED)
-                .send('Permission denied for the user. User is not permitted to perform this');
+        return res.status(HttpStatusCode.FORBIDDEN)
+                .send('Permission denied for the user. User doesnt have necessary permission to access this');
     }
 }
 
@@ -95,62 +95,34 @@ export default {
             done()
         }
         else {
-            return res.status(401).send('only for logged in users')
+            return res.status(HttpStatusCode.UNAUTHORIZED).send('only for logged in users')
         }
     },
 
     isSuperAdmin(req, res, done) {
         // Validate if admin is a superadmin, otherwise return a 401
-        if (_.indexOf(req.user.permissions, 'SUPERADMIN') > -1) {
-            done();
-        }
-        else {
-            return res.status(401).send('only for superadmins');
-        }
+        const validPermissions = ['SUPERADMIN'];
+        return checkPermissions(req, res, validPermissions, done);
     },
 
     canManageCatalog(req, res, done) {
         let validPermissions = ['SUPERADMIN', 'CATALOG_MANAGE'];
-        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
-        if (found) {
-            done();
-        }
-        else {
-            return res.status(401).send('permission denied to manage catalog');
-        }
+        return checkPermissions(req, res, validPermissions, done);
     },
 
     canViewCatalog(req, res, done) {
         let validPermissions = ['SUPERADMIN', 'CATALOG_MANAGE', 'CATALOG_VIEW'];
-        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
-        if (found) {
-            done();
-        }
-        else {
-            return res.status(401).send('permission denied to view catalog');
-        }
+        return checkPermissions(req, res, validPermissions, done);
     },
 
     canManageOrders(req, res, done) {
         let validPermissions = ['SUPERADMIN', 'ORDER_MANAGE'];
-        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
-        if (found) {
-            done();
-        }
-        else {
-            return res.status(401).send('permission denied to manage orders');
-        }
+        return checkPermissions(req, res, validPermissions, done);
     },
 
     canViewOrders(req, res, done) {
         let validPermissions = ['SUPERADMIN', 'ORDER_MANAGE', 'ORDER_VIEW'];
-        let found = req.user.permissions.some(permission => validPermissions.includes(permission));
-        if (found) {
-            done();
-        }
-        else {
-            return res.status(401).send('permission denied to view orders');
-        }
+        return checkPermissions(req, res, validPermissions, done);
     },
 
     canViewTariff(req, res, done) {

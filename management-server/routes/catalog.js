@@ -8,16 +8,18 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Curated Catalog' });
 });
 
-router.post('/search', passportAuth.isAuthenticated, passportAuth.canViewCatalog, catalogController.searchCatalog);
+router.use(passportAuth.isAuthenticated);
 
-router.post('/addProduct', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.addProductToCatalog);
+router.post('/search', passportAuth.canViewCatalog, catalogController.searchCatalog);
 
-router.get('/getProductDetails', passportAuth.isAuthenticated, passportAuth.canViewCatalog, catalogController.getProductDetails);
+router.post('/addProduct', passportAuth.canManageCatalog, catalogController.addProductToCatalog);
 
-router.put('/updateProduct', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.updateProductInCatalog);
+router.get('/getProductDetails', passportAuth.canViewCatalog, catalogController.getProductDetails);
 
-router.delete('/deleteProduct', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.deleteProductFromCatalog);
+router.put('/updateProduct', passportAuth.canManageCatalog, catalogController.updateProductInCatalog);
 
-router.get('/getPresignedUrlsForCatalogImageUploads', passportAuth.isAuthenticated, passportAuth.canManageCatalog, catalogController.getPresignedUrlsForCatalogImageUploads);
+router.delete('/deleteProduct', passportAuth.canManageCatalog, catalogController.deleteProductFromCatalog);
+
+router.get('/getPresignedUrlsForCatalogImageUploads', passportAuth.canManageCatalog, catalogController.getPresignedUrlsForCatalogImageUploads);
 
 module.exports = router;

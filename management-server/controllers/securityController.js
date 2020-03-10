@@ -37,5 +37,42 @@ export default {
             logger.error("Error in resetPassword Controller", {meta: err});
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
         }
+    },
+
+    login(req, res, next) {
+        // If this part gets executed, it means authentication was successful
+        // Regenerating a new session ID after the user is authenticated
+        let temp = req.session.passport;
+        req.session.regenerate((err) => {
+            req.session.passport = temp;
+            req.session.save((err) => {
+                res.status(httpStatus.OK).send({
+                    email: req.user.email,
+                    name: req.user.name,
+                    permissions: req.user.permissions
+                });
+            })
+        });
+    },
+
+    logout(req, res, next) {
+        // Since there is no really logic in this and passport is doing most of the job, putting the response logic in controller.
+        req.logout();
+        if (req.session) {
+            req.session.destroy((err) => {
+                if(err) {
+                    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send("server error - could not clear out session info completely")
+                }
+                return res.status(httpStatus.OK).send("logged out successfully");
+            });
+        }
+        else {
+            if (req.isUnauthenticated()) {
+                return res.status(httpStatus.OK).send("logged out successfully");
+            }
+            else {
+                return res.status(httpStatus.INTERNAL_SERVER_ERROR).send("server error - could not log out")
+            }
+        }
     }
 }
