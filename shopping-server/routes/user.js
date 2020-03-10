@@ -8,16 +8,18 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Users' });
 });
 
-router.post('/address', passportAuth.isAuthenticated, userController.addNewAddress);
+router.use(passportAuth.isAuthenticated);
 
-router.get('/address', passportAuth.isAuthenticated, userController.getAddresses);
+router.post('/address', puserController.addNewAddress);
 
-router.put('/address', passportAuth.isAuthenticated, userController.updateAddress);
+router.get('/address', puserController.getAddresses);
 
-router.delete('/address', passportAuth.isAuthenticated, userController.deleteAddress);
+router.put('/address', puserController.updateAddress);
 
-router.post('/orderList', passportAuth.isAuthenticated, userController.getOrderList);
+router.delete('/address', puserController.deleteAddress);
 
-router.get('/orderDetails', passportAuth.isAuthenticated, userController.getOrderDetails);
+router.post('/orderList', puserController.getOrderList);
+
+router.get('/orderDetails', puserController.getOrderDetails);
 
 module.exports = router;

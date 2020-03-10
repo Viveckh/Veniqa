@@ -1,5 +1,6 @@
 import express from 'express';
 import securityController from '../controllers/securityController';
+import HttpStatusCode from 'http-status-codes';
 var router = express.Router();
 import passport from 'passport';
 
@@ -17,7 +18,7 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
     req.session.regenerate((err) => {
         req.session.passport = temp;
         req.session.save((err) => {
-            res.status(200).send({
+            res.status(HttpStatusCode.OK).send({
                 email: req.user.email,
                 name: req.user.name,
                 referral_token: req.user.referral_token,
@@ -25,12 +26,11 @@ router.post('/login', passport.authenticate('login'), (req, res, next) => {
                 cart: req.user.cart
             });
         })
-    })
-    
+    });
 })
 
 router.get('/isLoggedIn', (req, res, next) => {
-    return res.status(200).send(req.isAuthenticated())
+    return res.status(HttpStatusCode.OK).send(req.isAuthenticated())
 })
 
 router.get('/logout', (req, res, next) => {
@@ -38,17 +38,17 @@ router.get('/logout', (req, res, next) => {
     if (req.session) {
         req.session.destroy((err) => {
             if(err) {
-                return res.status(500).send("server error - could not clear out session info completely")
+                return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send("server error - could not clear out session info completely")
             }
-            return res.status(200).send("logged out successfully");
+            return res.status(HttpStatusCode.OK).send("logged out successfully");
         });
     }
     else {
         if (req.isUnauthenticated()) {
-            return res.status(200).send("logged out successfully");
+            return res.status(HttpStatusCode.OK).send("logged out successfully");
         }
         else {
-            return res.status(500).send("server error - could not log out")
+            return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send("server error - could not log out")
         }
     }
 });
