@@ -9,14 +9,17 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Veniqa Bossman' });
 });
 
-router.post('/createAdmin', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, superAdminController.createAdmin);
+router.use(passportAuth.isAuthenticated);
+router.use(passportAuth.isSuperAdmin);
 
-router.get('/getAllAdmins', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, superAdminController.getAllAdmins);
+router.post('/createAdmin', superAdminController.createAdmin);
 
-router.get('/getAdminDetails', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, superAdminController.getAdminDetails);
+router.get('/getAllAdmins', superAdminController.getAllAdmins);
 
-router.put('/updateAdminAccess', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, superAdminController.updateAdminAccess);
+router.get('/getAdminDetails', superAdminController.getAdminDetails);
 
-router.delete('/deleteAdmin', passportAuth.isAuthenticated, passportAuth.isSuperAdmin, superAdminController.deleteAdmin);
+router.put('/updateAdminAccess', superAdminController.updateAdminAccess);
+
+router.delete('/deleteAdmin', superAdminController.deleteAdmin);
 
 module.exports = router;

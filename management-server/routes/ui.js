@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa User Interface Customizations' });
 });
 
+router.use(passportAuth.isAuthenticated);
+
 router.post('/featured', passportAuth.canManageFeatured, uiController.updateOrUpsertFeaturedSection);
 
 router.get('/featuredList', passportAuth.canViewFeatured, uiController.getAllFeaturedSections);
