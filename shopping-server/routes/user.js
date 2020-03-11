@@ -10,16 +10,16 @@ router.get('/', function(req, res, next) {
 
 router.use(passportAuth.isAuthenticated);
 
-router.post('/address', puserController.addNewAddress);
+router.post('/address', userController.addNewAddress);
 
-router.get('/address', puserController.getAddresses);
+router.get('/address', userController.getAddresses);
 
-router.put('/address', puserController.updateAddress);
+router.put('/address', userController.updateAddress);
 
-router.delete('/address', puserController.deleteAddress);
+router.delete('/address', userController.deleteAddress);
 
-router.post('/orderList', puserController.getOrderList);
+router.post('/orderList', userController.getOrderList);
 
-router.get('/orderDetails', puserController.getOrderDetails);
+router.get('/orderDetails', userController.getOrderDetails);
 
 module.exports = router;
