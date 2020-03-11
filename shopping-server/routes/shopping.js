@@ -8,12 +8,14 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Shopping' });
 });
 
-router.post('/addToCart', passportAuth.isAuthenticated, shoppingController.addToCart);
+router.use(passportAuth.isAuthenticated);
 
-router.get('/getCart', passportAuth.isAuthenticated, shoppingController.getCart);
+router.post('/addToCart', shoppingController.addToCart);
 
-router.put('/updateCart', passportAuth.isAuthenticated, shoppingController.updateCart);
+router.get('/getCart', shoppingController.getCart);
 
-router.delete('/deleteFromCart', passportAuth.isAuthenticated, shoppingController.deleteFromCart);
+router.put('/updateCart', shoppingController.updateCart);
+
+router.delete('/deleteFromCart', shoppingController.deleteFromCart);
 
 module.exports = router;

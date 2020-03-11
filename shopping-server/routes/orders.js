@@ -8,16 +8,18 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Veniqa Orders' });
 });
 
-router.post('/createCheckout', passportAuth.isAuthenticated, orderController.createCheckout);
+router.use(passportAuth.isAuthenticated);
 
-router.post('/completeCheckoutUsingCard', passportAuth.isAuthenticated, orderController.completeCheckoutUsingCard);
+router.post('/createCheckout', orderController.createCheckout);
 
-router.post('/completeCheckoutUsingKhalti', passportAuth.isAuthenticated, orderController.completeCheckoutUsingKhalti);
+router.post('/completeCheckoutUsingCard', orderController.completeCheckoutUsingCard);
 
-router.get('/isCheckoutValid', passportAuth.isAuthenticated, orderController.isCheckoutValid);
+router.post('/completeCheckoutUsingKhalti', orderController.completeCheckoutUsingKhalti);
 
-router.post('/createPaymentToken', passportAuth.isAuthenticated, orderController.createPaymentToken);
+router.get('/isCheckoutValid', orderController.isCheckoutValid);
 
-router.post('/completeCheckout', passportAuth.isAuthenticated, orderController.completeCheckout);
+router.post('/createPaymentToken', orderController.createPaymentToken);
+
+router.post('/completeCheckout', orderController.completeCheckout);
 
 module.exports = router;
