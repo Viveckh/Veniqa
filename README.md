@@ -10,6 +10,7 @@ Upon its demise due to logistical complications, the tech platform that powered 
 
 It is developed and maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders.
 
+**Documentation:** [https://documentation.veniqa.com](https://documentation.veniqa.com/)
 ___
 
 ## Official Website For More Info
@@ -75,8 +76,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ## Contribution
 
-We are currently in the process of building test suites, docker images and writing extensive documentation to speed up startup time for developers. In the meantime, any Pull Requests/Issues found are appreciated.
-
+We are currently in the process of building test suites, and writing extensive documentation to speed up startup time for developers. In the meantime, any Pull Requests/Issues found are appreciated.
 
 
 ## Blame These People For
