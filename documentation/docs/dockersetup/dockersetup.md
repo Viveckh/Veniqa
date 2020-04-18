@@ -37,7 +37,7 @@ This step creates a mongo instance in a container. It exposes port `27000` if yo
 
 ### Redis Setup
 
-Redis instance is also create since the application uses session caching. The exposed port is `6379`. 
+Redis instance is also created since the application uses session caching. The exposed port is `6379`. 
 
 ### Shopping Server Setup
 
