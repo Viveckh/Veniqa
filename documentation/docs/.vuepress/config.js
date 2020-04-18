@@ -28,6 +28,13 @@ module.exports = {
         children: [
           
         ]
+      },
+      {
+        title: 'Local Docker Setup',
+        path: '/dockersetup/dockersetup.md',
+        sidebarDepth: 2,
+        collapsable: false,
+        children: []
       }
     ]
   },
