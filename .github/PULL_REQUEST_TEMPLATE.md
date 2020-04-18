@@ -23,7 +23,7 @@ If yes, please describe how it impacts the application:
 
 **The PR fulfills these requirements:**
 
-- [ ] It's submitted to the `development` branch, _not_ the `master` branch
+- [ ] It's submitted to the `develop` branch, _not_ the `master` branch
 - [ ] When resolving a specific issue, it's referenced in the PR's title (e.g. `Fix #xxx[,#xxx]`, where "xxx" is the issue number)
 - [ ] New/updated tests are included
 
