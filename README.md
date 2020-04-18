@@ -40,6 +40,12 @@ With Veniqa, you have choices.
 
 ---
 
+## Quickstart
+
+You can start up the entire suite of applications using `docker`. For more information, go to [Quick Start Documentation](https://documentation.veniqa.com/dockersetup/dockersetup.html).
+
+---
+
 ## The Suite
 * API Server for Shopping Applications
 * API Server for Management Applications
