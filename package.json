@@ -1,0 +1,33 @@
+{
+    "name": "veniqa",
+    "version": "2.3.0",
+    "private": false,
+    "description": "An E-commerce solution",
+    "bugs": {
+      "url": "https://github.com/Viveckh/Veniqa/issues"
+    },
+    "author": "(EJ) Vivek Pandey <vpandey+veniqa@ramapo.edu>",
+    "contributors": [
+        "Arjun Bastola <abastola+veniqa@ramapo.edu>",
+        "Vivek Pandey <vpandey+veniqa@ramapo.edu>",
+        "Sujil Maharjan <maharjansujil+veniqa@ramapo.edu>"
+    ],
+    "keywords": [
+      "Veniqa",
+      "e-commerce solution",
+      "e-commerce",
+      "fashion",
+      "online retail",
+      "retail",
+      "Vue.js",
+      "Node.js",
+      "Mongo",
+      "Redis"
+    ],
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Viveckh/Veniqa"
+    }
+  }
+  
