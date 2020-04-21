@@ -2,7 +2,7 @@ version: '3'
 services:
   mongo: 
     build:
-      context: .
+      context: ./mongo
       dockerfile: Dockerfile-mongo
     ports:
       - 27000:27017

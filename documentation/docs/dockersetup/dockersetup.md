@@ -27,6 +27,19 @@ Then, start the setup process by running the following command:
 > docker-compose up
 ```
 
+**OR**
+
+You can also use Docker's Buildkit which will make the docker build process significantly faster.
+
+> If you want to learn more about Docker Buildkit, refer to this document: [https://docs.docker.com/develop/develop-images/build_enhancements/](https://docs.docker.com/develop/develop-images/build_enhancements/)
+
+If you would like to use the Docker's Buildkit, you can do so by running the following command:
+```
+> COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up
+```
+
+
+
 ## What is `docker-compose` doing?
 
 `docker-compose` is creating multiple images and starting multiple containers each necessary for the application to run. These steps happen with `docker-compose`:
