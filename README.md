@@ -8,17 +8,25 @@ Veniqa (Originally Veniqa New York) was a New York-based fashion retail startup 
 
 Upon its demise due to logistical complications, the tech platform that powered Veniqa was open-sourced as a 100% customizable framework under the MIT License.
 
-It is developed and maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders.
+It is developed and maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders. :heart:
 
-**Documentation:** [https://documentation.veniqa.com](https://documentation.veniqa.com/)
+:star2: Appeared as a top trending topic on HackerNews
+
+:star2: No. 1 Trending Github Project on 02/23/2020 and Top Trending on Feb-Mar. 2020
+
 ___
 
-## Official Website For More Info
+## Official Website
 [https://veniqa.com](https://veniqa.com)
 
 ---
 
-## Build Status
+## Documentation
+[https://documentation.veniqa.com](https://documentation.veniqa.com/)
+
+---
+
+## Demos :eyes:
 
 shop.veniqa.com 
 
@@ -28,21 +36,15 @@ admin.veniqa.com
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/bb8d700a-4136-4b65-acc1-f29e14aed779/deploy-status)](https://app.netlify.com/sites/prod-veniqa-admin/deploys)  
 
----
+--- 
 
-## Perfect For Boostrapped Startups & Hacky Engineers
+## Perfect For Boostrapped Startups & Hacky Engineers :fire: :fire:
 We love Woocommerce & Squarespace! But vendor lock-in and zero code access isn't for everyone.
 
 With Veniqa, you have choices.
 * Launch yourself
 * Get a premium support package
 * Use the codebase for other projects
-
----
-
-## Quickstart
-
-You can start up the entire suite of applications using `docker`. For more information, go to [Quick Start Documentation](https://documentation.veniqa.com/dockersetup/dockersetup.html).
 
 ---
 
@@ -54,7 +56,7 @@ You can start up the entire suite of applications using `docker`. For more infor
 
 ---
 
-## Few Things Under The Hood
+## Few Things Under The Hood :eyes:
 
 ### Built using the MEVN Stack & The Usual Suspects
 MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer (for fallback), Stripe.
@@ -80,12 +82,21 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ---
 
-## Contribution
+## Quickstart for Developers
 
-We are currently in the process of building test suites, and writing extensive documentation to speed up startup time for developers. In the meantime, any Pull Requests/Issues found are appreciated.
+You can start up the entire suite of applications using `docker`. For more information, go to [Quick Start Documentation](https://documentation.veniqa.com/dockersetup/dockersetup.html).
+
+---
 
 
-## Blame These People For
+## Contribution :pray:
+
+We are currently in the process of building test suites, and writing extensive documentation geared towards developers. In the meantime, any Pull Requests/Bug Fixes/Issues found are appreciated.
+
+Refer to the Quickstart Guide above to get up and running in minutes.
+
+
+## Blame These People For :point_down:
 
 <a href="https://github.com/Viveckh/Veniqa/graphs/contributors"><img src="https://www.veniqa.com/img/team/veniqa-contributors.png" /></a>
 

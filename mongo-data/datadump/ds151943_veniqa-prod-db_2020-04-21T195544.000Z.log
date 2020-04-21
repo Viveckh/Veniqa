@@ -1,0 +1,27 @@
+
+Using mongodump at '/home/madmin/deploy/lib/src/mongodb-linux-x86_64-community-3.6.12/bin/mongodump' version '3.6.12 (community)'...
+Executing command: 
+/home/madmin/deploy/lib/src/mongodb-linux-x86_64-community-3.6.12/bin/mongodump --host localhost --port 51943 -d veniqa-prod-db -u **** -p **** --authenticationDatabase admin --dumpDbUsersAndRoles --out /mnt/var/misc/backup_temp/backups/5e9f4fbfc975c98ba130e155/ds151943_veniqa-prod-db_2020-04-21T195544.000Z
+2020-04-21T12:55:47.636-0700	dumping users and roles for veniqa-prod-db
+2020-04-21T12:55:47.638-0700	writing veniqa-prod-db.veniqa_users to 
+2020-04-21T12:55:47.639-0700	writing veniqa-prod-db.veniqa_curated_products to 
+2020-04-21T12:55:47.639-0700	writing veniqa-prod-db.veniqa_product_categories to 
+2020-04-21T12:55:47.639-0700	writing veniqa-prod-db.veniqa_client_server_error_log to 
+2020-04-21T12:55:47.660-0700	done dumping veniqa-prod-db.veniqa_curated_products (50 documents)
+2020-04-21T12:55:47.661-0700	writing veniqa-prod-db.veniqa_orders to 
+2020-04-21T12:55:47.661-0700	done dumping veniqa-prod-db.veniqa_product_categories (36 documents)
+2020-04-21T12:55:47.661-0700	writing veniqa-prod-db.veniqa_tariff_rates to 
+2020-04-21T12:55:47.662-0700	done dumping veniqa-prod-db.veniqa_tariff_rates (4 documents)
+2020-04-21T12:55:47.662-0700	writing veniqa-prod-db.veniqa_admins to 
+2020-04-21T12:55:47.663-0700	done dumping veniqa-prod-db.veniqa_admins (2 documents)
+2020-04-21T12:55:47.663-0700	writing veniqa-prod-db.veniqa_currency_exchange_rates to 
+2020-04-21T12:55:47.663-0700	done dumping veniqa-prod-db.veniqa_client_server_error_log (34 documents)
+2020-04-21T12:55:47.663-0700	writing veniqa-prod-db.veniqa_ui_featured_sections to 
+2020-04-21T12:55:47.664-0700	done dumping veniqa-prod-db.veniqa_currency_exchange_rates (2 documents)
+2020-04-21T12:55:47.664-0700	writing veniqa-prod-db.veniqa_admin_server_error_log to 
+2020-04-21T12:55:47.665-0700	done dumping veniqa-prod-db.veniqa_ui_featured_sections (1 document)
+2020-04-21T12:55:47.665-0700	writing veniqa-prod-db.veniqa_checkouts to 
+2020-04-21T12:55:47.665-0700	done dumping veniqa-prod-db.veniqa_admin_server_error_log (0 documents)
+2020-04-21T12:55:47.666-0700	done dumping veniqa-prod-db.veniqa_checkouts (0 documents)
+2020-04-21T12:55:47.672-0700	done dumping veniqa-prod-db.veniqa_orders (18 documents)
+2020-04-21T12:55:47.675-0700	done dumping veniqa-prod-db.veniqa_users (56 documents)
