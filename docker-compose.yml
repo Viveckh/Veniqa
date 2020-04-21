@@ -6,6 +6,9 @@ services:
       dockerfile: Dockerfile-mongo
     ports:
       - 27000:27017
+    volumes:
+      - "dbconfig:/data/configdb"
+      - "dbdata:/data/db"
 
   redis:
     image: "redis:alpine"
@@ -87,3 +90,6 @@ services:
     ports:
       - 5202:4200
 
+volumes:
+  dbdata:
+  dbconfig:
