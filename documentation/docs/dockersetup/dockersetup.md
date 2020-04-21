@@ -67,3 +67,20 @@ Access: [http://localhost:5202](http://localhost:5202)
 ## Modify the DB and Cache connections
 
 If you want to modify the default instances of using docker's mongo and redis services, you can also provide the connection details to your own DB. To do so, you need to modify the environment variables in `docker-compose.yml` file in the root of the directory.
+
+## Default logins
+
+#### Shopping Platform
+
+You can sign up as a user. 
+
+Or duplicate an existing user in mongo `users` collection and replace the `email` and `password` field with email and password hash for the following admin user from `admins` collection.
+
+#### Admin Platform
+
+The following user with SUPERADMIN privilege is available as default.
+
+**Email:** demo@veniqa.com
+
+**Password:** pass$12
+
