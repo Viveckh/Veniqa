@@ -30,11 +30,11 @@ export default {
   },
 
   methods: {
-    shop(product) {
+    shop(product){
       this.$emit('shop', product);
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -42,3 +42,4 @@ export default {
   font-family: 'Quicksand', sans-serif;
 }
 </style>
+

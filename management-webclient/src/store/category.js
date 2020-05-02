@@ -65,6 +65,7 @@ export default {
 
     setCategorys(state, payload) {
       state.categorys = payload;
+
     },
   },
   getters: {
