@@ -5,8 +5,6 @@ import Checkout from '@/components/checkout/Checkout.vue';
 import MainPage from '@/components/homepage/MainPage.vue';
 import Login from '@/views/Login.vue';
 import PageNotFound from '@/views/Notfound.vue';
-import VueAnalytics from 'vue-analytics';
-import Config from '@/app-configs';
 
 Vue.use(Router);
 
@@ -112,11 +110,6 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else next();
-});
-
-Vue.use(VueAnalytics, {
-  id: Config.analyticsId,
-  router
 });
 
 export default router;
