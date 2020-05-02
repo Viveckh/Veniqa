@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
 
+import * as _ from 'lodash';
+
 export default {
   namespaced: true,
   state: {
@@ -28,7 +30,7 @@ export default {
       dispatch,
     }, tariff) {
       try {
-        await Vue.prototype.$axios({
+        const res = await Vue.prototype.$axios({
           url: ProxyUrl.addTariff,
           withCredentials: true,
           method: 'post',
@@ -44,7 +46,7 @@ export default {
       dispatch,
     }, tariff) {
       try {
-        await Vue.prototype.$axios({
+        const res = await Vue.prototype.$axios({
           url: ProxyUrl.editTariff,
           withCredentials: true,
           method: 'put',

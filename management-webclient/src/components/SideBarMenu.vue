@@ -145,8 +145,7 @@ export default {
       if (this.isSuperAdmin) return true;
       return (
         this.permissions
-        && (this.permissions.indexOf(Permission.ORDER_VIEW) >= 0
-        || this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0)
+        && (this.permissions.indexOf(Permission.ORDER_VIEW) >= 0 || this.permissions.indexOf(Permission.ORDER_MANAGE) >= 0)
       );
     }
   }

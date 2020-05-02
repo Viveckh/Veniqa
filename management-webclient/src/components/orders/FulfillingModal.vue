@@ -99,7 +99,7 @@
 
 <script>
 import _ from 'lodash';
-import FulfillingItemOrder from '@/dto/FulfillingItemOrder.json';
+import FulfillingItemOrder from '@/dto/FulfillingItemOrder';
 
 export default {
   name: 'FulfillingModal',

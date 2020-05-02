@@ -33,16 +33,14 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="(admin, aind) in admins"
-                  v-bind:key="aind"
+                  v-for="admin in admins"
                   v-if="admins.length > 0 && admin.name.toUpperCase().includes(query.toUpperCase())"
                 >
                   <td>{{admin.name}}</td>
                   <td>{{admin.email}}</td>
                   <td>
                     <ul class="list-unstyled">
-                      <li v-for="(item, iind) in admin.permissions"
-                        v-bind:key="iind">
+                      <li v-for="item in admin.permissions">
                         <span class="badge badge-success">{{item}}</span>
                       </li>
                     </ul>

@@ -8,12 +8,7 @@
           <strong>{{data.product.name}}</strong>
           <br>
           <a :href="data.product.item_url" target="_blank" style="color: blue">Product Url</a> |
-          <a
-            :href="'https://keen-turing-4cb6e4.netlify.com/#/products/'+ data.product._id"
-            target="_blank"
-            style="color: blue">
-            Veniqa Url
-          </a>
+          <a :href="'https://keen-turing-4cb6e4.netlify.com/#/products/'+ data.product._id" target="_blank" style="color: blue">Veniqa Url</a>
         </b-col>
         <b-col md="3">
           <span v-if="data.order_line_level_processing_details">
@@ -26,24 +21,21 @@
               <b-btn
                 variant="primary"
                 size="sm"
-                v-if="data.order_line_level_processing_details.status == 'PROCESSING'
-                && orderStatus != 'RECEIVED' && permissionGranted"
+                v-if="data.order_line_level_processing_details.status == 'PROCESSING' && orderStatus != 'RECEIVED' && permissionGranted"
                 @click="fulfillingModalShow = true"
               >Mark as fulfilling</b-btn>
 
               <b-btn
                 variant="primary"
                 size="sm"
-                v-if="data.order_line_level_processing_details.status == 'FULFILLING'
-                && orderStatus != 'RECEIVED' && permissionGranted"
+                v-if="data.order_line_level_processing_details.status == 'FULFILLING' && orderStatus != 'RECEIVED' && permissionGranted"
                 @click="shippingModalShow = true"
               >Mark as shipped</b-btn>
 
               <b-btn
                 variant="primary"
                 size="sm"
-                v-if="data.order_line_level_processing_details.status == 'SHIPPED'
-                && orderStatus != 'RECEIVED' && permissionGranted"
+                v-if="data.order_line_level_processing_details.status == 'SHIPPED' && orderStatus != 'RECEIVED' && permissionGranted"
                 @click="deliveredModalShow = true"
               >Mark as Delivered</b-btn>
             </div>
@@ -99,8 +91,7 @@
 
     <fulfilling-modal
       v-if="fulfillingModalShow"
-      :fulfillItem="data.order_line_level_processing_details ?
-      data.order_line_level_processing_details.fulfillment_order_details : null"
+      :fulfillItem="data.order_line_level_processing_details ? data.order_line_level_processing_details.fulfillment_order_details : null"
       @cancel="closeModal()"
       :editMode="editMode"
       @fulfill="fulfillItemOrder"
@@ -108,8 +99,7 @@
 
     <shipping-modal
       v-if="shippingModalShow"
-      :shippingDetail="data.order_line_level_processing_details
-      ? data.order_line_level_processing_details.shipment : null"
+      :shippingDetail="data.order_line_level_processing_details ? data.order_line_level_processing_details.shipment : null"
       @cancel="closeModal()"
       :editMode="editMode"
       @ship="markAsShipped"
@@ -118,8 +108,7 @@
     <delivered-modal
       v-if="deliveredModalShow"
       @cancel="closeModal()"
-      :deliveryDetail="data.order_line_level_processing_details
-      ? data.order_line_level_processing_details.delivery : null"
+      :deliveryDetail="data.order_line_level_processing_details ? data.order_line_level_processing_details.delivery : null"
       :editMode="editMode"
       @delivered="markAsDelivered"
     />
@@ -127,10 +116,10 @@
 </template>
 
 <script>
-import ItemOrderDescription from '@/components/orders/ItemOrderDescription.vue';
-import FulfillingModal from '@/components/orders/FulfillingModal.vue';
-import ShippingModal from '@/components/orders/ShippingModal.vue';
-import DeliveredModal from '@/components/orders/DeliveredModal.vue';
+import ItemOrderDescription from '@/components/orders/ItemOrderDescription';
+import FulfillingModal from '@/components/orders/FulfillingModal';
+import ShippingModal from '@/components/orders/ShippingModal';
+import DeliveredModal from '@/components/orders/DeliveredModal';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import Permission from '@/constants/permissions';

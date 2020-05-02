@@ -11,6 +11,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { FingerprintSpinner } from 'epic-spinners';
+import axios from 'axios';
 import { eventHub } from '@/utils/EventHub';
 
 export default {
@@ -44,13 +45,13 @@ export default {
 
   methods: {
     setLoading() {
-      this.refCount += 1;
+      this.refCount++;
       this.isLoading = true;
     },
 
     unsetLoading() {
       if (this.refCount > 0) {
-        this.refCount -= 1;
+        this.refCount--;
         this.isLoading = this.refCount > 0;
       }
     }

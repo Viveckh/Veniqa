@@ -174,10 +174,10 @@
 </template>
 
 <script>
-import FeaturedDTO from '@/dto/FeaturedProductDTO.json';
+import FeaturedDTO from '@/dto/FeaturedProductDTO';
 import _ from 'lodash';
 import { DesignTypes } from '@/config';
-import Pagination from '@/dto/Pagination.json';
+import Pagination from '@/dto/Pagination';
 import notification from '@/services/NotificationService';
 
 export default {

@@ -23,7 +23,7 @@ export default {
   },
 
   actions: {
-    async getAllFeaturedList({ commit }) {
+    async getAllFeaturedList({ commit }, section) {
       try {
         const {
           data,
@@ -42,8 +42,7 @@ export default {
       }
     },
 
-    // eslint-disable-next-line no-unused-vars
-    async save({ commit }, reqObj) {
+    async save({ state, commit }, reqObj) {
       const request = {
         name: reqObj.section,
         content: [],
@@ -64,7 +63,7 @@ export default {
           method: 'post',
           data: request,
         });
-        if (data && data.httpStatus === 200) {
+        if (data && data.httpStatus == 200) {
           return true;
         } throw new Error('Failed');
       } catch (error) {

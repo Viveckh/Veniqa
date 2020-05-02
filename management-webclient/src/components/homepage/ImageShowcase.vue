@@ -39,7 +39,7 @@ export default {
   },
 
   methods: {
-    chooseImage(image) {
+    chooseImage(image, event) {
       this.$emit('imageClick', image);
     },
 
