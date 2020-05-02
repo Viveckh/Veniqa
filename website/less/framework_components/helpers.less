@@ -1,0 +1,62 @@
+.clearfix{
+	overflow: hidden;
+}
+
+.clearfix-after{
+	&:after{
+		content: "";
+  	display: table;
+  	clear: both;
+	}
+}
+
+.allow-overflow{
+	overflow: visible;
+}
+
+.container{
+	.row--gapless{
+		padding-left: 15px;
+		padding-right: 15px;
+		> div[class*='col-']{
+			padding: 0;
+		}
+	}
+}
+
+@media all and (max-width: 767px){
+	.text-left-xs{
+		text-align: left;
+	}
+}
+
+@media all and (max-width: 991px){
+	.text-left-sm{
+		text-align: left;
+	}
+}
+
+section{
+	> .row--gapless{
+		padding-left: 0;
+		padding-right: 0;
+		> div[class*='col-']{
+			padding: 0;
+		}
+	}
+}
+
+div{
+	&.right{
+		float: right;
+	}
+	&.left{
+		float: left;
+	}
+}
+
+section.text-right{
+	> .container:last-child > .row:only-child > div[class*='col-']:only-child{
+		float: right;
+	}
+}

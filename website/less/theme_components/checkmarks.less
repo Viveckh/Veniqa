@@ -1,0 +1,30 @@
+/*! -- Stack Checkmarks & Crosses -- */
+
+.checkmark{
+	display: inline-block;
+	position: relative;
+	width: @base-line-height/1.5;
+	height: @base-line-height/1.5;
+	border-radius: 50%;
+	text-align: center;
+	&:not([class*='bg-']){
+		background: @color-primary;
+	}
+	&:before{
+		content: '\2713';
+		color: #fff;
+		font-size: 11px;
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: -4px;
+	}
+	&.checkmark--cross{
+		&:before{
+			content: '\2717';
+		}
+	}
+	&:not(:last-child){
+		margin-right: 13px;
+	}
+}

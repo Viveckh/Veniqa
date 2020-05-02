@@ -1,0 +1,77 @@
+/*! -- Stack Tooltips -- */
+
+.tooltip{
+	position: relative;
+	top: 3px;
+	display: inline-block;
+	width: @base-line-height/1.5;
+	height: @base-line-height/1.5;
+	border-radius: 50%;
+	background: @color-dark;
+	text-align: center;
+	cursor: pointer;
+	.tooltip__anchor{
+		color: #fff;
+		font-weight: 700;
+		font-size: 11px;
+		position: absolute;
+		top: -5px;
+		left: 6px;
+	}
+	.tooltip__text{
+		.transition(0.2s,ease);
+		text-align: left;
+		z-index: 10;
+		position: absolute;
+		width: 280px;
+		background: @color-bg-secondary;
+		border: 1px solid #ececec;
+		padding: @base-line-height/3;
+		left: @base-line-height/1.25;
+		top: -@base-line-height/2;
+		opacity: 0;
+		pointer-events: none;
+		cursor: default;
+		.box-shadow;
+		line-height: 20px;
+	}
+	&:hover{
+		.tooltip__text{
+			opacity: 1;
+		}
+	}
+	&:last-child{
+		margin-left: @base-line-height/2;
+	}
+}
+
+[data-tooltip]{
+	position: relative;
+	overflow: visible;
+	&:after{
+		transition: all .2s ease;
+		content: attr(data-tooltip);
+		position: absolute;
+		top: -24px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: @color-dark;
+		color: #fff;
+		border: 1px solid #e7e7e7;
+		padding: 2px 12px;
+		pointer-events: none;
+		white-space: nowrap;
+		font-size: 11px;
+		line-height: 18px;
+		font-weight: 600;
+		border-radius: 2px;
+		z-index: 2;
+		font-family: @body-font;
+	}
+}
+
+[data-tooltip]:not(:hover){
+	&:after{
+		opacity: 0;
+	}
+}
