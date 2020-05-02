@@ -33,9 +33,10 @@
                 <strong>{{item.counts}}</strong>
                 <br>
                 <!-- <span class="info">Aggregated Price:</span> &nbsp;&nbsp; -->
-
+                
               </p>
 
+              
 
               <div v-if="Object.keys(item.customizations).length > 0">
                 <span class="info"><strong>Customizations</strong></span>
@@ -49,7 +50,7 @@
         </b-col>
         <b-col md="3">
           <div class="info">
-            Due to the unconventional shipping methods, we cannot process direct returns on international orders.
+            Due to the unconventional shipping methods, we cannot process direct returns on international orders. 
             If there is any severe damage to the product, then please contact us. <br> <br>
 
             <a href="mailto:support@veniqa.com">support@veniqa.com</a>
@@ -69,25 +70,25 @@ export default {
     item: {
       type: Object,
       required: true,
-    },
+    }
   },
 
   data() {
     return {
 
-    };
+    }
   },
-
+  
   filters: {
-    formatDate(date) {
-      return moment(date).format('MMMM Do, YYYY');
-    },
+    formatDate(date){
+      return moment(date).format("MMMM Do, YYYY");
+    }
   },
 
   methods: {
-    isDelivered(obj) {
+    isDelivered(obj){
       return obj && obj.status === 'DELIVERED';
-    },
+    }
   },
 
   computed: {
@@ -97,9 +98,9 @@ export default {
 
     s3BucketUrl() {
       return process.env.VUE_APP_ORDER_S3_BUCKET_URL;
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="scss">

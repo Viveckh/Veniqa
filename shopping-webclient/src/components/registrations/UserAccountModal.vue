@@ -47,15 +47,19 @@
 </template>
 
 <script>
-import LoginComponent from '@/components/registrations/LoginComponent.vue';
-import RegisterComponent from '@/components/registrations/RegisterComponent.vue';
+import LoginComponent from '@/components/registrations/LoginComponent';
+import RegisterComponent from '@/components/registrations/RegisterComponent';
+import ProxyUrls from '@/constants/ProxyUrls.js';
+import ForgotPassword from '@/components/registrations/ForgotPasswordComponent';
 import moment from 'moment';
+import axios from 'axios';
 
 export default {
   name: 'UserAccountModal',
   components: {
     LoginComponent,
     RegisterComponent,
+    ForgotPassword,
   },
   data() {
     return {
@@ -114,7 +118,7 @@ export default {
 
     async register(userInfo) {
       try {
-        await this.$store.dispatch(
+        const res = await this.$store.dispatch(
           'authStore/registerUser',
           userInfo,
         );

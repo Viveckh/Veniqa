@@ -27,7 +27,7 @@ export default {
   },
 
   actions: {
-    async getOrderList({ state, commit }) {
+    async getOrderList({ state, commit }, searchTerm) {
       try {
         const { data } = await Vue.prototype.$axios({
           method: 'post',

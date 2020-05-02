@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import ProxyUrls from '@/constants/ProxyUrls';
+import FeaturedDTO from '@/dto/FeaturedProductDTO.json';
 
 /**
  * Service for api calls with feature apis.

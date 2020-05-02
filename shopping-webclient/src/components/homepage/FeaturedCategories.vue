@@ -45,8 +45,6 @@
 </template>
 
 <script>
-/* eslint-disable prefer-destructuring */
-
 export default {};
 </script>
 

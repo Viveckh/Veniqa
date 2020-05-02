@@ -12,28 +12,30 @@
 
 <script>
 import Product from '@/data/featuredProduct.json';
+import FeaturedCategories from '@/components/homepage/FeaturedCategories.vue';
 import FeatureService from '@/services/FeaturedService';
 import FeaturedStripe from '@/components/homepage/FeaturedStripe.vue';
-import DesignEntry from '@/components/homepage/designs/DesignEntry.vue';
+import DesignEntry from "@/components/homepage/designs/DesignEntry";
 
 export default {
   name: 'MainPage',
   components: {
+    FeaturedCategories,
     FeaturedStripe,
-    DesignEntry,
+    DesignEntry
   },
   data() {
     return {
       product: null,
       currentSection: 'homepage',
-      featuredDesigns: [],
+      featuredDesigns: []
     };
   },
 
   methods: {
-    gotoProduct(product) {
+    gotoProduct(product){
       this.$router.push(`/products/${product._id}`);
-    },
+    }
   },
 
   created() {
@@ -42,8 +44,8 @@ export default {
       .then((data) => {
         this.featuredDesigns = data;
       })
-      .catch((err) => { console.log(err); });
-  },
+      .catch(err => {});
+  }
 };
 </script>
 

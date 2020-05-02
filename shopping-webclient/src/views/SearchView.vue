@@ -33,8 +33,7 @@ export default {
   },
 
   watch: {
-    // eslint-disable-next-line
-    '$route.query': function (value) {
+    '$route.query': function (value, old) {
       this.assignQueryValues(value);
     },
   },

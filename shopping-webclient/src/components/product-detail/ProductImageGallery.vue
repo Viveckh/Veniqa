@@ -20,7 +20,7 @@
               class="responsive-image"
               v-bind:style="{'boxShadow' : thumb.id === choosedThumb.id ? '0px 0px 0px 2px ' + options.choosed_thumb_border_color : ''}"
               :class="{'choosed-thumb': thumb.id === choosedThumb.id}"
-            />
+            >
           </div>
           <div @click="moveThumbs('right')" class="control">
             <slot name="right">
@@ -36,7 +36,7 @@
             :data-zoom="previewLargeImg.url"
             class="responsive-image"
             draggable="false"
-          />
+          >
         </div>
       </b-col>
     </b-row>
@@ -47,7 +47,7 @@
 
 <script>
 // We need this specific version of working Drift-Zoom package.
-import Drift from '../../assets/drift-zoom/src/js/Drift';
+import Drift from '../../assets/drift-zoom/src/js/Drift.js';
 
 /**
  * Courtesy of akulubala from vue-product-zoomer
@@ -59,15 +59,15 @@ export default {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     baseImages: {
       type: Object,
       required: true,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -86,8 +86,8 @@ export default {
         move_by_click: true,
         scroll_items: 4,
         choosed_thumb_border_color: '#ff3d00',
-        move_button_style: 'chevron'
-      }
+        move_button_style: 'chevron',
+      },
     };
   },
   computed: {
@@ -101,13 +101,13 @@ export default {
       return this.options.move_button_style === 'chevron'
         ? {
           left: 'chevron-left',
-          right: 'chevron-right'
+          right: 'chevron-right',
         }
         : {
           left: 'angle-double-left',
-          right: 'angle-double-right'
+          right: 'angle-double-right',
         };
-    }
+    },
   },
   mounted() {
     this.runImager();
@@ -130,13 +130,12 @@ export default {
       if (this.drift !== null) {
         this.drift.setZoomImageURL(matchLargeImg.url);
       }
-    }
+    },
   },
   created() {
     if (Object.keys(this.baseImages).length > 0) {
-      // eslint-disable-next-line
       for (const key in this.baseImages) {
-        if (Object.prototype.hasOwnProperty.call(this.baseImages, key)) {
+        if (this.baseImages.hasOwnProperty(key)) {
           this[key] = this.baseImages[key];
         }
       }
@@ -152,13 +151,11 @@ export default {
     if (this.large_size.length === 0) {
       this.large_size = Object.assign([], this.normal_size);
     }
-    // eslint-disable-next-line prefer-destructuring
     this.choosedThumb = this.thumbs[0];
 
     if (Object.keys(this.baseZoomerOptions).length > 0) {
-      // eslint-disable-next-line
       for (const key in this.baseZoomerOptions) {
-        if (Object.prototype.hasOwnProperty.call(this.baseZoomerOptions, key)) {
+        if (this.baseZoomerOptions.hasOwnProperty(key)) {
           const element = this.baseZoomerOptions[key];
           this.options[key] = element;
         }
@@ -180,7 +177,9 @@ export default {
         .querySelector(`.${this.zoomer_box} .thumb-list`)
         .setAttribute(
           'style',
-          `grid-template-columns: repeat(${this.baseZoomerOptions.scroll_items}, auto)`
+          `grid-template-columns: repeat(${
+            this.baseZoomerOptions.scroll_items
+          }, auto)`,
         );
       const t = setInterval(() => {
         if (document.readyState === 'complete') {
@@ -240,8 +239,8 @@ export default {
       } else {
         this.choosedThumb = thumb;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

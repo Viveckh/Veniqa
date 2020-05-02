@@ -1,10 +1,8 @@
 <template>
   <div id="search-result-view-image">
-    <img v-show="!isHover" class="img-cls"
-      @mouseover="isHover = true" :src="product.thumbnailUrls[0]"/>
-    <img v-show="isHover" class="img-cls"
-    @mouseleave="isHover = false"
-    :src="product.thumbnailUrls.length > 1 ? product.thumbnailUrls[1] : product.thumbnailUrls[0]" >
+    <!-- <div class="img-cls" @mouseover="isHover = true" @mouseleave="isHover = false" :style="getPictureStyle()"></div> -->
+    <img v-show="!isHover" class="img-cls" @mouseover="isHover = true" :src="product.thumbnailUrls[0]"/>
+    <img v-show="isHover" class="img-cls"  @mouseleave="isHover = false" :src="product.thumbnailUrls.length > 1 ? product.thumbnailUrls[1] : product.thumbnailUrls[0]" >
   </div>
 </template>
 
@@ -15,21 +13,20 @@ export default {
     product: {
       type: Object,
       required: true,
-    },
+    }
   },
 
   data() {
     return {
       isHover: false,
-    };
+    }
   },
 
   methods: {
     getPictureStyle() {
       let picture = this.product.thumbnailUrls[0];
 
-      if (this.isHover && this.product.thumbnailUrls.length > 1) {
-        // eslint-disable-next-line prefer-destructuring
+      if(this.isHover && this.product.thumbnailUrls.length > 1) {
         picture = this.product.thumbnailUrls[1];
       }
       return {
@@ -40,8 +37,8 @@ export default {
         'margin-bottom': '10px',
       };
     },
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss">
@@ -56,3 +53,4 @@ export default {
     width: 100%;
   }
 </style>
+

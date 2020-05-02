@@ -1,6 +1,5 @@
-import Khalti from './KhaltiEntry.vue';
+import Khalti from './KhaltiEntry';
 
 export {
-  // eslint-disable-next-line import/prefer-default-export
-  Khalti,
-};
+  Khalti
+}

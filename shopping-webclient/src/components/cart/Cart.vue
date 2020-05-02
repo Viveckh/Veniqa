@@ -123,7 +123,7 @@ export default {
       this.$nextTick(async () => {
         if (item.counts > 0) {
           try {
-            await this.$store.dispatch('cartStore/updateOrders', [
+            const data = await this.$store.dispatch('cartStore/updateOrders', [
               item,
             ]);
             notification.success(
@@ -144,9 +144,7 @@ export default {
     async deleteSelected(item) {
       try {
         await this.$store.dispatch('cartStore/deleteOrders', [item]);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     },
   },
 

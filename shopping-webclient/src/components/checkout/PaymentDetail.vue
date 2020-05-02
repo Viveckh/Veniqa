@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import StripePayment from '@/components/checkout/stripe/Stripe.vue';
+import StripePayment from '@/components/checkout/stripe/Stripe';
 import { mapGetters } from 'vuex';
 import notification from '@/services/notificationService';
 import paymentService from '@/services/paymentService';
-import Config from '@/config.json';
+import Config from '@/config';
 import { Khalti } from '@/components/checkout/khalti';
 
 export default {
@@ -86,7 +86,7 @@ export default {
 
     async handlePayment() {
       try {
-        await this.$store.dispatch('cartStore/pay');
+        const success = await this.$store.dispatch('cartStore/pay');
         notification.success(this, 'Payment processed');
         this.shippingMethod = null;
       } catch (error) {
