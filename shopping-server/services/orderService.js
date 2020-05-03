@@ -275,7 +275,10 @@ export default {
             // Converting mongoose order object to regular json object to send to email service
             order = order.toObject({flattenMaps: true});
             transformer.castValuesToString(order, ["_id", "tariff", "category"]);
-            emailService.emailOrderReceived(order)
+            emailService.emailOrderReceived(order);
+
+            const cartItemIds = _.map(checkout.cart.items, '_id');
+            await shoppingService.deleteFromCart(userObj, cartItemIds);
 
             result = {
                 httpStatus: httpStatus.OK,
@@ -358,6 +361,9 @@ export default {
             order = order.toObject({flattenMaps: true});
             transformer.castValuesToString(order, ["_id", "tariff", "category"]);
             emailService.emailOrderReceived(order)
+
+            const cartItemIds = _.map(checkout.cart.items, '_id');
+            await shoppingService.deleteFromCart(userObj, cartItemIds);
 
             result = {
                 httpStatus: httpStatus.OK,
