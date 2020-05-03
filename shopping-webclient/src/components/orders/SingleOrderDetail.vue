@@ -8,7 +8,24 @@
       </h4>
 
       <b-card-group deck class="mb-3">
-        <b-card bg-variant="light" :header="getOrderDeet()">
+        <b-card bg-variant="light">
+          <template v-slot:header>
+            <div class="info">
+              <!-- Status goes here -->
+              Status:
+              <span
+                v-bind:class="{'green': order.overall_status != 'CANCELLED',
+                'red': order.overall_status === 'CANCELLED'}"
+              >
+                <strong>{{order.overall_status}}</strong>
+              </span><br>
+
+              <strong>Order #</strong>
+              {{order._id}}<br>
+              <strong>Order placed on</strong>
+              {{dateFormat(order.auditLog.createdOn)}}
+            </div>
+          </template>
           <div class="card-text card-font">
             <p>Total Weight: <strong>{{order.cart.totalWeight.quantity}} {{order.cart.totalWeight.unit}}</strong></p>
             <p>Sub Total Price: <strong>$ {{order.cart.subTotalPrice.amount | formattedAmount}}</strong></p>
@@ -131,26 +148,6 @@ export default {
         return moment(date).format('MMMM Do, YYYY');
       }
       return '';
-    },
-
-    getOrderDeet() {
-      return `
-              <div class="info">
-              <!-- Status goes here -->
-              Status:
-              <span
-                v-bind:class="{'green': ${this.order.overall_status} != 'CANCELLED', 
-                'red': ${this.order.overall_status} === 'CANCELLED'}"
-              >
-                <strong>${this.order.overall_status}</strong>
-              </span><br>
-
-              <strong>Order #</strong>
-              ${this.order._id}<br>
-              <strong>Order placed on</strong>
-              ${this.dateFormat(this.order.auditLog.createdOn)}
-              </div>
-      `;
     },
   },
 
