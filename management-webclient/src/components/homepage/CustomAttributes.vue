@@ -1,44 +1,59 @@
 <template>
   <div id="custom-attribute">
-    <b-btn @click="addRow()" size="sm">Add a row</b-btn>
     <div class="attrib-space"></div>
-    <div
-      v-for="(attrib, aInd) in attributes"
-      v-bind:key="aInd"
-      class="form-row"
-      v-bind:class="{'list-row': aInd % 2 == 0}"
-    >
-      <attribute-row :index="aInd" :row="attrib" @delete="deleteRow(aInd)"/>
-    </div>
-    <div class="space" v-if="attributes.length ==0"></div>
+    <add-attribute-form @add="addNewAttribute" />
+
+    <table class="table table-sm attrib-table" v-if="attributes.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Key</th>
+          <th>Type</th>
+          <th>Values</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(attrib, aind) in attributes" v-bind:key="aind">
+          <td>{{attrib.name}}</td>
+          <td>{{attrib.key}}</td>
+          <td>{{attrib.type}}</td>
+          <td v-if="attrib.type === 'Colors'">{{extractColorValues(attrib)}}</td>
+          <td v-else>{{attrib.values ? attrib.values.join(" , ") : ""}}</td>
+          <td>
+            <a>
+              <font-awesome-icon icon="trash-alt" @click="deleteAttribute(aind)" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="buttons align-right">
       <b-btn variant="primary" size="sm" @click="cancel()">Cancel</b-btn>
-      <b-btn variant="success" size="sm" @click="save()">Save</b-btn>
+      <b-btn variant="success" size="sm" :disabled="attributes.length <= 0" @click="save()">Save</b-btn>
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
-import ProductAttribDTO from '@/dto/ProductAttribute.json';
-import AttributeRow from '@/components/homepage/AttributeFormRow.vue';
 import { Attributes } from '@/constants/Constants';
+import AddAttributeForm from '@/components/homepage/AddAttributeForm.vue';
 
 export default {
   name: 'CustomAttribute',
   props: {
     propValue: {
-      required: true,
-      // type: Object
-    },
+      required: true
+    }
   },
   components: {
-    AttributeRow,
+    AddAttributeForm
   },
   data() {
     return {
-      attributes: [],
+      attributes: []
     };
   },
 
@@ -51,11 +66,16 @@ export default {
   },
 
   methods: {
-    deleteRow(ind) {
+    addNewAttribute(attrib) {
+      this.attributes.push(attrib);
+    },
+
+    deleteAttribute(ind) {
       this.attributes.splice(ind, 1);
     },
-    addRow() {
-      this.attributes.push(_.cloneDeep(ProductAttribDTO));
+
+    extractColorValues(attribute) {
+      return _.map(attribute.values, 'name').join(' , ');
     },
 
     cancel() {
@@ -77,7 +97,7 @@ export default {
           this.$notify({
             group: 'all',
             type: 'error',
-            text: 'You have to have at least 2 options for each attribute',
+            text: 'You have to have at least 2 options for each attribute'
           });
           return;
         }
@@ -86,7 +106,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'None of the fields above can be empty.',
+          text: 'None of the fields above can be empty.'
         });
       }
     },
@@ -117,8 +137,8 @@ export default {
         }
       }
       return true;
-    },
-  },
+    }
+  }
 };
 </script>
 
