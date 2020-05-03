@@ -24,7 +24,7 @@
         </b-row>
       </div>
 
-      <br>
+      <br />
 
       <div>
         <b-form-group horizontal :label-cols="2" label="Product Name" label-for="productName">
@@ -201,7 +201,7 @@
         <div></div>
 
         <b-form-group horizontal :label-cols="2" label="Active" label-for="sku">
-          <toggle-button v-model="product.active" :labels="{checked: 'Yes', unchecked: 'No'}"/>
+          <toggle-button v-model="product.active" :labels="{checked: 'Yes', unchecked: 'No'}" />
         </b-form-group>
 
         <!-- Item URL -->
@@ -258,7 +258,7 @@
             id="modal1"
             title="Add Attributes"
             hide-footer
-            size="sm"
+            size="lg"
           >
             <custom-attributes
               v-if="showAttributes"
@@ -326,7 +326,7 @@
                 :class="{ 'is-active': isActive.bold() }"
                 @click="commands.bold"
               >
-                <font-awesome-icon icon="bold"/>
+                <font-awesome-icon icon="bold" />
               </button>
 
               <button
@@ -334,7 +334,7 @@
                 :class="{ 'is-active': isActive.italic() }"
                 @click="commands.italic"
               >
-                <font-awesome-icon icon="italic"/>
+                <font-awesome-icon icon="italic" />
               </button>
 
               <button
@@ -342,7 +342,7 @@
                 :class="{ 'is-active': isActive.strike() }"
                 @click="commands.strike"
               >
-                <font-awesome-icon icon="strikethrough"/>
+                <font-awesome-icon icon="strikethrough" />
               </button>
 
               <button
@@ -350,7 +350,7 @@
                 :class="{ 'is-active': isActive.underline() }"
                 @click="commands.underline"
               >
-                <font-awesome-icon icon="underline"/>
+                <font-awesome-icon icon="underline" />
               </button>
 
               <button
@@ -358,7 +358,7 @@
                 :class="{ 'is-active': isActive.code() }"
                 @click="commands.code"
               >
-                <font-awesome-icon icon="code"/>
+                <font-awesome-icon icon="code" />
               </button>
 
               <button
@@ -366,7 +366,7 @@
                 :class="{ 'is-active': isActive.paragraph() }"
                 @click="commands.paragraph"
               >
-                <font-awesome-icon icon="paragraph"/>
+                <font-awesome-icon icon="paragraph" />
               </button>
 
               <button
@@ -392,7 +392,7 @@
                 :class="{ 'is-active': isActive.bullet_list() }"
                 @click="commands.bullet_list"
               >
-                <font-awesome-icon icon="list-ul"/>
+                <font-awesome-icon icon="list-ul" />
               </button>
 
               <button
@@ -400,7 +400,7 @@
                 :class="{ 'is-active': isActive.ordered_list() }"
                 @click="commands.ordered_list"
               >
-                <font-awesome-icon icon="list-ol"/>
+                <font-awesome-icon icon="list-ol" />
               </button>
 
               <button
@@ -408,7 +408,7 @@
                 :class="{ 'is-active': isActive.blockquote() }"
                 @click="commands.blockquote"
               >
-                <font-awesome-icon icon="quote-left"/>
+                <font-awesome-icon icon="quote-left" />
               </button>
 
               <button
@@ -416,19 +416,19 @@
                 :class="{ 'is-active': isActive.code_block() }"
                 @click="commands.code_block"
               >
-                <font-awesome-icon icon="code"/>
+                <font-awesome-icon icon="code" />
               </button>
 
               <button class="menubar__button" @click="commands.undo">
-                <font-awesome-icon icon="undo"/>
+                <font-awesome-icon icon="undo" />
               </button>
 
               <button class="menubar__button" @click="commands.redo">
-                <font-awesome-icon icon="redo"/>
+                <font-awesome-icon icon="redo" />
               </button>
             </div>
           </editor-menu-bar>
-          <editor-content class="editor__content" :editor="editor"/>
+          <editor-content class="editor__content" :editor="editor" />
         </b-form-group>
       </div>
 
@@ -481,18 +481,18 @@ import {
   Link,
   Strike,
   Underline,
-  History,
+  History
 } from 'tiptap-extensions';
 
 export default {
   props: {
-    data: { required: false, type: Object, default: null },
+    data: { required: false, type: Object, default: null }
   },
   components: {
     ManagePhoto,
     EditorContent,
     EditorMenuBar,
-    CustomAttributes,
+    CustomAttributes
   },
   created() {
     if (this.data != null) {
@@ -517,12 +517,12 @@ export default {
         category: {
           _id: null,
           category: null,
-          subcategory: null,
+          subcategory: null
         },
         store_sku: null,
         marked_price: {
           amount: 0,
-          currency: 'USD',
+          currency: 'USD'
         },
         active: true,
         thumbnailUrls: [
@@ -537,28 +537,27 @@ export default {
         ],
         price: {
           amount: 27.99,
-          currency: 'USD',
+          currency: 'USD'
         },
         tariff: null,
         weight: {
           quantity: 3.2,
-          unit: 'LB',
+          unit: 'LB'
         },
         custom_attributes: {},
         customizationOptions: {
-          customizations: [],
+          customizations: []
         },
-        details_html:
-          'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
+        details_html: 'A limited-edition illuminating powder with an ultra-smooth formula and radiant finish.',
         colors: [
           { name: 'Black', hexValue: '#000000' },
-          { name: 'Brown', hexValue: '#435ADF' },
+          { name: 'Brown', hexValue: '#435ADF' }
         ],
-        sizes: ['XS', 'S', 'M', 'L'],
+        sizes: ['XS', 'S', 'M', 'L']
       },
 
       showManagePhoto: false,
-      images: null,
+      images: null
     };
   },
 
@@ -581,13 +580,13 @@ export default {
         new Link(),
         new Strike(),
         new Underline(),
-        new History(),
+        new History()
       ],
 
       onUpdate: ({ getHTML }) => {
         // this.json = getJSON()
         this.product.details_html = getHTML();
-      },
+      }
     });
   },
   beforeDestroy() {
@@ -599,7 +598,7 @@ export default {
     },
 
     ...mapGetters({
-      tariffCategories: 'adminStore/tariffCategories',
+      tariffCategories: 'adminStore/tariffCategories'
     }),
 
     tariffState() {
@@ -625,18 +624,16 @@ export default {
     },
 
     categoryState() {
-      if (
-        this.product.category.category === undefined
-        || this.product.category.category == null
-      ) { return null; }
+      if (this.product.category.category === undefined || this.product.category.category == null) {
+        return null;
+      }
       return this.product.category.category.length > 0;
     },
 
     subcategoryState() {
-      if (
-        this.product.category._id === undefined
-        || this.product.category._id == null
-      ) { return null; }
+      if (this.product.category._id === undefined || this.product.category._id == null) {
+        return null;
+      }
       return this.product.category._id.length > 0;
     },
 
@@ -649,9 +646,7 @@ export default {
     },
 
     weightState() {
-      return (
-        this.product.weight.quantity > 0 && this.product.weight.quantity != null
-      );
+      return this.product.weight.quantity > 0 && this.product.weight.quantity != null;
     },
 
     unitState() {
@@ -663,13 +658,15 @@ export default {
     },
 
     filteredSubcategories() {
-      if (this.product.category.category == null) { return _.map(this.refdata.categories, 'subcategory'); }
-      const val = this.refdata.categories.filter((item) => {
+      if (this.product.category.category == null) {
+        return _.map(this.refdata.categories, 'subcategory');
+      }
+      const val = this.refdata.categories.filter(item => {
         if (item.category === this.product.category.category) return true;
         return false;
       });
       return val;
-    },
+    }
   },
   methods: {
     extractColorValues(attribute) {
@@ -726,13 +723,12 @@ export default {
     },
     async handleAddProduct() {
       if (!this.validateForm()) return;
-      const totalImages = this.$refs.managephoto.configureParams()
-        .numberOfThumbnailAndDetailedImages;
+      const totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
       if (totalImages <= 0) {
         this.$notify({
           group: 'all',
           type: 'warn',
-          text: 'You need to upload at least 1 image.',
+          text: 'You need to upload at least 1 image.'
         });
         return;
       }
@@ -750,7 +746,7 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error',
+          text: 'There was an error'
         });
       }
     },
@@ -758,13 +754,12 @@ export default {
       if (!this.validateForm()) return;
 
       // Check if there are any images.
-      const totalImages = this.$refs.managephoto.configureParams()
-        .numberOfThumbnailAndDetailedImages;
+      const totalImages = this.$refs.managephoto.configureParams().numberOfThumbnailAndDetailedImages;
       if (totalImages <= 0) {
         this.$notify({
           group: 'all',
           type: 'warn',
-          text: 'You need to upload at least 1 image.',
+          text: 'You need to upload at least 1 image.'
         });
         return;
       }
@@ -782,18 +777,18 @@ export default {
         this.$notify({
           group: 'all',
           type: 'error',
-          text: 'There was an error',
+          text: 'There was an error'
         });
       }
     },
     getSubCategory() {
       const refState = this.$store.getters['adminStore/allStateData'];
       const x = _.find(refState.refDataPayload.product_categories, {
-        name: this.product.category,
+        name: this.product.category
       }).subcategories;
       return x;
-    },
-  },
+    }
+  }
 };
 </script>
 
