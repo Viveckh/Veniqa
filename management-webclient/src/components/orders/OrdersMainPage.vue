@@ -2,20 +2,40 @@
   <div class="general-padding" id="order-view">
     <h3>Orders</h3>
 
-    <b-tabs>
-      <template slot="tabs">
-        <b-nav-item :active="orderStatus == 'RECEIVED'" @click="tabClicked('RECEIVED')">Received</b-nav-item>
-        <b-nav-item :active="orderStatus == 'CONFIRMED'" @click="tabClicked('CONFIRMED')">Confirmed</b-nav-item>
-        <b-nav-item
-          :active="orderStatus == 'IN-PROGRESS'"
-          @click="tabClicked('IN-PROGRESS')"
-        >In Progress</b-nav-item>
-        <b-nav-item :active="orderStatus == 'COMPLETED'" @click="tabClicked('COMPLETED')">Completed</b-nav-item>
-        <b-nav-item :active="orderStatus == 'CANCELLED'" @click="tabClicked('CANCELLED')">Cancelled</b-nav-item>
-      </template>
+    <b-tabs pills class="mt-4">
+      <b-tab disabled title="Filter by:" title-link-class="pl-0"/>
+      <b-tab
+        v-for="(tab,tind) in orderStatusTabs"
+        :key="tind"
+        :title="tab.title"
+        :active="orderStatus == tab.value"
+        @click="tabClicked(tab.value)"
+      />
     </b-tabs>
+    <hr/>
 
     <div class="order-list">
+      <b-row>
+        <b-col md="6">Per page &nbsp;&nbsp;&nbsp;
+          <b-form-select
+            v-model="pagination.limit"
+            :options="perPageOptions"
+            style="max-width: 100px"
+            size="sm"
+            @change="pageLimitChanged"
+          />
+        </b-col>
+        <b-col md="6">
+          <b-pagination
+            :total-rows="pagination.total"
+            v-model="pagination.page"
+            :per-page="pagination.limit"
+            @change="pageChanged"
+            aria-controls="content_loop"
+            align="right"
+          />
+        </b-col>
+      </b-row>
       <order-list/>
     </div>
   </div>
@@ -31,7 +51,31 @@ export default {
     OrderList,
   },
   data() {
-    return {};
+    return {
+      perPageOptions: [10, 20, 30, 50, 100],
+      orderStatusTabs: [
+        {
+          title: 'Received',
+          value: 'RECEIVED'
+        },
+        {
+          title: 'Confirmed',
+          value: 'CONFIRMED'
+        },
+        {
+          title: 'In Progress',
+          value: 'IN-PROGRESS'
+        },
+        {
+          title: 'Completed',
+          value: 'COMPLETED'
+        },
+        {
+          title: 'Cancelled',
+          value: 'CANCELLED'
+        },
+      ]
+    };
   },
 
   async created() {
@@ -56,11 +100,22 @@ export default {
     tabClicked(tab) {
       this.$store.dispatch('orderStore/getOrdersByStatus', tab);
     },
+
+    async pageLimitChanged(limit) {
+      this.pagination.limit = limit;
+      this.pageChanged(1);
+    },
+
+    async pageChanged(pageNum) {
+      this.pagination.page = pageNum;
+      await this.$store.dispatch('orderStore/getOrdersByStatus', this.orderStatus);
+    },
   },
 
   computed: {
     ...mapGetters({
       orderStatus: 'orderStore/orderStatus',
+      pagination: 'orderStore/pagination'
     }),
   },
 };

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import ProxyUrl from '@/constants/ProxyUrls';
-import PageSetup from '@/dto/PageDTO.json';
+import Pagination from '@/dto/Pagination.json';
 import _ from 'lodash';
 
 export default {
@@ -9,7 +9,7 @@ export default {
     orders: [],
     orderStatus: '',
 
-    pagination: {},
+    pagination: _.cloneDeep(Pagination),
     openOrder: null,
   },
 
@@ -200,12 +200,13 @@ export default {
 
     async getOrdersByStatus({
       commit,
+      state
     }, status) {
-      let reqObj = {
+      const reqObj = {
         orderStatus: status,
+        pagingOptions: state.pagination,
+        sortRule: '-auditLog.createdOn'
       };
-
-      reqObj = _.assignIn(reqObj, PageSetup);
 
       try {
         const {
@@ -261,5 +262,9 @@ export default {
     openOrder(state) {
       return state.openOrder;
     },
+
+    pagination(state) {
+      return state.pagination;
+    }
   },
 };
