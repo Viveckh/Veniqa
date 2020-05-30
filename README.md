@@ -108,13 +108,13 @@ Refer to the Quickstart Guide above to get up and running in minutes.
 Information about sponsorship tiers and benefits are outlined [here](https://opencollective.com/veniqa).
 
 
-#### Paypal
+### Paypal
 100% goes to Veniqa Engineering.
 
 <b>Paypal Email:</b> veniqa.engineering@gmail.com
 
 
-#### OpenCollective
+### OpenCollective
 90% goes to Veniqa Engineering.
 
 [Donate on this page](https://opencollective.com/veniqa)
