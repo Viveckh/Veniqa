@@ -110,10 +110,13 @@ Information about sponsorship tiers and benefits are outlined [here](https://ope
 
 #### Paypal
 100% goes to Veniqa Engineering.
+
 <b>Paypal Email:</b> veniqa.engineering@gmail.com
+
 
 #### OpenCollective
 90% goes to Veniqa Engineering.
+
 [Donate on this page](https://opencollective.com/veniqa)
 
 
