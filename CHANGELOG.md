@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixes
+- UI misalignments mentioned in [#126](https://github.com/Viveckh/Veniqa/issues/126)
+
+## [2.0.0]
+### Fixes
 - Order placed is now shown in the admin order page with pagination feature.
 - Changed the logic to delete the products from the cart once the order has been placed.
 - Docker container dynamic reload for servers failing is fixed. 

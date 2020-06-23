@@ -16,8 +16,8 @@
         </div>
       </b-col>
       <b-col md="10">
-        <div v-if="data && data.length > 0" class="align-left">
-          <div class="product-card align-left" v-for="(product, pid) in data" v-bind:key="pid">
+        <div v-if="data && data.length > 0">
+          <div class="product-card align-center" v-for="(product, pid) in data" v-bind:key="pid">
             <div class="link" @click="openProductDetail(product._id)">
               <div class="img-parent" v-if="product.thumbnailUrls.length > 0">
                 <search-result-view-image :product="product"/>
@@ -192,6 +192,7 @@ export default {
 .product-detail {
   width: 90%;
   margin-left: auto;
+  margin-right: auto;
 
   margin-bottom: 10px;
 }
