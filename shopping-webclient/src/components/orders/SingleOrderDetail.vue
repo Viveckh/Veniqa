@@ -168,6 +168,7 @@ export default {
   min-height: 90vh;
   width: 70%;
   margin: auto;
+  margin-top: 1em;
 
   h4 {
     margin-bottom: 2rem;
