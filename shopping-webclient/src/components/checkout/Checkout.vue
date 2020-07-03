@@ -28,12 +28,17 @@
     <div class="bottom-space"></div>
     <div class="checkout-button">
       <div v-if="isSessionActive">
-        <b-button
+        <div
           v-if="emailConfirmed && !checkoutInitiated && carts.length > 0"
-          size="lg"
-          class="full-width primary-button"
-          @click="handleCheckout()"
-        >Get Final Prices</b-button>
+        >
+          <b-button
+            size="lg"
+            class="full-width primary-button"
+            @click="handleCheckout()"
+          >Get Final Prices</b-button>
+          <br />
+          <br />
+        </div>
         <div v-else-if="!emailConfirmed">
           <p>You cannot checkout currently because your email address has not been confirmed.
             Please click below to resend the confirmation email</p>
