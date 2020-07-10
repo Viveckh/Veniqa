@@ -7,23 +7,6 @@ $gradient-color: linear-gradient(to right, #267871, #136a8a) !important;
 $primary-green: #00e676;
 $primary-red: hsl(348, 100%, 61%);
 
-// .primary-button {
-//   background-image: $gradient-color;
-//   border: none;
-
-//   &:hover {
-//     border: none;
-//     box-shadow: 3px 6px 20px 1px #2E3532;
-//   }
-
-//   &:active,
-//   &:focus,
-//   &:link,
-//   &:visited {
-//     border: none;
-//     box-shadow: unset;
-//   }
-// }
 
 .delete {
   color: $primary-red;
