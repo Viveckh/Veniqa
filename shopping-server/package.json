@@ -28,7 +28,7 @@
     "jade": "~1.11.0",
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mongodb": "^3.1.10",
     "mongoose": "^5.3.15",
     "mongoose-paginate": "^5.0.3",
