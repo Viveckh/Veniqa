@@ -49,6 +49,13 @@ module.exports = {
         sidebarDepth: 2,
         collapsable: false,
         children: []
+      },
+      {
+        title: 'SSL Setup',
+        path: '/ssl-setup/ssl-setup.md',
+        sidebarDepth: 2,
+        collapsable: false,
+        children: []
       }
     ]
   },
