@@ -35,6 +35,13 @@ module.exports = {
         sidebarDepth: 2,
         collapsable: false,
         children: []
+      },
+      {
+        title: 'Email Setup',
+        path: '/email-setup/email-setup.md',
+        sidebarDepth: 2,
+        collapsable: false,
+        children: []
       }
     ]
   },
