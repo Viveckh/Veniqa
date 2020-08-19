@@ -13,7 +13,7 @@ The default email service provider that Veniqa supports out-of-the-box is [Sendg
 
 While we love Sengrid, you are free to implement an email service using the provider of your choosing. In order to do this, follow the following high level steps. 
 
-**Note:** You can see an example of such an implementation by looking at the partial implementation of using the [Nodemailer service](https://nodemailer.com), which is available at `management-server/services/emailService.js` and `shopping-server/services/emailService.js`
+> You can see an example of such an implementation by looking at the partial implementation of using the [Nodemailer service](https://nodemailer.com), which is available at `management-server/services/emailService.js` and `shopping-server/services/emailService.js`
 
 * Make a copy of the files `management-server/services/emailServiceSendgrid.js` and `shopping-server/services/emailServiceSendgrid.js`. 
 * Make updates to the functions in the file depending on the API documentation of the email service provider you choose to use.

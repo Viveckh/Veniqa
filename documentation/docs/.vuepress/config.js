@@ -42,6 +42,13 @@ module.exports = {
         sidebarDepth: 2,
         collapsable: false,
         children: []
+      },
+      {
+        title: 'AWS S3 Setup',
+        path: '/aws-setup/s3setup.md',
+        sidebarDepth: 2,
+        collapsable: false,
+        children: []
       }
     ]
   },
