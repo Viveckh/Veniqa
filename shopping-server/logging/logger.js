@@ -32,7 +32,7 @@ const logger = winston.createLogger({
     new winston.transports.MongoDB({ 
       level: 'error',
       db: process.env.VENIQA_MONGODB_URL,
-      options: {useNewUrlParser: true},
+      options: {useNewUrlParser: true, useUnifiedTopology: true},
       collection: config.get('logging.mongodb_collection'),
       capped: false
     }),

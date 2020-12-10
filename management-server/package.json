@@ -29,9 +29,9 @@
     "jade": "~1.11.0",
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mongodb": "^3.5.2",
-    "mongoose": "^5.8.11",
+    "mongoose": "^5.11.5",
     "mongoose-paginate": "^5.0.3",
     "morgan": "~1.9.0",
     "nodemailer": "^4.7.0",
@@ -43,7 +43,7 @@
     "uuid": "^3.3.2",
     "validator": "^10.9.0",
     "winston": "^3.1.0",
-    "winston-mongodb": "^4.0.3"
+    "winston-mongodb": "^5.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

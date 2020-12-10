@@ -32,5 +32,18 @@ Some cloud providers like Azure ask for a PFX certificate, so for such needs you
 
 `openssl pkcs12 -export -out certificate.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem`
 
+A password might be asked, feel free to enter anything, just make sure you remember it because it will have to be provided later while using the .pfx file.
+
 ### Certificate ready for use
 Go ahead and upload the SSL certificate using your hosting providers's control panel.
+
+### For Renewal
+Follow the same steps as aboves.
+
+> Since certbot seems to preserve the previous certificates in the folder as well, remember the new folders may be created with suffixes like `-001` (i.e. `admin-server.veniqa.com-0002`) 
+
+### To check expiration
+To check the expiration of a certificate within `admin-server.veniqa.com`, the command would be
+
+`sudo openssl x509 -dates -noout -in admin-server.veniqa.com/cert.pem`
+
