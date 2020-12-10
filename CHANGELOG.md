@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Order placed is now shown in the admin order page with pagination feature.
 - Changed the logic to delete the products from the cart once the order has been placed.
 - Docker container dynamic reload for servers failing is fixed. 
+- Updated packages like Mongoose, MongoDB, Winston-MongoDB, Lodash and using unifiedTopology for db connections
 
 ### Added
 - Added couple of new event emitters `dropInOriginalBucket` and `dropInDestinationBucket`.
