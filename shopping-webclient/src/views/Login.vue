@@ -31,7 +31,7 @@ export default {
       // Do something when logged in.
       const previousPath = this.$route.query.previousPath ? this.$route.query.previousPath : null;
 
-      this.$router.push(previousPath ? previousPath : '/');
+      this.$router.push(previousPath || '/');
 
       this.$store.commit('loaderStore/unsetLoader');
     },

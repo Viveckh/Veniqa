@@ -125,9 +125,9 @@ router.beforeEach((to, from, next) => {
       query: {
         previousPath: from.fullPath
       }
-    })
+    });
   } else {
-    next()
+    next();
   }
 });
 
