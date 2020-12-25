@@ -1,44 +1,43 @@
+<p align="center">
+  <a href="https://veniqa.com">
+    <img src="https://www.veniqa.com/img/assets/veniqalogo.png" width="300px" alt="Veniqa E-commerce Solution" />
+  </a>
+</p>
+<p align="center">
+Open-source E-commerce Solution. 
+<br>Built using MEVN Stack (Node.js, Express.js, Vue.js, MongoDB) with Developer Friendliness and Cloud Integrations in mind.
+<br>
+<br><strong>Previously powered the Veniqa New York Startup</strong>.
+<br>
+<br> &#8680; Appeared as a <strong>#1 Trending Github Project Worldwide</strong> (02/23/2020)
+<br> &#8680; Appeared as a <strong>#1 Trending Topic on HackerNews</strong> (Feb. 2020)
+</p>
 
-<div style="text-align: center"><img src="https://www.veniqa.com/img/team/veniqa-logo.png" height="50px"/></div>
-
-
-# Veniqa Open-Source E-commerce Solution
-
-Veniqa (Originally Veniqa New York) was a New York-based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
-
-Upon its demise due to logistical complications, the tech platform that powered Veniqa was open-sourced as a 100% customizable framework under the MIT License.
-
-It is developed and maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders. :heart:
-
-:star2: Appeared as a top trending topic on HackerNews
-
-:star2: No. 1 Trending Github Project on 02/23/2020 and Top Trending on Feb-Mar. 2020
-
-___
-
-## Official Website
-[https://veniqa.com](https://veniqa.com)
-
----
-
-## Documentation
-[https://documentation.veniqa.com](https://documentation.veniqa.com/)
+<p align="center">
+  <a href="https://veniqa.com" target="_blank">Veniqa.com</a> |
+  <a href="https://documentation.veniqa.com" target="_blank">Documentation</a> |
+  <a href="https://documentation.veniqa.com/dockersetup/dockersetup.html" target="_blank">Quickstart</a> |
+  <a href="https://opencollective.com/veniqa" target="_blank">Sponsor</a>
+</p>
 
 ---
 
-## Demos :eyes:
+![Multi-Device Mockup](https://www.veniqa.com/img/device-mockups/multi-device-mockup.png)
 
-shop.veniqa.com 
+---
+## Demos :computer:
+
+[Shopping Platform](https://shop.veniqa.com)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c95aadbb-cf5b-4e35-a86d-69646f345690/deploy-status)](https://app.netlify.com/sites/prod-veniqa-client/deploys)
 
-admin.veniqa.com
+[Admin Platform](https://admin.veniqa.com)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/bb8d700a-4136-4b65-acc1-f29e14aed779/deploy-status)](https://app.netlify.com/sites/prod-veniqa-admin/deploys)  
 
 --- 
 
-## Perfect For Boostrapped Startups & Hacky Engineers :fire: :fire:
+## Perfect For Boostrapped Startups & Hacky Engineers :nerd_face:
 We love Woocommerce & Squarespace! But vendor lock-in and zero code access isn't for everyone.
 
 With Veniqa, you have choices.
@@ -48,7 +47,7 @@ With Veniqa, you have choices.
 
 ---
 
-## The Suite
+## The Suite :package:
 * API Server for Shopping Applications
 * API Server for Management Applications
 * Web Client for Shoppers
@@ -56,7 +55,7 @@ With Veniqa, you have choices.
 
 ---
 
-## Few Things Under The Hood :eyes:
+## Few Things Under The Hood :factory:
 
 ### Built using the MEVN Stack & The Usual Suspects
 MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer (for fallback), Stripe.
@@ -82,7 +81,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ---
 
-## Quickstart for Developers
+## Quickstart for Developers :electric_plug:
 
 You can start up the entire suite of applications using `docker`. For more information, go to [Quick Start Documentation](https://documentation.veniqa.com/dockersetup/dockersetup.html).
 
@@ -91,7 +90,7 @@ You can start up the entire suite of applications using `docker`. For more infor
 
 ## Contribution :pray:
 
-We are currently in the process of building test suites, and writing extensive documentation geared towards developers. In the meantime, any Pull Requests/Bug Fixes/Issues found are appreciated.
+We are looking for contributors to develop extensive test suites, and also address some of the enhancement roadmaps outlined in the issues page. Any Pull Requests/Bug Fixes/Issues found are appreciated.
 
 Refer to the Quickstart Guide above to get up and running in minutes.
 
