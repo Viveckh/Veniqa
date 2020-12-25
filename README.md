@@ -25,7 +25,7 @@ Open-source E-commerce Solution.
 ![Multi-Device Mockup](https://www.veniqa.com/img/device-mockups/multi-device-mockup.png)
 
 ---
-## Demos :eyes:
+## Demos :computer:
 
 [Shopping Platform](https://shop.veniqa.com)
 
@@ -37,7 +37,7 @@ Open-source E-commerce Solution.
 
 --- 
 
-## Perfect For Boostrapped Startups & Hacky Engineers :fire: :fire:
+## Perfect For Boostrapped Startups & Hacky Engineers :nerd_face:
 We love Woocommerce & Squarespace! But vendor lock-in and zero code access isn't for everyone.
 
 With Veniqa, you have choices.
@@ -47,7 +47,7 @@ With Veniqa, you have choices.
 
 ---
 
-## The Suite
+## The Suite :package:
 * API Server for Shopping Applications
 * API Server for Management Applications
 * Web Client for Shoppers
@@ -55,7 +55,7 @@ With Veniqa, you have choices.
 
 ---
 
-## Few Things Under The Hood :eyes:
+## Few Things Under The Hood :factory:
 
 ### Built using the MEVN Stack & The Usual Suspects
 MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer (for fallback), Stripe.
@@ -81,7 +81,7 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ---
 
-## Quickstart for Developers
+## Quickstart for Developers :electric_plug:
 
 You can start up the entire suite of applications using `docker`. For more information, go to [Quick Start Documentation](https://documentation.veniqa.com/dockersetup/dockersetup.html).
 
