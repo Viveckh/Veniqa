@@ -14,10 +14,10 @@ Open-source E-commerce Solution.
 </p>
 
 <p align="center">
-  <a href="https://veniqa.com">Veniqa.com</a> |
-  <a href="https://documentation.veniqa.com">Documentation</a> |
-  <a href="https://documentation.veniqa.com/dockersetup/dockersetup.html">Quickstart</a> |
-  <a href="https://opencollective.com/veniqa">Sponsor</a>
+  <a href="https://veniqa.com" target="_blank">Veniqa.com</a> |
+  <a href="https://documentation.veniqa.com" target="_blank">Documentation</a> |
+  <a href="https://documentation.veniqa.com/dockersetup/dockersetup.html" target="_blank">Quickstart</a> |
+  <a href="https://opencollective.com/veniqa" target="_blank">Sponsor</a>
 </p>
 
 ---
