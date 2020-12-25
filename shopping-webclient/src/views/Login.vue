@@ -29,7 +29,10 @@ export default {
   methods: {
     loggedIn() {
       // Do something when logged in.
-      this.$router.push('/');
+      const previousPath = this.$route.query.previousPath ? this.$route.query.previousPath : null;
+
+      this.$router.push(previousPath ? previousPath : '/');
+
       this.$store.commit('loaderStore/unsetLoader');
     },
   },

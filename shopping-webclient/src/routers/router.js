@@ -55,6 +55,9 @@ const router = new Router({
         {
           path: 'checkout',
           component: Checkout,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'orders',
@@ -102,16 +105,30 @@ const router = new Router({
   ],
 });
 
+// Auth guard that prevents the page from going forward if the user is not authorized for the paths that need authorization.
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem('email') == null || localStorage.getItem('email') === 'null') {
       next({
         path: '/login',
+        query: {
+          previousPath: from.fullPath
+        }
       });
     } else {
       next();
     }
-  } else next();
+  } else if (to.fullPath === '/login') {
+    // Setting previous path here so that it can be rerouted to old url that was open before login
+    next({
+      path: '/login',
+      query: {
+        previousPath: from.fullPath
+      }
+    })
+  } else {
+    next()
+  }
 });
 
 Vue.use(VueAnalytics, {
