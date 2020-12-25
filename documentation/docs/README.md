@@ -2,60 +2,48 @@
 home: true
 heroImage: /img/veniqa_logo_transparent.png
 heroText: Official Documentation
-tagline: Open-source E-commerce Solution
+tagline: Open-source E-commerce Solution.
 actionText: Get Started →
 actionLink: /servers/setup.html
-features:
-- title: Built using the MEVN Stack & The Usual Suspects
-  details: MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer (for fallback), Stripe.
-- title: Performant & Secure - cause we like it that way
-  details: Distributed requests utilizing all system cores, encrypted authentication and sessions, backend equipped with request rate limiting to prevent scripted attacks and bot crawling, database & file-based logging.
-- title: Built for the Cloud, with developers in mind
-  details: CD/CI friendly codebase and configuration setup, simplified dev-prod and local-cloud switches, docker scripts, AWS S3 Integration for cheap image storage.
 footer: MIT Licensed | Copyright © 2019-present Qarece New York
 ---
 
-# Veniqa Open-Source E-commerce Solution
+<p align="center">
+Built using MEVN Stack (Node.js, Express.js, Vue.js, MongoDB) with Developer Friendliness and Cloud Integrations in mind.
+  <br>
+  <br><strong>Previously powered the Veniqa New York Startup</strong>.
+  <br>
+  <br> &#8680; Appeared as a <strong>#1 Trending Github Project Worldwide</strong> (02/23/2020)
+  <br> &#8680; Appeared as a <strong>#1 Trending Topic on HackerNews</strong> (Feb. 2020)
+</p>
 
-Veniqa (Originally Veniqa New York) was a New York-based fashion retail startup that served consumers in South Asian countries to shop from luxury western brands.
-
-Upon its demise due to logistical complications, the tech platform that powered Veniqa was open-sourced as a 100% customizable framework under the MIT License.
-
-It is developed and maintained by [Qarece New York](https://qarece.com), which shares some of the same co-founders.
-
-___
-
-## Official Website For Details And Demos
-[https://veniqa.com](https://veniqa.com)
-
----
-
-## Perfect For Boostrapped Startups & Hacky Engineers
-We love Woocommerce & Squarespace! But vendor lock-in and zero code access isn't for everyone.
-
-With Veniqa, you have choices.
-* Launch yourself
-* Get a premium support package
-* Use the codebase for other projects
+<p align="center">
+  <a href="https://veniqa.com" target="_blank">Veniqa.com</a> |
+  <a href="https://documentation.veniqa.com" target="_blank">Documentation</a> |
+  <a href="https://documentation.veniqa.com/dockersetup/dockersetup.html" target="_blank">Quickstart</a> |
+  <a href="https://opencollective.com/veniqa" target="_blank">Sponsor</a>
+</p>
 
 ---
 
-## The Suite
-* API Server for Shopping Applications | [Code](https://github.com/Viveckh/Veniqa/tree/master/shopping-server)
-* API Server for Management Applications | [Code](https://github.com/Viveckh/Veniqa/tree/master/management-server)
-* Web Client for Shoppers: | [Code](https://github.com/Viveckh/Veniqa/tree/master/shopping-webclient)
-* Web Client for Management: | [Code](https://github.com/Viveckh/Veniqa/tree/master/management-webclient)
+![Multi-Device Mockup](https://www.veniqa.com/img/device-mockups/multi-device-mockup.png)
 
 ---
 
-## Demo
-### [Shoppers](https://shop.veniqa.com)
+## Demo :computer:
+### [Shopping Platform](https://shop.veniqa.com)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c95aadbb-cf5b-4e35-a86d-69646f345690/deploy-status)](https://app.netlify.com/sites/prod-veniqa-client/deploys)
+
 *Responsive across all devices*
 
 Feel free to sign up and checkout using dummy credit card `4242 4242 4242 4242`.
 
-### [Admin](https://admin.veniqa.com)
-*Currently only responsive for laptop and tablet view*
+### [Admin Platform](https://admin.veniqa.com)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bb8d700a-4136-4b65-acc1-f29e14aed779/deploy-status)](https://app.netlify.com/sites/prod-veniqa-admin/deploys)  
+
+*Currently only responsive for laptop view*
 
 Any edit attempts made in demo admin panel are blocked, and will fail.
 
@@ -67,7 +55,27 @@ Any edit attempts made in demo admin panel are blocked, and will fail.
 
 ---
 
-## Few Things Under The Hood
+
+## Perfect For Boostrapped Startups & Hacky Engineers :nerd_face:
+We love Woocommerce & Squarespace! But vendor lock-in and zero code access isn't for everyone.
+
+With Veniqa, you have choices.
+* Launch yourself
+* Get a premium support package
+* Use the codebase for other projects
+
+---
+
+
+## The Suite :package:
+* API Server for Shopping Applications | [Code](https://github.com/Viveckh/Veniqa/tree/master/shopping-server)
+* API Server for Management Applications | [Code](https://github.com/Viveckh/Veniqa/tree/master/management-server)
+* Web Client for Shoppers: | [Code](https://github.com/Viveckh/Veniqa/tree/master/shopping-webclient)
+* Web Client for Management: | [Code](https://github.com/Viveckh/Veniqa/tree/master/management-webclient)
+
+---
+
+## Few Things Under The Hood :factory:
 
 ### Built using the MEVN Stack & The Usual Suspects
 MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer (for fallback), Stripe.
@@ -93,22 +101,43 @@ MongoDB, Express.js, Vue.js, Node.js, Mongoose ORM, Redis, Sendgrid, Nodemailer 
 
 ---
 
-## Documentation Updates
+## Quickstart for Developers :electric_plug:
 
-We're still in the process of preparing more detailed documentation and utility tools to simplify the lives of developers interested in contributing to the platform.
+You can start up the entire suite of applications using `docker`. For more information, go to [Quick Start Documentation](https://documentation.veniqa.com/dockersetup/dockersetup.html).
 
 ---
 
-## Contribution
 
-We are currently in the process of building test suites, docker images and writing extensive documentation to speed up startup time for developers. In the meantime, any Pull Requests/Issues found are appreciated.
+## Contribution :pray:
 
-## Blame These People For
+We are looking for contributors to develop extensive test suites, and also address some of the enhancement roadmaps outlined in the issues page. Any Pull Requests/Bug Fixes/Issues found are appreciated.
+
+Refer to the Quickstart Guide above to get up and running in minutes.
+
+---
+
+## Blame These People For :point_down:
 
 * [(EJ) Vivek Pandey (Platform Architecture, Backend Engineering, DevOps, Data Modeling, & Websites)](https://viveckh.com)
 * [Sujil Maharjan (UX/UI Design, Frontend Engineering)](https://smaharj1.github.io/)
 * [Arjun Bastola (Frontend Engineering, Graphics Design)](https://github.com/abastola)
 
 ---
+
+## Sponsor this Project :clap:
+
+Information about sponsorship tiers and benefits are outlined [here](https://opencollective.com/veniqa).
+
+
+### Paypal
+100% goes to Veniqa Engineering.
+
+<b>Paypal Email:</b> veniqa.engineering@gmail.com
+
+
+### OpenCollective
+90% goes to Veniqa Engineering.
+
+[Donate on this page](https://opencollective.com/veniqa)
 
 
