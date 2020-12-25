@@ -1,10 +1,12 @@
 <p align="center">
   <a href="https://veniqa.com">
-    <img src="https://www.veniqa.com/img/assets/veniqalogo.png" width="640px" alt="Veniqa E-commerce Solution" />
+    <img src="https://www.veniqa.com/img/assets/veniqalogo.png" width="300px" alt="Veniqa E-commerce Solution" />
   </a>
 </p>
 <p align="center">
-Open-source E-commerce solution. <strong>Built using MEVN Stack (Node.js, Express.js, Vue.js, MongoDB) with Developer Friendliness and Cloud Integrations in mind.</strong> Previously powered the <strong>Veniqa New York Startup</strong>
+Open-source E-commerce solution. Built using MEVN Stack (Node.js, Express.js, Vue.js, MongoDB) with Developer Friendliness and Cloud Integrations in mind.
+<br>
+<br><strong>Previously powered the Veniqa New York Startup</strong>.
 <br>
 <br> &#8680; Appeared as a <strong>#1 Trending Github Project Worldwide</strong> (02/23/2020)
 <br> &#8680; Appeared as a <strong>#1 Trending Topic on HackerNews</strong> (Feb. 2020)
