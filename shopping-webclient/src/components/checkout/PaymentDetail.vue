@@ -54,6 +54,7 @@ export default {
         this.$store.commit('cartStore/resetOrders');
         this.$router.push(`/orders/${data.order_id}`);
         notification.success(this, 'Payment was successful.');
+        console.log('payWithStripe token', token);
       } catch (error) {
         console.log('Error with Veniqa payment', error);
         notification.error(

@@ -22,6 +22,7 @@ export default {
      * @param {*} { state }
      */
     async pay({ state, commit }) {
+      console.log('pay in cart');
       const { data } = await Vue.prototype.$axios({
         url: ProxyUrl.createPaymentToken,
         method: 'post',
@@ -54,6 +55,7 @@ export default {
         addressId: address._id
       };
       try {
+        console.log('createCheckout');
         const { data } = await Vue.prototype.$axios({
           url: ProxyUrl.createCheckout,
           method: 'post',

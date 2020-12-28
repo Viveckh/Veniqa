@@ -36,6 +36,10 @@ export default {
   // Payment URLS
   stripePay: '/orders/completeCheckoutUsingCard',
   khaltiPay: '/orders/completeCheckoutUsingKhalti',
+  
+  // Stripe Payment Intents
+  stripeInstantPay: '/orders/stripePaymentInstant',
+  stripeInstantPayment: '/orders/completeCheckoutUsingStripePaymentInstant',
 
   // Categories List
   categoriesUrl: '/ui/productCategoryList',

@@ -18,6 +18,9 @@
 import _ from 'lodash';
 import { Card, Stripe } from './index';
 import PaymentRequestDTO from './StripePaymentRequestDTO.json';
+import { mapGetters } from 'vuex';
+import Vue from 'vue';
+import ProxyUrl from '@/constants/ProxyUrls';
 
 export default {
   components: {
@@ -59,8 +62,75 @@ export default {
       // See https://stripe.com/docs/api#errors for the error object.
       // More general https://stripe.com/docs/stripe.js#stripe-create-token.
       try {
-        const data = await Stripe.createToken();
-        this.$emit('pay', data.token);
+        // const data = await Stripe.createToken();
+        // this.$emit('pay', data.token);
+        let checkoutId = this.checkoutId;
+        const { data } = await Vue.prototype.$axios({
+          url: ProxyUrl.stripeInstantPay,
+          method: 'post',
+          data: {
+            checkoutId
+          },
+        });
+      if (data && data.httpStatus === 200) {
+        console.log(data.responseData);
+        if (data.responseData) {
+          const paymentMethodReq =  await Stripe.createPaymentMethod('card', {});
+          console.log(paymentMethodReq);
+  
+          if(paymentMethodReq.paymentMethod.id){
+              const confirmPayment = await Stripe.confirmCardPayment(data.responseData.client_secret, {
+              payment_method: paymentMethodReq.paymentMethod.id
+              });
+  
+              console.log(confirmPayment);
+          
+              if(confirmPayment){
+                console.log('inside confirmPayment', confirmPayment);
+                if(confirmPayment.paymentIntent.status == 'succeeded'){
+                  console.log('inside confirmPayment status', confirmPayment);
+                  const { data } = await Vue.prototype.$axios({
+                    url: ProxyUrl.stripeInstantPayment,
+                    method: 'post',
+                    data: {
+                      checkoutId,
+                      paymentToken: confirmPayment.paymentIntent.id,
+                    },
+                  });
+                  if (data && data.httpStatus === 200) {
+                    return this.$router.push('/orders');
+                    //return data.responseData;
+                  }
+                    //this.createPayment(confirmPayment.paymentIntent.id);
+                }else{
+                  throw new Error('Card  details are invalid !');
+                }
+                  
+  
+              }
+  
+          }
+  
+        }
+        // const { data } = await Vue.prototype.$axios({
+        //   url: ProxyUrl.stripePay,
+        //   method: 'post',
+        //   data: {
+        //     checkoutId,
+        //     paymentToken: token.id,
+        //   },
+        // });
+        /**
+         * Response data:
+         * {
+         *    orderId: 'xxx'
+         * }
+        */
+        //return data.responseData;
+      }
+      //  const data = await Stripe.createToken();
+        console.log('stripe payWithStripe token', this.checkoutId);
+        //this.$emit('pay', data.token);
       } catch (error) {
         console.log('Stripe error', error.message);
       }
@@ -73,6 +143,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      checkoutId: 'cartStore/checkoutId',
+    }),
     // reqParams() {
     //   let params = _.cloneDeep(PaymentRequestDTO);
     //   params.total.amount = this.totalCost;
