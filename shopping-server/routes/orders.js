@@ -22,4 +22,8 @@ router.post('/createPaymentToken', orderController.createPaymentToken);
 
 router.post('/completeCheckout', orderController.completeCheckout);
 
+router.post('/stripePaymentInstant', orderController.stripePaymentInstant);
+
+router.post('/completeCheckoutUsingStripePaymentInstant', orderController.completeCheckoutUsingStripePaymentInstant);
+
 module.exports = router;
