@@ -553,8 +553,8 @@ export default {
                     integration_check: 'accept_a_payment',
                     user_email: userObj.email
                 },
-                description: "Swaas Order " + checkoutId.substr(checkoutId.length - 6), // Last six chars of id
-                statement_descriptor: "Swaas Order " + checkoutId.substr(checkoutId.length - 6)
+                description: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6), // Last six chars of id
+                statement_descriptor: F"Veniqa Order " + checkoutId.substr(checkoutId.length - 6)
             });
 
             //console.log(tokens);
@@ -606,8 +606,8 @@ export default {
             //     metadata: {
             //         user_email: userObj.email
             //     },
-            //     description: "Swaas Order " + checkoutId.substr(checkoutId.length - 6), // Last six chars of id
-            //     statement_descriptor: "Swaas Order " + checkoutId.substr(checkoutId.length - 6)
+            //     description: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6), // Last six chars of id
+            //     statement_descriptor: "Veniqa Order " + checkoutId.substr(checkoutId.length - 6)
             // });
 
             const chargeObj = await stripe.paymentIntents.retrieve(paymentToken);
