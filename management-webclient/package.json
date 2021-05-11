@@ -14,7 +14,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.2",
     "animate.css": "^3.7.0",
     "autocomplete-vue": "^1.1.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "bootstrap-vue": "^2.4.0",
     "epic-spinners": "^1.0.4",
     "lodash": "^4.17.15",
