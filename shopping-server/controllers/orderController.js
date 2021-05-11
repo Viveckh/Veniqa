@@ -15,6 +15,33 @@ export default {
         }
     },
 
+    async stripePaymentInstant(req, res, next){
+        let response;
+        //console.log(req.user);
+        try {
+            response = await orderService.stripePaymentInstant(req.body.checkoutId, req.user);
+            console.log(response);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            logger.error("Error in stripePaymentInstant Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+    async completeCheckoutUsingStripePaymentInstant(req, res, next) {
+        let response;
+        try {
+            response = await orderService.completeCheckoutUsingStripePaymentInstant(req.body.checkoutId, req.body.paymentToken, req.user);
+            return res.status(response.httpStatus).send(response);
+        }
+        catch(err) {
+            logger.error("Error in completeCheckoutUsingStripePaymentInstant Controller", {meta: err});
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({httpStatus: httpStatus.INTERNAL_SERVER_ERROR, status: "failed", errorDetails: err});
+        }
+    },
+
+
     async completeCheckoutUsingCard(req, res, next) {
         let response;
         try {

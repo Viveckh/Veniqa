@@ -29,6 +29,8 @@ export default {
       event.updateWith({ status: 'success' });
     });
 
+    console.log('stripe element payWithStripe token');
+
     this._paymentRequest.on('token', ev => this.$emit('token', ev));
 
     this._paymentBtn = createPayButton();
