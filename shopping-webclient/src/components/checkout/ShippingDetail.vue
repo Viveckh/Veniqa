@@ -210,7 +210,7 @@
           </b-col>
         </b-row>
         <div class="action-buttons">
-          <b-button variant="secondary" class="cancel-btn" @click="cancelForm()">Cancel</b-button>
+          <b-button variant="secondary-button" class="cancel-btn" @click="cancelForm()">Cancel</b-button>
           <b-button class="primary-button" v-if="!isUpdate" @click="saveAddress()">Save</b-button>
           <b-button class="primary-button" v-else @click="saveAddress()">Edit</b-button>
         </div>
@@ -375,6 +375,7 @@ export default {
 
   .cancel-btn {
     margin-right: 10px;
+    margin-top: 2em;
   }
 
   .action-buttons {

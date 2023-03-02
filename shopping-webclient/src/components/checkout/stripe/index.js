@@ -15,5 +15,5 @@ export {
   PostalCode,
   StripeElement,
   baseStyle,
-  Stripe,
+  Stripe
 };

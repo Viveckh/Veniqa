@@ -78,7 +78,7 @@ services:
       - './shopping-webclient:/app'
       - '/app/node_modules'
     ports:
-      - 5201:4200
+      - 5201:5201
     
   management-webclient:
     build:
@@ -88,7 +88,7 @@ services:
       - './management-webclient:/app'
       - '/app/node_modules'
     ports:
-      - 5202:4200
+      - 5202:5202
 
 volumes:
   dbdata:
