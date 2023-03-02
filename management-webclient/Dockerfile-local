@@ -1,10 +1,15 @@
 FROM node:lts-alpine
+FROM node:10
 
 # set working directory
 WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
+
+#For python 2.7 for npm
+RUN apt-get update && \
+    apt-get install -y python2.7
 
 # install and cache app dependencies
 COPY package.json /app/package.json
