@@ -3,6 +3,9 @@ import cryptoGen from '../authentication/cryptoGen';
 import emailService from './emailServiceSendgrid';
 import httpStatus from  'http-status-codes';
 import logger from '../logging/logger';
+import nodemailer from 'nodemailer';
+
+const useNodemailer = process.env.USE_NODEMAILER === 'true';
 
 export default {
     async createAdmin(userObj) {
@@ -26,7 +29,28 @@ export default {
 
             // If we have gotten here, the request must be successful, so respond accordingly
             logger.info("A new user has been added", {meta: user});
-            emailService.emailAdminWelcomeInstructions(user.email, user.name, user.passwordResetToken);
+            
+            if (useNodemailer) {
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.GMAIL_USER,
+                        pass: process.env.GMAIL_PASS
+                    }
+                });
+
+                const mailOptions = {
+                    from: process.env.GMAIL_USER,
+                    to: user.email,
+                    subject: 'Welcome to Admin',
+                    text: `Hello ${user.name},\n\nWelcome! Your password reset token is: ${user.passwordResetToken}`
+                };
+
+                await transporter.sendMail(mailOptions);
+            } else {
+                emailService.emailAdminWelcomeInstructions(user.email, user.name, user.passwordResetToken);
+            }
+
             let responseObj = {email: user.email, name: user.name, permissions: user.permissions};
             result = {httpStatus: httpStatus.OK, status: "successful", responseData: responseObj}
             return result;
