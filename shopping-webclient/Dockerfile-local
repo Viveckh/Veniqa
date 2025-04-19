@@ -1,15 +1,35 @@
-FROM node:lts-alpine
+FROM node:22.14-alpine
 
-# set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# Install build dependencies
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    git
 
-# install and cache app dependencies
-COPY package.json /app/package.json
-RUN npm install
-RUN npm install @vue/cli@3.7.0 -g
+# Configure npm to use Python 3 and update npm
+RUN npm install -g npm@latest && \
+    npm install -g node-gyp@latest
 
-# start app
+# Set environment variables
+ENV PYTHON=/usr/bin/python3
+ENV NODE_GYP_FORCE_PYTHON=/usr/bin/python3
+ENV SASS_BINARY_SITE=https://github.com/sass/node-sass/releases/download
+ENV NODE_SASS_SKIP_BINARY_DOWNLOAD_FOR_CI=true
+
+# Copy package files
+COPY package*.json /app/
+
+# Remove any existing node_modules and package-lock
+RUN rm -rf node_modules package-lock.json
+
+# Install dependencies
+RUN npm install --legacy-peer-deps --no-optional --force --ignore-scripts
+
+# Copy the rest of the application
+COPY . /app/
+
+# Start the development server
 CMD ["npm", "run", "serve"]

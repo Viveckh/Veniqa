@@ -25,10 +25,15 @@ module.exports = {
   },
 
   devServer: {
-    // open: process.platform === 'darwin',
-    // host: '0.0.0.0',
-    port: 5201, // CHANGE YOUR PORT HERE!
-    // https: false,
-    hotOnly: false,
+    port: 5201,
+    host: '0.0.0.0',
+    client: {
+      webSocketURL: 'auto://0.0.0.0:0/ws',
+    },
+    allowedHosts: 'all',
+    hot: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
   },
 };
