@@ -22,13 +22,13 @@ import '@/assets/css/sidebar.scss';
 import VueScrollTo from 'vue-scrollto';
 import Notifications from 'vue-notification';
 import _ from 'lodash';
-import { AtomSpinner } from 'epic-spinners';
+import { PulseLoader } from 'vue-loading-spinner';
 
 import 'animate.css';
 import './assets/css/hover.css';
 
 Vue.use(Notifications);
-Vue.use(AtomSpinner);
+Vue.component('pulse-loader', PulseLoader);
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {
